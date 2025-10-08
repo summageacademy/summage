@@ -1,0 +1,144 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  html, body {
+    height: 100%;
+    overflow: hidden; /* prevent scroll */
+  }
+  
+  body {
+    background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 60%);
+    color: #333;
+  }
+  
+  /* Page Grid */
+  .page {
+    display: grid;
+    grid-template-rows: auto 1fr 1fr;
+    height: 100vh;
+  }
+  
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: #ffffffee;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .back-btn {
+    background: #f24b0b;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  .back-btn:hover {
+    background: #d43a00;
+  }
+  
+  .brand-text {
+    font-weight: bold;
+    color: #f24b0b;
+    font-size: 24px;
+    font-family: 'Baloo 2', cursive;
+  }
+  
+  /* Panel Layout */
+  .panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+  }
+  
+  .panel-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1100px;
+    width: 100%;
+  }
+  
+  .panel-inner.reverse {
+    flex-direction: row-reverse;
+  }
+  
+  .panel-illustration img {
+    max-width: 400px;
+    height: auto;
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  .panel-text {
+    max-width: 450px;
+  }
+  
+  .panel-text h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #007a52;
+    font-family: 'Baloo 2', cursive;
+    margin-bottom: 15px;
+  }
+  
+  .panel-text p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #444;
+    line-height: 1.5;
+  }
+  
+  .btn {
+    display: inline-block;
+    background: #f24b0b;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .btn:hover {
+    background: #d43a00;
+    transform: scale(1.05);
+  }
+  
+  /* Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .panel-inner, .panel-inner.reverse {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .panel-illustration img {
+      max-width: 80%;
+    }
+  
+    .brand-text {
+      flex: 1;
+      text-align: center;
+    }
+  
+    .back-btn {
+      display: none; /* hide back button on mobile */
+    }
+  }
+  

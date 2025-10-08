@@ -1,0 +1,336 @@
+/* ===========================
+   UPDATED style.css
+   - Uses CSS variables for themeability
+   - Dark theme applied under [data-theme="dark"]
+   - Second hero button uses .btn.secondary
+   - Original layout & structure preserved
+   =========================== */
+
+/* ----- Theme variables (light default) ----- */
+:root {
+  --bg-gradient: linear-gradient(180deg, #f0fdfa 0%, #ffffff 60%);
+  --text-color: #333333;
+  --muted-text-color: #444444;
+  --header-bg: #ffffffee;
+  --header-border: #eaeaea;
+  --accent-color: #f24b0b; /* orange */
+  --link-color: #f24b0b;
+  --button-primary-bg: #f24b0b;
+  --button-primary-hover: #d43a00;
+  --button-secondary-bg: #06a87c;
+  --button-secondary-hover: #048965;
+  --chat-bg: #f24b0b;
+  --logo-text-color: #f24b0b;
+  --hero-title-color: #007a52;
+  --hero-paragraph-color: #444;
+  --footer-icon-shadow: rgba(0,0,0,0.12);
+  --image-drop-shadow: rgba(0,0,0,0.25);
+}
+
+/* ----- Dark theme (device-driven) ----- */
+[data-theme="dark"] {
+  --bg-gradient: linear-gradient(180deg, #0b1220 0%, #0f1724 60%);
+  --text-color: #e6eef6;
+  --muted-text-color: rgba(230,238,246,0.9);
+  --header-bg: rgba(5, 10, 18, 0.5);
+  --header-border: rgba(255,255,255,0.03);
+  --accent-color: #f24b0b; /* keep orange accent */
+  --link-color: #ffffff;
+  --button-primary-bg: #f24b0b;
+  --button-primary-hover: #d43a00;
+  --button-secondary-bg: #06a87c;
+  --button-secondary-hover: #048965;
+  --chat-bg: #f24b0b;
+  --logo-text-color: #f24b0b;
+  --hero-title-color: #ffffff;
+  --hero-paragraph-color: rgba(230,238,246,0.9);
+  --footer-icon-shadow: rgba(0,0,0,0.6);
+  --image-drop-shadow: rgba(0,0,0,0.6);
+}
+
+/* ========== Base styles (use vars) ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Remove horizontal overflow so page can expand */
+html, body {
+  overflow-x: hidden;
+}
+
+/* --- Header --- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 80px 30px 80px;
+  background: var(--header-bg);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--header-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  animation: fadeDown 1s ease;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.logo-text {
+  font-weight: bold;
+  color: var(--logo-text-color);
+  font-size: 28px;
+  transition: transform 0.3s ease;
+}
+.logo-text:hover {
+  transform: scale(1.05);
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 50px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: var(--link-color);
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
+}
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+nav ul li a.contact {
+  background: var(--button-secondary-bg);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+nav ul li a.contact:hover {
+  background: var(--button-secondary-hover);
+  transform: translateY(-2px);
+}
+
+/* --- Hero Section --- */
+.hero {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 20px 60px;
+  animation: fadeIn 1.2s ease;
+}
+
+.hero-text {
+  max-width: 500px;
+  animation: slideLeft 1s ease;
+}
+
+.hero-text h1 {
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--hero-title-color);
+  line-height: 1.2;
+  font-family: 'Baloo 2', cursive;
+}
+
+.hero-text p {
+  margin: 20px 0;
+  color: var(--hero-paragraph-color);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Primary button */
+.hero-text .btn {
+  display: inline-block;
+  background: var(--button-primary-bg);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-right: 10px;
+}
+.hero-text .btn:hover {
+  background: var(--button-primary-hover);
+  transform: scale(1.05);
+}
+
+/* Secondary button (explicit class .secondary) - brand green */
+.hero-text .btn.secondary {
+  background: var(--button-secondary-bg);
+}
+.hero-text .btn.secondary:hover {
+  background: var(--button-secondary-hover);
+  transform: scale(1.05);
+}
+
+.hero-image img {
+  max-width: 500px;
+  height: auto;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 18px var(--image-drop-shadow));
+}
+
+/* --- Mobile Hero Logo/Text --- */
+.mobile-logo {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.mobile-logo-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+}
+
+.mobile-hero-title {
+  display: none;
+  font-size: 42px;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+/* --- Footer --- */
+footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 60px;
+  animation: fadeUp 1s ease;
+}
+
+footer a img {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 3px 8px var(--footer-icon-shadow));
+}
+footer a img:hover {
+  transform: scale(1.2);
+}
+
+/* --- Chat Bubble --- */
+.chat-bubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--chat-bg);
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  z-index: 2000;
+}
+.chat-bubble:hover {
+  transform: scale(1.1);
+}
+.chat-bubble img {
+  width: 32px;
+  height: 32px;
+}
+
+/* --- Animations --- */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+  .hero-image img {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-logo {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  header { display: none; }
+  .hero-text h1 { display: none; }
+  .mobile-hero-title { display: block; }
+  .hero-text .btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    text-align: center;
+  }
+  .hero-text p { font-size: 14px; }
+}

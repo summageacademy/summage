@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summage Links</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background: linear-gradient(130deg, rgb(191, 11, 11) rgb(72, 10, 10));
+      color: #222;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+      background: #222;
+    }
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Desktop-only H1 */
+    h1.desktop-title {
+      display: none;
+      text-align: center;
+      margin: 1.5rem 0;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    h1.mobile-title {
+      display: none;
+      text-align: center;
+      margin: 1.5rem 0;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    h1.desktop-title { display: none; }
+    @media (min-width: 1024px) {
+      h1.desktop-title { display: block; }
+      h1.mobile-title { display: none; }
+    }
+
+    /* Show mobile title on <1024px */
+    @media (max-width: 1023px) {
+      h1.desktop-title { display: none; }
+      h1.mobile-title { display: block; font-size: 1.6rem; }
+    }
+    
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    /* Button Card */
+    .btn-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1rem;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 600;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      overflow: hidden;
+    }
+    .btn-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Mobile logos */
+    .btn-card img.logo {
+      width: 32px;
+      height: 32px;
+      margin-right: 12px;
+      display: inline-block;
+    }
+
+    /* PC/Tablet banners */
+    .banner {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      display: none;
+    }
+
+    /* Text inside card */
+    .btn-text {
+      font-size: 1.1rem;
+    }
+
+    /* Platform themes */
+    .telegram-admin { background: linear-gradient(45deg, #0088cc, #36a6e5); }
+    .telegram-business { background: linear-gradient(45deg, #1c1c1c, #333); }
+    .youtube { background: linear-gradient(45deg, #ff0000, #cc0000); }
+    .instagram { background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4); }
+    .telegram-channel { background: linear-gradient(45deg, #0088cc, #36a6e5); }
+
+    /* Tablet and Desktop: 2 per row, banners visible, logos hidden */
+    @media (min-width: 768px) {
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .btn-card {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+      }
+      .btn-card img.logo {
+        display: none;
+      }
+      .banner {
+        display: block;
+      }
+      .btn-text {
+        padding: 1rem;
+      }
+    }
+
+    /* Desktop navbar bigger */
+    @media (min-width: 1024px) {
+      nav {
+        gap: 3rem;
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="blogs.html">Blogs</a>
+  </nav>
+
+  <!-- Desktop-only Title -->
+  <h1 class="desktop-title">Contact us in such ways</h1>
+  <h1 class="mobile-title">Contact Us</h1>
+
+  <!-- Container -->
+  <div class="container">
+    <!-- Telegram Admin -->
+    <a href="#" class="btn-card telegram-admin">
+      <img src="images/telegram.png" alt="Telegram Logo" class="logo">
+      <img src="otherassets\supportlink.jpg" alt="Telegram Banner" class="banner">
+      <div class="btn-text">Summage Admin</div>
+    </a>
+
+    <!-- Telegram Business -->
+    <a href="https://t.me/summage_business" class="btn-card telegram-business">
+      <img src="images/telegram.png" alt="Telegram Dark" class="logo">
+      <img src="otherassets/telegramlink.jpg" alt="Telegram Business Banner" class="banner">
+      <div class="btn-text">Summage Business</div>
+    </a>
+
+    <!-- YouTube -->
+    <a href="https://youtube.com/" class="btn-card youtube">
+      <img src="images/youtube.png" alt="YouTube" class="logo">
+      <img src="otherassets/youtubelink.jpg" alt="YouTube Banner" class="banner">
+      <div class="btn-text">YouTube Channel</div>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://instagram.com/" class="btn-card instagram">
+      <img src="images/instagram.png" alt="Instagram" class="logo">
+      <img src="otherassets\instagramlink.jpg" alt="Instagram Banner" class="banner">
+      <div class="btn-text">Instagram</div>
+    </a>
+
+    <!-- Telegram Channel -->
+    <a href="https://t.me/summage_channel" class="btn-card telegram-channel">
+      <img src="images/telegram.png" alt="Telegram" class="logo">
+      <img src="otherassets/telegramlink.jpg" alt="Telegram Channel Banner" class="banner">
+      <div class="btn-text">Telegram Channel</div>
+    </a>
+  </div>
+</body>
+</html>

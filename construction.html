@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Summage — Page In Progress</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --header-height: 64px;
+      --safe-pad: 20px;
+      --bottom-nav-height: 110px; /* mobile reserved space */
+      --accent-warm: #f24b0b;
+      --accent-green: #007a52;
+      --accent-gradient: linear-gradient(135deg,#2fd8ab,#06a87c);
+      --accent-gradient-warm: linear-gradient(135deg,#f24b0b,#dd4408);
+      --bg: linear-gradient(180deg, #f0fdfa 0%, #ffffff 80%);
+      --glass: rgba(255,255,255,0.94);
+      --muted: #526066;
+      --text: #07121a;
+      --card-radius: 14px;
+      --shadow-sm: 0 6px 22px rgba(0,0,0,0.06);
+    }
+
+    /* reset */
+    *{box-sizing:border-box; margin:0; padding:0; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+    html,body{height:100%; font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; background:var(--bg); color:var(--text); -webkit-text-size-adjust:100%;}
+    a{color:inherit; text-decoration:none;}
+    button{font:inherit; cursor:pointer;}
+
+    /* Desktop header (kept minimal) */
+    header.topbar {
+      position: fixed; inset: 0 0 auto 0;
+      height: var(--header-height);
+      display:flex; align-items:center; justify-content:center;
+      background: var(--glass);
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(0,0,0,0.04);
+      z-index:1200;
+      box-shadow: var(--shadow-sm);
+      padding: 8px var(--safe-pad);
+    }
+    nav.desktop-nav { display:flex; gap:28px; align-items:center; }
+    nav.desktop-nav a { position:relative; font-weight:600; color:#111; letter-spacing:0.3px; font-size:15px; padding:6px 4px; }
+    nav.desktop-nav a::after { content:""; position:absolute; left:0; bottom:-6px; width:0; height:3px; background:var(--accent-warm); transition:width .28s ease; border-radius:2px; }
+    nav.desktop-nav a:hover { color:var(--accent-warm); }
+    nav.desktop-nav a:hover::after { width:100%; }
+
+    /* spacer to avoid overlap on desktop */
+    .spacer { height: var(--header-height); }
+
+    /* MAIN GRID (desktop) - left image no box, right simple content */
+    main.grid {
+      max-width:1200px;
+      margin: 28px auto;
+      padding: 18px var(--safe-pad);
+      display:grid;
+      grid-template-columns: 50% 50%;
+      gap:28px;
+      align-items:center;
+      min-height: calc(100vh - var(--header-height) - 56px);
+    }
+
+    /* ILLUSTRATION — removed box style so image sits on page naturally */
+    .illustration {
+      position: relative;
+      border-radius: 12px;
+      min-height: 420px;
+      display:flex; align-items:center; justify-content:center; overflow:visible;
+      /* no background, no boxed card */
+    }
+    /* Let illustration be large and breathe: full-bleed style inside container */
+    .illustration img {
+      width: 110%;
+      max-width: 1100px;
+      height: auto;
+      object-fit: cover;
+      transform: translateX(-6%);
+      filter: saturate(1.03);
+      border-radius: 8px;
+      box-shadow: none; /* no card shadow */
+    }
+
+    /* RIGHT: simplified, lively */
+    .panel {
+      background: transparent; /* simplified: no heavy card on desktop */
+      padding: 8px 0 8px 0;
+      display:flex; flex-direction:column; gap:12px;
+      align-items:flex-start;
+    }
+    .eyebrow { color:var(--muted); font-weight:700; font-size:0.86rem; text-transform:uppercase; letter-spacing:0.6px; }
+    h1 { font-family:'Baloo 2', cursive; color:var(--accent-warm); font-size:36px; margin:0; line-height:1.02; }
+    p.lead { color:#21343a; font-size:1rem; line-height:1.5; margin-top:6px; max-width:680px; }
+
+    /* ultra-simple actions */
+    .actions { display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; }
+    .btn {
+      padding: 12px 18px;
+      border-radius:12px;
+      font-weight:700;
+      border:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:140px;
+    }
+    .btn.primary { background:var(--accent-gradient); color:#fff; box-shadow: 0 8px 26px rgba(2,160,120,0.06); }
+    .btn.ghost { background:transparent; border:1px solid rgba(10,10,10,0.06); color:#111; }
+    .btn.linklike { background:transparent; color:var(--accent-warm); border-bottom:2px solid rgba(242,75,11,0.08); }
+
+    /* small lively accent line under the title */
+    .accent-line { height:6px; width:80px; background:var(--accent-gradient-warm); border-radius:4px; margin-top:6px; }
+
+    /* modal (same behavior as before) */
+    .modal-backdrop { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(6,8,10,0.46); z-index:2200; padding:18px; }
+    .modal { width:100%; max-width:680px; background:#fff; border-radius:12px; padding:20px; box-shadow:0 18px 60px rgba(0,0,0,0.28); }
+    .link-copy { width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(10,10,10,0.06); background:#fafafa; }
+
+    /* MOBILE: simplified single-row logo + Summage text, no card styles, fit in one screen */
+    .mobile-top {
+      display:none; /* shown on mobile via media query */
+      width:100%;
+      padding:12px var(--safe-pad);
+      display:flex;
+      align-items:center;
+      justify-content:flex-start; /* logo + text in same row */
+      gap:12px;
+    }
+    .mobile-logo { width:56px; height:56px; border-radius:12px; object-fit:cover; display:block; }
+    .mobile-title { font-family:'Baloo 2', cursive; color:var(--accent-warm); font-size:22px; margin-left:6px; }
+
+    /* bottom nav */
+    .bottom-nav {
+      position: fixed; left:50%; transform:translateX(-50%); bottom:18px; display:none; gap:14px; align-items:flex-end; z-index:1100; padding:8px;
+    }
+    .nav-btn { display:inline-flex; align-items:center; justify-content:center; width:58px; height:58px; border-radius:12px; background:var(--accent-gradient); box-shadow:0 8px 20px rgba(0,0,0,0.12); }
+    .nav-btn.center { width:76px; height:76px; border-radius:18px; background: linear-gradient(180deg,#f9734b,#ffab25); box-shadow:0 14px 36px rgba(255,120,50,0.22); margin-bottom:6px; }
+    .nav-btn img{ width:26px; height:26px; }
+
+    /* info block (desktop only small text) */
+    .info-small { color:var(--muted); font-size:0.95rem; margin-top:10px; max-width:700px; }
+
+    /* ANIMATIONS */
+    @keyframes subtleFloat { 0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)} }
+
+    /* RESPONSIVE rules */
+    @media (max-width: 767px) {
+      header.topbar { display:none; }
+      .spacer { display:none; }
+      /* mobile top: logo + text in single row */
+      .mobile-top { display:flex; }
+      /* layout: single column, but we will ensure everything fits above bottom nav */
+      main.grid {
+        grid-template-columns: 1fr;
+        gap:8px;
+        padding: 8px 12px;
+        min-height: calc(100vh - var(--bottom-nav-height) - 10px); /* reserve space for footer nav */
+        margin: 8px auto 0 auto;
+      }
+
+      /* illustration becomes full-screen friendly, but no card style */
+      .illustration { min-height: calc(60vh - 10px); display:flex; align-items:center; justify-content:center; padding:8px; overflow:visible; }
+      .illustration img { width:100%; height:auto; transform:none; max-width:680px; border-radius:10px; }
+
+      /* remove panel card styling, keep simple text stacked and compact */
+      .panel { padding: 6px 0 6px 0; gap:8px; align-items:flex-start; }
+      h1 { font-size:20px; margin-top:6px; }
+      p.lead { font-size:14px; }
+      .actions { justify-content:center; gap:8px; margin-top:10px; }
+      .btn { min-width:96px; padding:10px 12px; border-radius:10px; font-size:14px; }
+      .btn.ghost, .btn.linklike { border:none; background:transparent; color:var(--accent-warm); box-shadow:none; }
+
+      /* hide extra info block to keep one-screen fit */
+      .info-small { display:none; }
+
+      /* show bottom nav */
+      .bottom-nav{ display:flex; }
+      footer.site-footer { display:none; } /* avoid extra footer on mobile; bottom-nav is the main nav */
+    }
+
+    @media (min-width: 768px) and (max-width:999px) {
+      main.grid { grid-template-columns: 48% 52%; padding:18px; }
+    }
+
+    @media (min-width:1000px) {
+      header.topbar { display:flex; }
+    }
+
+    /* small polish */
+    footer.site-footer { margin-top:auto; background:var(--glass); border-top:1px solid rgba(0,0,0,0.04); padding:14px 18px; text-align:center; color:#666; margin-top:28px; border-radius:10px; max-width:1200px; margin-left:auto; margin-right:auto; }
+  </style>
+</head>
+<body>
+
+  <!-- Desktop header -->
+  <header class="topbar" role="banner" aria-label="Main navigation">
+    <nav class="desktop-nav" role="navigation" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="blogs.html">Blogs</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="spacer" aria-hidden="true"></div>
+
+  <!-- MOBILE TOP: logo + Summage in same row -->
+  <div class="mobile-top" aria-hidden="false">
+    <img src="otherassets/logo.jpg" alt="Summage logo" class="mobile-logo" />
+    <div class="mobile-title">Summage</div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="grid" role="main" aria-label="Feature in progress">
+    <!-- left: illustration (no boxed card) -->
+    <section class="illustration" aria-hidden="false">
+      <!-- choose an image with transparent/soft background so it blends with page -->
+      <img src="images/illustration-coming-soon.png" alt="Coming soon illustration" loading="lazy" />
+    </section>
+
+    <!-- right: simplified content -->
+    <aside class="panel" role="region" aria-labelledby="panel-title">
+      <div class="eyebrow">Under construction</div>
+      <h1 id="panel-title">This page isn't ready yet — we're building it</h1>
+      <div class="accent-line" aria-hidden="true"></div>
+      <p class="lead">Thanks for clicking — we're polishing this feature now. Explore our blog or go back to the main menu while we finish it.</p>
+
+      <div class="actions" role="group" aria-label="actions">
+        <a class="btn primary" href="blogs.html">See blogs</a>
+        <a class="btn ghost" href="index.html">Main menu</a>
+        <a class="btn linklike not-ready" href="about.html" data-target="about.html">About</a>
+      </div>
+
+      <div class="info-small">If you followed a dead link, devs: add <code>class="not-ready"</code> to intercepted anchors so users land here instead of seeing a 404.</div>
+    </aside>
+  </main>
+
+  <!-- modal -->
+  <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-labelledby="modal-title">
+      <h3 id="modal-title">That page isn't ready yet</h3>
+      <p>Looks like you clicked a feature we're still building. Copy the link to revisit later, or head back to the homepage for alternatives.</p>
+
+      <input id="modal-link" class="link-copy" readonly />
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:12px;">
+        <button id="modal-copy" class="btn linklike">Copy link</button>
+        <button id="modal-close" class="btn primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- mobile bottom nav -->
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a class="nav-btn" href="blogs.html" aria-label="Blogs"><img src="icons/blogfooter.png" alt="Blogs"></a>
+    <a class="nav-btn center" href="index.html" aria-label="Home"><img src="icons/home.png" alt="Home"></a>
+    <a class="nav-btn" href="profile.html" aria-label="Profile"><img src="icons/profile-user.png" alt="Profile"></a>
+  </nav>
+
+  <footer class="site-footer">Summage 2025 — All rights reserved</footer>
+
+  <script>
+    (function(){
+      const backdrop = document.getElementById('modal-backdrop');
+      const modalLink = document.getElementById('modal-link');
+      const btnCopy = document.getElementById('modal-copy');
+      const btnClose = document.getElementById('modal-close');
+
+      function openModal(href){
+        try { modalLink.value = new URL(href, location.href).toString(); } catch(e){ modalLink.value = href || location.href; }
+        backdrop.style.display = 'flex';
+        backdrop.setAttribute('aria-hidden','false');
+      }
+      function closeModal(){ backdrop.style.display = 'none'; backdrop.setAttribute('aria-hidden','true'); }
+
+      document.addEventListener('click', e => {
+        const a = e.target.closest && e.target.closest('a.not-ready');
+        if(!a) return;
+        e.preventDefault();
+        const href = a.getAttribute('href') || a.dataset.target || '';
+        openModal(href);
+      });
+
+      btnClose.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', e => { if(e.target === backdrop) closeModal(); });
+
+      btnCopy.addEventListener('click', () => {
+        navigator.clipboard?.writeText(modalLink.value).then(() => {
+          btnCopy.textContent = 'Copied ✓';
+          setTimeout(()=> btnCopy.textContent = 'Copy link', 1200);
+        }, () => {
+          btnCopy.textContent = 'Copy failed';
+          setTimeout(()=> btnCopy.textContent = 'Copy link', 1200);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

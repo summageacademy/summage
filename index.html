@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Learning</title>
+
+  <!-- Google Font for hero h1 -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="otherassets/logo.jpg" alt="Logo" class="logo-img">
+      <div class="logo-text">Summage</div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="blogs.html">Blogs</a></li>
+        <li><a href="contacts.html" class="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Online <br> Learning</h1>
+      <div class="mobile-logo">
+        <img src="otherassets/logo.jpg" alt="Logo" class="mobile-logo-img">
+        <span>Summage</span>
+      </div>
+      <p>Education Without Barriers.<br>We believe education should be accessible to everyone and every lesson we have is a step towards a brighter, better future.</p>
+      <a href="menu.html" class="btn">Begin Learning</a>
+      <!-- added .secondary class (additive only) so second button becomes brand green -->
+      <a href="aboutus.html" class="btn secondary">About Summage</a>
+    </div>
+    <div class="hero-image">
+      <img src="images/image.png" alt="Online Learning Illustration" />
+    </div>
+  </section>
+
+  <footer>
+    <a href="https://www.instagram.com/summageacademy/?utm_source=ig_web_button_share_sheet"><img src="images/instagram.png" alt="Instagram" /></a>
+    <a href="https://www.youtube.com/channel/UCGFCWwla7Pj8XsIJVZZASAQ"><img src="images/youtube.png" alt="YouTube" /></a>
+    <a href="https://t.me/summage_uz"><img src="images/telegram.png" alt="Telegram" /></a>
+  </footer>
+
+  <div class="chat-bubble">
+    <a href="contacts.html">
+      <img src="images/chat.png" alt="Chat" />
+    </a>
+  </div>
+
+  <!-- THEME SCRIPT: auto-detect system preference and listen for changes.
+       No toggle, no localStorage — device-driven as you requested. -->
+  <script>
+    (function () {
+      // Apply theme based on system preference on load
+      function applyThemeFromSystem() {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      }
+
+      applyThemeFromSystem();
+
+      // Listen for changes to the system preference and update live
+      if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        // use addEventListener if available (modern), fallback to addListener
+        if (typeof mq.addEventListener === 'function') {
+          mq.addEventListener('change', e => {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+          });
+        } else if (typeof mq.addListener === 'function') {
+          mq.addListener(e => {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+          });
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

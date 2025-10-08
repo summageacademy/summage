@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Lessons</title>
+  <link rel="stylesheet" href="lesson.css">
+  <style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f0f8ff;
+    }
+    .floating-back {
+        text-align: center;
+        position: fixed;
+        bottom: 35px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        background: #58a6ff;
+        color: white;
+        padding: 12px 19px;
+        border: 4px solid #0077FF;
+        border-radius: 50px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+    .floating-back:hover {
+        background: #a1cdff;
+        transform: translateX(-50%) scale(1.05);
+    }
+
+    .header {
+      width: 100%;
+      background: linear-gradient(270deg, #0077FF, #5ca8ff, #0077FF);
+      color: white;
+      padding: 45px 0;
+      text-align: center;
+      border-radius: 0 0 20px 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: bold;
+    }
+
+    .accordion {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+
+    .accordion-item {
+      margin-bottom: 15px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background: white;
+    }
+
+    .accordion-header {
+      background: #0077FF;
+      color: white;
+      padding: 15px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-header:hover {
+      background: #0059bf;
+    }
+
+    .accordion-header span {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 20px;
+    }
+
+    .accordion-content.open {
+      padding: 20px;
+    }
+
+    .lesson-buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 600px) {
+      .lesson-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .lesson-buttons {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .lesson-btn, .back-btn {
+      display: block;
+      text-align: center;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #0077FF;
+      background: #e8f3ff;
+      border: 3px solid #0077FF;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .lesson-btn:hover {
+      transform: scale(1.05);
+      background: #0077FF;
+      color: white;
+    }
+
+    .back-btn {
+      color: #F4320B;
+      border-color: #F4320B;
+      background: #ffe9e4;
+    }
+
+    .back-btn:hover {
+      background: #F4320B;
+      color: white;
+    }
+
+    .disclaimer {
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #ffe5b2;
+      border: 4px solid #F4A300;
+      border-radius: 16px;
+      text-align: center;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .disclaimer img {
+      width: 50px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+    <a href="mathmenu.html" class="floating-back">BACK</a>
+
+  <div class="header">
+    <h1>LESSONS</h1>
+  </div>
+
+  <div class="accordion">
+
+    <!-- Foundation -->
+    <div class="accordion-item">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        Foundation: Basics <span>+</span>
+      </div>
+      <div class="accordion-content">
+        <div class="lesson-buttons">
+          <a href="construction.html" class="lesson-btn">Numbers & Counting</a>
+          <a href="construction.html" class="lesson-btn">Place Values</a>
+          <a href="construction.html" class="lesson-btn">Addition</a>
+          <a href="construction.html" class="lesson-btn">Subtraction</a>
+          <a href="construction.html" class="lesson-btn">Multiplication</a>
+          <a href="construction.html" class="lesson-btn">Division</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fractions -->
+    <div class="accordion-item">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        Fractions and Others <span>+</span>
+      </div>
+      <div class="accordion-content">
+        <div class="lesson-buttons">
+          <a href="construction.html" class="lesson-btn">Fractions</a>
+          <a href="construction.html" class="lesson-btn">Mixed Numbers</a>
+          <a href="l9" class="lesson-btn">Improper Fractions</a>
+          <a href="l10" class="lesson-btn">Decimals</a>
+          <a href="l11" class="lesson-btn">Percentages</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="disclaimer">
+    <img src="images/under-construction.png" alt="Work in Progress">
+    <p>This site is in its first stage. You may encounter bugs, missing features, or unfinished pages. Thanks for your patience.</p>
+  </div>
+
+  <script>
+    function toggleAccordion(header) {
+      const content = header.nextElementSibling;
+      const sign = header.querySelector("span");
+
+      if (content.classList.contains("open")) {
+        content.style.maxHeight = null;
+        content.classList.remove("open");
+        sign.textContent = "+";
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+        content.classList.add("open");
+        sign.textContent = "–";
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+

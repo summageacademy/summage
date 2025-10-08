@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Summage Blogs</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand: #f24b0b;
+      --accent-strong: #007a52;          /* green main */
+      --accent-weak: rgba(0,122,82,0.12);/* green faint */
+      --text: #444444;
+      --muted: #707070;
+      --bg: #fafafa;
+      --card-bg: #fff;
+      --shadow: 0 6px 18px rgba(0,0,0,0.06);
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+
+    /* NAV full-bleed */
+    .nav{
+      position:fixed;
+      top:0;left:0;right:0;z-index:999;
+      background:linear-gradient(90deg,var(--brand), #fb6b39);
+      box-shadow: 0 8px 26px rgba(242,75,11,0.12);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      padding:10px 0;
+    }
+    .nav-inner{
+      max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 24px;box-sizing:border-box;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.12);box-shadow:0 6px 12px rgba(0,0,0,0.06)}
+    .brand h1{margin:0;font-family:"Baloo 2",sans-serif;font-weight:700;font-size:20px;color:#fff;letter-spacing:0.2px}
+    .brand small{display:block;color:rgba(255,255,255,0.95);font-size:12px;margin-top:2px;opacity:0.95}
+
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .back-link{
+      padding:8px 14px;border-radius:10px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.08);
+      font-weight:600;cursor:pointer;transition:transform .12s, background .12s;
+    }
+    .back-link:hover{transform:translateY(-3px);background:rgba(255,255,255,0.12)}
+    .lang-btn{
+      padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);font-size:13px;background:transparent;color:#fff;
+      cursor:pointer;transition:transform .12s;
+    }
+    .lang-btn:hover{transform:translateY(-2px)}
+
+    /* HERO BLEED */
+    .hero-bleed{
+      width:100%;display:grid;grid-template-columns: 1fr 520px;gap:22px;align-items:start;
+      padding:24px 28px;box-sizing:border-box;margin-top:0;
+    }
+
+    .left-panel{background:transparent;display:flex;flex-direction:column;gap:14px;align-items:flex-start;padding:8px 0}
+
+    .illustration{width:100%;height:260px;border-radius:12px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow: 0 8px 26px rgba(0,0,0,0.06);position:relative}
+    .illustration img{width:100%;height:100%;object-fit:cover;display:block}
+    .illustration::after{content:'';position:absolute;left:0;right:0;bottom:0;height:48%;background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.08) 100%);pointer-events:none;}
+
+    /* SEARCH - subtle green accent on focus (added) */
+    .search-wrap{width:100%;display:flex;flex-direction:column;gap:12px}
+    .search-box{width:100%;display:flex;align-items:center}
+    .search-box input{
+      width:100%;
+      padding:14px 16px;border-radius:12px;border:1px solid rgba(12,12,12,0.06);
+      font-size:15px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,250,250,0.9));
+      box-shadow: inset 0 -2px 6px rgba(0,0,0,0.03), 0 6px 18px rgba(0,0,0,0.04);
+      outline:none;transition:box-shadow .14s ease, transform .08s ease;
+    }
+    .search-box input::placeholder{color:#9aa0a6}
+    /* --- New: green inset stripe + soft green glow on focus (subtle) --- */
+    .search-box input:focus{
+      box-shadow:
+        inset 4px 0 0 var(--accent-weak),              /* subtle left stripe */
+        inset 0 -3px 10px rgba(0,0,0,0.04),
+        0 14px 30px rgba(0,122,82,0.06);               /* soft green outer glow */
+      transform:translateY(-2px);
+      border-color: rgba(0,122,82,0.12);
+    }
+
+    /* KEYWORDS - now using green for outline/active (requested) */
+    .keywords{display:flex;flex-wrap:wrap;gap:10px}
+    .keyword{
+      padding:8px 14px;border-radius:999px;
+      background:#fff;
+      border:1px solid var(--accent-weak);      /* <-- greenish outline by default */
+      font-size:13px;cursor:pointer;user-select:none;
+      transition:transform .08s, background .12s, box-shadow .12s, border-color .12s;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+      color:var(--text);
+    }
+    /* hover uses gentle green tint (keeps visual consistency) */
+    .keyword:hover{transform:translateY(-4px);background: rgba(0,122,82,0.06);border-color:var(--accent-strong);color:#0f2b22}
+    .keyword:active{transform:scale(.98)}
+    /* active keyword becomes a green pill */
+    .keyword.active{background:var(--accent-strong);color:#fff;border-color:var(--accent-strong);box-shadow: 0 10px 26px rgba(0,122,82,0.12)}
+
+    /* RIGHT panel & cards */
+    .right-panel{height:calc(100vh - 180px);overflow-y:auto;padding:8px;border-radius:12px;background:transparent;scrollbar-width:thin;box-sizing:border-box}
+    .blog-card{
+      display:flex;gap:14px;align-items:center;padding:14px;border-radius:12px;background:var(--card-bg);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin-bottom:14px;border:1px solid rgba(0,0,0,0.04);
+      transition:transform .18s ease, opacity .18s, box-shadow .12s;opacity:0; transform:translateY(10px);
+    }
+    .blog-card.visible{opacity:1;transform:translateY(0)}
+    .blog-card:hover{transform:translateY(-6px);box-shadow: 0 18px 40px rgba(0,0,0,0.08)}
+    .blog-card a{display:flex;align-items:center;gap:14px;color:inherit;width:100%}
+    .blog-body{flex:1;min-width:0}
+    .blog-body h3{margin:0;font-size:18px;color:var(--text);line-height:1.12}
+    .blog-body p{margin:8px 0 6px 0;color:var(--muted);font-size:14px}
+    .meta{margin-top:6px;font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .tags{display:flex;gap:6px;align-items:center;margin-left:4px}
+    .tag{font-size:11px;padding:6px 8px;border-radius:999px;background:rgba(0,0,0,0.04);color:var(--muted);border:1px solid rgba(0,0,0,0.03)}
+    .thumb{width:96px;height:96px;border-radius:10px;background:#eee;flex-shrink:0;object-fit:cover;border:1px solid rgba(0,0,0,0.04)}
+    .muted{color:var(--muted);font-size:13px}
+
+    /* language modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:60}
+    .modal{background:#fff;padding:18px;border-radius:12px;width:340px;text-align:center;border:1px solid rgba(0,0,0,0.06);box-shadow: 0 12px 40px rgba(0,0,0,0.08)}
+    .modal h4{margin:0 0 8px 0;font-family:"Baloo 2",sans-serif;color:var(--brand)}
+    .lang-grid{display:flex;gap:8px;justify-content:center;margin-top:12px}
+    .lang-option{padding:10px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;background:#fff;min-width:86px}
+    .lang-option:hover{transform:translateY(-3px);background:rgba(242,75,11,0.04)}
+    .modal small{display:block;color:var(--muted);margin-top:8px}
+
+    /* responsive */
+    @media (max-width: 992px){
+      .hero-bleed{grid-template-columns: 1fr; padding:20px;}
+      .illustration{height:220px}
+      .right-panel{height:50vh;margin-top:8px}
+    }
+    @media (max-width: 520px){
+      body{padding-bottom:40px}
+      .nav-inner{padding:8px 14px}
+      .logo{width:40px;height:40px}
+      .brand h1{font-size:17px}
+      .illustration{display:none}
+      .search-box input{padding:10px}
+      .keyword{padding:7px 10px;font-size:13px}
+      .hero-bleed{padding:12px;}
+    }
+
+    button:focus, a:focus, .keyword:focus, .lang-option:focus{outline:3px solid rgba(242,75,11,0.12);outline-offset:2px}
+    .fade-in{animation:fadeIn .36s ease both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none}}
+
+    /* --------------------
+       LOADER (mobile + desktop)
+       -------------------- */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 180ms ease, visibility 180ms ease;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
+    #loader.loaded { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .spinner {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 6px solid rgba(6,168,124,0.12);
+      border-top-color: var(--brand);
+      animation: spin 900ms linear infinite;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.06);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-label {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #333;
+      text-align: center;
+      opacity: 0.95;
+      font-weight: 600;
+      font-family: "Inter", sans-serif;
+    }
+
+    /* respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .spinner { animation: none; transform: none; }
+    }
+
+    /* --------------------
+       FOOTER NAV (mobile) - centered bottom nav
+       -------------------- */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-end;
+      z-index: 1100;
+      padding: 6px;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,#2fd8ab,#06a87c);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      border: 1px solid rgba(0,0,0,0.04);
+      text-decoration: none;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .nav-btn img { width: 26px; height: 26px; display: block; }
+    .nav-btn:active { transform: translateY(2px) scale(.99); }
+    .nav-btn:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.14); }
+
+    .nav-btn.center {
+      width: 76px;
+      height: 76px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,#f9734b,#ffab25);
+      box-shadow: 0 14px 36px rgba(255,120,50,0.22);
+      transform-origin: center;
+      margin-bottom: 6px;
+    }
+    .nav-btn.center img { width: 34px; height: 34px; filter: brightness(0) invert(1); }
+
+    /* Hide on larger screens (keep mobile-only) */
+    @media (min-width: 992px) {
+      .bottom-nav { display: none; }
+    }
+
+    /* reduced motion impact on nav */
+    @media (prefers-reduced-motion: reduce) {
+      .nav-btn, .nav-btn.center { transition: none; }
+    }
+
+    /* lang button: keep text on desktop, icon on mobile */
+.lang-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; }
+
+/* hide the img by default (desktop) */
+.lang-btn img { display:none; width:20px; height:20px; object-fit:contain; }
+
+/* text label styling kept (desktop) */
+.lang-btn .lang-text { font-size:13px; color:inherit; }
+
+/* MOBILE: show icon only, hide text visually but keep it for accessibility */
+@media (max-width: 520px) {
+  .lang-btn { padding:8px; border-radius:10px; }
+  .lang-btn img { display:block; }
+  .lang-btn .lang-text {
+    /* hide the visible text but keep available to screen readers */
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
+
+
+  </style>
+</head>
+<body class="no-scroll">
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Loading">
+    <div style="text-align:center">
+      <div class="spinner" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- NAV full-bleed at top. .nav-inner centers content -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="brand" id="brand-left">
+        <img src="otherassets/logo_white.jpg" alt="logo" class="logo" id="nav-logo">
+        <div>
+          <h1 id="brand-title">Summage Blogs</h1>
+          <small id="brand-sub">Learn. Teach. Become.</small>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <button class="back-link" id="back-link">Back to Blogs</button>
+        <!-- new: language button with icon (icon shown on mobile only) -->
+<button class="lang-btn" id="open-lang" aria-label="Choose language">
+  <img src="icons/languages.png" alt="" aria-hidden="true">
+  <span class="lang-text">Language</span>
+</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO (full-bleed) -->
+  <section class="hero-bleed" role="region" aria-label="Hero and blog list area">
+    <!-- LEFT: illustration + search + keywords (full-bleed area) -->
+    <div class="left-panel" id="left-panel">
+      <div class="illustration" id="illustration">
+        <img src="images\ChatGPT Image 25 сент. 2025 г., 02_07_32.png" alt="illustration">
+      </div>
+
+      <div class="search-wrap">
+        <div class="search-box">
+          <input id="search-input" type="search" placeholder="Search posts, authors, topics..." aria-label="Search posts">
+        </div>
+
+        <div class="keywords" id="keywords" aria-label="Search keywords"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: scrollable blog list (fixed width) -->
+    <aside class="right-panel" id="blog-list" aria-label="Blog list"></aside>
+  </section>
+
+  <!-- Language modal -->
+  <div id="lang-modal" style="display:none" class="modal-backdrop" role="dialog" aria-modal="true" data-force="false">
+    <div class="modal" id="lang-modal-box">
+      <h4>Choose language</h4>
+      <small class="muted">Pick your preferred language — saved for next time.</small>
+      <div class="lang-grid" style="margin-top:14px;">
+        <button class="lang-option" data-lang="en">English</button>
+        <button class="lang-option" data-lang="ru">Русский</button>
+        <button class="lang-option" data-lang="uz">Oʻzbekcha</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM NAV (implemented) -->
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a class="nav-btn" href="blogs.html" aria-label="Blogs">
+      <img src="icons\blogfooter.png" alt="Blogs">
+    </a>
+
+    <a class="nav-btn center" href="menu.html" aria-label="Home">
+      <img src="icons\home.png" alt="Home">
+    </a>
+
+    <a class="nav-btn" href="profile.html" aria-label="Profile">
+      <img src="icons\profile-user.png" alt="Profile">
+    </a>
+  </nav>
+
+  <script>
+  (function(){
+    const STORAGE_KEY = 'summage_lang';
+    const KEYWORDS_POOL = ['IELTS','Minimalism','English Club','Productivity','Teaching','Study Plan','Mock Tests'];
+
+    const posts = [
+      { id:1, slug:'blogs/blog1.html', date:'2025-09-22', author:'Abror Ahmed', img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1',
+        title:{en:'How to Improve Your IELTS Speaking Band Score?', ru:'Как улучшить балл за Speaking в IELTS?', uz:"IELTS Speaking ballingizni qanday oshirish mumkin?"},
+        subtitle:{en:'Skill balance, speaking practice, and mock tests.', ru:'Баланс навыков, говорение и пробные тесты.', uz:"Ko'nikmalar, gapirish mashqlari va testlar."},
+        body:{en:'A focused study plan that balances reading, writing, listening and speaking.', ru:'Фокусированный план подготовки.', uz:"Diqqatni jamlagan ta'lim rejasi."},
+        tags:['IELTS','Study Plan']},
+      { id:2, slug:'blog2.html', date:'2025-08-05', author:'Summage Team', img:'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=2',
+        title:{en:'Minimalist Blogging: Keep It Clean', ru:'Минималистичный блог: держите чистоту', uz:"Minimalistik blog: soddaligi bilan porla"},
+        subtitle:{en:'Design, speed, and focus on content.', ru:'Дизайн, скорость и фокус на контенте.', uz:"Dizayn, tezlik va mazmun."},
+        body:{en:'Remove noise and keep the reader focused on what matters.', ru:'Уберите шум и сосредоточьтесь на самом важном.', uz:"Shovqinni olib tashlang va mazmunga e'tibor bering."},
+        tags:['Minimalism','Blog']},
+      { id:3, slug:'blog3.html', date:'2025-07-01', author:'Ufq Academy', img:'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=3',
+        title:{en:'Start an English Club in Your City', ru:'Откройте клуб английского в вашем городе', uz:"O'zingizning shaharingizda Ingliz klubi oching"},
+        subtitle:{en:'Practical activities, speaking nights, feedback and recruiting.', ru:'Практические мероприятия, разговорные вечера и набор участников.', uz:"Amaliy tadbirlar va suhbat kechalari."},
+        body:{en:'How to organize and run an effective English club locally.', ru:'Как организовать и вести клуба по английскому.', uz:"Qanday qilib samarali ingliz klubi tashkil etish."},
+        tags:['Teaching','Club']},
+      { id:4, slug:'blog4.html', date:'2025-06-24', author:'A. Noor', img:'https://images.unsplash.com/photo-1506244470928-5b1f9c0a9f9d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=4',
+        title:{en:'Productivity Habits for Students', ru:'Привычки продуктивности для студентов', uz:"Talabalar uchun unumdorlik odatlari"},
+        subtitle:{en:'Routines, focus, and tiny wins.', ru:'Рутины, фокус и небольшие победы.', uz:"Rutinalar, diqqat va kichik yutuqlar."},
+        body:{en:'Small daily rituals that compound into big progress.', ru:'Маленькие ежедневные ритуалы.', uz:"Kichik kundalik odatlar katta natija beradi."},
+        tags:['Productivity']},
+      { id:5, slug:'blog5.html', date:'2025-05-17', author:'Salim', img:'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=5',
+        title:{en:'Mock Tests: How to Use Them Right', ru:'Пробные тесты: как правильно использовать', uz:"Mock testlardan qanday foydalanish kerak"},
+        subtitle:{en:'Timing, review, and improvement loop.', ru:'Тайминг, разбор и цикл улучшения.', uz:"Vaqtni boshqarish va tahlil."},
+        body:{en:'How to review and improve after each mock test.', ru:'Как разбирать ошибки после теста.', uz:"Har testdan keyin tahlil qilish."},
+        tags:['Mock Tests','IELTS']},
+      { id:6, slug:'blog6.html', date:'2025-04-10', author:'Team', img:'https://images.unsplash.com/photo-1536305030017-58aa8b6f5bdb?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=6',
+        title:{en:'Teaching Tips: Peer Feedback', ru:'Советы преподавателям: обратная связь', uz:"O'qituvchilar uchun fikr-mulohaza"},
+        subtitle:{en:'Create safe feedback loops.', ru:'Создание безопасной обратной связи.', uz:"Xavfsiz fikr almashish."},
+        body:{en:'How to give feedback that helps students grow.', ru:'Как давать полезную обратную связь.', uz:"Talabalarni rivojlantiruvchi fikr-mulohaza."},
+        tags:['Teaching']},
+      { id:7, slug:'blog7.html', date:'2025-02-09', author:'Rami', img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=7',
+        title:{en:'Public Speaking for Beginners', ru:'Публичные выступления для начинающих', uz:"Yangi boshlovchilar uchun ommaviy nutq"},
+        subtitle:{en:'Start small and build confidence.', ru:'Начинайте с малого и набирайте уверенность.', uz:"Kichikdan boshlang, ishonch hosil qiling."},
+        body:{en:'Practical tips on voice, posture, and structure.', ru:'Практические советы по голосу и позе.', uz:"Ovoz, holat va tuzilma bo'yicha maslahatlar."},
+        tags:['Public Speaking']},
+      { id:8, slug:'blog8.html', date:'2024-12-02', author:'Summage', img:'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=8',
+        title:{en:'How to Build Study Routines', ru:'Как выстроить учебные рутину', uz:"O'qish rutinasini qanday tashkil etish"},
+        subtitle:{en:'Consistency, breaks, and environment.', ru:'Последовательность, перерывы и окружение.', uz:"Izchillik, tanaffuslar va muhit."},
+        body:{en:'Build repeatable study habits that stick.', ru:'Как создать устойчивые привычки.', uz:"Barqaror odatlarni shakllantirish."},
+        tags:['Study Plan']},
+      { id:9, slug:'blog9.html', date:'2024-10-28', author:'Lia', img:'https://images.unsplash.com/photo-1485217988980-11786ced9454?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9',
+        title:{en:'Design Tips for Minimal Bloggers', ru:'Советы по дизайну для минималистов', uz:"Minimalist blogerlar uchun dizayn maslahatlari"},
+        subtitle:{en:'Whitespace, typography, and rhythm.', ru:'Пустое пространство, типографика и ритм.', uz:"Bo'shliq, tipografiya va ritm."},
+        body:{en:'Simple design choices that make content shine.', ru:'Простые решения для улучшения контента.', uz:"Mazmunni yorituvchi soddalik."},
+        tags:['Minimalism','Design']},
+      { id:10, slug:'blog10.html', date:'2024-09-03', author:'Team', img:'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=10',
+        title:{en:'Recruiting for Your Club', ru:'Набор участников для клуба', uz:"Klub uchun a'zolarni jalb qilish"},
+        subtitle:{en:'Posters, socials, word of mouth.', ru:'Плакаты, соцсети и сарафанное радио.', uz:"Plakatlar va ijtimoiy tarmoqlar."},
+        body:{en:'Practical channels to find members fast.', ru:'Практические каналы привлечения участников.', uz:"A'zolarni tez topish usullari."},
+        tags:['Club','Recruiting']},
+    ];
+
+    const $ = (s) => document.querySelector(s);
+    const searchInput = $('#search-input');
+    const keywordsEl = $('#keywords');
+    const blogListEl = $('#blog-list');
+    const backLink = $('#back-link');
+    const openLangBtn = $('#open-lang');
+    const langModal = $('#lang-modal');
+    const langModalOptions = Array.from(document.querySelectorAll('.lang-option'));
+    const navEl = document.querySelector('.nav');
+
+    let lang = localStorage.getItem(STORAGE_KEY);
+    const DICT = {
+      en:{placeholder:'Search posts, authors, topics...', backDesktop:'Back to Menu', backMobile:'Back', noResults:'No posts found.'},
+      ru:{placeholder:'Поиск по постам, авторам, темам...', backDesktop:'Назад к Меню', backMobile:'Назад', noResults:'Посты не найдены.'},
+      uz:{placeholder:"Postlar, mualliflar, mavzular bo'yicha qidirish...", backDesktop:"Menyuga qaytish", backMobile:"Orqaga", noResults:"Postlar topilmadi."}
+    };
+    function t(key){ return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || ''; }
+
+    if(!lang){
+      langModal.style.display = 'flex';
+      langModal.dataset.force = 'true';
+    } else {
+      langModal.style.display = 'none';
+      langModal.dataset.force = 'false';
+    }
+
+    function updateUIStrings(){
+      const isMobile = window.innerWidth <= 520;
+      backLink.textContent = isMobile ? (t('backMobile') || 'Back') : (t('backDesktop') || 'Back to Blogs');
+      searchInput.placeholder = t('placeholder');
+      const titleEl = document.getElementById('brand-title');
+      if(window.innerWidth <= 520){
+        titleEl.textContent = 'Summage';
+        document.querySelector('#brand-left small').style.display = 'none';
+      } else {
+        titleEl.textContent = 'Summage Blogs';
+        document.querySelector('#brand-left small').style.display = 'block';
+      }
+      // keep nav-safe content: set body padding-top to nav height
+      requestAnimationFrame(()=> {
+        const navHeight = navEl.offsetHeight || 72;
+        document.body.style.paddingTop = navHeight + 'px';
+      });
+    }
+
+    function openLangModal(force = false){
+      langModal.style.display = 'flex';
+      langModal.dataset.force = force ? 'true' : 'false';
+    }
+    openLangBtn.addEventListener('click', ()=> openLangModal(false));
+    langModal.addEventListener('click', (e)=>{
+      if(e.target === langModal && langModal.dataset.force !== 'true'){
+        langModal.style.display = 'none';
+      }
+    });
+    langModalOptions.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const chosen = btn.dataset.lang;
+        lang = chosen;
+        localStorage.setItem(STORAGE_KEY, chosen);
+        langModal.style.display = 'none';
+        langModal.dataset.force = 'false';
+        updateUIStrings();
+        renderKeywords();
+        renderPosts();
+      });
+    });
+
+    function getKeywordsForViewport(){
+      if(window.innerWidth <= 520) return KEYWORDS_POOL.slice(0,4);
+      if(window.innerWidth <= 992) return KEYWORDS_POOL.slice(0,5);
+      return KEYWORDS_POOL.slice(0,7);
+    }
+    function renderKeywords(){
+      keywordsEl.innerHTML = '';
+      const keys = getKeywordsForViewport();
+      keys.forEach(k=>{
+        const b = document.createElement('button');
+        b.className = 'keyword';
+        b.type = 'button';
+        b.textContent = k;
+        b.addEventListener('click', ()=> {
+          Array.from(keywordsEl.children).forEach(ch => ch.classList.remove('active'));
+          b.classList.add('active');
+          searchInput.value = k;
+          performSearch();
+          searchInput.focus();
+        });
+        keywordsEl.appendChild(b);
+      });
+    }
+
+    function sortedPosts(){ return posts.slice().sort((a,b)=> new Date(b.date) - new Date(a.date)); }
+    function searchPosts(q){
+      const raw = (q||'').toString().trim().toLowerCase();
+      if(!raw) return [];
+      return posts.filter(p=>{
+        const t0 = (p.title[lang] || p.title.en || '').toLowerCase();
+        const s0 = (p.subtitle[lang] || p.subtitle.en || '').toLowerCase();
+        const b0 = (p.body[lang] || p.body.en || '').toLowerCase();
+        const a0 = (p.author || '').toLowerCase();
+        const tags = (p.tags||[]).join(' ').toLowerCase();
+        return t0.includes(raw) || s0.includes(raw) || b0.includes(raw) || a0.includes(raw) || tags.includes(raw);
+      });
+    }
+
+    function getDisplayCaps(){
+      if(searchInput.value.trim()){
+        return window.innerWidth <= 520 ? 5 : 10;
+      } else {
+        return 3;
+      }
+    }
+
+    function renderPosts(){
+      blogListEl.innerHTML = '';
+      const q = searchInput.value.trim();
+      let items;
+      if(!q){
+        items = sortedPosts().slice(0, getDisplayCaps());
+      } else {
+        items = searchPosts(q);
+      }
+      const cap = getDisplayCaps();
+      items = items.slice(0, cap);
+
+      if(items.length === 0){
+        const empty = document.createElement('div');
+        empty.className = 'muted fade-in';
+        empty.textContent = (lang ? (DICT[lang] && DICT[lang].noResults) : DICT.en.noResults) || 'No posts found.';
+        blogListEl.appendChild(empty);
+        return;
+      }
+
+      items.forEach((post, idx)=>{
+        const card = document.createElement('article');
+        card.className = 'blog-card';
+        const link = document.createElement('a');
+        link.href = post.slug;
+        link.setAttribute('aria-label', (post.title[lang] || post.title.en));
+
+        const body = document.createElement('div');
+        body.className = 'blog-body';
+        const h3 = document.createElement('h3'); h3.textContent = (post.title[lang] || post.title.en);
+        const p = document.createElement('p'); p.textContent = (post.subtitle[lang] || post.subtitle.en);
+        const meta = document.createElement('div'); meta.className = 'meta';
+        meta.textContent = `${post.author} • ${post.date}`;
+
+        const tagsWrap = document.createElement('span'); tagsWrap.className = 'tags';
+        (post.tags || []).slice(0,3).forEach(tagText => {
+          const tEl = document.createElement('span'); tEl.className = 'tag'; tEl.textContent = tagText; tagsWrap.appendChild(tEl);
+        });
+        meta.appendChild(tagsWrap);
+
+        body.appendChild(h3); body.appendChild(p); body.appendChild(meta);
+
+        const img = document.createElement('img');
+        img.className = 'thumb';
+        img.src = post.img;
+        img.alt = post.title[lang] || post.title.en;
+
+        link.appendChild(body);
+        link.appendChild(img);
+        card.appendChild(link);
+        blogListEl.appendChild(card);
+
+        setTimeout(()=>card.classList.add('visible'), 80 * idx);
+      });
+    }
+
+    function performSearch(){ renderPosts(); }
+    searchInput.addEventListener('input', ()=> {
+      Array.from(keywordsEl.children).forEach(ch => ch.classList.remove('active'));
+      window.requestAnimationFrame(performSearch);
+    });
+
+    backLink.addEventListener('click', ()=>{
+      window.location.href = '/menu.html';
+    });
+
+    function onResize(){
+      updateUIStrings();
+      renderKeywords();
+      renderPosts();
+      const headerHeight = navEl.offsetHeight;
+      const vh = window.innerHeight;
+      const rightPanel = document.querySelector('.right-panel');
+      if(window.innerWidth > 992){
+        rightPanel.style.height = `${vh - headerHeight - 120}px`;
+      } else {
+        rightPanel.style.height = `${Math.max(240, Math.floor(vh * 0.5))}px`;
+      }
+    }
+    window.addEventListener('resize', onResize);
+
+    updateUIStrings();
+    renderKeywords();
+    renderPosts();
+    onResize();
+
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && langModal.style.display === 'flex' && langModal.dataset.force !== 'true'){
+        langModal.style.display = 'none';
+      }
+    });
+
+    window.Summage = { renderPosts, renderKeywords, posts };
+  })();
+  </script>
+
+  <!-- Loader + Footer behavior script (keeps separate from main IIFE) -->
+  <script>
+    (function(){
+      const loader = document.getElementById('loader');
+      if(!loader) return;
+
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const VISIBLE_MS = prefersReduced ? 0 : 220;    // small post-load pause for nicer UX
+      const REMOVE_AFTER_FADE_MS = 260;
+      const MAX_WAIT_MS = 5000; // safety fallback if load never fires
+
+      let finished = false;
+      function removeLoader(){
+        if(finished) return;
+        finished = true;
+        loader.classList.add('loaded');
+        setTimeout(()=> {
+          if(loader && loader.parentNode) loader.parentNode.removeChild(loader);
+          document.body.classList.remove('no-scroll');
+        }, REMOVE_AFTER_FADE_MS);
+      }
+
+      function onAllLoaded(){
+        // small visible pause then remove
+        setTimeout(removeLoader, VISIBLE_MS);
+      }
+
+      // If page already fully loaded, execute immediately
+      if(document.readyState === 'complete'){
+        onAllLoaded();
+      } else {
+        // Wait for all resources (images/fonts/styles) to finish loading
+        window.addEventListener('load', onAllLoaded, {once:true});
+        // Safety fallback — force removal after MAX_WAIT_MS
+        setTimeout(onAllLoaded, MAX_WAIT_MS);
+      }
+
+      // Icon fallback for footer nav icons (if images fail)
+      document.querySelectorAll('.bottom-nav .nav-btn img').forEach(img => {
+        img.addEventListener('error', () => {
+          img.style.display = 'none';
+          const fb = document.createElement('span');
+          fb.textContent = '•';
+          fb.style.fontSize = '20px';
+          fb.style.color = '#fff';
+          img.parentNode.appendChild(fb);
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>

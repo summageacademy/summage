@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile - Summage Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+  <!-- Desktop / Tablet header (shows when bottom nav is hidden) -->
+  <header class="top-bar" role="banner" aria-label="Top navigation">
+    <div class="brand">
+      <img src="otherassets/logo.jpg" alt="Summage logo" class="logo" />
+      <div class="brand-text">Summage</div>
+    </div>
+
+    <nav class="top-actions" aria-label="Main navigation">
+      <a class="back-btn" href="index.html" aria-label="Home">Home</a>
+      <a class="back-btn" href="menu.html" aria-label="Menu">Menu</a>
+      <a class="back-btn" href="blogs.html" aria-label="Blogs">Blogs</a>
+    </nav>
+  </header>
+
+  <!-- spacer to avoid content being hidden under a fixed header on wide screens -->
+  <div class="spacer" aria-hidden="true"></div>
+
+  <main class="profile-placeholder site-main" role="main" aria-label="Profile placeholder">
+    <img src="images\brain.png" alt="Coming Soon">
+    <h1>Coming Soon</h1>
+    <p>Meanwhile, enjoy free high-quality lessons</p>
+  </main>
+
+  <!-- Desktop footer (hidden on mobile) -->
+  <footer class="site-footer">
+    Summage 2025 · All rights reserved
+  </footer>
+
+  <!-- Mobile footer nav (shows on small screens; hidden on >=768px) -->
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a class="nav-btn" href="blogs.html" aria-label="Blogs">
+      <img src="icons/blogfooter.png" alt="Blogs" />
+    </a>
+    <a class="nav-btn center" href="menu.html" aria-label="Home">
+      <img src="icons/home.png" alt="Home" />
+    </a>
+    <a class="nav-btn" href="profile.html" aria-label="Profile">
+      <img src="icons/profile-user.png" alt="Profile" />
+    </a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Summage Academy</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="aboutus.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="blogs.html">Blogs</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-brand">
+      <img src="otherassets/logo.jpg" alt="Summage Logo" class="hero-logo">
+      <h1>Summage</h1>
+    </div>
+  </div>
+
+
+  <!-- ABOUT US -->
+  <section>
+    <h2>About Us</h2>
+    <p>
+      At Summage Academy, we believe education is not just knowledge—it’s freedom.  
+      Our mission is to make learning accessible, inspiring, and barrier-free for every student.  
+      With a lofi modern touch, we aim to create a community where curiosity meets opportunity.
+    </p>
+  </section>
+
+  <!-- TEAM -->
+  <section>
+    <h2>Our Team</h2>
+    <div class="team">
+      <div class="team-member">
+        <img src="otherassets/team/team1.jpg" alt="Abror Ahmeed">
+        <h3>Abror Ahmed</h3>
+        <p>Founder & Visionary</p>
+      </div>
+      <div class="team-member">
+        <img src="otherassets/team/team2.jpg" alt="Davlat">
+        <h3>Davlat</h3>
+        <p>Chief Strategy Officer</p>
+      </div>
+      <div class="team-member">
+        <img src="otherassets/team/team3.jpg" alt="Zakhro">
+        <h3>Zakhro</h3>
+        <p>Head of Production</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section>
+    <h2>Our Partners</h2>
+    <div class="partners">
+      <div class="partner-card">
+        <a href="https://t.me/finance4youth">
+            <img src="otherassets/partners/Altruists.png" alt="Partner 1">
+        </a>
+    </div>
+      <div class="partner-card">
+        <a href="https://t.me/volunteeralt">
+            <img src="otherassets/partners/Finance4Youth.png" alt="Partner 2">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    Summage 2025 - All rights reserved
+  </footer>
+
+  <!-- Scroll reveal script -->
+  <script>
+    const sections = document.querySelectorAll("section");
+    const reveal = () => {
+      const trigger = window.innerHeight * 0.9;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < trigger) sec.classList.add("visible");
+      });
+    };
+    window.addEventListener("scroll", reveal);
+    window.addEventListener("load", reveal);
+  </script>
+</body>
+</html>
