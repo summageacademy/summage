@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Summage Academy | Innovative Learning for the Future</title>
+  
+    <!-- META SEO -->
+    <meta name="description" content="Summage Academy is a modern educational platform helping students unlock their full potential through accessible, creative, and innovative learning experiences." />
+    <meta name="keywords" content="Summage Academy, online education, IELTS, learning platform, Uzbekistan education, Summage, free courses" />
+    <meta name="author" content="Summage Academy Team" />
+    <link rel="canonical" href="https://summage.uz/aboutus.html" />
+  
+    <!-- Open Graph (for social media sharing) -->
+    <meta property="og:title" content="Summage Academy - About Us" />
+    <meta property="og:description" content="Meet the team behind Summage Academy — where education meets innovation and creativity." />
+    <meta property="og:image" content="https://summage.uz/otherassets/logo.jpg" />
+    <meta property="og:url" content="https://summage.uz/aboutus.html" />
+    <meta property="og:type" content="website" />
+  
+    <!-- Favicon -->
+    <link rel="icon" href="otherassets/logo.jpg" type="image/jpeg" />
+  
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="aboutus.css">
+  </head>
+  
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="blogs.html">Blogs</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-brand">
+      <img src="otherassets/logo.jpg" alt="Summage Logo" class="hero-logo">
+      <h1>Summage</h1>
+    </div>
+  </div>
+
+
+  <!-- ABOUT US -->
+  <section>
+    <h2>About Us</h2>
+    <p>
+      At <strong>Summage Academy</strong>, we believe education is not just knowledge—it’s freedom.  
+      Founded with a mission to make learning accessible, creative, and barrier-free, Summage connects students, teachers, and lifelong learners from Uzbekistan and beyond.  
+      We focus on <strong>English language mastery, skill-based learning, and youth empowerment</strong>, while maintaining a clean, modern, and inspiring study environment.
+    </p>
+    <p style="margin-top:20px;">
+      Our academy is built by passionate educators and innovators who understand that true learning comes from curiosity, creativity, and collaboration.  
+      Whether you’re preparing for the <strong>IELTS exam</strong>, exploring career opportunities, or building new skills, Summage Academy provides the tools and community you need to grow with confidence.
+    </p>
+  </section>
+  <section>
+    <h2>Our Mission & Values</h2>
+    <p>
+      Our mission is simple — to transform education into an experience that’s <strong>inspiring, practical, and truly global</strong>.  
+      We strive to build an academy that doesn’t just teach — it uplifts.
+    </p>
+    <ul style="max-width:700px; margin:30px auto; text-align:left; line-height:1.7; color:#444;">
+      <li><strong>Accessibility:</strong> Education for every student, regardless of background or budget.</li>
+      <li><strong>Innovation:</strong> Modern learning tools, gamified systems, and real-world projects.</li>
+      <li><strong>Creativity:</strong> Encouraging every learner to think beyond the classroom walls.</li>
+      <li><strong>Community:</strong> Building connections between students, teachers, and dreamers.</li>
+      <li><strong>Purpose:</strong> Preparing youth to lead with wisdom, skill, and integrity.</li>
+    </ul>
+  </section>
+  
+  
+
+  <!-- TEAM -->
+  <section>
+    <h2>Our Team</h2>
+    <div class="team">
+      <div class="team-member">
+        <img src="otherassets/team/team1.jpg" alt="Abror Ahmeed">
+        <h3>Abror Ahmed</h3>
+        <p>Founder & Visionary</p>
+      </div>
+      <div class="team-member">
+        <img src="otherassets/team/team2.jpg" alt="Davlat">
+        <h3>Davlat</h3>
+        <p>Chief Strategy Officer</p>
+      </div>
+      <div class="team-member">
+        <img src="otherassets/team/team3.jpg" alt="Zakhro">
+        <h3>Zakhro</h3>
+        <p>Head of Production</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section>
+    <h2>Our Partners</h2>
+    <div class="partners">
+      <div class="partner-card">
+        <a href="https://t.me/finance4youth">
+            <img src="otherassets/partners/Altruists.png" alt="Partner 1">
+        </a>
+    </div>
+      <div class="partner-card">
+        <a href="https://t.me/volunteeralt">
+            <img src="otherassets/partners/Finance4Youth.png" alt="Partner 2">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    Summage 2025 - All rights reserved
+  </footer>
+
+  <!-- Scroll reveal script -->
+  <script>
+    const sections = document.querySelectorAll("section");
+    const reveal = () => {
+      const trigger = window.innerHeight * 0.9;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < trigger) sec.classList.add("visible");
+      });
+    };
+    window.addEventListener("scroll", reveal);
+    window.addEventListener("load", reveal);
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Summage Academy",
+      "url": "https://summage.org",
+      "logo": "https://summage.org/otherassets/logo.jpg",
+      "sameAs": [
+        "https://t.me/summageacademy",
+        "https://instagram.com/summageacademy"
+      ],
+      "description": "Summage Academy is a modern educational platform focused on accessible, creative, and skill-based learning for students and youth in Uzbekistan."
+    }
+    </script>
+    
+</body>
+</html>
