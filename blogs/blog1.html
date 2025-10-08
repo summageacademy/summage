@@ -1,0 +1,439 @@
+<!-- article.html -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Summage — Article</title>
+<style>
+  :root{
+    --brand: #f24b0b;       /* your brand color */
+    --text: #333;
+    --muted: #666;
+    --bg: #fafafa;
+    --card: #fff;
+    --radius: 10px;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  }
+
+  /* Reset / layout */
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;padding:24px}
+  a{color:var(--brand);text-decoration:underline}
+
+  /* NAVBAR (simple) */
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--brand), #fb6b39);
+    color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  }
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:48px;height:48px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.12)}
+  .brand .title{font-weight:700;font-size:18px;line-height:1;margin:0}
+  .brand .subtitle{font-size:12px;opacity:0.95;margin:0}
+
+  .nav-actions{display:flex;gap:8px;align-items:center}
+  .nav-actions a,.nav-actions button{background:rgba(255,255,255,0.12);padding:8px 12px;border-radius:10px;color:#fff;font-weight:600;text-decoration:none;border:0;cursor:pointer}
+  .nav-actions a:active,.nav-actions button:active{transform:translateY(1px)}
+
+  /* MAIN layout */
+  .container{max-width:1100px;margin:20px auto 0}
+  .hero{
+    display:flex;gap:24px;align-items:flex-start;background:var(--card);padding:22px;border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.04);
+  }
+
+  /* left content */
+  .main{flex:1;min-width:0}
+  .kicker{display:inline-block;color:var(--brand);font-weight:700;font-size:13px;margin-bottom:8px}
+  h1{margin:6px 0 10px;font-size:34px;line-height:1.02}
+  p.lead{color:var(--muted);margin:0 0 16px;font-size:15px}
+
+  /* 60/40 split block */
+  .split{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px}
+  .split .text{flex:0 0 60%}
+  .split .image{flex:0 0 40%}
+  .split .image img{width:100%;height:auto;border-radius:8px;display:block}
+
+  /* general article text */
+  article p{margin:0 0 12px 0;font-size:15px}
+  article ul{margin:8px 0 12px 20px}
+  .meta{color:var(--muted);font-size:13px;margin-top:10px}
+
+  /* right column (small objects) */
+  .aside{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
+  .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 18px rgba(0,0,0,0.03)}
+  .card h4{margin:0 0 6px 0;font-size:15px}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+
+  /* language modal (small & reused) */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:none;align-items:center;justify-content:center;z-index:60}
+  .modal{background:#fff;padding:16px;border-radius:10px;width:320px;text-align:center;border:1px solid rgba(0,0,0,0.06);box-shadow: 0 12px 40px rgba(0,0,0,0.08)}
+  .lang-grid{display:flex;gap:8px;justify-content:center;margin-top:12px}
+  .lang-option{padding:8px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;background:#fff;min-width:80px}
+  .lang-option[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .modal small{display:block;color:var(--muted);margin-top:8px}
+
+  /* responsive: tablet/mobile */
+  @media (max-width:900px){
+    .hero{flex-direction:column}
+    .aside{width:100%}
+  }
+  @media (max-width:520px){
+    body{padding:14px}
+    .brand img{width:40px;height:40px;border-radius:8px}
+    .brand .title{font-size:16px}
+    .nav-actions a{padding:8px 10px;font-size:14px}
+    h1{font-size:22px}
+    .split{flex-direction:column}
+    .split .image img{width:90%;margin:8px auto 0;display:block} /* image ~90% width on mobile */
+    .aside{order:2}
+  }
+  .lang-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; }
+
+/* hide the img by default (desktop) */
+.lang-btn img { display:none; width:20px; height:20px; object-fit:contain; }
+
+/* text label styling kept (desktop) */
+.lang-btn .lang-text { font-size:13px; color:inherit; }
+
+/* MOBILE: show icon only, hide text visually but keep it for accessibility */
+@media (max-width: 520px) {
+  .lang-btn { padding:8px; border-radius:10px; }
+  .lang-btn img { display:block; }
+  .lang-btn .lang-text {
+    /* hide the visible text but keep available to screen readers */
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" role="banner">
+    <div class="brand">
+      <!-- replace logo.png with your file -->
+      <img src="logo_white.jpg" alt="Summage logo">
+      <div>
+        <p class="title">Summage</p>
+        <p class="subtitle">Thoughtful notes</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Back to root blogs.html; this file assumed inside a folder -->
+      <a id="backBtn" href="../blogs.html">← Back to blogs</a>
+      <!-- Language button (opens modal) -->
+      <button class="lang-btn" id="open-lang" aria-label="Choose language">
+        <img src="/icons/languages.png" alt="" aria-hidden="true">
+        <span class="lang-text">Language</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="container">
+    <main class="hero" role="main" aria-labelledby="article-title">
+      <section class="main">
+        <span class="kicker" id="kicker">IELTS Speaking</span>
+        <h1 id="article-title">How to Improve Your IELTS Speaking Band Score?</h1>
+        <p class="lead" id="lead">A practical, straight-talking guide to calm your nerves, grow fluency, and raise your IELTS Speaking band.</p>
+
+        <article id="article-body" aria-live="polite">
+          <!-- full set of paragraphs: p1 .. p10 -->
+          <p id="p1">Most students, especially in the Speaking part, freeze or stutter — their ideas seem to vanish just when they need them most. That’s normal, and the good news is: it’s fixable.</p>
+
+          <p id="p2">In this article we’ll look at ways to overcome those moments and find practical solutions that work for regular learners — not just exam gurus.</p>
+
+          <p id="p3">Speaking from my own experience, the main cause is usually a lack of ready ideas. Reading — especially books that make you think — gives you time and language to shape opinions. Videos often give facts quickly, but books teach you how to reflect and connect ideas. That habit builds mental material you can use in any Part 1, 2, or 3 question.</p>
+
+          <p id="p4">If you’re new to reading, start with short, practical books on self-improvement — they cover many topics and introduce useful vocabulary. One day you’ll read about habits, the next day about productivity, and these different themes give you examples and words that often appear in IELTS topics.</p>
+
+          <p id="p5">I find reading quietly beautiful, especially today when many people only consume fast short content. Books slow your mind down and force you to form opinions — exactly the skill speaking tests reward.</p>
+
+          <p id="p6">So where should you put your focus? First: build a small daily habit of reading and noting short ideas. Second: practice producing those ideas aloud under a timer. Third: clean your feed — follow news and thoughtful sources rather than only entertainment.</p>
+
+          <p id="p7">You might ask: what’s the link between ideas and practice? Practice makes you familiar with common topics. As you practice more, you’ll have templates and examples ready and your brain will fill gaps faster on unfamiliar topics.</p>
+
+          <p id="p8">Also tidy your social media: follow news accounts, short essays, or fact-based pages. You are what you read — feed your mind with quality input so it outputs better on test day.</p>
+
+          <p id="p9">Yes — chatbots can help. I used ChatGPT to get Part 1 prompts, answered them aloud using speech-to-text, and reviewed the transcript. Practicing with an AI partner removes judgment and lets you try many topics quickly.</p>
+
+          <p id="p10">That’s all for today. I hope you found something useful — keep practicing, stay calm, and keep the habit. If you want, I can make cue cards or a printable 4-week calendar to follow each day. Tell me which and I’ll build it.</p>
+
+          <!-- 60% text / 40% image block -->
+          <div class="split" aria-label="text with image">
+            <div class="text">
+              <h3 id="h3-compact" style="margin-top:0">Small summary</h3>
+              <p id="split-p">Here are the main things we covered:</p>
+              <ul id="bullets">
+                <li id="b1">Why ideas vanish and how to stop it</li>
+                <li id="b2">How to build ideas quickly</li>
+                <li id="b3">Bonus: training with AI and smart tools</li>
+              </ul>
+            </div>
+            <div class="image">
+              <!-- fixed forward-slash path -->
+              <img src="../blogs/blog-images/illustration-mobile.png" alt="explainer image">
+            </div>
+          </div>
+
+          <p class="meta" id="meta"><time datetime="2025-09-24">Published • Sep 24, 2025</time></p>
+        </article>
+      </section>
+
+      <aside class="aside" aria-label="related">
+        <div class="card">
+          <h4 id="aside1-title">Lo-fi mood</h4>
+          <p id="aside1-body">Soft tones, simple layout — small details make the page feel warm.</p>
+        </div>
+
+        <div class="card">
+          <h4 id="aside2-title">Related post</h4>
+          <p><a id="related-link" href="#">Short guide to headlines</a></p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Language modal -->
+  <div id="lang-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" id="lang-modal-box" role="document" aria-labelledby="lang-title">
+      <h4 id="lang-title">Choose language</h4>
+      <small class="muted">Pick your preferred language — saved for next time.</small>
+      <div class="lang-grid" style="margin-top:12px;">
+        <button class="lang-option" data-lang="en" aria-pressed="false">English</button>
+        <button class="lang-option" data-lang="ru" aria-pressed="false">Русский</button>
+        <button class="lang-option" data-lang="uz" aria-pressed="false">Oʻzbekcha</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  (function(){
+    const STORAGE_KEY = 'summage_lang';
+
+    const DICT = {
+      en: {
+        kicker: 'IELTS Speaking',
+        title: 'How to Improve Your IELTS Speaking Band Score?',
+        lead: 'A practical, straight-talking guide to calm your nerves, grow fluency, and raise your IELTS Speaking band.',
+        p1: 'Most students, especially in the Speaking part, freeze or stutter — their ideas seem to vanish just when they need them most. That’s normal, and the good news is: it’s fixable.',
+        p2: 'In this article we’ll look at ways to overcome those moments and find practical solutions that work for regular learners — not just exam gurus.',
+        p3: 'Speaking from my own experience, the main cause is usually a lack of ready ideas. Reading — especially books that make you think — gives you time and language to shape opinions. Videos often give facts quickly, but books teach you how to reflect and connect ideas. That habit builds mental material you can use in any Part 1, 2, or 3 question.',
+        p4: 'If you’re new to reading, start with short, practical books on self-improvement — they cover many topics and introduce useful vocabulary. One day you’ll read about habits, the next day about productivity, and these different themes give you examples and words that often appear in IELTS topics.',
+        p5: 'I find reading quietly beautiful, especially today when many people only consume fast short content. Books slow your mind down and force you to form opinions — exactly the skill speaking tests reward.',
+        p6: 'So where should you put your focus? First: build a small daily habit of reading and noting short ideas. Second: practice producing those ideas aloud under a timer. Third: clean your feed — follow news and thoughtful sources rather than only entertainment.',
+        p7: 'You might ask: what’s the link between ideas and practice? Practice makes you familiar with common topics. As you practice more, you’ll have templates and examples ready and your brain will fill gaps faster on unfamiliar topics.',
+        p8: 'Also tidy your social media: follow news accounts, short essays, or fact-based pages. You are what you read — feed your mind with quality input so it outputs better on test day.',
+        p9: 'Yes, chatbots can help. I used ChatGPT to get Part 1 prompts, answered them aloud using speech-to-text and reviewed the transcript. Practicing with an AI partner removes judgment and lets you try many topics quickly.',
+        p10: 'That’s all for today. I hope you found something useful — keep practicing, stay calm, and keep the habit. If you want, I can make cue cards or a printable 4-week calendar to follow each day. Tell me which and I’ll build it.',
+        compact: 'Small summary',
+        splitP: 'Here are the main things we covered:',
+        bullets: ['Why ideas vanish and how to stop it','How to build ideas quickly','Bonus: training with AI and smart tools'],
+        meta: 'Published • Sep 24, 2025',
+        aside1Title: 'Lo-fi mood',
+        aside1Body: 'Soft tones, simple layout — small details make the page feel warm.',
+        aside2Title: 'Related post',
+        relatedLink: 'Short guide to headlines',
+        backDesktop: '← Back to blogs',
+        backMobile: 'Back'
+      },
+
+      ru: {
+        kicker: 'Разговорная часть IELTS',
+        title: 'Как улучшить балл за Speaking в IELTS?',
+        lead: 'Практичное и честное руководство, которое поможет успокоиться, повысить беглость речи и улучшить результат в Speaking.',
+        p1: 'Многие кандидаты в Speaking замирают или запинаются. Их мысли будто исчезают в самый неподходящий момент. Это нормально, и хорошая новость в том, что это исправимо.',
+        p2: 'В этой статье мы рассмотрим способы справиться с такими моментами и предложим практичные решения, которые подходят обычным ученикам, а не только экспертам по экзаменам.',
+        p3: 'По моему опыту, основная причина это отсутствие готовых идей. Чтение, особенно книги, которые заставляют думать, даёт время и язык для выражения мнения. Видео часто дают факты быстро, но книги учат размышлять и связывать идеи. Такая привычка формирует «мысленный материал», который пригодится в любой части теста.',
+        p4: 'Если вы новичок в чтении, начните с коротких практичных книг по саморазвитию. Они охватывают разные темы и вводят полезную лексику. Один день вы читаете о привычках, на другой о продуктивности. Такие темы дают примеры и слова, часто встречающиеся в IELTS.',
+        p5: 'Мне очень нравится чтение в тишине. Особенно сейчас, когда многие потребляют только быстрый короткий контент. Книги замедляют мысль и заставляют формировать мнение. Именно это ценят в разговорной части теста.',
+        p6: 'Итак, на что фокусироваться? Во-первых: выработайте небольшую ежедневную привычку читать и записывать короткие идеи. Во-вторых: практикуйтесь озвучивать эти идеи под таймер. В-третьих: очистите ленту и следите за новостями и вдумчивыми источниками, а не только за развлечениями.',
+        p7: 'Вы можете спросить: как связаны идеи и практика? Практика знакомит вас с распространёнными темами. Чем больше вы практикуетесь, тем больше у вас шаблонов и примеров, и мозг быстрее заполняет пробелы на незнакомых темах.',
+        p8: 'Также наведите порядок в социальных сетях. Следите за новостными аккаунтами, короткими эссе или страницами с фактами. Вы это то, что читаете. Кормите мозг качественным контентом, чтобы он лучше работал в день экзамена.',
+        p9: 'Да. чат-боты помогают. Я использовал ChatGPT чтобы получить вопросы для Part 1, отвечал вслух через распознавание речи и просматривал транскрипт. Тренировка с ИИ партнёром убирает страх оценки и позволяет быстро отработать много тем.',
+        p10: 'На сегодня всё. Надеюсь, вы нашли что-то полезное и продолжайте практиковаться, сохраняйте спокойствие и не бросайте привычку.',
+        compact: 'Краткое содержание',
+        splitP: 'Вот основные вещи, которые мы обсудили:',
+        bullets: ['Почему уходят идеи и как это остановить','Как быстро находить идеи','Бонус: тренировка с ИИ и полезные инструменты'],
+        meta: 'Опубликовано • 24 сен 2025',
+        aside1Title: 'Ло-фи настроение',
+        aside1Body: 'Мягкие тона, простой макет и небольшие детали делают страницу уютной.',
+        aside2Title: 'Релевантный пост',
+        relatedLink: 'Краткое руководство по заголовкам',
+        backDesktop: '← Назад к блогам',
+        backMobile: 'Назад'
+      },
+
+      uz: {
+        kicker: "IELTS Soʻzlashuvi",
+        title: "IELTS Speaking ballingizni qanday oshirish mumkin?",
+        lead: "Tinchlanish, ravonlikni oshirish va IELTS Speaking ballingizni ko‘tarish uchun amaliy, ochiqcha qo‘llanma.",
+        p1: "Ko‘plab talabalar, ayniqsa Speaking bo‘limida, javob berayotganda to‘silib qoladi yoki tili tutiladi — fikrlar kerakli paytda yo‘qolgandek bo‘ladi. Bu normal holat va uni tuzatish mumkin.",
+        p2: "Ushbu maqolada biz bunday vaziyatlarga qanday qarshi turish va oddiy, amaliy yechimlarni qanday topish mumkinligini ko‘rib chiqamiz — faqat ekspertlarga emas, oddiy tayyorgarlik qiluvchilarga mos.",
+        p3: "Tajriba shuni ko‘rsatadiki, asosiy sabab — tayyor g‘oyalar zaxirasining yetishmasligi. Kitob o‘qish — ayniqsa tafakkurni uyg‘otadigan kitoblar — fikrni shakllantirish uchun vaqt va til beradi. Videolar tez faktlarni beradi, lekin kitoblar fikrlash va g‘oyalarni bog‘lashni o‘rgatadi. Bu odat sizga testning har bir bo‘limida kerakli materialni taqdim etadi.",
+        p4: "Agar siz o‘qishni endigina boshlayotgan bo‘lsangiz, amaliy va qisqa o‘qishlarni, xususan o‘zi-yaxshilanish haqida kitoblarni tanlang — ular turli mavzularni qamrab oladi va foydali lug‘atni taqdim etadi. Bir kunda siz odatlar haqida o‘qiysiz, boshqa kunda esa mahsuldorlik haqida — bunday mavzular IELTSda tez-tez uchraydi.",
+        p5: "Men uchun o‘qish tinch va go‘zal — ayniqsa hozirda ko‘pchilik tez va qisqa kontent iste’mol qiladi. Kitoblar aqlni sekinlashtiradi va fikrni shakllantirishga majbur qiladi — aynan shu ko‘nikma Speaking testida baholanadi.",
+        p6: "Qayerga e’tibor qaratish kerak? Birinchidan: har kuni kichik o‘qish odatini shakllantiring va qisqa g‘oyalarni yozib boring. Ikkinchidan: bu g‘oyalarni taymer ostida ovozli ravishda mashq qiling. Uchinchi: ijtimoiy tarmog‘ingizni tozalang — faqat o‘yin-kulgi emas, yangiliklar va fikrli manbalarni kuzating.",
+        p7: "Siz so‘rashingiz mumkin: g‘oyalar va mashg‘ulotlar orasidagi bog‘lanish nima? Mashq sizni keng tarqalgan mavzular bilan tanishtiradi. Qanchalik ko‘p mashq qilsangiz, shuncha ko‘p shablon va misollar hosil bo‘ladi, boshqacha mavzularda ham miyaning bo‘shliqlarni to‘ldirishga imkon beradi.",
+        p8: "Shuningdek, ijtimoiy tarmoqlaringizni tartibga soling: yangiliklar akkauntlari, qisqa esse va faktlarga asoslangan sahifalarni kuzating. Siz nima o‘qisangiz, shunaqa bo‘lasiz — miyangizni sifatli kontent bilan oziqlantiring.",
+        p9: "Ha — chat-botlar yordam beradi. Men ChatGPTdan Part 1 savollarini so‘rar edim, javoblarni ovoz orqali yozib olardim va transkriptni tahlil qilardim. AI bilan mashq qilish hukm ostida emas va ko‘p mavzularni tez sinab ko‘rishga imkon beradi.",
+        p10: "Bugun shuncha. Umid qilamanki, biror foydali narsani topdingiz — mashq qiling, xotirjam bo‘ling va odatni davom ettiring. Xohlasangiz, men kundalik 4 haftalik bosib o‘tish yoki kartochkalar yaratib bera olaman. Qaysini xohlashingizni ayting, men tayyorlayman.",
+        compact: "Qisqacha mazmun",
+        splitP: "Mana biz muhokama qilgan asosiy mavzular:",
+        bullets: ["Nega fikrlar yo‘qoladi va uni qanday to‘xtatish","Qanday qilib tez g‘oya topish mumkin","Bonus: AI va foydali vositalar bilan mashq qilish"],
+        meta: "Chop etilgan • 24 Sen 2025",
+        aside1Title: "Lo-fi ruh",
+        aside1Body: "Yumshoq ohanglar, soddalashgan maket — kichik detallar sahifani iliq qiladi.",
+        aside2Title: "Tegishli post",
+        relatedLink: "Sarlavhalar bo‘yicha qisqacha qo‘llanma",
+        backDesktop: "← Bloglarga qaytish",
+        backMobile: "Orqaga"
+      }
+    };
+
+    // Helper to get stored lang (fallback to 'en')
+    function getStoredLang(){
+      const v = localStorage.getItem(STORAGE_KEY);
+      return (v && DICT[v]) ? v : 'en';
+    }
+
+    // Elements we will update
+    const elements = {
+      kicker: document.getElementById('kicker'),
+      title: document.getElementById('article-title'),
+      lead: document.getElementById('lead'),
+      p1: document.getElementById('p1'),
+      p2: document.getElementById('p2'),
+      p3: document.getElementById('p3'),
+      p4: document.getElementById('p4'),
+      p5: document.getElementById('p5'),
+      p6: document.getElementById('p6'),
+      p7: document.getElementById('p7'),
+      p8: document.getElementById('p8'),
+      p9: document.getElementById('p9'),
+      p10: document.getElementById('p10'),
+      compact: document.getElementById('h3-compact'),
+      splitP: document.getElementById('split-p'),
+      bullets: [document.getElementById('b1'), document.getElementById('b2'), document.getElementById('b3')],
+      meta: document.getElementById('meta'),
+      aside1Title: document.getElementById('aside1-title'),
+      aside1Body: document.getElementById('aside1-body'),
+      aside2Title: document.getElementById('aside2-title'),
+      relatedLink: document.getElementById('related-link'),
+      backBtn: document.getElementById('backBtn')
+    };
+
+    // Apply language strings to page
+    function applyLanguage(lang){
+      const D = DICT[lang] || DICT.en;
+      elements.kicker.textContent = D.kicker;
+      elements.title.textContent = D.title;
+      elements.lead.textContent = D.lead;
+      elements.p1.textContent = D.p1;
+      elements.p2.textContent = D.p2;
+      elements.p3.textContent = D.p3;
+      elements.p4.textContent = D.p4;
+      elements.p5.textContent = D.p5;
+      elements.p6.textContent = D.p6;
+      elements.p7.textContent = D.p7;
+      elements.p8.textContent = D.p8;
+      elements.p9.textContent = D.p9;
+      elements.p10.textContent = D.p10;
+      elements.compact.textContent = D.compact;
+      elements.splitP.textContent = D.splitP;
+      // bullets array
+      D.bullets.forEach((txt, i) => {
+        if(elements.bullets[i]) elements.bullets[i].textContent = txt;
+      });
+      elements.meta.innerHTML = '<time datetime="2025-09-24">' + D.meta + '</time>';
+      elements.aside1Title.textContent = D.aside1Title;
+      elements.aside1Body.textContent = D.aside1Body;
+      elements.aside2Title.textContent = D.aside2Title;
+      elements.relatedLink.textContent = D.relatedLink;
+      // back button text (mobile vs desktop)
+      function updateBackText(){
+        const isMobile = window.innerWidth <= 420;
+        elements.backBtn.textContent = isMobile ? D.backMobile : D.backDesktop;
+      }
+      updateBackText();
+      // keep responsive update
+      // remove previous listener to avoid duplicates
+      // (simple approach: don't add multiple listeners on repeated apply)
+    }
+
+    // init
+    let lang = getStoredLang();
+    applyLanguage(lang);
+
+    // Language modal behavior
+    const openLangBtn = document.getElementById('open-lang');
+    const langModal = document.getElementById('lang-modal');
+    const langOptions = Array.from(document.querySelectorAll('.lang-option'));
+
+    function openLangModal(){
+      langModal.style.display = 'flex';
+      langModal.setAttribute('aria-hidden','false');
+      // set pressed states
+      langOptions.forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
+      });
+    }
+    function closeLangModal(){
+      langModal.style.display = 'none';
+      langModal.setAttribute('aria-hidden','true');
+    }
+
+    openLangBtn.addEventListener('click', openLangModal);
+    langModal.addEventListener('click', (e) => {
+      if(e.target === langModal) closeLangModal();
+    });
+
+    langOptions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chosen = btn.dataset.lang;
+        if(!DICT[chosen]) return;
+        lang = chosen;
+        localStorage.setItem(STORAGE_KEY, chosen);
+        applyLanguage(chosen);
+        // update pressed states
+        langOptions.forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === chosen ? 'true' : 'false'));
+        closeLangModal();
+      });
+    });
+
+    // Listen for storage changes in other tabs
+    window.addEventListener('storage', (e) => {
+      if(e.key === STORAGE_KEY){
+        const newLang = (e.newValue && DICT[e.newValue]) ? e.newValue : 'en';
+        lang = newLang;
+        applyLanguage(newLang);
+      }
+    });
+
+    // expose API
+    window.Summage = window.Summage || {};
+    window.Summage.setLang = function(code){ if(DICT[code]) { localStorage.setItem(STORAGE_KEY, code); applyLanguage(code); } };
+
+    // initial responsive back text update
+    (function updateBackOnResize(){
+      const D = DICT[lang] || DICT.en;
+      function update(){ const isMobile = window.innerWidth <= 420; document.getElementById('backBtn').textContent = isMobile ? D.backMobile : D.backDesktop; }
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+  })();
+</script>
+
+</body>
+</html>
