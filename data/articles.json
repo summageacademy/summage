@@ -1,0 +1,68 @@
+{
+  "articles": [
+    {
+      "id": "a1",
+      "title": "The Pomodoro",
+      "paragraphs": [
+        "The Pomodoro Techique is a time management method developed by Francesco Cirillo in the late 1980s. It uses a kitchen timer to break work into intervals, typically 25 minutes in length, separated by short breaks. Each interval is known as pomodoro, from the Italian word for tomato, after the tomato-shaped kitchen timer that Cirillo used while he was a university student. A goal of this technique is to reduce the effect of internal and external interruptions of focus and flow.",
+        ""
+      ],
+      "questions": [
+        {
+          "type": "mcq",
+          "text": "What's the meanning of Pomodoro?",
+          "options": [
+            "A word used for kitchen clock",
+            "An Italian Word for Tomato",
+            "The name of the founder of this technique",
+            "Italian word used for vegatables"
+          ],
+          "answer": 1
+        },
+        {
+          "type": "mcq",
+          "text": "Why it's called Pomodoro?",
+          "options": [
+            "Because it means 25 minutes in Italian",
+            "The Founder of this technique liked this word a lot, as it was also popular among Italians at the time",
+            "Because founder of this technique used tomato-shaped clock during his university years, inspired by this, he put this name to the technique",
+            "Italians insisted him to put this name, as it was symbol of time in Italy at the time"
+          ],
+          "answer": 3
+        }
+      ]
+    },
+    {
+      "id": "a2",
+      "title": "A Short Walk",
+      "paragraphs": [
+        "Walking the dusty road, the traveler found a lone tree giving shade. He rested, ate bread, and watched a child fly a bright kite.",
+        "The breeze carried the scent of baked bread and distant markets, and for a moment everything felt ordinary and full of small meaning."
+      ],
+      "questions": [
+        {
+          "type": "mcq",
+          "text": "What did the traveler watch?",
+          "options": ["A bird", "A child fly a kite", "A sunset", "A market"],
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "id": "a3",
+      "title": "City Lights",
+      "paragraphs": [
+        "At night the city hums with lights and voices. Cafes glow, and people move like rivers.",
+        "On the corner, someone plays a melody on an old guitar; the sound threads through the alleys and becomes a small shared memory."
+      ],
+      "questions": [
+        {
+          "type": "mcq",
+          "text": "Which image fits the passage?",
+          "options": ["A silent village", "A bright city at night", "A mountain lake", "A desert"],
+          "answer": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Summage Reading Mocks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --orange-1:#ff8a00;
+      --orange-2:#ff5a1f;
+      --brand:#f24b0b;
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --radius:16px;
+      --shadow: 0 8px 30px rgba(17,24,39,0.06);
+      --accent:#ff7a2e;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;color:#0f172a;background:linear-gradient(180deg,#fbfdff 0%, #f3f6fb 100%);min-height:100vh;display:flex;flex-direction:column}
+
+    /* NAV (desktop) */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(90deg,var(--brand), #fb6b39);
+      box-shadow:0 8px 26px rgba(242,75,11,0.12);border-bottom:1px solid rgba(0,0,0,0.04);padding:8px 0;
+    }
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 20px;box-sizing:border-box}
+    .brand-wrap{display:flex;align-items:center;gap:12px;color:#fff}
+    .nav-logo{width:48px;height:48px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.12);box-shadow:0 6px 12px rgba(0,0,0,0.06)}
+    .brand-wrap h1{margin:0;font-weight:800;font-size:18px;font-family:Inter, sans-serif;color:#fff}
+    .brand-wrap small{display:block;color:rgba(255,255,255,0.95);font-size:12px;opacity:0.95}
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .back-link{padding:8px 14px;border-radius:10px;background:rgb(255, 112, 51);color:#fff;border:1px solid rgba(255,255,255,0.08);font-weight:600;cursor:pointer;transition:transform .12s, background .12s}
+    .back-link:hover{transform:translateY(-3px);background:rgb(233, 12, 12)}
+
+    /* Page layout */
+    main.wrap{flex:1;display:flex;flex-direction:column;gap:12px;padding:20px 16px;max-width:1100px;margin:0 auto;width:100%;box-sizing:border-box}
+    .mobile-title{display:none;font-weight:700;color:var(--accent);font-size:14px;margin-left:4px}
+
+    /* Hero area */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start;margin-top:8px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+
+    .article{display:flex;flex-direction:column;gap:12px}
+    .badge{background:linear-gradient(90deg,var(--orange-1),var(--orange-2));color:white;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+    /* Article title must be visible (dark color) */
+    .article h2{margin:0;font-size:18px;color:#0b1220}
+    .article p{margin:0;color:#25303b;line-height:1.6;font-size:16px}
+
+    /* Question panel */
+    .q-head{display:flex;justify-content:space-between;align-items:center}
+    .q-title{font-weight:700;color:#0b1220}
+    .choices{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .choice{background:#fbfbfe;padding:12px;border-radius:12px;border:1px solid rgba(15,23,42,0.04);cursor:pointer;transition:transform .12s, box-shadow .12s;display:flex;align-items:center;gap:10px}
+    .choice:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(15,23,42,0.06)}
+    .choice.correct{border:2px solid #16a34a;background:#f0fff6}
+    .choice.wrong{border:2px solid #ef4444;background:#fff6f6}
+
+    /* desktop fixed Next */
+    .action-wrap{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:80}
+    .duo-btn{background:linear-gradient(180deg,var(--orange-1),var(--orange-2));color:white;padding:14px 26px;border-radius:999px;border:none;font-weight:800;box-shadow:0 14px 40px rgba(255,90,30,0.16);cursor:pointer;font-size:16px}
+
+    /* mobile round back button (top-right) - fixed and hovering on mobile only */
+    .mobile-back{
+      display:none; /* default hidden; shown on mobile via media query */
+      position:fixed;top:14px;right:14px;z-index:120;width:52px;height:52px;border-radius:999px;
+      background:linear-gradient(180deg, rgb(255, 88, 10), rgb(255, 128, 37));display:grid;place-items:center;color:white;
+      border:1px solid rgba(255,255,255,0.12);box-shadow:0 10px 28px rgba(0,0,0,0.2);cursor:pointer;
+      transition:transform .12s, box-shadow .12s, opacity .12s;
+      opacity:0.98;
+    }
+    .mobile-back img{width:22px;height:22px;filter:brightness(2) invert(1)}
+    .mobile-back:active{transform:translateY(2px);box-shadow:0 6px 18px rgba(0,0,0,0.18)}
+    .mobile-back:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,0.22)}
+
+    /* overlay */
+    .overlay{position:fixed;inset:0;display:grid;place-items:center;background:rgba(15,23,42,0.06);backdrop-filter:blur(4px);pointer-events:none;opacity:0;transition:opacity .12s;z-index:120}
+    .overlay.show{pointer-events:auto;opacity:1}
+    .feedback{display:flex;flex-direction:column;align-items:center;gap:10px;background:white;padding:20px;border-radius:14px;box-shadow:var(--shadow)}
+    .feedback svg{width:84px;height:84px}
+
+    /* responsive tweaks */
+    @media (max-width:980px){
+      /* hide the full navbar on mobile */
+      .nav{display:none}
+
+      .hero{grid-template-columns:1fr}
+      .mobile-title{display:block}
+
+      /* show the mobile round back button */
+      .mobile-back{display:grid}
+      /* hide desktop Next button on mobile */
+      .action-wrap{display:none}
+    }
+
+    @media (max-width:460px){
+      .article p{font-size:15px}
+      .choice{padding:10px;font-size:15px}
+      .duo-btn{padding:12px 20px;font-size:15px}
+    }
+
+    .muted{color:var(--muted)}
+    .tiny{font-size:13px}
+  </style>
+</head>
+<body>
+  <!-- Desktop navbar (hidden on mobile) -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="brand-wrap">
+        <img src="otherassets/logo_white.jpg" alt="logo" class="nav-logo" id="nav-logo" onerror="this.style.display='none'">
+        <div>
+          <h1 id="brand-title">Summage Reading Mocks</h1>
+          <small id="brand-sub">Learn. Teach. Become.</small>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <button class="back-link" id="desktop-back">Back to Menu</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap" id="main-wrap">
+    <div class="mobile-title">READING MOCK</div>
+
+    <section class="hero" role="main">
+      <!-- Article card -->
+      <article class="card article" aria-live="polite">
+        <div class="meta" style="display:flex;gap:10px;align-items:center">
+          <div class="badge" id="article-badge">READ</div>
+          <div class="muted tiny" id="article-info">—</div>
+        </div>
+        <h2 id="article-title">Title</h2>
+        <div id="article-paragraphs"><!-- paragraphs injected here --></div>
+      </article>
+
+      <!-- Question panel -->
+      <aside class="card q-panel">
+        <div class="q-head">
+          <div>
+            <div class="q-title" id="q-title">Question</div>
+          </div>
+        </div>
+
+        <div id="question-area"></div>
+
+        <div style="display:flex;gap:10px;justify-content:flex-start;align-items:center;margin-top:6px">
+          <button id="shuffle-btn" style="background:transparent;border:1px solid rgba(15,23,42,0.06);padding:8px 12px;border-radius:10px;cursor:pointer">Other random question ↺</button>
+        </div>
+
+      </aside>
+    </section>
+  </main>
+
+  <!-- Mobile round back button (top-right only on mobile) -->
+  <button class="mobile-back" id="mobile-back" aria-label="Back">
+    <!-- fallback to simple unicode arrow if icon missing -->
+    <img src="icons/back-arrow.png" alt="back" onerror="this.style.display='none'">
+    <span id="mobile-back-fallback" style="display:none;color:#fff;font-size:20px;">←</span>
+  </button>
+
+  <!-- Desktop Next CTA (fixed) -->
+  <div class="action-wrap">
+    <button class="duo-btn" id="duo-action">Next</button>
+  </div>
+
+  <!-- overlay feedback -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="feedback" role="status">
+      <div id="fb-icon"></div>
+      <div id="fb-text" style="font-weight:700;color:#0b1220">Good</div>
+    </div>
+  </div>
+
+  <!-- Embedded JSON (now supports paragraphs array) -->
+  <script id="articles-data" type="application/json">
+  {
+    "articles": [
+      {
+        "id": "a1",
+        "title": "The Pomodoro",
+        "paragraphs": [
+          "The Pomodoro Techique is a time management method developed by Francesco Cirillo in the late 1980s. It uses a kitchen timer to break work into intervals, typically 25 minutes in length, separated by short breaks. Each interval is known as pomodoro, from the Italian word for tomato, after the tomato-shaped kitchen timer that Cirillo used while he was a university student. A goal of this technique is to reduce the effect of internal and external interruptions of focus and flow. ",
+          ""
+        ],
+        "questions": [
+          { "type": "mcq", "text": "What's the meanning of Pomodoro?", "options": ["A word used for kitchen clock","An Italian Word for Tomato","The name of the founder of this technique","Italian word used for vegatables"], "answer": 1 },
+          { "type": "mcq", "text": "Why it's called Pomodoro?", "options": ["Because it means 25 minutes in Italian","The Founder of this technique liked this word a lot, as it was also popular among Italians at the time","Because founder of this technique used tomato-shaped clock during his university years, inspired by this, he put this name to the technique","Italians insisted him to put this name, as it was symbol of time in Italy at the time"], "answer": 2 }
+        ]
+      },
+      {
+        "id": "a2",
+        "title": "The Feynman techinique",
+        "paragraphs": [
+          "The Feynman technique is a powerful learning method named after the Noble Prize-winning physicist Richard Feynman, who was known for his ability to explain complex ideas in very simple terms. ",
+          "This method focuses on true comprehension rather than memorization, helping to break down complex ideas into manageable parts and solidify knowledge."
+        ],
+        "questions": [
+          { "type": "mcq", "text": "Why this technique is called Feynman?", "options": ["Because it was popular name among Americans","Scientist's mother loved this word, and Scientist put it as name to honor his mother","It's named after the founder of this technique","Scientist chose it because it was his favourite word at the time"], "answer": 2 }
+        ]
+      },
+      {
+        "id": "a3",
+        "title": "Dinosaurs",
+        "paragraphs": [
+          "Dinosaurs are reptiles that have lived on Earth for about 245 million years. They first appeared during Triassic period, between 243 and 233.33 million years ago, although the exact origin and timing of the evolution dinosaurs is a subject of active research. The leading theory is that a huge asteroid or comet slammed into Earth 65 million years ago, blocking sunlight, changing the climate and setting off global wildfires. ",
+          "However, the fossil record shows that for the first time 175 million years of their existence, dinosaurs took in a huge variety of forms as the environment changed and new species evolved that were suited to these new conditions. Dinosaurs that failed to adapt went instinct."
+        ],
+        "questions": [
+          { "type": "mcq", "text": "Which image fits the description of the time when Asteroid or Comet hit the earth?", "options": ["The days were bright, The dinosaurs were living peacefully. There was no lackage of food and Sun was shining","The climate was normalized after the comet his the ground, and with it's force, enormous winds had arised and put out the fire in the woods","After comet hit the ground, tremendous mountains were shaped and this event made the earth more beautiful place","After hitting the ground, the comet caused the sky to be dark, sunglight couldn't pass through and the woods burned down after big climate change"], "answer": 3 }
+        ]
+      },
+      {
+        "id": "a4",
+        "title": "Flowers",
+        "paragraphs": [
+          "Traditional symbol of red rose is love and fertility. In every language this flower expresses deep feelings for someone who is special. When it comes to white rose, it symbolizes the innocent and new love. There is also yellow rose which means friendship.",
+          "Flowers can describe people`s feelings and emotions that cannot be described by simple words. Meanings vary depending on the color and the quantity."
+        ],
+        "questions": [
+          { "type": "mcq", "text": "What is the symbol of Rose?", "options": ["The rose's symbol is related to human blood, as they also share the same color","A red rose is seen as symbol of special friendship","A red rose is seen as symbol of love, expression of deep feelings towards someone.","A red rose symbolizes the innocencent and fresh love."], "answer": 2 }
+        ]
+      },
+      {
+        "id": "a5",
+        "title": "UNICEF",
+        "paragraphs": [
+          "UNICEF was established in 1946 by the United Nations to help children and mothers who were suffering from the aftermath of World War II. It was the idea of Ludwik Rajchman, who proposed using the remaining funds for child feeding program. The organization was created by Resolution 57(I) of the United Nations General Assembly, and Rachjman was appointed as the first chairman of UNICEF.",
+          "In 1953, it officially became the United Nations Children`s Fund. This organization is responsible for providing humanitarian and developmental aid to children worldwide."
+        ],
+        "questions": [
+          { "type": "mcq", "text": "Whose idea it was to establish UNICEF?", "options": ["It was American Council's idea to establish this organization.","Children and Women suffering from War problems suggested this idea.","Idea was given mainly from Ludwik Rachjman, who suggested to use remaining funds to help those suffering from aftermath of War problems", "United Nations General Assembly suggested this idea and by Resolution57(I), the organization was founded"], "answer": 2 }
+        ]
+      },
+      {
+        "id": "a6",
+        "title": "UNICEF",
+        "paragraphs": [
+          "Kid Power is a division of UNICEF that involves children in helping other children who are in need. UNICEF Kid Power developed the world`s first “wearable for good” – a children`s fitness tracker that connects to a smartphone app. The app lets users complete missions and rewards them for participation.",
+          "UNICEF continues to play a vital role in protecting children`s rights, improving their health, and ensuring access to education worldwide. Its tireless efforts have made a lasting impact on millions of young lives, proving that with cooperation and compassion, a better future for every child is possible.   "
+        ],
+        "questions": [
+          { "type": "mcq", "text": "What can 'Wearable for Good' do?", "options": ["It's a fitness tracker designed for children, it lets user connect to a smartphone with special app and rewards users for completing tasks","It lets children play around with their friends and meet new people","It's a fitness tracker and mainly used for professional athlets to track their calories and reward them for completing tasks.", "Tracker gives missions and tasks to users and insists them to pay for getting rewarded."], "answer": 0 }
+        ]
+      },
+      {
+        "id": "a7",
+        "title": "Deadly Colors",
+        "paragraphs": [
+          "Orpiment is a bright yellow mineral that was historically used as a pigment. The color comes from mineral itself and contains arsenic, which is highly poisonous. Prolonged use or exposure caused many diseases and even death. For example, in ancient China and the Middle East, this pigment was used as a cosmetic or depilatory. ",
+          "Women applied it to their faces or used it to remove unwanted hair. However, long exposure led to arsenic poisoning, resulting in fatal illnesses and miscarriages."
+        ],
+        "questions": [
+          { "type": "mcq", "text": "What was one of the major dangers of using orpiment as a pigment?", "options": ["It could easily lose its color over time.","It contained lead, which damaged artworks.","It caused health problems due to its poisonous content.", "It was extremely expensive to produce."], "answer": 2 }
+        ]
+      },
+      { "id": "a8", "title": "Radium Paints", "paragraphs": ["Radium was used to produce glowing colors that shined in the dark – green, yellow, blue, and others. It contained radium, a highly radioactive element, which made it extremely dangerous. In the early 20th century in America, it was used as a decoration. Many people even dyed their teeth and nails with radium-based paint.", "The so-called Radium Girls were female factory workers whose job was to paint watch dials with radium using a method called lip-pointing. After long exposure, they suffered from bone tumors, jaw necrosis, and spontaneous fractures."], "questions": [ { "type": "mcq", "text": "Why were radium-based paints popular in the early 20th century?", "options": ["Because they were cheap and easy to make","Because they created bright, glowing colors visible in the dark","Because they were believed to improve health and beauty","Because they were used only for scientific experiments"], "answer": 1 }, { "type": "mcq", "text": "What was the main danger of using radium-based decorations?", "options": ["They produced harmful radioactive effects","They contained poisonous metals like arsenic","They caused permanent stains on skin and teeth","They could only be removed with strong acids"], "answer": 0 }, { "type": "mcq", "text": "Which of the following best describes public awareness of radium's danger at that time?", "options": ["People were fully aware of its risks but ignored them","People were unaware of the serious health effects","Scientists warned everyone not to use it, but it was banned anyway","People only used it for industrial tools, not personal decoration"], "answer": 1 } ] },
+      { "id": "a9", "title": "Lavender", "paragraphs": ["This flower is associated with relaxation, tranquility, luck, calming and pacifying the mind. Lavender from the ancient times is believed to attract positive energy and has a spiritual meaning of purity, virtue and serenity.", "Today, lavender is widely used in aromatherapy, perfumes, and natural medicines. Its scent is known to reduce stress and help people sleep better, keeping its ancient reputation alive in modern times."], "questions": [ { "type": "mcq", "text": "What qualities are most commonly linked to lavender according to the text?", "options": ["Strength and courage","Relaxation and tranquility","Energy and motivation","Creativity and imagination"], "answer": 1 }, { "type": "mcq", "text": "What spiritual meanings are connected with lavender from ancient times?", "options": ["Power and control","Purity, virtue, and serenity","Wisdom and leadership","Change and transformation"], "answer": 1 }, { "type": "mcq", "text": "According to the first paragraph, how was lavender viewed in ancient beliefs?", "options": ["As a symbol of strength and wealth","As a plant used mainly for decoration","As a source of positive and peaceful energy","As a medicine for physical pain"], "answer": 2 } ] },
+      { "id": "a10","title":"The History of Tea","paragraphs":["Tea, one of the world’s most popular beverages, originated in China over 4,000 years ago when Emperor Shen Nong discovered it after tea leaves fell into his boiling water, creating a pleasant aroma.","Today, tea is consumed globally for its refreshing taste, health benefits, and role in cultural rituals like British afternoon tea or Japanese tea ceremonies."],"questions":[{"type":"mcq","text":"Where did tea originate according to the first paragraph?","options":["India","China","Japan","Britain"],"answer":1},{"type":"mcq","text":"Who is credited with discovering tea in the first paragraph?","options":["A local farmer","Emperor Shen Nong","A traveling merchant","A Japanese monk"],"answer":1},{"type":"mcq","text":"What happened to create the pleasant aroma of tea in the legend from the first paragraph?","options":["Tea leaves were roasted","Tea leaves fell into boiling water","Tea leaves were crushed","Tea leaves were dried"],"answer":1}]},
+      {"id":"a11","title":"The Silk Road","paragraphs":["The Silk Road, an ancient network of trade routes, connected East Asia to the Mediterranean, flourishing from the 2nd century BCE to the 15th century CE. It facilitated the exchange of goods like silk, spices, and ideas between civilizations.","Today, the Silk Road's legacy lives on in cultural exchanges, modern trade routes, and archaeological discoveries that highlight its historical significance."],"questions":[{"type":"mcq","text":"What regions did the Silk Road connect according to the first paragraph?","options":["North America to Europe","East Asia to the Mediterranean","Africa to South America","Australia to Asia"],"answer":1},{"type":"mcq","text":"What types of goods were exchanged along the Silk Road in the first paragraph?","options":["Electronics and machinery","Silk, spices, and ideas","Gold and silver coins","Books and maps"],"answer":1},{"type":"mcq","text":"During which time period did the Silk Road flourish according to the first paragraph?","options":["5th century CE to 10th century CE","2nd century BCE to 15th century CE","10th century BCE to 5th century CE","15th century CE to present"],"answer":1}]},
+      {"id":"a12","title":"The Great Wall of China","paragraphs":["The Great Wall of China, built over centuries starting from the 7th century BCE, was primarily constructed to protect Chinese states from invasions and to facilitate border control. Spanning over 21,000 kilometers, it is one of the longest man-made structures in the world.","Today, the Great Wall is a UNESCO World Heritage Site, attracting millions of tourists annually and symbolizing China's historical strength and ingenuity."],"questions":[{"type":"mcq","text":"What was the primary purpose of the Great Wall of China according to the first paragraph?","options":["To serve as a trade route","To protect from invasions and control borders","To mark religious sites","To connect major cities"],"answer":1},{"type":"mcq","text":"When did the construction of the Great Wall begin as mentioned in the first paragraph?","options":["1st century CE","7th century BCE","10th century BCE","5th century CE"],"answer":1},{"type":"mcq","text":"What is the approximate length of the Great Wall according to the first paragraph?","options":["10,000 kilometers","21,000 kilometers","5,000 kilometers","15,000 kilometers"],"answer":1}]},
+      {"id":"a13","title":"The Amazon Rainforest","paragraphs":["The Amazon Rainforest, often called the 'lungs of the Earth,' spans nine countries in South America and contains over 400 billion individual trees. It plays a critical role in regulating the global climate by absorbing carbon dioxide.","Modern conservation efforts aim to protect the Amazon from deforestation, supporting its rich biodiversity and indigenous communities."],"questions":[{"type":"mcq","text":"What nickname is given to the Amazon Rainforest in the first paragraph?","options":["Heart of the Earth","Lungs of the Earth","Soul of the Earth","Brain of the Earth"],"answer":1},{"type":"mcq","text":"How many countries does the Amazon Rainforest span according to the first paragraph?","options":["Five","Nine","Three","Twelve"],"answer":1},{"type":"mcq","text":"What is a key role of the Amazon Rainforest mentioned in the first paragraph?","options":["Producing oxygen for cities","Regulating global climate","Providing timber for construction","Creating new animal species"],"answer":1}]},
+      {"id":"a14","title":"The Pyramids of Giza","paragraphs":["The Pyramids of Giza, built around 2600 BCE in Egypt, were constructed as tombs for pharaohs, with the Great Pyramid being the largest and one of the Seven Wonders of the Ancient World. They showcase advanced ancient engineering.","Today, the pyramids remain a testament to Egypt’s cultural heritage, drawing archaeologists and tourists to study their mysteries."],"questions":[{"type":"mcq","text":"What was the primary purpose of the Pyramids of Giza according to the first paragraph?","options":["Temples for worship","Tombs for pharaohs","Palaces for kings","Storage for grain"],"answer":1},{"type":"mcq","text":"When were the Pyramids of Giza built as stated in the first paragraph?","options":["1500 BCE","2600 BCE","1000 BCE","3000 CE"],"answer":1},{"type":"mcq","text":"What is the Great Pyramid known as in the first paragraph?","options":["A modern marvel","One of the Seven Wonders of the Ancient World","The tallest structure in Africa","A religious monument"],"answer":1}]},
+      {"id":"a15","title":"The Compass","paragraphs":["The compass, invented in China during the Han Dynasty around 200 BCE, was initially used for divination before becoming a navigational tool. It relies on Earth’s magnetic field to point north, aiding explorers and sailors.","Modern compasses are integral to navigation systems, from hiking to aviation, and have evolved with digital technology."],"questions":[{"type":"mcq","text":"What was the initial use of the compass in China according to the first paragraph?","options":["Navigation","Divination","Construction","Astronomy"],"answer":1},{"type":"mcq","text":"During which dynasty was the compass invented as per the first paragraph?","options":["Tang Dynasty","Han Dynasty","Qing Dynasty","Ming Dynasty"],"answer":1},{"type":"mcq","text":"What does the compass rely on to function according to the first paragraph?","options":["Solar energy","Earth’s magnetic field","Wind patterns","Star positions"],"answer":1}]},
+      {"id":"a16","title":"The Printing Press","paragraphs":["The printing press, developed by Johannes Gutenberg in the 15th century, revolutionized the spread of knowledge by enabling mass production of books. It used movable type, making texts like the Bible widely accessible.","Today, the printing press’s legacy continues in modern publishing, influencing education and communication worldwide."],"questions":[{"type":"mcq","text":"Who developed the printing press according to the first paragraph?","options":["Isaac Newton","Johannes Gutenberg","Leonardo da Vinci","Galileo Galilei"],"answer":1},{"type":"mcq","text":"What was a key feature of the printing press mentioned in the first paragraph?","options":["Digital screens","Movable type","Automated binding","Colored ink"],"answer":1},{"type":"mcq","text":"What did the printing press enable according to the first paragraph?","options":["Mass production of clothes","Mass production of books","Mass production of tools","Mass production of food"],"answer":1}]},
+      {"id":"d6","title":"The Taj Mahal","paragraphs":["The Taj Mahal, built in the 17th century in India by Emperor Shah Jahan, is a mausoleum dedicated to his wife Mumtaz Mahal. Constructed from white marble, it symbolizes eternal love and architectural brilliance.","Now a UNESCO World Heritage Site, the Taj Mahal attracts millions of visitors and represents India’s rich cultural heritage."],"questions":[{"type":"mcq","text":"Who commissioned the Taj Mahal according to the first paragraph?","options":["Akbar the Great","Shah Jahan","Aurangzeb","Jahangir"],"answer":1},{"type":"mcq","text":"What is the Taj Mahal primarily described as in the first paragraph?","options":["A palace","A mausoleum","A temple","A fortress"],"answer":1},{"type":"mcq","text":"What material was used to build the Taj Mahal as per the first paragraph?","options":["Red sandstone","White marble","Granite","Limestone"],"answer":1}]},
+      {"id":"d7","title":"The Wheel","paragraphs":["The wheel, invented around 3500 BCE in Mesopotamia, is one of humanity’s earliest technological breakthroughs. Initially used for pottery, it later transformed transportation and machinery.","Wheels remain essential in modern vehicles, industry, and countless devices, shaping the world’s technological progress."],"questions":[{"type":"mcq","text":"Where was the wheel invented according to the first paragraph?","options":["Egypt","Mesopotamia","China","India"],"answer":1},{"type":"mcq","text":"What was the initial use of the wheel as mentioned in the first paragraph?","options":["Transportation","Pottery","Construction","Warfare"],"answer":1},{"type":"mcq","text":"Around when was the wheel invented according to the first paragraph?","options":["2000 BCE","3500 BCE","5000 BCE","1000 BCE"],"answer":1}]},
+      {"id":"d8","title":"The Internet","paragraphs":["The Internet, developed in the late 20th century, began as a U.S. military project called ARPANET to enable secure communication. It evolved into a global network connecting billions of devices.","Today, the Internet drives communication, commerce, and innovation, shaping nearly every aspect of modern life."],"questions":[{"type":"mcq","text":"What was the original name of the Internet project according to the first paragraph?","options":["WorldNet","ARPANET","CyberNet","InfoWeb"],"answer":1},{"type":"mcq","text":"What was the initial purpose of the Internet as per the first paragraph?","options":["Social networking","Secure communication","Online shopping","Entertainment"],"answer":1},{"type":"mcq","text":"In which century did the Internet begin according to the first paragraph?","options":["19th century","20th century","21st century","18th century"],"answer":1}]},
+      {"id":"d9","title":"The Colosseum","paragraphs":["The Colosseum, built in Rome around 70-80 CE, was an amphitheater used for gladiatorial contests and public spectacles. It could hold up to 80,000 spectators, showcasing Roman engineering.","Today, the Colosseum is a major tourist attraction and a symbol of Rome’s historical grandeur."],"questions":[{"type":"mcq","text":"What was the Colosseum primarily used for according to the first paragraph?","options":["Religious ceremonies","Gladiatorial contests and public spectacles","Royal residences","Market trading"],"answer":1},{"type":"mcq","text":"What was the capacity of the Colosseum as mentioned in the first paragraph?","options":["50,000 spectators","80,000 spectators","20,000 spectators","100,000 spectators"],"answer":1},{"type":"mcq","text":"When was the Colosseum built according to the first paragraph?","options":["50-60 CE","70-80 CE","90-100 CE","100-110 CE"],"answer":1}]},
+      {"id":"d10","title":"Penicillin","paragraphs":["Penicillin, discovered by Alexander Fleming in 1928, was the first antibiotic, revolutionizing medicine by treating bacterial infections. It was accidentally found when mold grew on a petri dish in his lab.","Penicillin paved the way for modern antibiotics, saving countless lives and transforming healthcare."],"questions":[{"type":"mcq","text":"Who discovered penicillin according to the first paragraph?","options":["Marie Curie","Alexander Fleming","Louis Pasteur","Thomas Edison"],"answer":1},{"type":"mcq","text":"In which year was penicillin discovered as per the first paragraph?","options":["1908","1928","1948","1888"],"answer":1},{"type":"mcq","text":"How was penicillin discovered according to the first paragraph?","options":["Through deliberate experiments","When mold grew on a petri dish","By studying viruses","During surgery"],"answer":1}]},
+      {"id":"e1","title":"The Renaissance Period","paragraphs":["The Renaissance, spanning from the 14th to the 17th century in Europe, marked a profound revival of interest in classical antiquity, fostering advancements in art, science, and humanism. Originating in Italy with figures like Leonardo da Vinci and Michelangelo, it emphasized realism in painting, anatomical precision in sculpture, and empirical observation in scientific inquiry, leading to innovations such as linear perspective and the heliocentric model proposed by Copernicus.","In contemporary times, the Renaissance's influence persists in modern education, architecture, and cultural institutions, inspiring ongoing appreciation for interdisciplinary learning and creative expression."],"questions":[{"type":"mcq","text":"What does the first paragraph suggest was a key characteristic of the Renaissance's approach to art and science?","options":["Strict adherence to medieval traditions","Emphasis on realism and empirical observation","Focus solely on religious themes","Reliance on abstract concepts without evidence"],"answer":1},{"type":"mcq","text":"According to the first paragraph, which innovation is associated with the Renaissance period?","options":["The invention of the steam engine","The development of linear perspective","The creation of digital computing","The discovery of electricity"],"answer":1},{"type":"mcq","text":"The first paragraph implies that the Renaissance originated in which country?","options":["France","Italy","Spain","England"],"answer":1}]},
+      {"id":"e2","title":"Climate Change Impacts","paragraphs":["Climate change, driven primarily by human activities such as fossil fuel combustion and deforestation, has resulted in rising global temperatures, more frequent extreme weather events, and shifts in ecosystems. Scientific consensus indicates that greenhouse gas emissions trap heat in the atmosphere, leading to phenomena like melting polar ice caps, sea-level rise, and biodiversity loss, which threaten coastal communities and agricultural productivity worldwide.","Efforts to mitigate climate change today include international agreements like the Paris Accord, renewable energy transitions, and conservation initiatives aimed at reducing carbon footprints."],"questions":[{"type":"mcq","text":"What does the first paragraph identify as the main drivers of climate change?","options":["Natural volcanic activity and solar variations","Human activities like fossil fuel combustion and deforestation","Orbital changes and tectonic shifts","Industrial pollution and urbanization only"],"answer":1},{"type":"mcq","text":"The first paragraph suggests that greenhouse gas emissions primarily cause which atmospheric effect?","options":["Cooling of the lower atmosphere","Trapping heat in the atmosphere","Depletion of the ozone layer","Increase in atmospheric oxygen levels"],"answer":1},{"type":"mcq","text":"According to the first paragraph, what is a consequence of melting polar ice caps?","options":["Decreased ocean salinity","Sea-level rise","Expanded landmass in polar regions","Reduced global temperatures"],"answer":1}]},
+      {"id":"e3","title":"The Industrial Revolution","paragraphs":["The Industrial Revolution, beginning in Britain in the late 18th century, transformed agrarian societies into industrialized ones through mechanization, factory systems, and innovations like the steam engine invented by James Watt. This era saw rapid urbanization, improved transportation via railways, and economic growth, but also led to social challenges including labor exploitation, environmental degradation, and widening class disparities.","Modern industries continue to evolve from these foundations, incorporating automation and sustainable practices to address historical drawbacks."],"questions":[{"type":"mcq","text":"What does the first paragraph imply was a major social challenge during the Industrial Revolution?","options":["Decline in population growth","Labor exploitation and class disparities","Increased agricultural output","Reduction in urban migration"],"answer":1},{"type":"mcq","text":"According to the first paragraph, which invention is highlighted as key to the Industrial Revolution?","options":["The electric motor","The steam engine by James Watt","The internal combustion engine","The transistor"],"answer":1},{"type":"mcq","text":"The first paragraph suggests that the Industrial Revolution primarily originated in which location?","options":["The United States","Britain","Germany","France"],"answer":1}]},
+      {"id":"e4","title":"Biodiversity Conservation","paragraphs":["Biodiversity conservation involves protecting the variety of life on Earth, including genetic, species, and ecosystem diversity, which is essential for maintaining ecological balance and providing services like pollination, water purification, and medicine derivation. Threats such as habitat destruction, overexploitation, invasive species, and climate change have accelerated extinction rates, prompting strategies like protected areas, sustainable harvesting, and international treaties to safeguard vulnerable populations.","Contemporary approaches to conservation integrate technology, community involvement, and policy reforms to enhance global efforts against biodiversity loss."],"questions":[{"type":"mcq","text":"What does the first paragraph suggest is a primary benefit of biodiversity?","options":["Increasing urban development","Maintaining ecological balance and providing ecosystem services","Promoting industrial expansion","Reducing natural resource availability"],"answer":1},{"type":"mcq","text":"According to the first paragraph, which factor is NOT listed as a threat to biodiversity?","options":["Habitat destruction","Overexploitation","Renewable energy adoption","Invasive species"],"answer":2},{"type":"mcq","text":"The first paragraph implies that conservation strategies include which of the following?","options":["Unlimited resource extraction","Establishment of protected areas and sustainable harvesting","Promotion of monoculture farming","Ignoring international treaties"],"answer":1}]},
+      {"id":"e5","title":"Ancient Egyptian Civilization","paragraphs":["Ancient Egyptian civilization, flourishing along the Nile River from around 3100 BCE, was renowned for its monumental architecture, hierarchical society, and polytheistic religion centered on pharaohs as divine rulers. Achievements included the construction of pyramids as tombs, advancements in mathematics for surveying land, and a writing system of hieroglyphs that recorded history, literature, and administrative details on papyrus scrolls.","The legacy of ancient Egypt influences modern archaeology, art, and cultural studies, revealing insights into early human societies."],"questions":[{"type":"mcq","text":"What does the first paragraph suggest was the role of pharaohs in ancient Egyptian society?","options":["Merely administrative leaders","Divine rulers in a polytheistic religion","Foreign invaders","Elected officials"],"answer":1},{"type":"mcq","text":"According to the first paragraph, for what purpose were pyramids primarily built?","options":["Military fortresses","Tombs","Palaces for living rulers","Temples for worship"],"answer":1},{"type":"mcq","text":"The first paragraph implies that hieroglyphs were used to record which aspects?","options":["Only religious texts","History, literature, and administrative details","Modern scientific theories","Fictional stories exclusively"],"answer":1}]},
+      {"id":"e6","title":"Renewable Energy Sources","paragraphs":["Renewable energy sources, such as solar, wind, hydro, and geothermal power, harness natural processes to generate electricity without depleting finite resources, offering sustainable alternatives to fossil fuels. These technologies reduce greenhouse gas emissions, promote energy independence, and create jobs, though challenges include intermittency, high initial costs, and the need for infrastructure upgrades to integrate them into existing grids efficiently.","Global adoption of renewables is accelerating through incentives, technological advancements, and international collaborations to combat climate change."],"questions":[{"type":"mcq","text":"What does the first paragraph suggest is a major advantage of renewable energy sources?","options":["Dependence on imported fuels","Reduction in greenhouse gas emissions and energy independence","Increased reliance on finite resources","Higher long-term operational costs"],"answer":1},{"type":"mcq","text":"According to the first paragraph, which challenge is associated with renewable energy?","options":["Unlimited availability","Intermittency and high initial costs","Decreased job creation","Simplified grid integration"],"answer":1},{"type":"mcq","text":"The first paragraph implies that renewable sources generate electricity by harnessing what?","options":["Artificial chemicals","Natural processes","Nuclear fission","Coal combustion"],"answer":1}]},
+      {"id":"e7","title":"The Human Genome Project","paragraphs":["The Human Genome Project, an international collaborative effort launched in 1990 and completed in 2003, aimed to map and sequence all 3 billion base pairs of human DNA, identifying approximately 20,000-25,000 genes. This endeavor provided foundational knowledge for understanding genetic diseases, evolutionary biology, and personalized medicine, utilizing advanced sequencing technologies and bioinformatics to analyze vast datasets.","Post-project developments have led to breakthroughs in genomics, including CRISPR gene editing and targeted therapies for hereditary conditions."],"questions":[{"type":"mcq","text":"What does the first paragraph suggest was the primary goal of the Human Genome Project?","options":["Developing new pharmaceuticals","Mapping and sequencing human DNA","Studying environmental impacts on genes","Creating artificial intelligence for biology"],"answer":1},{"type":"mcq","text":"According to the first paragraph, how many genes were approximately identified?","options":["10,000-15,000","20,000-25,000","30,000-35,000","40,000-45,000"],"answer":1},{"type":"mcq","text":"The first paragraph implies that the project relied on which tools for analysis?","options":["Traditional microscopy only","Advanced sequencing technologies and bioinformatics","Manual counting of base pairs","Satellite imagery"],"answer":1}]},
+      {"id":"e8","title":"Globalization Effects","paragraphs":["Globalization, the process of increasing interconnectedness among nations through trade, technology, and cultural exchange, has facilitated economic growth, innovation diffusion, and access to diverse goods, but also exacerbated income inequality, cultural homogenization, and environmental strain due to intensified resource consumption and supply chain vulnerabilities.","In the current era, globalization evolves with digital platforms, reshaping international relations and business models."],"questions":[{"type":"mcq","text":"What does the first paragraph suggest is a negative effect of globalization?","options":["Reduced access to goods","Exacerbation of income inequality and cultural homogenization","Decline in technological innovation","Isolation of economies"],"answer":1},{"type":"mcq","text":"According to the first paragraph, globalization increases interconnectedness through which means?","options":["Isolationist policies","Trade, technology, and cultural exchange","Military alliances only","Nationalistic movements"],"answer":1},{"type":"mcq","text":"The first paragraph implies that globalization leads to environmental strain primarily because of what?","options":["Decreased resource use","Intensified resource consumption and supply chain vulnerabilities","Limited international travel","Reduced global trade"],"answer":1}]},
+      {"id":"e9","title":"Ocean Exploration","paragraphs":["Ocean exploration, encompassing the study of marine environments using submersibles, sonar mapping, and satellite imagery, has revealed hydrothermal vents teeming with extremophiles, vast underwater mountain ranges, and the role of oceans in regulating climate through carbon sequestration and heat distribution. Despite covering over 70% of Earth's surface, less than 20% of the ocean floor has been mapped in high resolution, highlighting the need for continued research to uncover biodiversity and geological secrets.","Advancements in robotics and AI are enhancing deep-sea investigations, promising new discoveries in marine science."],"questions":[{"type":"mcq","text":"What does the first paragraph suggest about the extent of ocean floor mapping?","options":["Over 50% in high resolution","Less than 20% in high resolution","Complete coverage","Only coastal areas mapped"],"answer":1},{"type":"mcq","text":"According to the first paragraph, what have ocean explorations revealed?","options":["Desert-like barren zones","Hydrothermal vents with extremophiles and underwater mountain ranges","Extraterrestrial life forms","Ancient land civilizations"],"answer":1},{"type":"mcq","text":"The first paragraph implies that oceans play a role in climate regulation through which processes?","options":["Increasing atmospheric pollution","Carbon sequestration and heat distribution","Reducing solar radiation","Promoting deforestation"],"answer":1}]},
+      {"id":"e10","title":"Artificial Intelligence Development","paragraphs":["Artificial Intelligence development, tracing back to the 1950s with pioneers like Alan Turing, involves creating systems that mimic human cognition through machine learning algorithms, neural networks, and data processing to perform tasks such as natural language understanding, image recognition, and predictive analytics. Ethical concerns arise regarding bias in training data, job displacement, and privacy invasion, necessitating regulatory frameworks to ensure responsible deployment.","AI's integration into daily life continues to expand, from virtual assistants to autonomous vehicles, transforming industries."],"questions":[{"type":"mcq","text":"What does the first paragraph suggest is an ethical concern in AI development?","options":["Enhancement of human creativity","Bias in training data and job displacement","Reduction in computational costs","Simplification of programming languages"],"answer":1},{"type":"mcq","text":"According to the first paragraph, AI systems mimic human cognition using which methods?","options":["Manual labor simulations","Machine learning algorithms and neural networks","Physical hardware replicas","Random data generation"],"answer":1},{"type":"mcq","text":"The first paragraph implies that AI development began in which decade?","options":["1970s","1950s","1990s","2010s"],"answer":1}]}
+      ]
+
+  }
+  </script>
+
+  <script>
+    (function(){
+      const $ = (s)=> document.querySelector(s);
+      const data = JSON.parse(document.getElementById('articles-data').textContent);
+      let state = { curArticle:null, curQuestion:null };
+
+      function randInt(n){ return Math.floor(Math.random()*n); }
+      function pickRandomArticle(){ return data.articles[randInt(data.articles.length)]; }
+      function pickRandomMCQ(article){ const mcqs = (article.questions||[]).filter(q=>q.type==='mcq'); return mcqs.length? mcqs[randInt(mcqs.length)] : null; }
+      function pickRandomQuestion(article){ return pickRandomMCQ(article) || (article.questions && article.questions[0]) || null; }
+
+      function isMobileView(){ return window.innerWidth <= 980; } // match your mobile breakpoint
+
+      function setState(a,q){ state.curArticle=a; state.curQuestion=q; render(); }
+      function loadRandom(){
+        const a = pickRandomArticle();
+        const q = pickRandomQuestion(a);
+        if(!q){ console.warn('no question found for article', a); return; }
+        setState(a,q);
+      }
+
+      function renderArticleParagraphs(){
+        const container = $('#article-paragraphs');
+        container.innerHTML = '';
+        const paragraphs = state.curArticle.paragraphs || (state.curArticle.paragraph? [state.curArticle.paragraph] : []);
+        if(isMobileView()){
+          // mobile: only first paragraph
+          const p = document.createElement('p'); p.textContent = paragraphs[0] || ''; container.appendChild(p);
+          updateArticleInfo(wordCount(paragraphs[0] || ''));
+        } else {
+          // desktop: show all paragraphs (2 or 3 etc.)
+          let visibleText = '';
+          paragraphs.forEach(txt=>{
+            const p = document.createElement('p'); p.textContent = txt; container.appendChild(p);
+            visibleText += ' ' + txt;
+          });
+          updateArticleInfo(wordCount(visibleText));
+        }
+      }
+
+      function wordCount(text){
+        if(!text) return 0;
+        return text.trim().split(/\s+/).filter(Boolean).length;
+      }
+
+      function updateArticleInfo(count){
+        const info = $('#article-info');
+        info.textContent = `${count} words · short passage`;
+      }
+
+      function render(){
+        // article
+        $('#article-title').textContent = state.curArticle.title || '';
+        renderArticleParagraphs();
+
+        // question
+        $('#q-title').textContent = state.curQuestion.text || '';
+        const area = $('#question-area'); area.innerHTML='';
+        const ctn = document.createElement('div'); ctn.className='choices';
+        (state.curQuestion.options || []).forEach((opt,i)=>{
+          const btn = document.createElement('button');
+          btn.className = 'choice'; btn.type='button';
+          btn.innerHTML = `<span style="flex:1;text-align:left">${opt}</span>`;
+          btn.onclick = ()=> handleMCQ(i, btn);
+          ctn.appendChild(btn);
+        });
+        area.appendChild(ctn);
+      }
+
+      function handleMCQ(idx, el){
+        const ok = state.curQuestion.answer === idx;
+        if(ok) el.classList.add('correct'); else el.classList.add('wrong');
+        document.querySelectorAll('.choice').forEach(b=>b.onclick=null);
+        showFeedback(ok);
+      }
+
+      function showFeedback(ok){
+        const ov = $('#overlay'), icon = $('#fb-icon'), text = $('#fb-text');
+        ov.classList.add('show');
+        if(ok){
+          icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          text.textContent = 'Correct — well done!';
+        } else {
+          icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6l12 12" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          text.textContent = 'Not quite — keep trying.';
+        }
+        setTimeout(()=> ov.classList.remove('show'), 800);
+        setTimeout(()=> loadRandom(), 1100);
+      }
+
+      // Controls
+      $('#shuffle-btn').addEventListener('click', ()=> loadRandom());
+      $('#duo-action').addEventListener('click', ()=> loadRandom());
+
+      $('#desktop-back').addEventListener('click', ()=> {
+        try{ location.href='mocks.html'; } catch(e){ history.back(); }
+      });
+
+      const mobileBackBtn = $('#mobile-back');
+      mobileBackBtn.addEventListener('click', ()=> {
+        try{ location.href='mocks.html'; } catch(e){ history.back(); }
+      });
+
+      // fallback display if icon fails
+      const img = mobileBackBtn.querySelector('img');
+      img.addEventListener && img.addEventListener('error', ()=> {
+        const fb = document.getElementById('mobile-back-fallback');
+        if(fb) fb.style.display = 'block';
+      });
+
+      // keyboard shortcuts
+      document.addEventListener('keydown', (e)=>{
+        if(!state.curQuestion) return;
+        if(e.key>='1' && e.key<='9'){
+          const n = Number(e.key)-1;
+          const ch = document.querySelectorAll('.choice');
+          if(ch[n]) ch[n].click();
+        }
+        if(e.key === 'ArrowRight') loadRandom();
+      });
+
+      // re-render on resize so paragraphs shown follow the device rule
+      let resizeTimer = null;
+      window.addEventListener('resize', ()=>{
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(()=>{
+          // adjust padding for desktop nav
+          adjustPadding();
+          // re-render to update paragraphs (mobile/desktop switch)
+          if(state.curArticle && state.curQuestion) render();
+        }, 120);
+      });
+
+      function adjustPadding(){
+        const nav = document.querySelector('.nav');
+        if(nav && getComputedStyle(nav).display !== 'none'){
+          document.body.style.paddingTop = nav.offsetHeight + 'px';
+        } else {
+          document.body.style.paddingTop = '0px';
+        }
+      }
+
+      // init
+      adjustPadding();
+      loadRandom();
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Reading Overview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fff5f5 0%, #ffeaea 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#ff824d] to-[#ff4d4d] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#f9a8a8] to-[#f87171] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 1 — IELTS Reading Overview</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Format, Timing, Scoring Explained</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#f87171]">Welcome to Your First Reading Mission!</h2>
+      <p>In this lesson, you’ll discover what the IELTS Reading test really looks like — its structure, timing, and scoring system. Think of it as your treasure map before the adventure begins! 🗺️</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f87171]">1. What Is IELTS Reading?</h2>
+      <p>Imagine you’re a detective — IELTS Reading gives you 3 passages and 40 questions. You have <b>60 minutes</b> to uncover the truth hidden inside each text.</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Texts come from books, ads, journals, and magazines</li>
+        <li>Topics range from science to history to education</li>
+      </ul>
+      <div class="bg-red-50 border-l-4 border-[#f87171] p-4 mt-4 rounded">
+        <p class="italic">🎯 Your goal: Understand the main ideas, opinions, and details — like a skilled reader, not a robot!</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f87171]">💥 2. Structure at a Glance</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-center border text-sm md:text-base">
+          <thead class="bg-[#ffe3e3]">
+            <tr>
+              <th class="border px-3 py-2">Section</th>
+              <th class="border px-3 py-2">Type</th>
+              <th class="border px-3 py-2">Text Length</th>
+              <th class="border px-3 py-2">Focus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border px-3 py-2">Passage 1</td>
+              <td class="border px-3 py-2">Simple & factual</td>
+              <td class="border px-3 py-2">~700 words</td>
+              <td class="border px-3 py-2">Everyday topics</td>
+            </tr>
+            <tr>
+              <td class="border px-3 py-2">Passage 2</td>
+              <td class="border px-3 py-2">Moderate</td>
+              <td class="border px-3 py-2">~800 words</td>
+              <td class="border px-3 py-2">Work or education</td>
+            </tr>
+            <tr>
+              <td class="border px-3 py-2">Passage 3</td>
+              <td class="border px-3 py-2">Difficult & abstract</td>
+              <td class="border px-3 py-2">~900 words</td>
+              <td class="border px-3 py-2">Academic ideas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-sm text-gray-600 italic">💡 Difficulty increases gradually — warm up with Passage 1!</p>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f87171]">⚔️ Mini Challenge — Time Division</h2>
+      <p>“You have 15 minutes for Passage 1 — how would you divide your time between reading and answering?”</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 10 min read / 5 min answer</button>
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 5 min read / 10 min answer</button>
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 7 min read / 8 min answer</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f87171]">📈 3. Scoring System</h2>
+      <p>You’ll answer <b>40 questions</b>, each worth one mark. Your total converts to a Band Score (1–9).</p>
+      <div class="overflow-x-auto mt-3">
+        <table class="min-w-full text-center border text-sm md:text-base">
+          <thead class="bg-[#ffe3e3]">
+            <tr>
+              <th class="border px-3 py-2">Raw Score</th>
+              <th class="border px-3 py-2">Band Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="border px-3 py-2">40</td><td class="border px-3 py-2">9.0</td></tr>
+            <tr><td class="border px-3 py-2">37–38</td><td class="border px-3 py-2">8.5</td></tr>
+            <tr><td class="border px-3 py-2">35–36</td><td class="border px-3 py-2">8.0</td></tr>
+            <tr><td class="border px-3 py-2">30–32</td><td class="border px-3 py-2">7.0</td></tr>
+            <tr><td class="border px-3 py-2">23–26</td><td class="border px-3 py-2">6.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bg-[#fff5f5] border-l-4 border-[#f87171] p-4 mt-4 rounded">
+        <p>🎯 Aim for <b>30+</b> correct answers to hit Band 7. That’s the golden zone for most universities!</p>
+      </div>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#f87171]">🌿 You Did It!</h2>
+      <p>Congratulations, you’ve completed Lesson 1 of Summage Academy’s IELTS Reading course.  
+      Next up: <b>Lesson 2 — Matching Headings Masterclass</b></p>
+      <div class="mt-4">
+        <button class="bg-gradient-to-r from-[#f9a8a8] to-[#f87171] hover:opacity-90 text-white py-2 px-5 rounded-full shadow-md">👉 Next Lesson</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-100', 'bg-red-100'));
+      
+      if (option === 3) {
+        element.classList.add('bg-green-100');
+        result.textContent = '✅ Correct! Reading 7 min and answering 8 min gives you balance.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Try reading briefly, then answer while scanning.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

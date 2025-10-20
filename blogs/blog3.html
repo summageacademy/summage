@@ -1,0 +1,387 @@
+<!-- attention_like_muscle.html -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Summage — Build Attention Like a Muscle</title>
+<style>
+  :root{
+    --brand: #f24b0b;
+    --text: #222;
+    --muted: #666;
+    --bg: #fafafa;
+    --card: #fff;
+    --radius: 10px;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;padding:24px}
+  a{color:var(--brand);text-decoration:underline}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--brand), #fb6b39);color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:48px;height:48px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.12)}
+  .brand .title{font-weight:700;font-size:18px;line-height:1;margin:0}
+  .brand .subtitle{font-size:12px;opacity:0.95;margin:0}
+  .nav-actions{display:flex;gap:8px;align-items:center}
+  .nav-actions a,.nav-actions button{background:rgba(255,255,255,0.12);padding:8px 12px;border-radius:10px;color:#fff;font-weight:600;text-decoration:none;border:0;cursor:pointer}
+
+  .container{max-width:1100px;margin:20px auto 0}
+  .hero{display:flex;gap:24px;align-items:flex-start;background:var(--card);padding:22px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.04)}
+  .main{flex:1;min-width:0}
+  .kicker{display:inline-block;color:var(--brand);font-weight:700;font-size:13px;margin-bottom:8px}
+  h1{margin:6px 0 10px;font-size:34px;line-height:1.02}
+  p.lead{color:var(--muted);margin:0 0 16px;font-size:15px}
+
+  .split{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px}
+  .split .text{flex:0 0 60%}
+  .split .image{flex:0 0 40%}
+  .split .image img{width:100%;height:auto;border-radius:8px;display:block}
+
+  article p{margin:0 0 12px 0;font-size:15px}
+  article ul{margin:8px 0 12px 20px}
+  .meta{color:var(--muted);font-size:13px;margin-top:10px}
+
+  .aside{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
+  .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 18px rgba(0,0,0,0.03)}
+  .card h4{margin:0 0 6px 0;font-size:15px}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+
+  .trans{color:var(--muted);font-size:14px;margin-top:6px;margin-bottom:6px;padding-left:6px;border-left:2px solid rgba(0,0,0,0.03)}
+  .quote{margin:18px 0;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(242,75,11,0.06), rgba(242,75,11,0.02));border:1px solid rgba(242,75,11,0.12);font-size:16px;color:var(--text)}
+  .quote .q-text{font-weight:600;margin:0 0 8px 0}
+  .quote .q-author{font-size:13px;color:var(--muted);}
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:none;align-items:center;justify-content:center;z-index:60}
+  .modal{background:#fff;padding:16px;border-radius:10px;width:320px;text-align:center;border:1px solid rgba(0,0,0,0.06);box-shadow: 0 12px 40px rgba(0,0,0,0.08)}
+  .lang-grid{display:flex;gap:8px;justify-content:center;margin-top:12px}
+  .lang-option{padding:8px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;background:#fff;min-width:80px}
+  .lang-option[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .modal small{display:block;color:var(--muted);margin-top:8px}
+
+  @media (max-width:900px){.hero{flex-direction:column}.aside{width:100%}}
+  @media (max-width:520px){body{padding:14px}.brand img{width:40px;height:40px;border-radius:8px}.brand .title{font-size:16px}.nav-actions a{padding:8px 10px;font-size:14px}h1{font-size:22px}.split{flex-direction:column}.split .image img{width:90%;margin:8px auto 0;display:block}.aside{order:2}}
+  .lang-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; }
+  .lang-btn img { display:none; width:20px; height:20px; object-fit:contain; }
+  .lang-btn .lang-text { font-size:13px; color:inherit; }
+  @media (max-width: 520px) { .lang-btn { padding:8px; border-radius:10px; } .lang-btn img { display:block; } .lang-btn .lang-text { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; } }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" role="banner">
+    <div class="brand">
+      <img src="logo_white.jpg" alt="Summage logo">
+      <div>
+        <p class="title">Summage</p>
+        <p class="subtitle">Thoughtful notes</p>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <a id="backBtn" href="../blogs.html">← Back to blogs</a>
+      <button class="lang-btn" id="open-lang" aria-label="Choose language">
+        <img src="/icons/languages.png" alt="" aria-hidden="true">
+        <span class="lang-text">Language</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="container">
+    <main class="hero" role="main" aria-labelledby="article-title">
+      <section class="main">
+        <span class="kicker" id="kicker">Mindcraft</span>
+        <h1 id="article-title">How to Build Attention Like a Muscle</h1>
+        <p class="lead" id="lead">Short, actionable — and a little soulful. This is my guide to training attention: steady, daily, and humane.</p>
+
+        <article id="article-body" aria-live="polite">
+
+          <p id="p1">Attention is not a gift — it's a skill. I used to think being focused was something others were born with. Then I treated attention like a muscle: if you warm it, exercise it, and rest it properly, it grows. That change in view is everything.</p>
+          
+          <h3 style="margin-top:10px">Why attention matters (short)</h3>
+          <p id="p2">When attention is trained you: learn faster, resist distraction, read deeper, and make fewer regrettable impulses. In my life, attention unlocked better study sessions, calmer prayers, and clearer goals.</p>
+          
+          <h3 style="margin-top:10px">Principles (how a muscle grows)</h3>
+          <ul>
+            <li><strong>Progressive overload:</strong> start small, increase gradually.</li>
+            <li><strong>Specificity:</strong> train attention in the exact way you need it (reading vs. listening vs. coding).</li>
+            <li><strong>Rest & recovery:</strong> breaks are where gains happen.</li>
+            <li><strong>Consistency over intensity:</strong> daily tiny wins beat rare big sprints.</li>
+          </ul>
+          
+          <h3 style="margin-top:10px">Tactics I used — practical and simple</h3>
+
+          <p id="p3">1) Micro-sessions: 12 minutes focused — 3 minutes rest. Repeat 4 times. The short window keeps the brain sharp and reduces procrastination. Use a physical timer (not your phone alarm) — the tactile click matters.</p>
+          
+          <p id="p4">2) Single-task rituals: before a session, write one sentence: "My goal for 12 minutes is..." This orients attention and reduces vague starting anxiety.</p>
+          
+          <p id="p5">3) Non-dominant hand check-ins: every 30 minutes, write one word with your other hand describing current focus (e.g., \"clear\", \"drifty\", \"deep\"). It acts like a reset and engages new circuits.</p>
+          
+          <p id="p6">4) Environment pruning: remove one attention-sucking object from your workspace each week (notifications, tab groups, a distracting poster). Small deletions add up.</p>
+          
+          <h3 style="margin-top:10px">A 3-week attention plan (doable)</h3>
+          <p id="p7">Week 1 — Foundations</p>
+          <ul>
+            <li>Day sessions: 2 × (12min focus + 3min break).</li>
+            <li>Daily ritual: write the 12-min goal.</li>
+            <li>Evening log: 2 lines — what worked, what drifted.</li>
+          </ul>
+          
+          <p id="p8">Week 2 — Load & specificity</p>
+          <ul>
+            <li>Increase to 3 × (20min focus + 5min break) on one day.</li>
+            <li>Practice one focused reading session (slow, margin notes).</li>
+            <li>Remove one distraction from the workspace.</li>
+          </ul>
+          
+          <p id="p9">Week 3 — Variation & resilience</p>
+          <ul>
+            <li>Mix study modes (listening, writing, problem-solving) each day.</li>
+            <li>Do one 45-min deep session (with 10-min break halfway).</li>
+            <li>Keep the discomfort log — celebrate the minutes you kept focus.</li>
+          </ul>
+          
+          <h3 style="margin-top:10px">Micro-practices you can do anywhere</h3>
+          <ul>
+            <li>Single-count breathing (4 in, 4 hold, 4 out) for one minute before a task.</li>
+            <li>Two-minute focused stare: pick an object and describe it silently for 120 seconds — no phone.</li>
+            <li>One-word check-ins (non-dominant hand) during breaks.</li>
+            <li>Replace one scroll session with two printed pages of slow reading.</li>
+          </ul>
+          
+          <h3 style="margin-top:10px">What you might expect</h3>
+          <p id="p10">At first you’ll fail often — that's the training. After 2–3 weeks you’ll notice longer pockets of focus, less guilt when you falter, and clearer study sessions. The muscle doesn't look dramatic — but your life will feel quieter and more intentional.</p>
+          
+          <div class="split" aria-label="text with image">
+            <div class="text">
+              <h3 id="h3-summary" style="margin-top:0">Quick checklist</h3>
+              <ul id="bullets">
+                <li>12/3 micro-sessions daily</li>
+                <li>One ritual sentence before work</li>
+                <li>Non-dominant hand one-word check-ins</li>
+                <li>Weekly environment pruning</li>
+                <li>Keep a short discomfort log</li>
+              </ul>
+            </div>
+            <div class="image">
+              <img src="../blogs/blog-images/attention-illustration.png" alt="attention illustration">
+            </div>
+          </div>
+
+          <p class="meta" id="meta"><time datetime="2025-10-11">Published • Oct 11, 2025</time></p>
+
+          <div class="quote" role="note" aria-label="quote">
+            <p class="q-text">"The man who conquers himself is greater than the man who conquers a thousand cities."</p>
+            <p class="q-author">— Imam Ali (رضي الله عنه)</p>
+          </div>
+
+        </article>
+      </section>
+
+      <aside class="aside" aria-label="related">
+        <div class="card">
+          <h4 id="aside1-title">Practice kit</h4>
+          <p id="aside1-body">Physical timer • Notebook for discomfort log • Quiet corner for slow reading.</p>
+        </div>
+
+        <div class="card">
+          <h4 id="aside2-title">Related post</h4>
+          <p><a id="related-link" href="#">How I Learned to Use My Brain 100%</a></p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Language modal -->
+  <div id="lang-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" id="lang-modal-box" role="document" aria-labelledby="lang-title">
+      <h4 id="lang-title">Choose language</h4>
+      <small class="muted">This page includes inline translations and a compact translations note.</small>
+      <div class="lang-grid" style="margin-top:12px;">
+        <button class="lang-option" data-lang="en" aria-pressed="false">English</button>
+        <button class="lang-option" data-lang="ru" aria-pressed="false">Русский</button>
+        <button class="lang-option" data-lang="uz" aria-pressed="false">Oʻzbekcha</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  (function(){
+    const STORAGE_KEY = 'summage_lang';
+    const DICT = {
+      en: {
+        kicker: 'Mindcraft',
+        title: 'How to Build Attention Like a Muscle',
+        lead: 'Short, actionable — and a little soulful. This is my guide to training attention: steady, daily, and humane.',
+        p1: 'Attention is not a gift — it\'s a skill. I used to think being focused was something others were born with. Then I treated attention like a muscle: if you warm it, exercise it, and rest it properly, it grows. That change in view is everything.',
+        p2: 'When attention is trained you: learn faster, resist distraction, read deeper, and make fewer regrettable impulses.',
+        p3: '1) Micro-sessions: 12 minutes focused — 3 minutes rest. Repeat 4 times. Use a physical timer.',
+        p4: '2) Single-task rituals: before a session, write one sentence: "My goal for 12 minutes is..."',
+        p5: '3) Non-dominant hand check-ins: every 30 minutes, write one word with your other hand describing current focus.',
+        p6: '4) Environment pruning: remove one attention-sucking object from your workspace each week.',
+        p7: 'Week 1 — Foundations: 2 × (12+3), ritual, evening log.',
+        p8: 'Week 2 — Load & specificity: 20-min sessions, slow reading, remove one distraction.',
+        p9: 'Week 3 — Variation & resilience: mix modes, one 45-min deep session, keep the discomfort log.',
+        p10: 'Expect failures early; expect steady improvement by week 2–3. The life you build will feel quieter and more intentional.',
+        meta: 'Published • Oct 11, 2025',
+        aside1Title: 'Practice kit',
+        aside1Body: 'Physical timer • Notebook for discomfort log • Quiet corner for slow reading.',
+        aside2Title: 'Related post',
+        relatedLink: 'How I Learned to Use My Brain 100%',
+        backDesktop: '← Back to blogs',
+        backMobile: 'Back',
+        quote: { text: '"The man who conquers himself is greater than the man who conquers a thousand cities."', author: 'Imam Ali (رضي الله عنه)' }
+      },
+      ru: {
+        kicker: 'Mindcraft',
+        title: 'Как тренировать внимание как мышцу',
+        lead: 'Коротко, практично и немного душевно. Мой гид по тренировке внимания: стабильно, ежедневно и по-человечески.',
+        p1: 'Внимание — навык. Раньше я думал, что фокус — врождённая черта. Потом я стал тренировать внимание как мускул: разогрей, потренируй и дай отдохнуть — и оно вырастет.',
+        p2: 'Когда внимание тренировано, вы учитесь быстрее, сопротивляетесь отвлечениям, глубже читаете и меньше поддаётесь импульсам.',
+        p3: '1) Микросессии: 12 минут фокуса — 3 минуты отдыха. Повторите 4 раза. Используйте физический таймер.',
+        p4: '2) Ритуал одной задачи: перед сессией запишите одно предложение: «Моя цель на 12 минут...»',
+        p5: '3) Проверки недоминантной рукой: каждые 30 минут напишите другим рукой одно слово, описывающее фокус.',
+        p6: '4) Обрезка окружения: убирайте каждую неделю одну вещь, крадущую внимание.',
+        p7: '1-я неделя — основы: 2 сессии 12+3, ритуал, вечерний лог.',
+        p8: '2-я неделя — нагрузка: 20-мин сеансы, медленное чтение, удалить одну помеху.',
+        p9: '3-я неделя — вариативность: смешивайте режимы, одна 45-мин глубинная сессия, журнал дискомфорта.',
+        p10: 'Ожидайте неудач в начале; улучшение почувствуете через 2–3 недели. Жизнь станет тише и осознаннее.',
+        meta: 'Опубликовано • 11 окт 2025',
+        aside1Title: 'Набор для практики',
+        aside1Body: 'Физический таймер • Блокнот для журнала дискомфорта • Тихое место для медленного чтения.',
+        aside2Title: 'Релевантный пост',
+        relatedLink: 'Как я научился использовать мозг на 100%',
+        backDesktop: '← Назад к блогам',
+        backMobile: 'Назад',
+        quote: { text: '"Человек, который победил самого себя, больше того, кто покорил тысячу городов."', author: 'Имам Али (رضي الله عنه)' }
+      },
+      uz: {
+        kicker: 'Mindcraft',
+        title: 'Diqqatni mushak kabi qanday qurish mumkin',
+        lead: 'Qisqa, amaliy va ozgina ruhiy. Bu diqqatni mashq qilish bo‘yicha mening qo‘llanmam: barqaror, kundalik va odamiy.',
+        p1: 'Diqqat in\'om emas, balki mahoratdir. Avvaliga men fokus boshqalarga berilgan deb o‘ylardim. Keyin uni mushak kabi mashq qilishni boshladim: isin, mashq qil va dam ol — u o‘sadi.',
+        p2: 'Diqqatni o‘rgansangiz: tezroq o‘rganasiz, chalg‘itishga chidaysan, chuqurroq o‘qisan va kamroq impulsiv xatti-harakat qilasan.',
+        p3: '1) Mikro-sessiyalar: 12 daqiqa fokus — 3 daqiqa tanaffus. 4 marta takrorlang. Fizik taimer ishlating.',
+        p4: '2) Bitta vazifa rituallari: sessiya oldida bitta gap yozing: "Mening 12 daqiqa maqsadim..."',
+        p5: '3) Noaniq qo‘l tekshiruvlari: har 30 daqiqada boshqa qo‘l bilan e\'tibor holatini bitta so‘z bilan yozing.',
+        p6: '4) Muhitni tozalash: har hafta ish joyingizdan bir e\'tiborni o‘g‘iruvchi narsani olib tashlang.',
+        p7: '1-hafta — asoslar: 2 × (12+3), rituallar, kechki jurnal.',
+        p8: '2-hafta — yuk va maxsuslik: 20 daqiqa seanslar, sekin o‘qish, bitta chalg‘ituvchini olib tashlang.',
+        p9: '3-hafta — o‘zgaruvchanlik: rejimlarni aralashtiring, bir 45 daqiqa chuqur sessiya va noqulaylik jurnalini davom ettiring.',
+        p10: 'Dastlab muvaffaqiyatsizliklar bo‘ladi; 2–3 haftadan keyin barqaror yaxshilanishni sezasiz. Hayotingiz tinchroq va ongliroq bo‘ladi.',
+        meta: 'Chop etilgan • 11 Okt 2025',
+        aside1Title: 'Amaliy to‘plam',
+        aside1Body: 'Fizik taimer • Noqulaylik jurnali uchun daftar • Sekin o‘qish uchun jim joy.',
+        aside2Title: 'Tegishli post',
+        relatedLink: 'Qanday qilib miyamni 100% ishlatishni o‘rgandim',
+        backDesktop: '← Bloglarga qaytish',
+        backMobile: 'Orqaga',
+        quote: { text: '"O‘zini zabt etgan kishi ming shaharni zabt etgan kimsadan ulug‘dir."', author: 'Imom Ali (رضي الله عنه)' }
+      }
+    };
+
+    function getStoredLang(){ const v = localStorage.getItem(STORAGE_KEY); return (v && DICT[v]) ? v : 'en'; }
+
+    const elements = {
+      kicker: document.getElementById('kicker'),
+      title: document.getElementById('article-title'),
+      lead: document.getElementById('lead'),
+      p1: document.getElementById('p1'),
+      p2: document.getElementById('p2'),
+      p3: document.getElementById('p3'),
+      p4: document.getElementById('p4'),
+      p5: document.getElementById('p5'),
+      p6: document.getElementById('p6'),
+      p7: document.getElementById('p7'),
+      p8: document.getElementById('p8'),
+      p9: document.getElementById('p9'),
+      p10: document.getElementById('p10'),
+      meta: document.getElementById('meta'),
+      aside1Title: document.getElementById('aside1-title'),
+      aside1Body: document.getElementById('aside1-body'),
+      aside2Title: document.getElementById('aside2-title'),
+      relatedLink: document.getElementById('related-link'),
+      backBtn: document.getElementById('backBtn')
+    };
+
+    function applyLanguage(lang){
+      const D = DICT[lang] || DICT.en;
+      elements.kicker.textContent = D.kicker;
+      elements.title.textContent = D.title;
+      elements.lead.textContent = D.lead;
+      elements.p1.textContent = D.p1;
+      elements.p2.textContent = D.p2;
+      elements.p3.textContent = D.p3;
+      elements.p4.textContent = D.p4;
+      elements.p5.textContent = D.p5;
+      elements.p6.textContent = D.p6;
+      elements.p7.textContent = D.p7;
+      elements.p8.textContent = D.p8;
+      elements.p9.textContent = D.p9;
+      elements.p10.textContent = D.p10;
+      elements.meta.innerHTML = '<time datetime="2025-10-11">' + D.meta + '</time>';
+      elements.aside1Title.textContent = D.aside1Title;
+      elements.aside1Body.textContent = D.aside1Body;
+      elements.aside2Title.textContent = D.aside2Title;
+      elements.relatedLink.textContent = D.relatedLink;
+      function updateBackText(){ const isMobile = window.innerWidth <= 420; elements.backBtn.textContent = isMobile ? D.backMobile : D.backDesktop; }
+      updateBackText();
+
+      // Update quote
+      const quoteBlock = document.querySelector('.quote');
+      if(quoteBlock){
+        const qt = D.quote || DICT.en.quote;
+        quoteBlock.querySelector('.q-text').textContent = qt.text;
+        quoteBlock.querySelector('.q-author').textContent = '— ' + qt.author;
+      }
+    }
+
+    let lang = getStoredLang();
+    applyLanguage(lang);
+
+    const openLangBtn = document.getElementById('open-lang');
+    const langModal = document.getElementById('lang-modal');
+    const langOptions = Array.from(document.querySelectorAll('.lang-option'));
+
+    function openLangModal(){ langModal.style.display = 'flex'; langModal.setAttribute('aria-hidden','false'); langOptions.forEach(btn => { btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false'); }); }
+    function closeLangModal(){ langModal.style.display = 'none'; langModal.setAttribute('aria-hidden','true'); }
+
+    openLangBtn.addEventListener('click', openLangModal);
+    langModal.addEventListener('click', (e) => { if(e.target === langModal) closeLangModal(); });
+
+    langOptions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chosen = btn.dataset.lang;
+        if(!DICT[chosen]) return;
+        lang = chosen;
+        localStorage.setItem(STORAGE_KEY, chosen);
+        applyLanguage(chosen);
+        langOptions.forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === chosen ? 'true' : 'false'));
+        closeLangModal();
+      });
+    });
+
+    window.addEventListener('storage', (e) => {
+      if(e.key === STORAGE_KEY){
+        const newLang = (e.newValue && DICT[e.newValue]) ? e.newValue : 'en';
+        lang = newLang;
+        applyLanguage(newLang);
+      }
+    });
+
+    window.Summage = window.Summage || {};
+    window.Summage.setLang = function(code){ if(DICT[code]) { localStorage.setItem(STORAGE_KEY, code); applyLanguage(code); } };
+
+    (function updateBackOnResize(){
+      const D = DICT[lang] || DICT.en;
+      function update(){ const isMobile = window.innerWidth <= 420; document.getElementById('backBtn').textContent = isMobile ? D.backMobile : D.backDesktop; }
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+  })();
+</script>
+
+</body>
+</html>

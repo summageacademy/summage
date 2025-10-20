@@ -29,23 +29,23 @@
 
 /* ----- Dark theme (device-driven) ----- */
 [data-theme="dark"] {
-  --bg-gradient: linear-gradient(180deg, #0b1220 0%, #0f1724 60%);
-  --text-color: #e6eef6;
-  --muted-text-color: rgba(230,238,246,0.9);
-  --header-bg: rgba(5, 10, 18, 0.5);
-  --header-border: rgba(255,255,255,0.03);
-  --accent-color: #f24b0b; /* keep orange accent */
-  --link-color: #ffffff;
+  --bg-gradient: linear-gradient(180deg, #f0fdfa 0%, #ffffff 60%);
+  --text-color: #333333;
+  --muted-text-color: #444444;
+  --header-bg: #ffffffee;
+  --header-border: #eaeaea;
+  --accent-color: #f24b0b; /* orange */
+  --link-color: #f24b0b;
   --button-primary-bg: #f24b0b;
   --button-primary-hover: #d43a00;
   --button-secondary-bg: #06a87c;
   --button-secondary-hover: #048965;
   --chat-bg: #f24b0b;
   --logo-text-color: #f24b0b;
-  --hero-title-color: #ffffff;
-  --hero-paragraph-color: rgba(230,238,246,0.9);
-  --footer-icon-shadow: rgba(0,0,0,0.6);
-  --image-drop-shadow: rgba(0,0,0,0.6);
+  --hero-title-color: #007a52;
+  --hero-paragraph-color: #444;
+  --footer-icon-shadow: rgba(0,0,0,0.12);
+  --image-drop-shadow: rgba(0,0,0,0.25);
 }
 
 /* ========== Base styles (use vars) ========== */
