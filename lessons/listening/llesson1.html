@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Listening Lesson 1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fff8e1 0%, #fff4d6 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#fcd34d] to-[#f59e0b] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#f59e0b] to-[#fcd34d] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 1: Listening Overview</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Mastering Focus, Understanding, and Prediction</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#f59e0b]">What is the Listening Test?</h2>
+      <p>In the IELTS Listening test, you’ll hear a range of recordings such as conversations, monologues, and academic discussions. Your goal is to listen carefully, understand main ideas, and catch specific details accurately.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f59e0b]">1. Structure of the Test</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li><b>Section 1:</b> Everyday conversation (e.g., booking, appointments)</li>
+        <li><b>Section 2:</b> Monologue (e.g., tour guide, radio talk)</li>
+        <li><b>Section 3:</b> Academic discussion (2–4 speakers)</li>
+        <li><b>Section 4:</b> Lecture or academic talk</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-[#f59e0b] p-4 mt-4 rounded">
+        <p class="italic">Tip: Each recording is played <b>once</b>. Focus and note-taking are key!</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f59e0b]">2. Common Question Types</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Multiple Choice</li>
+        <li>Matching Information</li>
+        <li>Form Completion</li>
+        <li>Map or Diagram Labeling</li>
+        <li>Sentence Completion</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-[#f59e0b] p-4 mt-4 rounded">
+        <p class="italic">Tip: Always read the questions first. This helps your brain know what to listen for.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f59e0b]">3. Essential Listening Strategies</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Predict possible answers before listening</li>
+        <li>Listen for synonyms and paraphrasing</li>
+        <li>Don’t panic if you miss one answer, just <b>move on!</b></li>
+        <li>Use short notes and keywords</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-[#f59e0b] p-4 mt-4 rounded">
+        <p class="italic">Tip: Stay calm, as missing one answer doesn’t mean failing the section.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f59e0b]">Mini Challenge 🎧</h2>
+      <p>“How many times will each recording be played in the IELTS Listening test?”</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 Only once</button>
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 Twice</button>
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 Three times</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#f59e0b]">🎧 You Did It!</h2>
+      <p>Well done, you’ve completed Lesson 1 of Summage Academy’s IELTS Listening course.<br>
+      Next up: <br><b>Lesson 2: Predicting Answers</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-amber-300', 'bg-red-100'));
+      
+      if (option === 1) {
+        element.classList.add('bg-amber-300');
+        result.textContent = '✅ Correct! Each recording is played only once, so stay focused.';
+        result.className = 'mt-3 text-amber-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. You only get one chance to hear each recording.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -188,12 +188,12 @@
   <header>
     <img src="otherassets/logo.jpg" alt="Summage Logo">
     <h1>Writing Practice</h1>
-    <a href="mocks.html">← Back</a>
+    <a href="mocks.html">Back</a>
   </header>
 
   <main>
     <div class="selector">
-      <div class="select-btn">Choose Task ⬇️</div>
+      <div class="select-btn">Choose Task </div>
       <div class="options">
         <div data-task="2">Task 2</div>
       </div>
@@ -210,7 +210,7 @@
     </div>
   </main>
 
-  <button class="next-btn" id="next-btn" disabled>Next Topic ➡️</button>
+  <button class="next-btn" id="next-btn" disabled>Next Topic</button>
 
   <script>
     const tasks = {
@@ -236,7 +236,33 @@
         { topic: "Some people think school exams are the best way to assess students, while others believe continuous assessment is better. Discuss both views and give your opinion.", answer: "Exams measure performance under pressure, while continuous assessment shows consistent effort. Conclude that a mix of both ensures fair and accurate evaluation." },
         { topic: "Some think living in big cities is better, while others prefer life in the countryside. Discuss both views and give your opinion.", answer: "Cities offer job opportunities and modern comfort, while countryside life gives peace and closeness to nature. Conclude that choice depends on lifestyle, but balanced urban planning can offer both." },    
         { topic: "Some people think young people should choose their own careers, while others believe parents should guide them. Discuss both views and give your opinion.", answer: "Freedom allows passion and motivation, while parental advice provides wisdom and safety. Conclude that youths should decide but respect their parents’ experience." },
-        { topic: "Many people think climate change is the biggest threat to humanity, while others believe there are more urgent problems. Discuss both views and give your opinion.", answer: "Climate change affects all life globally, while poverty and war cause immediate suffering. Conclude that solving climate issues first helps reduce other global problems too." }    
+        { topic: "Many people think climate change is the biggest threat to humanity, while others believe there are more urgent problems. Discuss both views and give your opinion.", answer: "Climate change affects all life globally, while poverty and war cause immediate suffering. Conclude that solving climate issues first helps reduce other global problems too." },    
+        { topic: "Some people believe that success depends mainly on luck, while others think it depends on hard work. Discuss both views and give your opinion.", answer: "Explain that luck may open doors but hard work sustains success. Conclude that discipline and effort create their own luck." },
+        { topic: "Many argue that globalization brings more benefits than drawbacks. Discuss both views and give your opinion.", answer: "Discuss economic growth and cultural exchange versus loss of identity and inequality. Conclude that controlled globalization benefits nations most." },
+        { topic: "Some people think public money should be spent on healthcare, while others believe education is more important. Discuss both views and give your opinion.", answer: "Compare the role of health in survival and education in progress. Conclude that both are essential, but education creates long-term health awareness." },
+        { topic: "Some believe social media makes people closer, while others think it isolates them. Discuss both views and give your opinion.", answer: "Explain how it connects people globally but weakens real relationships. Conclude that moderation is the key to healthy use." },
+        { topic: "Many people believe that advertisements influence our choices too much. Discuss both views and give your opinion.", answer: "Discuss how ads help businesses and inform customers but also manipulate emotions. Conclude that ethical advertising should be encouraged." },
+        { topic: "Some people think that learning art and music at school is a waste of time. Discuss both views and give your opinion.", answer: "Compare creativity and emotional growth versus academic focus. Conclude that art supports mental balance and should stay in education." },
+        { topic: "Some believe people today value money more than relationships. Discuss both views and give your opinion.", answer: "Show how modern life demands financial stability but emotional connection defines happiness. Conclude that balance between both brings peace." },
+        { topic: "Many people think space exploration is a waste of money, while others see it as important for the future. Discuss both views and give your opinion.", answer: "Discuss cost and immediate issues versus technological progress and inspiration. Conclude that exploration should continue with responsible budgeting." },
+        { topic: "Some think schools should focus on practical skills, while others prefer theoretical knowledge. Discuss both views and give your opinion.", answer: "Compare how theory builds understanding and practice builds ability. Conclude that a balanced education produces capable citizens." },
+        { topic: "Some people think the government should make university education free for everyone. Discuss both views and give your opinion.", answer: "Explain how free education promotes equality but can burden the economy. Conclude that partial scholarships and merit-based systems are fairer." },
+        { topic: "Many believe that modern technology is making people less creative. Discuss both views and give your opinion.", answer: "Compare how tools inspire innovation versus how convenience kills imagination. Conclude that creativity depends on how we use technology." },
+        { topic: "Some people think international tourism creates tension between countries instead of understanding. Discuss both views and give your opinion.", answer: "Discuss cultural exchange and misunderstanding due to ignorance. Conclude that respectful tourism strengthens global unity." },
+        { topic: "Some argue that men and women should be paid equally in every profession. Discuss both views and give your opinion.", answer: "Explain equality in effort versus physical or risk-based job differences. Conclude that fairness should depend on skill, not gender." },
+        { topic: "Many people believe that crime rates can be reduced by giving longer prison sentences. Discuss both views and give your opinion.", answer: "Compare punishment as deterrence versus rehabilitation as prevention. Conclude that both strict laws and education are necessary." },
+        { topic: "Some people think students should study only subjects they enjoy, while others believe they should learn a variety. Discuss both views and give your opinion.", answer: "Discuss passion-based learning versus well-rounded education. Conclude that early variety helps students later choose their passion wisely." },
+        { topic: "Some believe traditional culture will disappear due to modern technology. Discuss both views and give your opinion.", answer: "Discuss digital preservation versus cultural loss through globalization. Conclude that technology can actually protect traditions if used wisely." },
+        { topic: "Many think celebrities have a bad influence on young people. Discuss both views and give your opinion.", answer: "Show positive role models versus toxic lifestyles. Conclude that it depends on who the youth choose to follow." },
+        { topic: "Some argue that online learning will replace traditional schools in the future. Discuss both views and give your opinion.", answer: "Discuss flexibility and access versus lack of human interaction. Conclude that blended learning is the most effective model." },
+        { topic: "Many people believe that governments should ban fast food to protect public health. Discuss both views and give your opinion.", answer: "Compare personal freedom versus public health concerns. Conclude that education and awareness work better than strict bans." },
+        { topic: "Some people think success in life comes from university education, while others believe it comes from real-life experience. Discuss both views and give your opinion.", answer: "Compare academic preparation with practical learning. Conclude that success depends on how well knowledge is applied, not where it’s learned." },
+        { topic: "Some believe children should start school at an early age, while others think they should begin later. Discuss both views and give your opinion.", answer: "Discuss early development versus emotional readiness. Conclude that the ideal age depends on each child’s maturity and environment." },
+        { topic: "Many people think governments should spend more on public transport than on roads. Discuss both views and give your opinion.", answer: "Explain how public transport reduces pollution, while roads support private travel. Conclude that cities need both for balanced infrastructure." },
+        { topic: "Some believe that rich countries should help poor countries financially. Discuss both views and give your opinion.", answer: "Discuss global responsibility versus dependency. Conclude that help should focus on education and job creation, not just money." },
+        { topic: "Many people think traditional books are better than e-books. Discuss both views and give your opinion.", answer: "Compare the emotional value of paper books and the convenience of digital reading. Conclude that the purpose of reading matters more than the format." },
+        { topic: "Some think the main purpose of museums is to educate people, while others believe they are for entertainment. Discuss both views and give your opinion.", answer: "Discuss how museums teach history and attract visitors through fun. Conclude that combining education with engagement makes museums powerful." }
+
       ]
     };
 
@@ -277,7 +303,7 @@
       const random = data[Math.floor(Math.random() * data.length)];
       let html = `<h2>Writing Task ${currentTask}</h2><p>${random.topic}</p>`;
 
-      questionCard.innerHTML = html + `<button class="show-answer">Show Advice 💬</button>`;
+      questionCard.innerHTML = html + `<button class="show-answer">Show Advice</button>`;
       answerCard.style.display = "none";
       answerText.textContent = random.answer;
 

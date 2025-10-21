@@ -1,0 +1,285 @@
+/* ====== Global ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #fff8f1 0%, #ffe8d6 100%);
+    color: #333;
+    line-height: 1.6;
+    padding-bottom: 80px;
+  }
+  
+  /* ====== Navbar ====== */
+  .navbar {
+    max-width: 1100px;
+    margin: 20px auto;
+    background: linear-gradient(90deg, #ff8a3d, #ff5a1f);
+    padding: 12px 20px;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  
+  .brand h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .brand p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    margin-top: -4px;
+  }
+  
+  .back-btn {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 14px;
+  }
+  
+  .back-btn:hover {
+    background: rgba(255,255,255,0.3);
+  }
+  
+  /* ====== Hero ====== */
+  .hero {
+    max-width: 900px;
+    margin: 40px auto;
+    background: linear-gradient(90deg, #ffbb70, #ff884d);
+    color: #fff;
+    text-align: center;
+    padding: 50px 25px;
+    border-radius: 28px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    animation: fadeIn 1s ease forwards;
+  }
+  
+  .hero h1 {
+    font-size: 30px;
+    font-weight: 700;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-top: 8px;
+  }
+  
+  /* ====== Content Layout ====== */
+  .content {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  .card {
+    background: #fff;
+    padding: 24px;
+    border-radius: 18px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    margin-top: 24px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeInUp 0.6s ease forwards;
+  }
+  
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .card h2 {
+    color: #ff6b1f;
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+  
+  /* ====== Lists, Tables ====== */
+  ul {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  
+  li {
+    margin-bottom: 6px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+  }
+  
+  table th, table td {
+    border: 1px solid #f3c6a5;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  table th {
+    background: #fff0e0;
+    color: #ff6b1f;
+  }
+  
+  table td {
+    background: #fff;
+  }
+  
+  /* ====== Notes, Tips, Highlights ====== */
+  .tip {
+    background: #f0fff4;
+    border-left: 5px solid #38a169;
+    padding: 12px 14px;
+    margin-top: 16px;
+    border-radius: 10px;
+    color: #2f855a;
+    font-weight: 500;
+  }
+  
+  .note {
+    color: #777;
+    font-style: italic;
+    margin-top: 8px;
+  }
+  
+  /* ====== Quiz Section ====== */
+  .quiz {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .quiz button {
+    border: 1px solid #ffe0c2;
+    background: #fffaf6;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 15px;
+    transition: 0.25s;
+  }
+  
+  .quiz button:hover {
+    background: #fff2e3;
+  }
+  
+  .quiz button.correct {
+    background: #e6ffed;
+    border-color: #48bb78;
+  }
+  
+  .quiz button.wrong {
+    background: #ffecec;
+    border-color: #f56565;
+  }
+  
+  /* ====== Result Message ====== */
+  .result {
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  
+  .result.success {
+    color: #2f855a;
+  }
+  
+  .result.error {
+    color: #c53030;
+  }
+  
+  /* ====== Centered Outro ====== */
+  .center {
+    text-align: center;
+  }
+  
+  .next-btn {
+    margin-top: 12px;
+    background: linear-gradient(90deg, #ffbb70, #ff884d);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.25s;
+  }
+  
+  .next-btn:hover {
+    opacity: 0.9;
+  }
+  
+  /* ====== Footer ====== */
+  footer {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    margin-top: 40px;
+  }
+  
+  /* ====== Animations ====== */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  /* ====== Responsive ====== */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 24px;
+    }
+  
+    .hero p {
+      font-size: 16px;
+    }
+  
+    .card {
+      padding: 18px;
+    }
+  
+    .navbar {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .back-btn {
+      width: 100%;
+    }
+  }
+  

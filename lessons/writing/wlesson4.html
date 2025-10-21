@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Writing Lesson 4</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #e1fff7 0%, #e3fff9 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#a7f3d0] to-[#34d399] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#34d399] to-[#a7f3d0] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 4: Formal Letter Structure</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">How to Write a Polished and Professional Letter</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#34d399]">Why Structure Matters</h2>
+      <p>In Writing Task 1 for formal letters, clear structure is essential. It shows examiners that you can communicate politely and professionally.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">1 Greeting and Opening</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Dear Sir or Madam</li>
+        <li>Dear Mr Smith / Ms Jones</li>
+        <li>Start with a polite introduction explaining why you are writing</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Always match your greeting with the formality of the situation.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">2 Body of the Letter</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Use one paragraph for each main point</li>
+        <li>Be clear and concise</li>
+        <li>Use polite and professional phrases such as "I would be grateful if" or "I am writing to request"</li>
+        <li>Include details or examples to support your points</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Keep your tone formal but friendly, avoid slang or overly casual words.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">3 Closing and Sign Off</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Use phrases like "Yours faithfully" if you don't know the name</li>
+        <li>"Yours sincerely" if you know the name</li>
+        <li>End with a polite note or request</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Your closing leaves a lasting impression, make it polite and professional.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#34d399]">Mini Challenge</h2>
+      <p>Which greeting is most appropriate for a formal letter to a company?</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 Dear Sir or Madam</button>
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 Hey there</button>
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 Hi John</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#34d399]">🌿 Excellent Work</h2>
+      <p>Congratulations you have completed Lesson 4 of Summage Academys IELTS Writing course.
+      <br><b>And You have also completed the first part of this course! Congratulations!</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-300', 'bg-red-100'));
+      
+      if (option === 1) {
+        element.classList.add('bg-green-300');
+        result.textContent = '✅ Correct! This is the appropriate formal greeting.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Choose a formal and professional greeting.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

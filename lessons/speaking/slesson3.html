@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Speaking Lesson 3</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #e1efff 0%, #e3f0ff 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#ff824d] to-[#ff4d4d] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#459cff] to-[#3b82f6] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 3: Building Fluency</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Think in English & Short Speaking Drills</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#3b82f6]">Why Fluency Matters</h2>
+      <p>Fluency is about speaking smoothly without long pauses. Thinking in your native language slows you down. In this lesson, you’ll practice thinking in English and doing short speaking drills to improve fluency.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#3b82f6]">1. Think in English</h2>
+      <p>Start by mentally narrating your day or simple actions in English:</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Describe what you see around you: “The sky is blue, the trees are green.”</li>
+        <li>Talk about your plan: “I will study for 1 hour, then take a break.”</li>
+        <li>Express your thoughts: “I feel happy because I finished my tasks.”</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 mt-4 rounded">
+        <p class="italic">🎯 Tip: Don’t translate from your native language—train your brain to form sentences directly in English.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#3b82f6]">2. Short Speaking Drills</h2>
+      <p>Practice speaking on small topics for 30–60 seconds:</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Talk about your favorite food or hobby</li>
+        <li>Describe your room or workspace</li>
+        <li>Explain a simple process, e.g., how you make tea</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 mt-4 rounded">
+        <p class="italic">🎯 Tip: Focus on smooth delivery, not perfection. Small sentences are okay; keep talking!</p>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#3b82f6]">3. Quick Drills for Everyday Practice</h2>
+      <p>Try these daily drills for 5–10 minutes:</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Pick a random object in your room and describe it in English</li>
+        <li>Summarize a short video or article aloud</li>
+        <li>Ask and answer simple questions with a friend in English</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 mt-4 rounded">
+        <p class="italic">🎯 Tip: Consistency is key. Short daily drills build natural fluency faster than occasional long practice sessions.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#3b82f6]">Mini Challenge</h2>
+      <p>“If you want to improve fluency in 10 minutes daily, which method works best?”</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-[#d8eaff] hover:bg-[#edf5ff] p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 Short drills + thinking in English daily</button>
+        <button class="block w-full text-left bg-[#d8eaff] hover:bg-[#edf5ff] p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 Translate long sentences from native language</button>
+        <button class="block w-full text-left bg-[#d8eaff] hover:bg-[#edf5ff] p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 Read silently without speaking</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#3b82f6]">🌿 You’re Growing!</h2>
+      <p>Congratulations, you’ve completed Lesson 3 of Summage Academy’s IELTS Speaking course.  
+      Next up: <br><b>Lesson 4: Vocabulary Upgrade</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-100', 'bg-red-100'));
+      
+      if (option === 1) {
+        element.classList.add('bg-green-100');
+        result.textContent = '✅ Correct! Short daily drills + thinking in English is the fastest way to build fluency.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Remember: Fluency comes from speaking short sentences daily, not silent translation.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

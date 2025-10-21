@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Speaking Lesson 4</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #e1efff 0%, #e3f0ff 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#ff824d] to-[#ff4d4d] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#459cff] to-[#3b82f6] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 4: Vocabulary Upgrade</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Synonyms & Natural Expressions</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#3b82f6]">Why Vocabulary Matters</h2>
+      <p>Using a rich variety of words and natural expressions boosts your IELTS Speaking score. Instead of repeating the same basic words, you can show range and fluency.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#3b82f6]">1. Common Synonyms</h2>
+      <p>Replace simple words with better alternatives:</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Good - Excellent, Amazing, Fantastic</li>
+        <li>Bad - Poor, Terrible, Unpleasant</li>
+        <li>Happy - Cheerful, Content, Delighted</li>
+        <li>Important - Crucial, Essential, Significant</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 mt-4 rounded">
+        <p class="italic">Tip: Use synonyms naturally; don’t force them into sentences.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#3b82f6]">2. Natural Expressions</h2>
+      <p>Using phrases makes your speech sound more natural:</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Instead of “I like reading” - “I’m really into reading”</li>
+        <li>Instead of “It’s interesting” - “It really fascinates me”</li>
+        <li>Instead of “I think it’s good” - “In my opinion, it’s excellent”</li>
+        <li>Instead of “I don’t know” - “I’m not entirely sure, but…”</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 mt-4 rounded">
+        <p class="italic">Tip: Phrases help your answers sound fluent and confident.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#3b82f6]">3. Practice Drills</h2>
+      <p>Try to use at least one synonym or expression in each answer:</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Pick 5 basic words today and learn 2–3 alternatives for each</li>
+        <li>Record yourself using new words in short answers</li>
+        <li>Swap simple phrases with natural expressions in your daily practice</li>
+      </ul>
+      <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 mt-4 rounded">
+        <p class="italic">Tip: Don’t memorize answers.  Just practice replacing words naturally.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#3b82f6]">Mini Challenge</h2>
+      <p>“If you want to sound more natural, which strategy is best?”</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-[#d8eaff] hover:bg-[#edf5ff] p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 Use synonyms & natural phrases in your answers</button>
+        <button class="block w-full text-left bg-[#d8eaff] hover:bg-[#edf5ff] p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 Keep repeating simple words to be safe</button>
+        <button class="block w-full text-left bg-[#d8eaff] hover:bg-[#edf5ff] p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 Focus only on grammar, not vocabulary</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#3b82f6]">🌿 Great Progress!</h2>
+      <p>Congratulations, you’ve completed Lesson 4 of Summage Academy’s IELTS Speaking course.  
+      <br><b>And You have successfully finished the first part of this speaking course! Congratulations!</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-100', 'bg-red-100'));
+      
+      if (option === 1) {
+        element.classList.add('bg-green-100');
+        result.textContent = '✅ Correct! Using synonyms and natural expressions makes your speech fluent and confident.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Focus on enriching your vocabulary and using natural phrases.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

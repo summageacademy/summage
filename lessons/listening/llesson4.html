@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Listening Lesson 4</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fff8e1 0%, #fff4d6 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#fcd34d] to-[#f59e0b] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#f59e0b] to-[#fcd34d] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 4: Note-taking Basics</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Learn how to listen smart and write faster than your thoughts.</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#f59e0b]">Why Note-taking Matters</h2>
+      <p>In IELTS Listening, writing down everything isn’t the goal but catching <b>the right things</b> is. Smart note-taking helps you stay focused, remember details, and catch keywords before they slip away.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f59e0b]">1. Write Less, Understand More</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Don’t copy full sentences, but rather focus on main ideas.</li>
+        <li>Use arrows (->), short forms, and abbreviations like “info” or “b4”.</li>
+        <li>Keep your notes clear and structured, not messy scribbles.</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-[#f59e0b] p-4 mt-4 rounded">
+        <p class="italic">Tip: Note only what helps you answer, not what sounds “nice.” Be selective.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f59e0b]">2. Use Visual Clues</h2>
+      <p>Use symbols, brackets, or small sketches to organize ideas quickly.</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>“⬆” for increase, “⬇” for decrease</li>
+        <li>“💲” for money or prices</li>
+        <li>“📍” for location or place</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-[#f59e0b] p-4 mt-4 rounded">
+        <p class="italic">Tip: Your notes should speak to <b>you</b>, not your teacher. Personalize your symbols.</p>
+      </div>
+    </section>
+
+    <!-- Mini Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f59e0b]">Quick Check</h2>
+      <p>What’s the best way to take notes in IELTS Listening?</p>
+
+      <div class="space-y-2 mt-4" id="quiz4">
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 Write every single word carefully</button>
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 Capture main ideas, key words, and use short forms</button>
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 Ignore note-taking and just listen</button>
+      </div>
+      <p id="result4" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#f59e0b]">Well Done!</h2>
+      <p>You’ve learned how to take notes that actually help you listen better.<br>
+        <b>And by that, You have also finished the first part of this course. Congratulations!</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result4');
+      const buttons = document.querySelectorAll('#quiz4 button');
+      buttons.forEach(btn => btn.classList.remove('bg-amber-300', 'bg-red-100'));
+      
+      if (option === 2) {
+        element.classList.add('bg-amber-300');
+        result.textContent = '✅ Perfect! That’s the smart listener’s approach — focus on key ideas, not every word.';
+        result.className = 'mt-3 text-amber-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Writing everything slows you down — only note what truly matters.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

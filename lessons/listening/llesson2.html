@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Listening Lesson 2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fff8e1 0%, #fff4d6 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#fcd34d] to-[#f59e0b] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#f59e0b] to-[#fcd34d] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 2: Predicting Answers.</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Sharpen your mind to hear the right clues before they appear</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#f59e0b]">Why Predicting Helps You Win</h2>
+      <p>Predicting answers helps you prepare mentally and catch keywords the moment they are said. It’s like setting your radar before the storm begins.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f59e0b]">1. The Power of Anticipation</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Read the questions before the audio starts.</li>
+        <li>Guess the type of word needed: is it a noun, number, verb, or adjective?</li>
+        <li>Look for context clues in the question. They reveal what to expect.</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-[#f59e0b] p-4 mt-4 rounded">
+        <p class="italic">Tip: Train your brain to notice signal words like “because,” “however,” or “for example.” They guide you to answers.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f59e0b]">2. Recognizing Patterns in Questions</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li><b>Numbers or Prices:</b> Expect to hear amounts, dates, or times.</li>
+        <li><b>Places:</b> Look for buildings, streets, or institutions.</li>
+        <li><b>Actions:</b> Listen for verbs that describe what someone did or will do.</li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-[#f59e0b] p-4 mt-4 rounded">
+        <p class="italic">Tip: Highlight question words like <b>where, when, who, how much</b>. They tell you what the answer will sound like.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f59e0b]">3. Using Grammar and Logic to Predict</h2>
+      <p>Before the audio starts, look at the blank and ask yourself: what kind of word fits here?</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>If it says “He went to ___,” you expect a <b>place.</b></li>
+        <li>If it says “He spoke ___,” it’s likely a <b>language or adverb.</b></li>
+        <li>If it says “The price is ___,” it’s probably a <b>number.</b></li>
+      </ul>
+      <div class="bg-amber-50 border-l-4 border-[#f59e0b] p-4 mt-4 rounded">
+        <p class="italic">Tip: The grammar around the blank often gives away the answer’s form.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f59e0b]">Mini Challenge</h2>
+      <p>When you see a question that says “The cost of the trip is ___,” what kind of word should you predict?</p>
+
+      <div class="space-y-2 mt-4" id="quiz2">
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 A number</button>
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 A place</button>
+        <button class="block w-full text-left bg-amber-100 hover:bg-amber-200 p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 A person’s name</button>
+      </div>
+      <p id="result2" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#f59e0b]">✨ Brilliant Work</h2>
+      <p>You’ve learned how to predict answers like a pro listener.<br>
+      Next up:<br><b>Lesson 3: Accent & Pronunciation</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result2');
+      const buttons = document.querySelectorAll('#quiz2 button');
+      buttons.forEach(btn => btn.classList.remove('bg-amber-300', 'bg-red-100'));
+      
+      if (option === 1) {
+        element.classList.add('bg-amber-300');
+        result.textContent = '✅ Correct! The blank clearly asks for a number like a price or amount.';
+        result.className = 'mt-3 text-amber-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. The phrase “cost of the trip” tells you to expect a number.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

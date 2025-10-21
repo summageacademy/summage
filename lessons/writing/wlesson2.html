@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Writing Lesson 2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #e1fff7 0%, #e3fff9 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#a7f3d0] to-[#34d399] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#34d399] to-[#a7f3d0] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 2: Describing Trends</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">How to Talk About Changes Over Time</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#34d399]">Why Describing Trends Matters</h2>
+      <p>In Writing Task 1, describing trends accurately shows examiners your ability to interpret data clearly. It’s not just about numbers but it's also about patterns.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">1. Trend Vocabulary</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Increase: rise, grow, climb, soar, surge</li>
+        <li>Decrease: fall, drop, decline, dip, plummet</li>
+        <li>No change: remain steady, plateau, stabilize</li>
+        <li>Fluctuate: vary, oscillate, show ups and downs</li>
+        <li>Peak/Lowest: reach a peak, hit a low point, bottom out</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">🎯 Tip: Mix these words to avoid repetition and show range in your writing.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">2. Linking Trends</h2>
+      <p>Connect your ideas using phrases to make your description smoother:</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>“From 2000 to 2010, X increased steadily, whereas Y declined slightly.”</li>
+        <li>“Overall, the number of students rose dramatically, while teacher numbers remained stable.”</li>
+        <li>“In contrast to a gradual increase in X, Y fluctuated during the same period.”</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Use contrast and comparison phrases to highlight trends effectively.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">3. Practice Drill</h2>
+      <p>Look at any graph or chart and try describing trends using:</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>2–3 verbs for increase/decrease</li>
+        <li>2 linking phrases to compare trends</li>
+        <li>1 sentence summarizing the overall pattern</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Try writing 3–4 sentences first, then expand as you get comfortable.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#34d399]">Mini Challenge</h2>
+      <p>“Which sentence best describes a steady upward trend?”</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 The number of visitors climbed steadily over the period.</button>
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 The number of visitors fluctuated up and down.</button>
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 The number of visitors hit a low point immediately.</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#34d399]">🌿 Great Job!</h2>
+      <p>Congratulations, you’ve completed Lesson 2 of Summage Academy’s IELTS Writing course.  
+      Next up: <br><b>Lesson 3: Comparing Data</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-300', 'bg-red-100'));
+      
+      if (option === 1) {
+        element.classList.add('bg-green-300');
+        result.textContent = '✅ Correct! “Climbed steadily” shows a clear upward trend.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Steady upward trends require words like “climbed steadily” or “rose gradually”.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>
