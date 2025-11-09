@@ -1,214 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Summage Links</title>
+  <head>
+    <!-- Yandex.RTB -->
+    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Summage Academy | Get in Touch</title>
 
-  <link rel="icon" href="otherassets/logo.jpg" type="image/jpeg" />
+    <!-- META SEO -->
+    <meta name="description" content="Get in touch with Summage Academy! We're here to help with IELTS prep, course info, partnerships, or just to say hello." />
+    <meta name="keywords" content="Summage Academy contact, IELTS help Uzbekistan, free education support, contact Summage" />
+    <meta name="author" content="Summage Academy Team" />
+    <link rel="canonical" href="https://summage.uz/contactus.html" />
 
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background: linear-gradient(130deg, rgb(191, 11, 11) rgb(72, 10, 10));
-      color: #222;
-    }
+    <!-- Open Graph -->
+    <meta property="og:title" content="Contact Us - Summage Academy" />
+    <meta property="og:description" content="Have questions? We're here to help! Reach out to the Summage Team." />
+    <meta property="og:image" content="https://summage.uz/otherassets/logo.jpg" />
+    <meta property="og:url" content="https://summage.uz/contactus.html" />
+    <meta property="og:type" content="website" />
 
-    /* Navbar */
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      padding: 1rem;
-      background: #222;
-    }
-    nav a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 600;
-    }
+    <!-- Favicon -->
+    <link rel="icon" href="otherassets/logo.jpg" type="image/jpeg" />
 
-    /* Desktop-only H1 */
-    h1.desktop-title {
-      display: none;
-      text-align: center;
-      margin: 1.5rem 0;
-      font-size: 2rem;
-      font-weight: 700;
-      color: #333;
-    }
-
-    h1.mobile-title {
-      display: none;
-      text-align: center;
-      margin: 1.5rem 0;
-      font-size: 2rem;
-      font-weight: 700;
-      color: #333;
-    }
-
-    h1.desktop-title { display: none; }
-    @media (min-width: 1024px) {
-      h1.desktop-title { display: block; }
-      h1.mobile-title { display: none; }
-    }
-
-    /* Show mobile title on <1024px */
-    @media (max-width: 1023px) {
-      h1.desktop-title { display: none; }
-      h1.mobile-title { display: block; font-size: 1.6rem; }
-    }
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="contactus.css">
+    
+    <!-- Google tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LZP4KSPR1V');
+    </script>
+  </head>
 
-    /* Container */
-    .container {
-      max-width: 1100px;
-      margin: 2rem auto;
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
+  <body>
+    <!-- HEADER -->
+    <header>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="aboutus.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </header>
 
-    /* Button Card */
-    .btn-card {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 1rem;
-      border-radius: 12px;
-      color: #fff;
-      font-weight: 600;
-      transition: transform 0.2s ease;
-      cursor: pointer;
-      text-decoration: none;
-      overflow: hidden;
-    }
-    .btn-card:hover {
-      transform: translateY(-4px);
-    }
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-brand">
+        <img src="otherassets/logo.jpg" alt="Summage Logo" class="hero-logo">
+        <h1>Contact Us</h1>
+      </div>
+      <p class="hero-subtitle">We'd love to hear from you</p>
+    </div>
 
-    /* Mobile logos */
-    .btn-card img.logo {
-      width: 32px;
-      height: 32px;
-      margin-right: 12px;
-      display: inline-block;
-    }
+    <!-- CONTACT SECTION -->
+    <section class="contact-section">
+      <div class="contact-container">
+        <!-- Contact Info -->
+        <div class="contact-info">
+          <h2>Let's Connect!</h2>
+          <p>Got a question about IELTS, wanna team up or just feeling chatty? Drop us a line. We're all ears!</p>
 
-    /* PC/Tablet banners */
-    .banner {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 8px;
-      display: none;
-    }
+          <div class="info-item">
+            <span>Email</span>
+            <a href="mailto:summageacademy@gmail.com">summageacademy@gmail.com</a>
+          </div>
 
-    /* Text inside card */
-    .btn-text {
-      font-size: 1.1rem;
-    }
+          <div class="info-item">
+            <span>Telegram</span>
+            <a href="https://t.me/summage_admin" target="_blank">@summage_admin</a>
+          </div>
 
-    /* Platform themes */
-    .telegram-admin { background: linear-gradient(45deg, #0088cc, #36a6e5); }
-    .telegram-business { background: linear-gradient(45deg, #1c1c1c, #333); }
-    .youtube { background: linear-gradient(45deg, #ff0000, #cc0000); }
-    .instagram { background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4); }
-    .telegram-channel { background: linear-gradient(45deg, #0088cc, #36a6e5); }
+          <div class="info-item">
+            <span>Instagram</span>
+            <a href="https://instagram.com/summageacademy" target="_blank">@summageacademy</a>
+          </div>
 
-    /* Tablet and Desktop: 2 per row, banners visible, logos hidden */
-    @media (min-width: 768px) {
-      .container {
-        grid-template-columns: repeat(2, 1fr);
+          <div class="social-links">
+            <a href="https://t.me/summageacademy" target="_blank" aria-label="Telegram">Telegram</a>
+            <a href="https://instagram.com/summageacademy" target="_blank" aria-label="Instagram">Instagram</a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+          <form id="contactForm">
+            <div class="form-group">
+              <input type="text" id="name" name="name" required placeholder="Your Name" />
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" name="email" required placeholder="Your Email" />
+            </div>
+            <div class="form-group">
+              <input type="text" id="subject" name="subject" placeholder="Subject (Optional)" />
+            </div>
+            <div class="form-group">
+              <textarea id="message" name="message" rows="6" required placeholder="Your Message..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">
+              Send Message
+            </button>
+          </form>
+
+          <div class="form-response" id="formResponse"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      Summage 2025 - All rights reserved
+    </footer>
+
+    <!-- Scroll Reveal -->
+    <script>
+      const sections = document.querySelectorAll("section");
+      const reveal = () => {
+        const trigger = window.innerHeight * 0.9;
+        sections.forEach(sec => {
+          const top = sec.getBoundingClientRect().top;
+          if (top < trigger) sec.classList.add("visible");
+        });
+      };
+      window.addEventListener("scroll", reveal);
+      window.addEventListener("load", reveal);
+    </script>
+
+    <!-- ==================== EMAILJS INTEGRATION ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+      (function(){
+        emailjs.init('9fJyhACKh68-QnijV'); // Your Public Key
+      })();
+
+      const SERVICE_ID  = 'service_ug7jn3l';     // Your Service ID
+      const TEMPLATE_ID = 'template_22ssr7e';    // Your Template ID
+
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const responseDiv = document.getElementById('formResponse');
+        responseDiv.style.opacity = '0';
+        responseDiv.innerHTML = '';
+
+        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+          .then(() => {
+            responseDiv.innerHTML = `
+              <p style="color:#007a52; font-weight:600;">
+                Thank you! Your message has been sent. We'll reply soon!
+              </p>`;
+            responseDiv.style.opacity = '1';
+            this.reset();
+            setTimeout(() => { responseDiv.style.opacity = '0'; }, 5000);
+          })
+          .catch(err => {
+            responseDiv.innerHTML = `
+              <p style="color:#e63946; font-weight:600;">
+                Oops! Something went wrong. Please try again later.
+              </p>`;
+            responseDiv.style.opacity = '1';
+            console.error('EmailJS error:', err);
+          });
+      });
+    </script>
+    <!-- Yandex.RTB R-A-17680991-4 -->
+    <script>
+    window.yaContextCb.push(() => {
+        Ya.Context.AdvManager.render({
+            "blockId": "R-A-17680991-4",
+            "type": "topAd"
+        })
+    })
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Summage Academy",
+      "url": "https://summage.uz",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "summageacademy@gmail.com",
+        "contactType": "Customer Support"
       }
-      .btn-card {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 0;
-      }
-      .btn-card img.logo {
-        display: none;
-      }
-      .banner {
-        display: block;
-      }
-      .btn-text {
-        padding: 1rem;
-      }
     }
-
-    /* Desktop navbar bigger */
-    @media (min-width: 1024px) {
-      nav {
-        gap: 3rem;
-        padding: 1.2rem;
-      }
-    }
-  </style>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-LZP4KSPR1V');
-  </script>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="aboutus.html">About Us</a>
-    <a href="blogs.html">Blogs</a>
-  </nav>
-
-  <!-- Desktop-only Title -->
-  <h1 class="desktop-title">Contact us in such ways</h1>
-  <h1 class="mobile-title">Contact Us</h1>
-
-  <!-- Container -->
-  <div class="container">
-    <!-- Telegram Admin -->
-    <a href="https://t.me/summage_admin" class="btn-card telegram-admin">
-      <img src="images/telegram.webp" alt="Telegram Logo" class="logo">
-      <img src="otherassets\supportlink.jpg" alt="Telegram Banner" class="banner">
-      <div class="btn-text">Summage Admin</div>
-    </a>
-
-    <!-- Telegram Business -->
-    <a href="https://t.me/summage_business" class="btn-card telegram-business">
-      <img src="images/telegram.webp" alt="Telegram Dark" class="logo">
-      <img src="otherassets/telegramlink.jpg" alt="Telegram Business Banner" class="banner">
-      <div class="btn-text">Summage Business</div>
-    </a>
-
-    <!-- YouTube -->
-    <a href="https://www.youtube.com/channel/UCGFCWwla7Pj8XsIJVZZASAQ" class="btn-card youtube">
-      <img src="images/youtube.webp" alt="YouTube" class="logo">
-      <img src="otherassets/youtubelink.jpg" alt="YouTube Banner" class="banner">
-      <div class="btn-text">YouTube Channel</div>
-    </a>
-
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/summageacademy/?utm_source=ig_web_button_share_sheet" class="btn-card instagram">
-      <img src="images/instagram.webp" alt="Instagram" class="logo">
-      <img src="otherassets\instagramlink.jpg" alt="Instagram Banner" class="banner">
-      <div class="btn-text">Instagram</div>
-    </a>
-
-    <!-- Telegram Channel -->
-    <a href="https://t.me/summage_uz" class="btn-card telegram-channel">
-      <img src="images/telegram.webp" alt="Telegram" class="logo">
-      <img src="otherassets/telegramlink.jpg" alt="Telegram Channel Banner" class="banner">
-      <div class="btn-text">Telegram Channel</div>
-    </a>
-  </div>
-</body>
+    </script>
+  </body>
 </html>

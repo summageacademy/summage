@@ -1,0 +1,439 @@
+/* GPA PAGE — SCHOOL + PC LAYOUT */
+.gpa-wrapper {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gpa-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+  border: 1px solid rgba(0, 0, 0, .05);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* SYSTEM SELECTOR */
+.system-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: .95rem;
+  color: #2d2a26;
+}
+
+.system-selector label {
+  font-weight: 600;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.system-selector select {
+  flex: 1;
+  padding: 12px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 1rem;
+  background: white;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.system-selector select:focus {
+  outline: none;
+  border-color: #06a87c;
+  box-shadow: 0 0 0 4px rgba(6, 168, 124, .1);
+}
+
+/* ADD SUBJECT */
+.add-course {
+  margin-bottom: 16px;
+}
+
+.input-row {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.input-box {
+  flex: 1;
+  min-width: 0;
+}
+
+.input-box input,
+.input-box select {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-family: inherit;
+  transition: all .2s ease;
+  box-sizing: border-box;
+}
+
+.input-box input::placeholder {
+  color: #94a3b8;
+}
+
+.input-box input:focus,
+.input-box select:focus {
+  outline: none;
+  border-color: #06a87c;
+  box-shadow: 0 0 0 4px rgba(6, 168, 124, .1);
+}
+
+.add-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06a87c, #2fd8ab);
+  color: white;
+  border: none;
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .18s ease;
+  box-shadow: 0 6px 16px rgba(6, 168, 124, .2);
+  flex-shrink: 0;
+}
+
+.add-circle:active {
+  transform: scale(0.92);
+}
+
+/* SUBJECTS LIST */
+.courses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-bottom: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #f1f5f9;
+}
+
+.courses-list::-webkit-scrollbar {
+  width: 6px;
+}
+.courses-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+.courses-list::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 3px;
+}
+
+.course-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+  color: #2d2a26;
+  word-break: break-word;
+}
+
+.remove-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .18s ease;
+  flex-shrink: 0;
+}
+
+.remove-btn:hover {
+  background: #fecaca;
+}
+
+/* RESULT */
+.result-box {
+  padding-top: 16px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.result-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.result-line span {
+  color: #64748b;
+}
+
+.result-line strong {
+  font-size: 2.4rem;
+  color: #f9734b;
+  font-weight: 700;
+}
+
+.reset-text {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: .95rem;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 8px;
+  padding: 0;
+  font-family: inherit;
+}
+
+.reset-text:hover {
+  color: #b91c1c;
+}
+
+/* HINT */
+.hint {
+  margin-top: 16px;
+  padding: 14px;
+  background: #f0fdfa;
+  border-radius: 14px;
+  font-size: .95rem;
+  color: #065f46;
+  text-align: center;
+  border: 1px solid #86efac;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 1023px) {
+  .gpa-layout-pc { display: none !important; }
+  .gpa-wrapper { padding: 0 12px; }
+  .gpa-card { 
+    padding: 20px; 
+    border-radius: 0 !important; /* CRITICAL: NO ROUNDED CORNERS ON MOBILE */
+    overflow: visible !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+  }
+  .input-row { flex-direction: column; gap: 10px; }
+  .add-circle { width: 64px; height: 64px; font-size: 2rem; margin: 0 auto; }
+  .system-selector { flex-direction: column; align-items: stretch; gap: 8px; }
+  .result-line strong { font-size: 2.8rem; }
+}
+
+/* ================================================= PC LAYOUT (≥1024px) ================================================= */
+@media (min-width: 1024px) {
+  .gpa-wrapper {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .gpa-card {
+    width: 75%;
+    margin-right: 25%;
+    padding: 32px;
+    border-radius: 0;
+    border-right: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+  }
+
+  .gpa-layout-mobile { display: none !important; }
+  .gpa-layout-pc { display: flex; gap: 32px; align-items: flex-start; }
+
+  .input-column { flex: 1; min-width: 300px; max-width: 420px; }
+  .info-column { flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px; }
+
+  .instructions {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    font-size: .95rem;
+    color: #475569;
+  }
+
+  .instructions h3 {
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+    color: #1e293b;
+  }
+
+  .instructions ol { margin: 0; padding-left: 20px; }
+  .instructions li { margin-bottom: 8px; line-height: 1.5; }
+
+  .courses-list-pc {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px;
+    max-height: 380px;
+    overflow-y: auto;
+  }
+
+  .result-box-pc { margin-top: 24px; padding-top: 16px; border-top: 1px dashed #cbd5e1; }
+  .result-line strong { font-size: 2.6rem !important; }
+
+  .gpa-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: -1px; bottom: 0;
+    width: 1px;
+    background: #e2e8f0;
+  }
+}
+
+/* === FINAL FIX: MOBILE DROPDOWN 100% VISIBLE === */
+@media (max-width: 1023px) {
+  .gpa-card {
+    border-radius: 0 !important;
+    overflow: visible !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  .input-box select {
+    position: relative;
+    z-index: 9999 !important;
+    background: white !important;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 16px !important;
+  }
+
+  .gpa-wrapper,
+  .gpa-layout-mobile,
+  .add-course,
+  .input-row,
+  .input-box {
+    overflow: visible !important;
+  }
+
+  /* Remove any overlay interference */
+  .sidebar-overlay {
+    pointer-events: none !important;
+  }
+  .sidebar-overlay.open {
+    pointer-events: auto !important;
+  }
+}
+
+/* === CUSTOM DROPDOWN FOR MOBILE === */
+@media (max-width: 1023px) {
+  .custom-dropdown {
+    position: relative;
+    width: 100%;
+  }
+
+  .grade-display {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all .2s ease;
+  }
+
+  .grade-display::after {
+    content: '▼';
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-left: 8px;
+  }
+
+  .grade-display:focus {
+    outline: none;
+    border-color: #06a87c;
+    box-shadow: 0 0 0 4px rgba(6, 168, 124, .1);
+  }
+
+  .grade-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 9999;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,.1);
+  }
+
+  .grade-options li {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .grade-options li:last-child {
+    border-bottom: none;
+  }
+
+  .grade-options li:hover,
+  .grade-options li:focus {
+    background: #f0fdfa;
+    outline: none;
+  }
+
+  .grade-options li[aria-selected="true"] {
+    background: #d1fae5;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 1024px) {
+  .gpa-layout-mobile {
+    padding-bottom: 90px; /* or 100px if footer is tall */
+    margin-bottom: 30px;
+  }
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 99;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}

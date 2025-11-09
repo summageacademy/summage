@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar + Sidebars</title>
+  <link rel="icon" href="otherassets/logo.jpg" type="image/jpeg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --orange-1:#ff8a00;
+      --orange-2:#ff5a1f;
+      --brand:#f24b0b;
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --radius:16px;
+      --shadow: 0 8px 30px rgba(17,24,39,0.06);
+      --accent:#ff7a2e;
+      --bottom-nav-height: 110px;
+      --nav-height:64px;
+      --sidebar-width:240px;
+    }
+
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;color:#0f172a;background:var(--bg);}
+
+    /* ------------------ NAVBAR ------------------ */
+    .nav{
+      position:fixed; top:0; left:0; right:0; z-index:999;
+      height: var(--nav-height);
+      background:linear-gradient(90deg,var(--brand), #fb6b39);
+      box-shadow:0 8px 26px rgba(242,75,11,0.12);
+      border-bottom:1px solid rgba(0,0,0,0.04);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 20px;
+    }
+    .brand-wrap{display:flex;align-items:center;gap:12px;color:#fff;}
+    .nav-logo{width:48px;height:48px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.12);}
+    .brand-wrap h1{margin:0;font-weight:800;font-size:18px;color:#fff;}
+    .brand-wrap small{display:block;color:rgba(255,255,255,0.95);font-size:12px;opacity:0.95;}
+    .nav-actions{display:flex;align-items:center;gap:10px;}
+    .back-link, .hamburger {
+      padding:8px 14px;border-radius:10px;background:rgb(255, 112, 51);color:#fff;border:1px solid rgba(255,255,255,0.08);font-weight:600;cursor:pointer;transition:transform .12s, background .12s;
+    }
+    .back-link:hover{transform:translateY(-3px);background:rgb(233, 12, 12);}
+    .hamburger{display:none; border:none; background:transparent; font-size:28px; line-height:1; color:#fff;}
+
+    /* ------------------ LEFT SIDEBAR (DESKTOP) ------------------ */
+    .left-sidebar {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      width: var(--sidebar-width);
+      height: calc(100% - var(--nav-height));
+      background: var(--card);
+      border-right: 1px solid rgba(0,0,0,0.06);
+      padding: 20px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      z-index: 500;
+    }
+    .left-sidebar a {
+      text-decoration:none;
+      color:#0f172a;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:10px;
+      transition: background 0.15s;
+    }
+    .left-sidebar a:hover { background: rgba(242,75,11,0.1); }
+
+    /* ------------------ MOBILE SLIDE-IN SIDEBAR ------------------ */
+    .sidebar {
+      position: fixed;
+      top: 0; right: -250px;
+      width: 250px;
+      height: 100%;
+      background:#fff;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.12);
+      padding: 60px 20px 20px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      transition: right 0.3s ease;
+      z-index: 1200;
+    }
+    .sidebar.active { right: 0; }
+    .sidebar a { text-decoration:none; color:#0f172a; font-weight:600; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.08); }
+
+    /* ------------------ MAIN CONTENT ------------------ */
+    main {
+      margin-top: var(--nav-height);
+      padding: 20px;
+      margin-left: var(--sidebar-width); /* for desktop left sidebar */
+      transition: margin 0.3s;
+    }
+
+    /* ------------------ IELTS HERO BUTTONS ------------------ */
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .buttons-container a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: left;
+      text-decoration: none;
+      color: #fff;
+      border-radius: 16px;
+      padding: 16px 12px;
+      font-weight: 600;
+      transition: transform .18s ease, box-shadow .18s ease;
+      flex: 1 1 calc(50% - 12px);
+      min-height: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .buttons-container a h3 { 
+      margin: 0 0 4px 0;
+      font-size: 1.2rem; 
+      font-weight: 800; 
+      line-height: 1.2;
+      transition: transform 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .buttons-container a p { 
+      font-size: 0.9rem; 
+      font-weight: 400; 
+      opacity: 0.9; 
+      line-height: 1.2; 
+      transition: opacity 0.2s ease;
+    }
+
+    /* Hide subheadings on mobile */
+    @media (max-width:980px){
+      .buttons-container a p { display: none; }
+    }
+
+    /* Desktop: solid width & stacked vertically */
+    @media (min-width:981px){
+      .buttons-container {
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 400px;
+        margin: 0;
+      }
+      .buttons-container a {
+        flex: none;
+        width: 100%;
+        min-height: 90px;
+        align-items: flex-start;
+        text-align: left;
+        padding: 16px 20px;
+      }
+      .buttons-container a p { display: block; }
+    }
+
+    /* Hover effect for button */
+    .buttons-container a:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+
+    /* Button gradients */
+    .lesson-btn { background: linear-gradient(135deg,#f9a8a8,#f87171); }
+    .lesson-btn2 { background: linear-gradient(135deg,#fcd34d,#f59e0b); }
+    .lesson-btn3 { background: linear-gradient(135deg,#a7f3d0,#34d399); }
+    .lesson-btn4 { background: linear-gradient(135deg,#93c5fd,#3b82f6); }
+
+    /* ------------------ FOOTER NAV (MOBILE) ------------------ */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-end;
+      z-index: 1100;
+      padding: 8px;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2fd8ab, #06a87c);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      text-decoration: none;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+    .nav-btn img { width: 26px; height: 26px; display: block; }
+    .nav-btn:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14); }
+    .nav-btn.center {
+      width: 76px;
+      height: 76px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #f9734b, #ffab25);
+      box-shadow: 0 14px 36px rgba(255, 120, 50, 0.22);
+      margin-bottom: 6px;
+    }
+    .nav-btn.center img { width: 34px; height: 34px; filter: brightness(0) invert(1); }
+
+    /* ------------------ RESPONSIVE ------------------ */
+    @media (max-width:980px){
+      .left-sidebar{display:none;}
+      main{margin-left:0;}
+      .back-link{display:none;}
+      .hamburger{display:block;}
+    }
+    @media (min-width:981px){
+      .bottom-nav{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="brand-wrap">
+      <img src="otherassets/logo_white.jpg" alt="logo" class="nav-logo">
+      <div>
+        <h1>Main Menu</h1>
+        <small>Thoughtful notes</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button class="back-link">Back to Menu</button>
+      <button class="hamburger">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- Desktop Left Sidebar -->
+  <div class="left-sidebar">
+    <a href="menu.html">Home</a>
+    <a href="blogs.html">Blogs</a>
+    <a href="profile.html">Profile</a>
+    <a href="tools.html">Tools</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Mobile Right Slide Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="menu.html">Home</a>
+    <a href="blogs.html">Blogs</a>
+    <a href="profile.html">Profile</a>
+    <a href="tools.html">Tools</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <!-- IELTS Hero Buttons -->
+    <div class="buttons-container">
+      <a href="readinglessons.html" class="lesson-btn">
+        <h3>IELTS <br>Reading</h3>
+        <p>Practice reading passages and improve comprehension.</p>
+      </a>
+      <a href="listeninglessons.html" class="lesson-btn2">
+        <h3>IELTS <br>Listening</h3>
+        <p>Sharpen your listening skills with exercises.</p>
+      </a>
+      <a href="writinglessons.html" class="lesson-btn3">
+        <h3>IELTS <br>Writing</h3>
+        <p>Learn how to write essays and reports effectively.</p>
+      </a>
+      <a href="speakinglessons.html" class="lesson-btn4">
+        <h3>IELTS <br>Speaking</h3>
+        <p>Practice speaking fluently with tips and examples.</p>
+      </a>
+    </div>
+  </main>
+
+  <!-- Mobile Footer Navbar -->
+  <nav class="bottom-nav">
+    <a class="nav-btn" href="blogs.html">
+      <img src="icons/blogfooter.png" alt="Blogs" />
+    </a>
+    <a class="nav-btn center" href="menu.html">
+      <img src="icons/home.png" alt="Home" />
+    </a>
+    <a class="nav-btn" href="profile.html">
+      <img src="icons/profile-user.png" alt="Profile" />
+    </a>
+  </nav>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const sidebar = document.getElementById('sidebar');
+
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+        sidebar.classList.remove('active');
+      }
+    });
+  </script>
+
+</body>
+</html>

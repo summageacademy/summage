@@ -1,384 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
-  <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
-
-  <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-  <script>
-      window.ezstandalone = window.ezstandalone || {};
-      ezstandalone.cmd = ezstandalone.cmd || [];
-  </script>
-  
+  <script type="text/javascript" src="/___vscode_livepreview_injected_script"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Main Menu</title>
   <link rel="icon" href="otherassets/logo.jpg" type="image/jpeg" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap');
+  <link rel="stylesheet" href="menu.css">
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html,body { height: 100%; }
-    body {
-      font-family: "IBM Plex Sans", sans-serif;
-      background-color: #f5f2eb;
-      padding: 24px 6%;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      padding-bottom: 110px; /* space for fixed footer on mobile */
-    }
-
-    /* =========================
-       LOADER (new)
-       ========================= */
-    /* Fullscreen overlay */
-    #loader {
-      position: fixed;
-      inset: 0;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      transition: opacity 180ms ease, visibility 180ms ease;
-      opacity: 1;
-      visibility: visible;
-      pointer-events: all;
-    }
-    /* when we add .loaded, fade out */
-    #loader.loaded {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    /* spinner */
-    .spinner {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 6px solid rgba(6,168,124,0.18); /* soft track */
-      border-top-color: #06a87c; /* brand color */
-      animation: spin 900ms linear infinite;
-      box-shadow: 0 6px 18px rgba(6,168,124,0.12);
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* optional small brand label under spinner */
-    .loader-label {
-      margin-top: 12px;
-      font-size: 13px;
-      color: #2d2a26;
-      text-align: center;
-      opacity: 0.95;
-      font-weight: 600;
-      font-family: "IBM Plex Sans", sans-serif;
-    }
-
-    /* Prevent scroll while loading (body.no-scroll applied) */
-    body.no-scroll { overflow: hidden; touch-action: none; }
-
-    /* ----------------- existing UI CSS (kept and unchanged for the most part) ----------------- */
-
-    /* HEADER */
-    .header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .title-group { display: flex; flex-direction: column; align-items: flex-start; }
-    h1 {
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 700;
-      color: #2d2a26;
-      margin-bottom: 6px;
-      letter-spacing: -0.5px;
-    }
-    h2 {
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      font-weight: 400;
-      color: #4e4a45;
-    }
-    @media (max-width:767px) { h2 { display: none; } }
-
-    /* BACK BUTTON */
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: clamp(4px,1vw,8px);
-      text-decoration: none;
-      background-color: #F4320B;
-      color: #fff;
-      border-radius: 14px;
-      padding: clamp(8px,1.2vw,14px) clamp(12px,2vw,22px);
-      font-size: clamp(0.9rem,1.5vw,1.2rem);
-      font-weight: 600;
-      box-shadow: 0 3px 6px rgba(244,50,11,0.2);
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .back-btn:hover { background-color:#d92b09; transform: translateY(-2px); }
-
-    /* PAGE LAYOUT */
-    .content-wrapper {
-      display: flex;
-      gap: 3%;
-      align-items: stretch;
-      width: 100%;
-    }
-
-    /* LEFT PANEL */
-    .left-panel {
-      flex: 0 0 30%;
-      max-width: 340px;
-      min-width: 240px;
-      display: flex;
-      flex-direction: column;
-    }
-    .buttons-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* LESSON BUTTONS */
-    .lesson-btn, .lesson-btn2, .lesson-btn3, .lesson-btn4 {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: #fff;
-  border-radius: 16px;
-  padding: 14px 18px;
-  font-weight: 600;
-  box-shadow: 0 6px 16px rgba(15,15,15,0.05);
-  transition: transform .18s ease, box-shadow .18s ease;
-  min-height: 68px;
-}
-
-    .lesson-btn:hover, .lesson-btn2:hover, .lesson-btn3:hover, .lesson-btn4:hover { transform: translateY(-4px); }
-    .lesson-btn  { background: linear-gradient(135deg,#f9a8a8,#f87171); }
-    .lesson-btn2 { background: linear-gradient(135deg,#fcd34d,#f59e0b); }
-    .lesson-btn3 { background: linear-gradient(135deg,#a7f3d0,#34d399); }
-    .lesson-btn4 { background: linear-gradient(135deg,#93c5fd,#3b82f6); }
-    .lesson-btn h3, .lesson-btn2 h3, .lesson-btn3 h3, .lesson-btn4 h3 { margin-bottom: 8px; }
-    .lesson-btn p, .lesson-btn2 p, .lesson-btn3 p, .lesson-btn4 p {
-      font-size: clamp(0.85rem,1.4vw,1rem);
-      font-weight: 400;
-      opacity: 0.95;
-      line-height: 1.2;
-    }
-
-    /* MIDDLE PANEL */
-    .middle-panel { flex: 1; display: flex; align-items: stretch; }
-    .mock-card {
-      flex: 1;
-      background: linear-gradient(135deg,#ff9f3f,#ff561d);
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-    .mock-card:hover { transform: scale(1.03); }
-    .mock-icon {
-      width: 40%;
-      max-width: 60%;
-      object-fit: contain;
-      margin-bottom: 4px;
-      flex-grow: 1;
-    }
-    .mock-title-desktop {
-      font-size: clamp(1.4rem,2.5vw,1.8rem);
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: rgb(255, 249, 223);
-    }
-    .mock-title-mobile { display: none; }
-    .mock-subtitle {
-      font-size: clamp(0.9rem,1.3vw,1rem);
-      color: rgb(255, 249, 223);
-      opacity: 0.95;
-      max-width: 90%;
-      margin-bottom: 20px;
-    }
-
-    /* RIGHT PANEL (BLOG CARD) */
-    .blogs-card {
-      background: linear-gradient(145deg, #FFF9E6, #FFF3C2);
-      border-radius: 16px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      max-width: 350px;
-      min-height: 220px;
-      transition: 0.3s ease;
-    }
-    .blog-preview {
-      background: #FFFBEF;
-      border: 2px solid #FFD166;
-      border-radius: 14px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      flex: 1;
-      position: relative;
-      transition: transform 0.2s ease, background 0.2s ease;
-      margin-bottom: 12px;
-    }
-    .blog-preview:hover { background: #FFF7D7; transform: translateY(-2px); }
-    .blog-icon {width: 70%; max-width: 120px; align-self: center; margin: 8px 0; flex-grow: 1; object-fit: contain;}
-    .blog-text { display: flex; flex-direction: column; align-items: flex-start; margin-top: auto; padding-left: 4px; }
-    .blog-text h3 { font-size: 1.15rem; font-weight: 800; margin: 0; color: #A66B00; }
-    .blog-text p { font-size: 0.95rem; margin: 2px 0 0; opacity: 0.85; font-weight: 500; }
-    .arrow { position: absolute; right: 12px; bottom: 10px; font-size: 1.4rem; font-weight: bold; color: #EFA400; }
-
-    .see-blogs-btn, .see-blogs-btn-mobile {
-      text-decoration: none;
-      background: #FFD166;
-      border: none;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-    .a-btn {
-      text-decoration: none;
-      color: #2d2a26;
-    }
-    .see-blogs-btn { padding: 12px; margin-top: 14px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); }
-    .see-blogs-btn:hover { background: #FFC94C; transform: scale(1.03); }
-    .see-blogs-btn-mobile { display: none; padding: 14px; margin: 15px auto; width: 90%; }
-
-    /* PROMO IMAGE MOBILE */
-    .promo-image-mobile {
-      display: none;
-      width: 100%;
-      margin: 18px auto;
-      text-align: center;
-    }
-
-    .promo-image-mobile img {
-      max-width: 90%;
-      height: auto;
-      border-radius: 14px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      transition: transform 0.2s ease;
-    }
-
-    .promo-image-mobile img:hover {
-      transform: scale(1.02);
-    }
-
-    @media (max-width: 767px) {
-      .promo-image-mobile { display: block; }
-    }
-
-    .a-mock { text-decoration: none; }
-
-    /* ------------------ NEW FOOTER: compact square buttons (mobile) ------------------ */
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 18px;
-      display: flex;
-      gap: 14px;
-      align-items: flex-end;
-      z-index: 1100;
-      padding: 8px;
-      pointer-events: auto;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 58px;
-      height: 58px;
-      border-radius: 12px;
-      background: linear-gradient(135deg,#2fd8ab,#06a87c);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-      border: 1px solid rgba(0,0,0,0.04);
-      text-decoration: none;
-      transition: transform .16s ease, box-shadow .16s ease;
-    }
-    .nav-btn img { width: 26px; height: 26px; display: block; }
-    .nav-btn:active { transform: translateY(2px) scale(.99); }
-    .nav-btn:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.14); }
-
-    /* Center button bigger and elevated */
-    .nav-btn.center {
-      width: 76px;
-      height: 76px;
-      border-radius: 18px;
-      background: linear-gradient(135deg,#f9734b,#ffab25);
-      box-shadow: 0 14px 36px rgba(255,120,50,0.22);
-      transform-origin: center;
-      margin-bottom: 6px;
-    }
-    .nav-btn.center img { width: 34px; height: 34px; filter: brightness(0) invert(1); }
-
-    @media (min-width: 768px) {
-      .bottom-nav { display: none; }
-    }
-
-    /* Ensure older footer rules are effectively removed (in case of cached CSS) */
-    .footer-nav { display: none !important; }
-
-    /* MOBILE RESPONSIVE ADJUSTMENTS */
-    @media (max-width: 1024px) {
-      .content-wrapper { flex-direction: column; gap: 18px; }
-      .left-panel, .middle-panel { max-width: 100%; flex: 1 1 auto; }
-      .mock-card, .blogs-card { max-width: 100%; height: auto; }
-    }
-    @media (max-width: 767px) {
-      .buttons-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .lesson-btn p, .lesson-btn2 p, .lesson-btn3 p, .lesson-btn4 p { display: none; }
-      .mock-subtitle { display: none; }
-      .mock-title-desktop { display: none; }
-      .mock-title-mobile { display: block; font-size: 1rem; font-weight: 700; margin-bottom: 6px; color: rgb(255, 249, 223); }
-      .blogs-card { display: none; }
-      .see-blogs-btn-mobile { display: block; }
-      .greeting { display: block; }
-    }
-
-    /* MOBILE GREETING */
-    .greeting {
-      display: none;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #3b2f2f;
-      margin-bottom: 18px;
-      text-align: left;
-      letter-spacing: -0.3px;
-    }
-
-    .promo-image-mobile { display: none; }
-
-  </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-LZP4KSPR1V');
   </script>
 </head>
+
 <body class="no-scroll">
+
   <!-- LOADER -->
   <div id="loader" role="status" aria-label="Loading">
     <div>
@@ -392,13 +33,20 @@
       <h1>Main Menu</h1>
       <h2>Welcome to the dashboard – choose an option below</h2>
     </div>
-    <a href="index.html" class="back-btn">⟵ Back</a>
+    <!-- Desktop Back Button -->
+    <a href="index.html" class="back-btn">Back</a>
+    <!-- Mobile Hamburger -->
+    <button class="hamburger-btn" id="hamburgerBtn"
+            aria-label="Open menu" aria-controls="sidebar"
+            aria-expanded="false" title="Open menu">
+      <span class="hamburger-icon" aria-hidden="true"></span>
+    </button>
   </div>
 
   <div class="content-wrapper">
     <!-- LEFT PANEL -->
     <div class="left-panel">
-      <div class="greeting">Good morning, scholar ✨</div>
+      <div class="greeting">Good morning, scholar</div>
       <div class="buttons-container">
         <a href="readinglessons.html" class="lesson-btn">
           <h3 class="title-mobile">IELTS <br>Reading</h3>
@@ -426,12 +74,14 @@
           <img src="icons/reading.png" alt="Reading Icon" class="mock-icon">
           <div class="mock-title-desktop">IELTS Mock Tests</div>
           <div class="mock-title-mobile">IELTS Mocks</div>
-          <div class="mock-subtitle">Simulate the real IELTS exam experience and track your progress.</div>
+          <div class="mock-subtitle">
+            Simulate the real IELTS exam experience and track your progress.
+          </div>
         </a>
       </div>
     </div>
 
-    <!-- RIGHT PANEL -->
+    <!-- RIGHT PANEL (BLOG CARD) -->
     <div class="blogs-card">
       <div class="blog-preview">
         <img src="icons/blog1.png" alt="Blog Icon" class="blog-icon">
@@ -449,90 +99,124 @@
         </div>
         <span class="arrow">→</span>
       </div>
-      <button class="see-blogs-btn" id="blogs"><a class="a-btn" href="blogs.html">See Our Blogs</a></button>
+      <button class="see-blogs-btn" id="blogs">
+        <a class="a-btn" href="blogs.html">See Our Blogs</a>
+      </button>
     </div>
   </div>
 
-  <!-- New random promo image (mobile only) -->
-  <div class="promo-image-mobile">
-    <img id="randomPromo" src="" alt="Promo Link">
-  </div>
-
-  <!-- NEW FOOTER: three separate square-ish buttons, center larger -->
+  <!-- MOBILE FOOTER -->
   <nav class="bottom-nav" aria-label="Mobile navigation">
     <a class="nav-btn" href="blogs.html" aria-label="Blogs">
       <img src="icons/blogfooter.png" alt="Blogs">
     </a>
-
     <a class="nav-btn center" href="index.html" aria-label="Home">
       <img src="icons/home.png" alt="Home">
     </a>
-
     <a class="nav-btn" href="profile.html" aria-label="Profile">
       <img src="icons/profile-user.png" alt="Profile">
     </a>
   </nav>
 
-  <script>
-    // Random promo images (replace with real images)
-    const promoImages = [
-      "otherassets/telegramlink.jpg",
-      "otherassets/youtubelink.jpg"
-    ];
-    const randomImg = promoImages[Math.floor(Math.random() * promoImages.length)];
-    const promoEl = document.getElementById("randomPromo");
-    if (promoEl) promoEl.src = randomImg;
+  <!-- MOBILE SIDEBAR + OVERLAY -->
+  <div id="sidebarOverlay" class="sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
+  <aside id="sidebar" class="sidebar" role="dialog" aria-modal="true"
+         aria-labelledby="sidebarTitle">
+    <div class="sidebar-header">
+      <h3 id="sidebarTitle">Menu & Tools</h3>
+      <button class="close-btn" id="sidebarCloseBtn"
+              aria-label="Close menu">×</button>
+    </div>
+    <div class="section">
+      <a href="gpa.html" class="item">
+        <div class="item-icon">G</div>
+        <div class="item-label">GPA Calculator</div>
+      </a>
+      <a href="https://t.me/summagetests" class="item">
+        <div class="item-icon">P</div>
+        <div class="item-label">PDF Tests</div>
+      </a>
+      <a href="studyguide.html" class="item">
+        <div class="item-icon">S</div>
+        <div class="item-label">Study Guide</div>
+      </a>
+    </div>
+    <div class="section">
+      <a href="aboutus.html" class="item">
+        <div class="item-icon">A</div>
+        <div class="item-label">About Us</div>
+      </a>
+      <a href="contacts.html" class="item">
+        <div class="item-icon">C</div>
+        <div class="item-label">Contact Us</div>
+      </a>
+    </div>
+    <div class="section">
+      <a href="privacy.html" class="item">
+        <div class="item-icon">P</div>
+        <div class="item-label">Privacy Policy</div>
+      </a>
+      <a href="terms.html" class="item">
+        <div class="item-icon">T</div>
+        <div class="item-label">Terms & Conditions</div>
+      </a>
+    </div>
+    <div style="flex:1"></div>
+    <div class="section" style="padding-bottom:12px;">
+      <div style="font-size:.9rem;color:#6b6b6b;">Version 1.0</div>
+    </div>
+  </aside>
+  <!-- PC SIDEBAR -->
+  <aside class="pc-sidebar">
+    <div class="sidebar-header">
+      <h3>Menu & Tools</h3>
+    </div>
 
-    // Icon fallback for accessibility
-    document.querySelectorAll('.nav-btn img').forEach(img => {
-      img.addEventListener('error', () => {
-        img.style.display = 'none';
-        const fallback = document.createElement('span');
-        fallback.textContent = '•';
-        fallback.style.fontSize = '20px';
-        img.parentNode.appendChild(fallback);
-      });
-    });
+    <!-- RANDOM QUOTE (PC only) -->
+    <div class="sidebar-quote" id="pcQuote">
+      <p class="quote-text"></p>
+      <small class="quote-author"></small>
+    </div>
 
-    // -------------------------
-    // Loader logic
-    // -------------------------
-    // Show loader immediately (already visible by default). We'll:
-    // 1) Wait ~20ms (as requested) to simulate minimal load.
-    // 2) Add .loaded to fade out overlay (180ms transition), then remove it and restore scrolling.
-    document.addEventListener('DOMContentLoaded', () => {
-      const loader = document.getElementById('loader');
-      // Timeout in ms that loader stays fully visible before starting fade:
-      const VISIBLE_MS = 600; // ~0.02s as you requested
-      // After fade we remove the element to avoid blocking interactions
-      const REMOVE_AFTER_FADE_MS = 220; // slightly larger than CSS transition
+    <!-- Links (unchanged) -->
+    <div class="section">
+      <a href="gpa.html" class="item">
+        <div class="item-icon">G</div>
+        <div class="item-label">GPA Calculator</div>
+      </a>
+      <a href="https://t.me/summagetests" class="item">
+        <div class="item-icon">P</div>
+        <div class="item-label">PDF Tests</div>
+      </a>
+      <a href="studyguide.html" class="item">
+        <div class="item-icon">S</div>
+        <div class="item-label">Study Guide</div>
+      </a>
+    </div>
+    <div class="section">
+      <a href="aboutus.html" class="item">
+        <div class="item-icon">A</div>
+        <div class="item-label">About Us</div>
+      </a>
+      <a href="contacts.html" class="item">
+        <div class="item-icon">C</div>
+        <div class="item-label">Contact Us</div>
+      </a>
+    </div>
+    <div class="section">
+      <a href="privacy.html" class="item">
+        <div class="item-icon">P</div>
+        <div class="item-label">Privacy Policy</div>
+      </a>
+      <a href="terms.html" class="item">
+        <div class="item-icon">T</div>
+        <div class="item-label">Terms & Conditions</div>
+      </a>
+    </div>
 
-      // safety: ensure loader exists
-      if (!loader) {
-        document.body.classList.remove('no-scroll');
-        return;
-      }
-
-      // start a short wait then fade out
-      setTimeout(() => {
-        loader.classList.add('loaded');
-        // remove loader from DOM after fade completes
-        setTimeout(() => {
-          if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
-          document.body.classList.remove('no-scroll');
-        }, REMOVE_AFTER_FADE_MS);
-      }, VISIBLE_MS);
-    });
-  </script>
-  <script>
-    document.getElementById('blogs').addEventListener('click', function () {
-      // do something (analytics, animate, etc.)
-      window.location.href = 'blogs.html';
-      // or: window.location.assign('/menu.html');
-      // or to replace history (no back): window.location.replace('/menu.html');
-    });
-  </script>
-
+    <div style="flex:1"></div>
+    <div class="version">Version 1.0</div>
+  </aside>
+  <script src="menu.js"></script>
 </body>
 </html>
-
