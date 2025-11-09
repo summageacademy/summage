@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Reading Lesson 8</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fff5f5 0%, #ffeaea 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#ff824d] to-[#ff4d4d] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#f9a8a8] to-[#f87171] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 8: Completion Questions</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Sentence, Note, Summary Fill-ins</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#f87171]">What Are Completion Questions?</h2>
+      <p>Completion questions require you to fill in missing words or phrases from the text. They test your understanding of details, synonyms, and paraphrasing.</p>
+      <div class="bg-red-50 border-l-4 border-[#f87171] p-4 mt-4 rounded">
+        <p class="italic">🎯 Tip: Focus on keywords in the question and scan the passage carefully to find answers.</p>
+      </div>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f87171]">1. Types of Completion Questions</h2>
+      <ul class="list-disc ml-6 mt-3 space-y-2">
+        <li><b>Sentence Completion:</b> Fill in a missing word or phrase in a sentence from the text.</li>
+        <li><b>Note Completion:</b> Complete a summary or note using words from the text.</li>
+        <li><b>Summary Completion:</b> Fill gaps in a paragraph summary, testing understanding of the main points.</li>
+      </ul>
+      <div class="bg-[#fff5f5] border-l-4 border-[#f87171] p-4 mt-4 rounded">
+        <p class="italic">💡 Strategy: Always pay attention to the word limit in the question. If it says “NO MORE THAN TWO WORDS,” stick to it strictly.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f87171]">2. Common Pitfalls</h2>
+      <ul class="list-disc ml-6 mt-3 space-y-2">
+        <li>Copying extra words from the text beyond the limit.</li>
+        <li>Ignoring paraphrasing; words may not match exactly.</li>
+        <li>Not checking grammar: answer must fit the sentence grammatically.</li>
+      </ul>
+      <div class="bg-[#ffe3e3] border-l-4 border-[#f87171] p-4 mt-4 rounded">
+        <p class="italic">⏰ Tip: Scan for keywords first, then check surrounding words to get exact answers.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f87171]">Mini Challenge</h2>
+      <p>Complete the sentence: “The main purpose of the passage is to ________ the benefits of early morning study.” (NO MORE THAN TWO WORDS)</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 explain</button>
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 describe</button>
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 illustrate</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f87171]">3. Timing & Strategy</h2>
+      <ul class="list-disc ml-6 mt-3 space-y-2">
+        <li>Skim the passage to locate relevant sections quickly.</li>
+        <li>Underline keywords in the question to spot synonyms in the text.</li>
+        <li>Stick to the word limit strictly to avoid losing marks.</li>
+      </ul>
+      <p class="mt-3 text-gray-600 italic">⏱ Allocate ~1–2 minutes per gap for maximum accuracy without wasting time.</p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#f87171]">🌿 You Did It!</h2>
+      <p>Well done! You’ve completed Lesson 8 of Summage Academy’s IELTS Reading course.  
+      Next up: <br><b>Lesson 9: Time Management</b></p>
+    </section>
+
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-100', 'bg-red-100'));
+      
+      if (option === 2) {
+        element.classList.add('bg-green-100');
+        result.textContent = '✅ Correct! "describe" best fits the sentence and word limit.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Make sure the answer matches meaning and word limit.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

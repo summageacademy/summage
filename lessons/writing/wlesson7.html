@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Writing Lesson 7</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #e1fff7 0%, #e3fff9 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#a7f3d0] to-[#34d399] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#34d399] to-[#a7f3d0] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 7: Coherence & Cohesion</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Linking Devices & Paragraph Flow</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#34d399]">Why Coherence & Cohesion Matter</h2>
+      <p>Coherence means your ideas are logically connected. Cohesion means your sentences are smoothly linked. Together, they make your writing easy to read and beautifully structured — like a river that flows without interruption.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">1. Building Paragraph Flow</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li><b>Start with a topic sentence:</b> Introduce the main idea clearly.</li>
+        <li><b>Support it:</b> Add explanations, data, or examples.</li>
+        <li><b>End smoothly:</b> Link to the next paragraph naturally.</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Each paragraph should have one clear purpose — don’t mix ideas.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">2. Common Linking Devices</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li><b>Adding:</b> moreover, furthermore, in addition, also</li>
+        <li><b>Contrasting:</b> however, whereas, on the other hand, although</li>
+        <li><b>Giving examples:</b> for instance, for example, such as</li>
+        <li><b>Showing results:</b> therefore, as a result, consequently, thus</li>
+        <li><b>Sequencing:</b> first of all, next, then, finally</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Use a range of connectors — but don’t overuse them! Clarity first.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">3. Avoiding Common Mistakes</h2>
+      <ul class="list-disc ml-6 mt-3">
+        <li>Overusing connectors (every sentence doesn’t need one).</li>
+        <li>Repeating the same linking word (“however” used 5 times in a row).</li>
+        <li>Jumping between unrelated ideas without transition.</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Your writing should feel like a conversation — natural, not mechanical.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#34d399]">Mini Challenge</h2>
+      <p>Which sentence shows good coherence and cohesion?</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 The sales increased. However, profits also grew because of better marketing.</button>
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 The sales increased. Marketing. Also profits better. Because reason.</button>
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 The sales increased! Sales increased! Also increased sales marketing profits!</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#34d399]">🌿 You Did It!</h2>
+      <p>Excellent work! You’ve completed Lesson 7 of Summage Academy’s IELTS Writing course.  
+      Next up: <br><b>Lesson 8: Developing Arguments</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-300', 'bg-red-100'));
+      
+      if (option === 1) {
+        element.classList.add('bg-green-300');
+        result.textContent = '✅ Correct! Logical connection and flow make it cohesive and clear.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Make sure sentences connect naturally and logically.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

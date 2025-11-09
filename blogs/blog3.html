@@ -1,57 +1,72 @@
-<!-- attention_like_muscle.html -->
+<!-- article.html -->
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Summage — Build Attention Like a Muscle</title>
+<title>Summage — Article</title>
 <style>
   :root{
-    --brand: #f24b0b;
-    --text: #222;
+    --brand: #f24b0b;       /* your brand color */
+    --text: #333;
     --muted: #666;
     --bg: #fafafa;
     --card: #fff;
     --radius: 10px;
     font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   }
+
+  /* Reset / layout */
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;padding:24px}
   a{color:var(--brand);text-decoration:underline}
-  .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--brand), #fb6b39);color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+
+  /* NAVBAR (simple) */
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--brand), #fb6b39);
+    color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  }
   .brand{display:flex;align-items:center;gap:12px}
   .brand img{width:48px;height:48px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.12)}
   .brand .title{font-weight:700;font-size:18px;line-height:1;margin:0}
   .brand .subtitle{font-size:12px;opacity:0.95;margin:0}
+
   .nav-actions{display:flex;gap:8px;align-items:center}
   .nav-actions a,.nav-actions button{background:rgba(255,255,255,0.12);padding:8px 12px;border-radius:10px;color:#fff;font-weight:600;text-decoration:none;border:0;cursor:pointer}
+  .nav-actions a:active,.nav-actions button:active{transform:translateY(1px)}
 
+  /* MAIN layout */
   .container{max-width:1100px;margin:20px auto 0}
-  .hero{display:flex;gap:24px;align-items:flex-start;background:var(--card);padding:22px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.04)}
+  .hero{
+    display:flex;gap:24px;align-items:flex-start;background:var(--card);padding:22px;border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.04);
+  }
+
+  /* left content */
   .main{flex:1;min-width:0}
   .kicker{display:inline-block;color:var(--brand);font-weight:700;font-size:13px;margin-bottom:8px}
   h1{margin:6px 0 10px;font-size:34px;line-height:1.02}
   p.lead{color:var(--muted);margin:0 0 16px;font-size:15px}
 
+  /* 60/40 split block */
   .split{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px}
   .split .text{flex:0 0 60%}
   .split .image{flex:0 0 40%}
   .split .image img{width:100%;height:auto;border-radius:8px;display:block}
 
+  /* general article text */
   article p{margin:0 0 12px 0;font-size:15px}
   article ul{margin:8px 0 12px 20px}
   .meta{color:var(--muted);font-size:13px;margin-top:10px}
 
+  /* right column (small objects) */
   .aside{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
   .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 18px rgba(0,0,0,0.03)}
   .card h4{margin:0 0 6px 0;font-size:15px}
   .card p{margin:0;color:var(--muted);font-size:14px}
 
-  .trans{color:var(--muted);font-size:14px;margin-top:6px;margin-bottom:6px;padding-left:6px;border-left:2px solid rgba(0,0,0,0.03)}
-  .quote{margin:18px 0;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(242,75,11,0.06), rgba(242,75,11,0.02));border:1px solid rgba(242,75,11,0.12);font-size:16px;color:var(--text)}
-  .quote .q-text{font-weight:600;margin:0 0 8px 0}
-  .quote .q-author{font-size:13px;color:var(--muted);}
-
+  /* language modal (small & reused) */
   .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:none;align-items:center;justify-content:center;z-index:60}
   .modal{background:#fff;padding:16px;border-radius:10px;width:320px;text-align:center;border:1px solid rgba(0,0,0,0.06);box-shadow: 0 12px 40px rgba(0,0,0,0.08)}
   .lang-grid{display:flex;gap:8px;justify-content:center;margin-top:12px}
@@ -59,12 +74,46 @@
   .lang-option[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
   .modal small{display:block;color:var(--muted);margin-top:8px}
 
-  @media (max-width:900px){.hero{flex-direction:column}.aside{width:100%}}
-  @media (max-width:520px){body{padding:14px}.brand img{width:40px;height:40px;border-radius:8px}.brand .title{font-size:16px}.nav-actions a{padding:8px 10px;font-size:14px}h1{font-size:22px}.split{flex-direction:column}.split .image img{width:90%;margin:8px auto 0;display:block}.aside{order:2}}
+  /* responsive: tablet/mobile */
+  @media (max-width:900px){
+    .hero{flex-direction:column}
+    .aside{width:100%}
+  }
+  @media (max-width:520px){
+    body{padding:14px}
+    .brand img{width:40px;height:40px;border-radius:8px}
+    .brand .title{font-size:16px}
+    .nav-actions a{padding:8px 10px;font-size:14px}
+    h1{font-size:22px}
+    .split{flex-direction:column}
+    .split .image img{width:90%;margin:8px auto 0;display:block} /* image ~90% width on mobile */
+    .aside{order:2}
+  }
   .lang-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; }
-  .lang-btn img { display:none; width:20px; height:20px; object-fit:contain; }
-  .lang-btn .lang-text { font-size:13px; color:inherit; }
-  @media (max-width: 520px) { .lang-btn { padding:8px; border-radius:10px; } .lang-btn img { display:block; } .lang-btn .lang-text { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; } }
+
+/* hide the img by default (desktop) */
+.lang-btn img { display:none; width:20px; height:20px; object-fit:contain; }
+
+/* text label styling kept (desktop) */
+.lang-btn .lang-text { font-size:13px; color:inherit; }
+
+/* MOBILE: show icon only, hide text visually but keep it for accessibility */
+@media (max-width: 520px) {
+  .lang-btn { padding:8px; border-radius:10px; }
+  .lang-btn img { display:block; }
+  .lang-btn .lang-text {
+    /* hide the visible text but keep available to screen readers */
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -72,6 +121,7 @@
   <!-- NAV -->
   <header class="nav" role="banner">
     <div class="brand">
+      <!-- replace logo.png with your file -->
       <img src="logo_white.jpg" alt="Summage logo">
       <div>
         <p class="title">Summage</p>
@@ -80,9 +130,11 @@
     </div>
 
     <div class="nav-actions">
+      <!-- Back to root blogs.html; this file assumed inside a folder -->
       <a id="backBtn" href="../blogs.html">← Back to blogs</a>
+      <!-- Language button (opens modal) -->
       <button class="lang-btn" id="open-lang" aria-label="Choose language">
-        <img src="/icons/languages.png" alt="" aria-hidden="true">
+        <img src="../icons/languages.png" alt="" aria-hidden="true">
         <span class="lang-text">Language</span>
       </button>
     </div>
@@ -91,103 +143,62 @@
   <div class="container">
     <main class="hero" role="main" aria-labelledby="article-title">
       <section class="main">
-        <span class="kicker" id="kicker">Mindcraft</span>
-        <h1 id="article-title">How to Build Attention Like a Muscle</h1>
-        <p class="lead" id="lead">Short, actionable — and a little soulful. This is my guide to training attention: steady, daily, and humane.</p>
+        <span class="kicker" id="kicker">IELTS Speaking</span>
+        <h1 id="article-title">How to Improve Your IELTS Speaking Band Score?</h1>
+        <p class="lead" id="lead">A practical, straight-talking guide to calm your nerves, grow fluency, and raise your IELTS Speaking band.</p>
 
         <article id="article-body" aria-live="polite">
+          <!-- full set of paragraphs: p1 .. p10 -->
+          <p id="p1">Most students, especially in the Speaking part, freeze or stutter — their ideas seem to vanish just when they need them most. That’s normal, and the good news is: it’s fixable.</p>
 
-          <p id="p1">Attention is not a gift — it's a skill. I used to think being focused was something others were born with. Then I treated attention like a muscle: if you warm it, exercise it, and rest it properly, it grows. That change in view is everything.</p>
-          
-          <h3 style="margin-top:10px">Why attention matters (short)</h3>
-          <p id="p2">When attention is trained you: learn faster, resist distraction, read deeper, and make fewer regrettable impulses. In my life, attention unlocked better study sessions, calmer prayers, and clearer goals.</p>
-          
-          <h3 style="margin-top:10px">Principles (how a muscle grows)</h3>
-          <ul>
-            <li><strong>Progressive overload:</strong> start small, increase gradually.</li>
-            <li><strong>Specificity:</strong> train attention in the exact way you need it (reading vs. listening vs. coding).</li>
-            <li><strong>Rest & recovery:</strong> breaks are where gains happen.</li>
-            <li><strong>Consistency over intensity:</strong> daily tiny wins beat rare big sprints.</li>
-          </ul>
-          
-          <h3 style="margin-top:10px">Tactics I used — practical and simple</h3>
+          <p id="p2">In this article we’ll look at ways to overcome those moments and find practical solutions that work for regular learners — not just exam gurus.</p>
 
-          <p id="p3">1) Micro-sessions: 12 minutes focused — 3 minutes rest. Repeat 4 times. The short window keeps the brain sharp and reduces procrastination. Use a physical timer (not your phone alarm) — the tactile click matters.</p>
-          
-          <p id="p4">2) Single-task rituals: before a session, write one sentence: "My goal for 12 minutes is..." This orients attention and reduces vague starting anxiety.</p>
-          
-          <p id="p5">3) Non-dominant hand check-ins: every 30 minutes, write one word with your other hand describing current focus (e.g., \"clear\", \"drifty\", \"deep\"). It acts like a reset and engages new circuits.</p>
-          
-          <p id="p6">4) Environment pruning: remove one attention-sucking object from your workspace each week (notifications, tab groups, a distracting poster). Small deletions add up.</p>
-          
-          <h3 style="margin-top:10px">A 3-week attention plan (doable)</h3>
-          <p id="p7">Week 1 — Foundations</p>
-          <ul>
-            <li>Day sessions: 2 × (12min focus + 3min break).</li>
-            <li>Daily ritual: write the 12-min goal.</li>
-            <li>Evening log: 2 lines — what worked, what drifted.</li>
-          </ul>
-          
-          <p id="p8">Week 2 — Load & specificity</p>
-          <ul>
-            <li>Increase to 3 × (20min focus + 5min break) on one day.</li>
-            <li>Practice one focused reading session (slow, margin notes).</li>
-            <li>Remove one distraction from the workspace.</li>
-          </ul>
-          
-          <p id="p9">Week 3 — Variation & resilience</p>
-          <ul>
-            <li>Mix study modes (listening, writing, problem-solving) each day.</li>
-            <li>Do one 45-min deep session (with 10-min break halfway).</li>
-            <li>Keep the discomfort log — celebrate the minutes you kept focus.</li>
-          </ul>
-          
-          <h3 style="margin-top:10px">Micro-practices you can do anywhere</h3>
-          <ul>
-            <li>Single-count breathing (4 in, 4 hold, 4 out) for one minute before a task.</li>
-            <li>Two-minute focused stare: pick an object and describe it silently for 120 seconds — no phone.</li>
-            <li>One-word check-ins (non-dominant hand) during breaks.</li>
-            <li>Replace one scroll session with two printed pages of slow reading.</li>
-          </ul>
-          
-          <h3 style="margin-top:10px">What you might expect</h3>
-          <p id="p10">At first you’ll fail often — that's the training. After 2–3 weeks you’ll notice longer pockets of focus, less guilt when you falter, and clearer study sessions. The muscle doesn't look dramatic — but your life will feel quieter and more intentional.</p>
-          
+          <p id="p3">Speaking from my own experience, the main cause is usually a lack of ready ideas. Reading — especially books that make you think — gives you time and language to shape opinions. Videos often give facts quickly, but books teach you how to reflect and connect ideas. That habit builds mental material you can use in any Part 1, 2, or 3 question.</p>
+
+          <p id="p4">If you’re new to reading, start with short, practical books on self-improvement — they cover many topics and introduce useful vocabulary. One day you’ll read about habits, the next day about productivity, and these different themes give you examples and words that often appear in IELTS topics.</p>
+
+          <p id="p5">I find reading quietly beautiful, especially today when many people only consume fast short content. Books slow your mind down and force you to form opinions — exactly the skill speaking tests reward.</p>
+
+          <p id="p6">So where should you put your focus? First: build a small daily habit of reading and noting short ideas. Second: practice producing those ideas aloud under a timer. Third: clean your feed — follow news and thoughtful sources rather than only entertainment.</p>
+
+          <p id="p7">You might ask: what’s the link between ideas and practice? Practice makes you familiar with common topics. As you practice more, you’ll have templates and examples ready and your brain will fill gaps faster on unfamiliar topics.</p>
+
+          <p id="p8">Also tidy your social media: follow news accounts, short essays, or fact-based pages. You are what you read — feed your mind with quality input so it outputs better on test day.</p>
+
+          <p id="p9">Yes — chatbots can help. I used ChatGPT to get Part 1 prompts, answered them aloud using speech-to-text, and reviewed the transcript. Practicing with an AI partner removes judgment and lets you try many topics quickly.</p>
+
+          <p id="p10">That’s all for today. I hope you found something useful — keep practicing, stay calm, and keep the habit. If you want, I can make cue cards or a printable 4-week calendar to follow each day. Tell me which and I’ll build it.</p>
+
+          <!-- 60% text / 40% image block -->
           <div class="split" aria-label="text with image">
             <div class="text">
-              <h3 id="h3-summary" style="margin-top:0">Quick checklist</h3>
+              <h3 id="h3-compact" style="margin-top:0">Small summary</h3>
+              <p id="split-p">Here are the main things we covered:</p>
               <ul id="bullets">
-                <li>12/3 micro-sessions daily</li>
-                <li>One ritual sentence before work</li>
-                <li>Non-dominant hand one-word check-ins</li>
-                <li>Weekly environment pruning</li>
-                <li>Keep a short discomfort log</li>
+                <li id="b1">Why ideas vanish and how to stop it</li>
+                <li id="b2">How to build ideas quickly</li>
+                <li id="b3">Bonus: training with AI and smart tools</li>
               </ul>
             </div>
             <div class="image">
-              <img src="../blogs/blog-images/attention-illustration.png" alt="attention illustration">
+              <!-- fixed forward-slash path -->
+              <img src="../blogs/blog-images/illustration-mobile.png" alt="explainer image">
             </div>
           </div>
 
-          <p class="meta" id="meta"><time datetime="2025-10-11">Published • Oct 11, 2025</time></p>
-
-          <div class="quote" role="note" aria-label="quote">
-            <p class="q-text">"The man who conquers himself is greater than the man who conquers a thousand cities."</p>
-            <p class="q-author">— Imam Ali (رضي الله عنه)</p>
-          </div>
-
+          <p class="meta" id="meta"><time datetime="2025-09-24">Published • Sep 24, 2025</time></p>
         </article>
       </section>
 
       <aside class="aside" aria-label="related">
         <div class="card">
-          <h4 id="aside1-title">Practice kit</h4>
-          <p id="aside1-body">Physical timer • Notebook for discomfort log • Quiet corner for slow reading.</p>
+          <h4 id="aside1-title">Lo-fi mood</h4>
+          <p id="aside1-body">Soft tones, simple layout — small details make the page feel warm.</p>
         </div>
 
         <div class="card">
           <h4 id="aside2-title">Related post</h4>
-          <p><a id="related-link" href="#">How I Learned to Use My Brain 100%</a></p>
+          <p><a id="related-link" href="..\blogs\blog2.html">How to use 100% of Your Brain?</a></p>
         </div>
       </aside>
     </main>
@@ -197,7 +208,7 @@
   <div id="lang-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal" id="lang-modal-box" role="document" aria-labelledby="lang-title">
       <h4 id="lang-title">Choose language</h4>
-      <small class="muted">This page includes inline translations and a compact translations note.</small>
+      <small class="muted">Pick your preferred language — saved for next time.</small>
       <div class="lang-grid" style="margin-top:12px;">
         <button class="lang-option" data-lang="en" aria-pressed="false">English</button>
         <button class="lang-option" data-lang="ru" aria-pressed="false">Русский</button>
@@ -209,80 +220,95 @@
 <script>
   (function(){
     const STORAGE_KEY = 'summage_lang';
+
     const DICT = {
       en: {
-        kicker: 'Mindcraft',
-        title: 'How to Build Attention Like a Muscle',
-        lead: 'Short, actionable — and a little soulful. This is my guide to training attention: steady, daily, and humane.',
-        p1: 'Attention is not a gift — it\'s a skill. I used to think being focused was something others were born with. Then I treated attention like a muscle: if you warm it, exercise it, and rest it properly, it grows. That change in view is everything.',
-        p2: 'When attention is trained you: learn faster, resist distraction, read deeper, and make fewer regrettable impulses.',
-        p3: '1) Micro-sessions: 12 minutes focused — 3 minutes rest. Repeat 4 times. Use a physical timer.',
-        p4: '2) Single-task rituals: before a session, write one sentence: "My goal for 12 minutes is..."',
-        p5: '3) Non-dominant hand check-ins: every 30 minutes, write one word with your other hand describing current focus.',
-        p6: '4) Environment pruning: remove one attention-sucking object from your workspace each week.',
-        p7: 'Week 1 — Foundations: 2 × (12+3), ritual, evening log.',
-        p8: 'Week 2 — Load & specificity: 20-min sessions, slow reading, remove one distraction.',
-        p9: 'Week 3 — Variation & resilience: mix modes, one 45-min deep session, keep the discomfort log.',
-        p10: 'Expect failures early; expect steady improvement by week 2–3. The life you build will feel quieter and more intentional.',
-        meta: 'Published • Oct 11, 2025',
-        aside1Title: 'Practice kit',
-        aside1Body: 'Physical timer • Notebook for discomfort log • Quiet corner for slow reading.',
+        kicker: 'Listening comprehension',
+        title: 'How to Improve Your Listening Comprehension?',
+        lead: 'A practical guide to master your Listening comprehension.',
+        p1: 'Listening is one of those skills that quietly defines how well you understand a language. Most students, especially those preparing for IELTS or simply learning English, struggle not because they cannot hear the words, but because their brain cannot process them fast enough. In this post we will talk about how to train your ears and mind to catch meaning, not just sound.',
+        p2: 'Before we jump into techniques, you have to understand one thing. Listening is not a passive skill. It is active. You have to engage with it. Every time you listen, your brain works like a translator and a detective at once, trying to connect what it hears with what it already knows. That’s why we need to build a strong base of words, context, and focus.',
+        p3: 'When I was training for my own exams, I realized that most listening problems come from poor attention and stress. The mind starts worrying about missing one word and ends up missing the whole sentence. The solution is to train calm focus. Start with short clips, maybe 30 seconds long, and replay them. Listen once without subtitles, then again with them. Do not rush. The goal is to understand the idea, not to chase every single word.',
+        p4: 'You can start with podcasts or YouTube videos made for learners. News channels like BBC Learning English or TED-Ed are great for building active listening. Try to shadow what you hear: repeat the same sentence immediately after the speaker. It sounds strange at first, but it is one of the most powerful exercises to improve accent, rhythm, and comprehension at the same time.',
+        p5: 'One thing that helped me a lot was writing down short notes while listening. Not full sentences, just key words. Later, I would try to retell what I heard in my own words. This single habit improved my memory and speaking speed together. It also trains your brain to identify main ideas fast, which is exactly what you need in IELTS Part 3 when questions get deeper.',
+        p6: 'Listening is not only about sound quality, it’s about mind quality. So keep your brain sharp. Avoid background distractions when studying. Clean your playlist. Follow channels that feed your intellect, not drain it. Replace random music with English podcasts once in a while. When your mind is surrounded by the language daily, you start understanding even when you are not trying.',
+        p7: 'If you get bored easily, mix your routine. One day listen to an interview, the next day a short story, and sometimes even a movie scene. Change accents too. British, American, Australian they all have their rhythm. Exposure is your teacher. The more your brain hears diversity, the faster it adapts. At one point you will notice that even fast native speech no longer scares you.',
+        p8: 'Try to make listening part of your life, not just your study plan. While cooking, walking, or traveling, play English audio. Even background listening has value because it keeps your mind connected to natural speech. And when you finally sit for practice, you will notice your brain predicts meaning faster, almost automatically.',
+        p9: 'Technology can help too. I often used ChatGPT to create listening quizzes or small dialogues, recorded them with AI voices, and practiced them later. Apps like Elsa, YouGlish, and Speechling also train pronunciation and comprehension together. Practicing with smart tools removes pressure and makes learning playful.',
+        p10: 'That’s all for today. Listening is a habit, not a talent. The more you train, the sharper it gets. Be patient, stay curious, and let your ears fall in love with the language. Over time you will not just hear English, you will start feeling it.',
+        compact: 'Small summary',
+        splitP: 'Here are the main things we covered:',
+        bullets: ['Why listening feels difficult and how to fix it','Best daily habits to improve comprehension','Bonus: using AI tools to practice smartly'],
+        meta: 'Published • Nov 3, 2025',
+        aside1Title: 'Lo-fi mood',
+        aside1Body: 'Soft tones, simple layout. Small details make the page feel warm.',
         aside2Title: 'Related post',
-        relatedLink: 'How I Learned to Use My Brain 100%',
+        relatedLink: 'How to use 100% of Your Brain?',
         backDesktop: '← Back to blogs',
-        backMobile: 'Back',
-        quote: { text: '"The man who conquers himself is greater than the man who conquers a thousand cities."', author: 'Imam Ali (رضي الله عنه)' }
+        backMobile: 'Back'
       },
+
+
       ru: {
-        kicker: 'Mindcraft',
-        title: 'Как тренировать внимание как мышцу',
-        lead: 'Коротко, практично и немного душевно. Мой гид по тренировке внимания: стабильно, ежедневно и по-человечески.',
-        p1: 'Внимание — навык. Раньше я думал, что фокус — врождённая черта. Потом я стал тренировать внимание как мускул: разогрей, потренируй и дай отдохнуть — и оно вырастет.',
-        p2: 'Когда внимание тренировано, вы учитесь быстрее, сопротивляетесь отвлечениям, глубже читаете и меньше поддаётесь импульсам.',
-        p3: '1) Микросессии: 12 минут фокуса — 3 минуты отдыха. Повторите 4 раза. Используйте физический таймер.',
-        p4: '2) Ритуал одной задачи: перед сессией запишите одно предложение: «Моя цель на 12 минут...»',
-        p5: '3) Проверки недоминантной рукой: каждые 30 минут напишите другим рукой одно слово, описывающее фокус.',
-        p6: '4) Обрезка окружения: убирайте каждую неделю одну вещь, крадущую внимание.',
-        p7: '1-я неделя — основы: 2 сессии 12+3, ритуал, вечерний лог.',
-        p8: '2-я неделя — нагрузка: 20-мин сеансы, медленное чтение, удалить одну помеху.',
-        p9: '3-я неделя — вариативность: смешивайте режимы, одна 45-мин глубинная сессия, журнал дискомфорта.',
-        p10: 'Ожидайте неудач в начале; улучшение почувствуете через 2–3 недели. Жизнь станет тише и осознаннее.',
-        meta: 'Опубликовано • 11 окт 2025',
-        aside1Title: 'Набор для практики',
-        aside1Body: 'Физический таймер • Блокнот для журнала дискомфорта • Тихое место для медленного чтения.',
-        aside2Title: 'Релевантный пост',
-        relatedLink: 'Как я научился использовать мозг на 100%',
-        backDesktop: '← Назад к блогам',
-        backMobile: 'Назад',
-        quote: { text: '"Человек, который победил самого себя, больше того, кто покорил тысячу городов."', author: 'Имам Али (رضي الله عنه)' }
+        "kicker": "Аудирование",
+        "title": "Как улучшить понимание на слух?",
+        "lead": "Практическое руководство, чтобы овладеть аудированием.",
+        "p1": "Аудирование это один из тех навыков, которые тихо определяют, насколько хорошо ты понимаешь язык. Большинство студентов, особенно тех, кто готовится к экзаменам или просто изучает английский, сталкиваются с трудностями не потому что не слышат слова, а потому что мозг не успевает их обработать. В этом посте мы поговорим о том, как тренировать уши и ум, чтобы улавливать смысл, а не просто звук.",
+        "p2": "Прежде чем перейти к техникам, нужно понять одно. Аудирование не пассивный навык. Оно активно. Нужно взаимодействовать с ним. Каждый раз, когда ты слушаешь, твой мозг работает как переводчик и детектив одновременно, пытаясь связать услышанное с тем, что уже знает. Поэтому нужно выстроить прочную базу из слов, контекста и внимания.",
+        "p3": "Когда я сам готовился к экзаменам, понял, что большинство проблем с аудированием происходят из-за плохой концентрации и стресса. Ум начинает переживать, что пропустил одно слово и в итоге теряет целое предложение. Решение это тренировать спокойное внимание. Начни с коротких отрывков, примерно по 30 секунд, и переслушивай их. Сначала без субтитров, потом с ними. Не спеши. Цель понять идею, а не гнаться за каждым словом.",
+        "p4": "Можно начать с подкастов или YouTube видео для изучающих английский. Каналы вроде BBC Learning English или TED Ed отлично подходят для активного слушания. Попробуй повторять за диктором сразу после того, как услышишь фразу. Сначала это кажется странным, но это одно из самых эффективных упражнений, чтобы улучшить произношение, ритм и понимание одновременно.",
+        "p5": "Одно, что сильно помогло мне, это записывать короткие заметки во время прослушивания. Не полные предложения, а только ключевые слова. Потом я пытался пересказать услышанное своими словами. Эта привычка улучшила мою память и скорость речи. Она также тренирует мозг быстро выделять основные идеи, что особенно важно в третьей части IELTS, когда вопросы становятся сложнее.",
+        "p6": "Аудирование это не только о качестве звука, это о качестве ума. Держи мозг в тонусе. Избегай отвлекающих факторов во время занятий. Очисти свой плейлист. Подписывайся на каналы, которые развивают, а не утомляют. Иногда замени музыку на английские подкасты. Когда язык окружает тебя ежедневно, ты начинаешь понимать даже тогда, когда не пытаешься.",
+        "p7": "Если тебе быстро становится скучно, разнообразь занятия. Один день слушай интервью, другой короткий рассказ, а иногда даже сцену из фильма. Меняй акценты тоже. Британский, американский, австралийский у каждого свой ритм. Опыт твой лучший учитель. Чем больше мозг слышит разнообразие, тем быстрее адаптируется. В какой-то момент ты заметишь, что даже быстрая речь носителей больше не пугает.",
+        "p8": "Постарайся сделать аудирование частью жизни, а не только учебного плана. Во время готовки, прогулок или поездок включай английский аудио. Даже фоновое прослушивание полезно, потому что держит ум связанным с естественной речью. И когда ты наконец сядешь за практику, заметишь, что мозг начинает предугадывать смысл почти автоматически.",
+        "p9": "Технологии тоже могут помочь. Я часто использовал ChatGPT, чтобы создавать упражнения на аудирование или короткие диалоги, записывал их с помощью голосов ИИ и потом тренировался. Приложения вроде Elsa, YouGlish и Speechling тренируют произношение и понимание одновременно. Практика с умными инструментами убирает напряжение и делает обучение интересным.",
+        "p10": "На сегодня это всё. Аудирование это привычка, а не талант. Чем больше тренируешь, тем острее оно становится. Будь терпелив, оставайся любопытным и позволь ушам влюбиться в язык. Со временем ты начнёшь не просто слышать английский, а чувствовать его.",
+        "compact": "Краткое резюме",
+        "splitP": "Вот основные моменты, которые мы рассмотрели:",
+        "bullets": ["Почему аудирование кажется сложным и как это исправить", "Лучшие ежедневные привычки для улучшения понимания", "Бонус как использовать ИИ для умной практики"],
+        "meta": "Опубликовано • 3 ноября 2025",
+        "aside1Title": "Lo fi настроение",
+        "aside1Body": "Мягкие тона, простой дизайн. Маленькие детали делают страницу уютной.",
+        "aside2Title": "Похожая статья",
+        "relatedLink": "Как использовать 100% своего мозга?",
+        "backDesktop": "← Назад к блогам",
+        "backMobile": "Назад"
       },
+
       uz: {
-        kicker: 'Mindcraft',
-        title: 'Diqqatni mushak kabi qanday qurish mumkin',
-        lead: 'Qisqa, amaliy va ozgina ruhiy. Bu diqqatni mashq qilish bo‘yicha mening qo‘llanmam: barqaror, kundalik va odamiy.',
-        p1: 'Diqqat in\'om emas, balki mahoratdir. Avvaliga men fokus boshqalarga berilgan deb o‘ylardim. Keyin uni mushak kabi mashq qilishni boshladim: isin, mashq qil va dam ol — u o‘sadi.',
-        p2: 'Diqqatni o‘rgansangiz: tezroq o‘rganasiz, chalg‘itishga chidaysan, chuqurroq o‘qisan va kamroq impulsiv xatti-harakat qilasan.',
-        p3: '1) Mikro-sessiyalar: 12 daqiqa fokus — 3 daqiqa tanaffus. 4 marta takrorlang. Fizik taimer ishlating.',
-        p4: '2) Bitta vazifa rituallari: sessiya oldida bitta gap yozing: "Mening 12 daqiqa maqsadim..."',
-        p5: '3) Noaniq qo‘l tekshiruvlari: har 30 daqiqada boshqa qo‘l bilan e\'tibor holatini bitta so‘z bilan yozing.',
-        p6: '4) Muhitni tozalash: har hafta ish joyingizdan bir e\'tiborni o‘g‘iruvchi narsani olib tashlang.',
-        p7: '1-hafta — asoslar: 2 × (12+3), rituallar, kechki jurnal.',
-        p8: '2-hafta — yuk va maxsuslik: 20 daqiqa seanslar, sekin o‘qish, bitta chalg‘ituvchini olib tashlang.',
-        p9: '3-hafta — o‘zgaruvchanlik: rejimlarni aralashtiring, bir 45 daqiqa chuqur sessiya va noqulaylik jurnalini davom ettiring.',
-        p10: 'Dastlab muvaffaqiyatsizliklar bo‘ladi; 2–3 haftadan keyin barqaror yaxshilanishni sezasiz. Hayotingiz tinchroq va ongliroq bo‘ladi.',
-        meta: 'Chop etilgan • 11 Okt 2025',
-        aside1Title: 'Amaliy to‘plam',
-        aside1Body: 'Fizik taimer • Noqulaylik jurnali uchun daftar • Sekin o‘qish uchun jim joy.',
-        aside2Title: 'Tegishli post',
-        relatedLink: 'Qanday qilib miyamni 100% ishlatishni o‘rgandim',
-        backDesktop: '← Bloglarga qaytish',
-        backMobile: 'Orqaga',
-        quote: { text: '"O‘zini zabt etgan kishi ming shaharni zabt etgan kimsadan ulug‘dir."', author: 'Imom Ali (رضي الله عنه)' }
+        kicker: "IELTS Speaking",
+        title: "IELTS Speaking ballingizni qanday oshirish mumkin?",
+        lead: "Tinchlanish, ravonlikni oshirish va IELTS Speaking ballingizni ko‘tarish uchun amaliy qo‘llanma.",
+        p1: "Ko‘plab test topshiruvchilar Speaking bo‘limida javob berayotganda to'xtab qolishadi yoki huddiki tillari ishlamay qoladi. Fikrlari kerakli paytda yo‘qolgandek. Bu normal holat va uni tuzatish mumkin.",
+        p2: "Ushbu maqolada biz bunday vaziyatlarni qanday qilib oldini olishni va oddiy yechimlarni qanday qilib qo'llash mumkinligini ko‘rib chiqamiz.",
+        p3: "Tajribamdan kelib chiqib shuni takidlay olamanki, asosiy sabab bu tayyor g‘oyalar kamligi yoxud dunyo qarashning kichkinaligi. Kitob o‘qish, ayniqsa tafakkurni uyg‘otadigan kitoblar fikrni shakllantirish uchun vaqt beradi. Videolar faktlarni juda tezlik bilan berishadi, lekin kitoblar fikrlash va g‘oyalarni bog‘lash uchun kerakli vaqtni beradi. Bu odat sizga testning har bir bo‘limida suvdek zarur bo'ladi.",
+        p4: "Agar siz o‘qishni endigina boshlayotgan bo‘lsangiz, amaliy va qisqa kitob janrlarini, xususan \"Self-improvement\" haqida kitoblarni tanlang. Ular turli mavzularni qamrab oladi va foydali lug‘atni taqdim etadi. Bir kuni kundalik tartib qanchalik kerakligi haqida o‘qiysiz, boshqa kuni esa moliyaviy savodxonlik haqida. Bunday mavzular IELTSda tez-tez uchraydi.",
+        p5: "Men uchun o‘qish tinch va go‘zal odatdek ko'rinadi. Ayniqsa hozirgi texnalogiyalar odamlarni ongini o'rab olayotgan zamonda. Kitoblar aqlni ijobiy manoda sekinlashtiradi, yoxud tinchlantiradi va fikrni shakllantirishga majbur qiladi. Aynan shu ko‘nikma Speaking testida baholanadi.",
+        p6: "Qayerga e’tibor qaratish kerak? Birinchidan: har kuni kichik savodxonlik odatini shakllantiring va qisqa g‘oyalarni yozib boring. Ikkinchidan: bu g‘oyalarni taymer ostida ovozli ravishda mashq qiling. Uchinchi: ijtimoiy tarmog‘ingizni tozalang va faqat o‘yin-kulgi emas, yangiliklar va fikrli manbalarni kuzating.",
+        p7: "Siz so‘rashingiz mumkin: g‘oyalar va ushbu mashg'ulotlar orasida qanday bog‘liqlik bor? Mashq sizni keng tarqalgan mavzular bilan tanishtiradi. Qanchalik ko‘p mashq qilsangiz, shuncha ko‘p shablon va misollar hosil bo‘ladi, boshqacha mavzularda ham miyaning bo‘shliqlarni to‘ldirishga imkon beradi.",
+        p8: "Shuningdek, ijtimoiy tarmoqlaringizni tartibga keltiring: yangiliklar va faktlarga asoslangan sahifalarni kuzatib boring. Siz nima o‘qisangiz, o'sha bo'lasiz. Shunday ekan, miyangizni sifatli kontent bilan oziqlantiring.",
+        p9: "Ha, chat-botlar juda katta yordam berishadi. Men ChatGPTdan Part 1 savollarini so‘rar edim, javoblarni \"Speech-to-Text\" orqali yozib olardim va transkriptni tahlil qilardim. Suniy Intelekt bilan mashq qilish o'zgalarning \"Ustingizdan kulishi\" qo'rquvini yo'q qiladi va ko‘p mavzularni tez fursat ichida sinab ko‘rishingizga imkon beradi.",
+        p10: "Bugunchalik shunlar edi. Umid qilamanki, biror foydali narsa o'rgandingiz. Mashq qilishdan to'xtamang, xotirjam bo‘ling va ko'proq ingliz tilida gapirishni davom ettiring.",
+        compact: "Qisqacha mazmun",
+        splitP: "Muhokama qilingan asosiy mavzular:",
+        bullets: ["Nega fikrlar yo‘qolib qolishadi va uni qanday to‘xtatish mumkin?","Qanday qilib tez g‘oya topish mumkin","Bonus: AI va foydali vositalar bilan mashq qilish"],
+        meta: "Chop etilgan • 3 Noyabr, 2025",
+        aside1Title: "Lo-fi vibe",
+        aside1Body: "Yumshoq ohanglar, soddalashgan maket. Kichik detallar sahifani iliq qiladi.",
+        aside2Title: "Tegishli post",
+        relatedLink: "Sarlavhalar bo‘yicha qisqacha qo‘llanma",
+        backDesktop: "← Bloglarga qaytish",
+        backMobile: "Orqaga"
       }
     };
 
-    function getStoredLang(){ const v = localStorage.getItem(STORAGE_KEY); return (v && DICT[v]) ? v : 'en'; }
+    // Helper to get stored lang (fallback to 'en')
+    function getStoredLang(){
+      const v = localStorage.getItem(STORAGE_KEY);
+      return (v && DICT[v]) ? v : 'en';
+    }
 
+    // Elements we will update
     const elements = {
       kicker: document.getElementById('kicker'),
       title: document.getElementById('article-title'),
@@ -297,6 +323,9 @@
       p8: document.getElementById('p8'),
       p9: document.getElementById('p9'),
       p10: document.getElementById('p10'),
+      compact: document.getElementById('h3-compact'),
+      splitP: document.getElementById('split-p'),
+      bullets: [document.getElementById('b1'), document.getElementById('b2'), document.getElementById('b3')],
       meta: document.getElementById('meta'),
       aside1Title: document.getElementById('aside1-title'),
       aside1Body: document.getElementById('aside1-body'),
@@ -305,6 +334,7 @@
       backBtn: document.getElementById('backBtn')
     };
 
+    // Apply language strings to page
     function applyLanguage(lang){
       const D = DICT[lang] || DICT.en;
       elements.kicker.textContent = D.kicker;
@@ -320,35 +350,54 @@
       elements.p8.textContent = D.p8;
       elements.p9.textContent = D.p9;
       elements.p10.textContent = D.p10;
-      elements.meta.innerHTML = '<time datetime="2025-10-11">' + D.meta + '</time>';
+      elements.compact.textContent = D.compact;
+      elements.splitP.textContent = D.splitP;
+      // bullets array
+      D.bullets.forEach((txt, i) => {
+        if(elements.bullets[i]) elements.bullets[i].textContent = txt;
+      });
+      elements.meta.innerHTML = '<time datetime="2025-09-24">' + D.meta + '</time>';
       elements.aside1Title.textContent = D.aside1Title;
       elements.aside1Body.textContent = D.aside1Body;
       elements.aside2Title.textContent = D.aside2Title;
       elements.relatedLink.textContent = D.relatedLink;
-      function updateBackText(){ const isMobile = window.innerWidth <= 420; elements.backBtn.textContent = isMobile ? D.backMobile : D.backDesktop; }
-      updateBackText();
-
-      // Update quote
-      const quoteBlock = document.querySelector('.quote');
-      if(quoteBlock){
-        const qt = D.quote || DICT.en.quote;
-        quoteBlock.querySelector('.q-text').textContent = qt.text;
-        quoteBlock.querySelector('.q-author').textContent = '— ' + qt.author;
+      // back button text (mobile vs desktop)
+      function updateBackText(){
+        const isMobile = window.innerWidth <= 420;
+        elements.backBtn.textContent = isMobile ? D.backMobile : D.backDesktop;
       }
+      updateBackText();
+      // keep responsive update
+      // remove previous listener to avoid duplicates
+      // (simple approach: don't add multiple listeners on repeated apply)
     }
 
+    // init
     let lang = getStoredLang();
     applyLanguage(lang);
 
+    // Language modal behavior
     const openLangBtn = document.getElementById('open-lang');
     const langModal = document.getElementById('lang-modal');
     const langOptions = Array.from(document.querySelectorAll('.lang-option'));
 
-    function openLangModal(){ langModal.style.display = 'flex'; langModal.setAttribute('aria-hidden','false'); langOptions.forEach(btn => { btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false'); }); }
-    function closeLangModal(){ langModal.style.display = 'none'; langModal.setAttribute('aria-hidden','true'); }
+    function openLangModal(){
+      langModal.style.display = 'flex';
+      langModal.setAttribute('aria-hidden','false');
+      // set pressed states
+      langOptions.forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
+      });
+    }
+    function closeLangModal(){
+      langModal.style.display = 'none';
+      langModal.setAttribute('aria-hidden','true');
+    }
 
     openLangBtn.addEventListener('click', openLangModal);
-    langModal.addEventListener('click', (e) => { if(e.target === langModal) closeLangModal(); });
+    langModal.addEventListener('click', (e) => {
+      if(e.target === langModal) closeLangModal();
+    });
 
     langOptions.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -357,11 +406,13 @@
         lang = chosen;
         localStorage.setItem(STORAGE_KEY, chosen);
         applyLanguage(chosen);
+        // update pressed states
         langOptions.forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === chosen ? 'true' : 'false'));
         closeLangModal();
       });
     });
 
+    // Listen for storage changes in other tabs
     window.addEventListener('storage', (e) => {
       if(e.key === STORAGE_KEY){
         const newLang = (e.newValue && DICT[e.newValue]) ? e.newValue : 'en';
@@ -370,9 +421,11 @@
       }
     });
 
+    // expose API
     window.Summage = window.Summage || {};
     window.Summage.setLang = function(code){ if(DICT[code]) { localStorage.setItem(STORAGE_KEY, code); applyLanguage(code); } };
 
+    // initial responsive back text update
     (function updateBackOnResize(){
       const D = DICT[lang] || DICT.en;
       function update(){ const isMobile = window.innerWidth <= 420; document.getElementById('backBtn').textContent = isMobile ? D.backMobile : D.backDesktop; }

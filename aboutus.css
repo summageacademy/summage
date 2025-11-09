@@ -1,3 +1,4 @@
+/* aboutus.css - FINAL OPTIMIZED VERSION */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -7,6 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  line-height: 1.6;
 }
 
 /* HEADER */
@@ -35,6 +37,7 @@ header nav a {
   font-size: 15px;
   letter-spacing: 0.5px;
   transition: color 0.25s ease;
+  outline: none;
 }
 header nav a::after {
   content: "";
@@ -46,11 +49,17 @@ header nav a::after {
   background: #f24b0b;
   transition: width 0.3s ease;
 }
-header nav a:hover {
+header nav a:hover,
+header nav a:focus {
   color: #f24b0b;
 }
-header nav a:hover::after {
+header nav a:hover::after,
+header nav a:focus::after {
   width: 100%;
+}
+header nav a:focus {
+  outline: 2px solid #f24b0b;
+  outline-offset: 2px;
 }
 
 /* HERO */
@@ -78,11 +87,6 @@ header nav a:hover::after {
   font-size: 72px;
   color: #f24b0b;
   line-height: 1.1;
-}
-@media (max-width: 600px) {
-  .hero-brand { flex-direction: column; text-align: center; }
-  .hero h1 { font-size: 56px; }
-  .hero-logo { width: 70px; height: 70px; }
 }
 
 /* SECTIONS */
@@ -118,11 +122,10 @@ section p {
   max-width: 800px;
   margin: 0 auto;
   font-size: 16px;
-  line-height: 1.6;
   color: #444;
 }
 
-/* 🌿 VALUES LIST - MOBILE FRIENDLY */
+/* VALUES LIST - IMPROVED MOBILE */
 .values-list {
   list-style: none;
   margin: 40px auto 0;
@@ -140,7 +143,6 @@ section p {
   border-radius: 10px;
   padding: 18px 20px;
   text-align: left;
-  line-height: 1.6;
   font-size: 16px;
   color: #333;
   display: flex;
@@ -148,57 +150,66 @@ section p {
   gap: 12px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.05);
   transition: all 0.3s ease;
-  flex-direction: row;
-  flex-wrap: wrap;
   position: relative;
+  min-height: 68px;
 }
+
 .values-list li span {
   font-size: 22px;
-  flex-shrink: 0;
   color: #f24b0b;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
+
 .values-list li strong {
-  display: inline-block;
-  font-weight: 700;
   color: #007a52;
-  margin-right: 6px;
+  font-weight: 700;
 }
+
 .values-list li:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.1);
   background: #f9fffc;
 }
 
-/* 📱 MOBILE REWORK */
+/* MOBILE: Stack emoji on top-right, content left */
 @media (max-width: 600px) {
+  .hero-brand { flex-direction: column; text-align: center; }
+  .hero h1 { font-size: 56px; }
+  .hero-logo { width: 70px; height: 70px; }
+
+  section { padding: 40px 24px; }
+  section h2 { font-size: 26px; }
+
   .values-list li {
     flex-direction: column;
     align-items: flex-start;
     padding: 16px 18px;
-    gap: 8px;
+    gap: 6px;
   }
 
   .values-list li span {
     position: absolute;
-    top: 16px;
-    right: 18px;
+    top: 14px;
+    right: 16px;
     font-size: 20px;
+    margin-top: 0;
   }
 
   .values-list li strong {
     display: block;
-    margin-bottom: 4px;
-    font-size: 16.5px;
+    font-size: 16px;
+    margin-bottom: 2px;
   }
 
-  .values-list li::before {
+  .values-list li::after {
     content: "";
     display: block;
     height: 1px;
     width: 100%;
     background: #eaeaea;
-    margin-bottom: 6px;
-    opacity: 0.5;
+    margin-top: 8px;
+    opacity: 0.4;
   }
 }
 
@@ -221,9 +232,19 @@ section p {
   border: 3px solid #f24b0b;
   transition: transform 0.3s ease;
 }
-.team-member img:hover { transform: scale(1.05); }
-.team-member h3 { margin-top: 12px; font-size: 18px; color: #007a52; }
-.team-member p { font-size: 14px; color: #555; }
+.team-member img:hover,
+.team-member img:focus {
+  transform: scale(1.05);
+}
+.team-member h3 {
+  margin-top: 12px;
+  font-size: 18px;
+  color: #007a52;
+}
+.team-member p {
+  font-size: 14px;
+  color: #555;
+}
 
 /* PARTNERS */
 .partners {
@@ -239,7 +260,8 @@ section p {
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.partner-card:hover {
+.partner-card:hover,
+.partner-card:focus-within {
   transform: translateY(-5px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
@@ -251,7 +273,10 @@ section p {
   filter: grayscale(30%);
   transition: filter 0.3s ease;
 }
-.partner-card img:hover { filter: grayscale(0%); }
+.partner-card:hover img,
+.partner-card:focus-within img {
+  filter: grayscale(0%);
+}
 
 /* FOOTER */
 footer {
@@ -274,8 +299,7 @@ footer {
   50% { transform: translateY(-6px); }
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE FALLBACK */
 @media (max-width: 768px) {
   section { padding: 40px 30px; }
-  section h2 { font-size: 26px; }
 }

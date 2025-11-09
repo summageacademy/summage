@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Writing Lesson 8</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #e1fff7 0%, #e3fff9 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#a7f3d0] to-[#34d399] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#34d399] to-[#a7f3d0] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 8: Developing Arguments</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Examples, Evidence & Balancing Points</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#34d399]">Why Developing Arguments Matters</h2>
+      <p>In IELTS Writing Task 2, strong arguments make your essay convincing and logical. You must support your ideas with <b>examples, evidence, and balanced viewpoints</b> to achieve a high band score.</p>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">1. Using Examples Effectively</h2>
+      <p>Examples help your reader understand your point better and make your ideas feel realistic.</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li><b>Personal examples:</b> “For instance, many students struggle to focus when learning online.”</li>
+        <li><b>General examples:</b> “For example, research shows that remote work boosts productivity.”</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Use 1–2 examples per body paragraph to clarify your argument — keep them short and relevant.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">2. Supporting with Evidence</h2>
+      <p>Evidence gives strength to your argument. It can be facts, studies, logical reasoning, or general truths.</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li>“Studies indicate that…”</li>
+        <li>“According to recent surveys…”</li>
+        <li>“It is widely accepted that…”</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: You don’t need real data — logical, believable examples are enough for IELTS.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#34d399]">3. Balancing Your Points</h2>
+      <p>High-level essays show balance — acknowledging different sides before concluding your opinion.</p>
+      <ul class="list-disc ml-6 mt-3">
+        <li><b>Balanced sentence:</b> “While technology has improved communication, it has also reduced face-to-face interaction.”</li>
+        <li><b>Contrast phrases:</b> however, on the other hand, although, whereas</li>
+      </ul>
+      <div class="bg-green-50 border-l-4 border-[#34d399] p-4 mt-4 rounded">
+        <p class="italic">Tip: Showing both sides makes your writing mature and analytical.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#34d399]">Mini Challenge</h2>
+      <p>“What’s the best way to strengthen an argument in IELTS Writing Task 2?”</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 Support ideas with clear examples and evidence</button>
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 Write as many complex words as possible</button>
+        <button class="block w-full text-left bg-green-100 hover:bg-green-200 p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 Ignore the opposite opinion</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#34d399]">🌿 You Did It!</h2>
+      <p>Excellent work — you’ve mastered <b>Lesson 8: Developing Arguments</b>.  
+      Up next: <br><b>Lesson 9: Complex Sentences</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-300', 'bg-red-100'));
+      
+      if (option === 1) {
+        element.classList.add('bg-green-300');
+        result.textContent = '✅ Correct! Examples and evidence make your arguments powerful and logical.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. Complex words or one-sided views weaken your argument.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

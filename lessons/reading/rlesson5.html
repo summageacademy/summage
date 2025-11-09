@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — IELTS Reading Lesson 5</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fff5f5 0%, #ffeaea 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#ff824d] to-[#ff4d4d] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#f9a8a8] to-[#f87171] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 5: Multiple Choice</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Choosing Accurately Under Time Pressure</p>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#f87171]">Understanding the Challenge</h2>
+      <p>Multiple Choice questions in IELTS Reading test not only your comprehension, but also your ability to identify precise meaning quickly. Each option may seem correct at first — your job is to find <b>the one that fits the passage perfectly</b>.</p>
+      <div class="bg-red-50 border-l-4 border-[#f87171] p-4 mt-4 rounded">
+        <p class="italic">Remember: “Almost correct” is still wrong. IELTS rewards accuracy, not guesses.</p>
+      </div>
+    </section>
+
+    <!-- Section 1 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f87171]">1. How to Approach the Question</h2>
+      <ul class="list-disc ml-6 mt-3 space-y-2">
+        <li><b>Step 1:</b> Read the question stem carefully — know exactly what it’s asking.</li>
+        <li><b>Step 2:</b> Underline keywords (names, dates, adjectives).</li>
+        <li><b>Step 3:</b> Scan the passage for these keywords or their synonyms.</li>
+        <li><b>Step 4:</b> Read a few lines above and below to confirm the meaning.</li>
+        <li><b>Step 5:</b> Eliminate wrong options — this boosts accuracy and confidence.</li>
+      </ul>
+      <div class="bg-[#fff5f5] border-l-4 border-[#f87171] p-4 mt-4 rounded">
+        <p class="italic">Tip: If two options seem right, one is probably too general or too specific. Choose the one that matches the author’s exact message.</p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-2 text-[#f87171]">2. Common Traps</h2>
+      <ul class="list-disc ml-6 mt-3 space-y-2">
+        <li><b>Synonym traps:</b> IELTS loves rewording ideas with similar vocabulary.</li>
+        <li><b>Opinion traps:</b> The answer is what the <b>writer</b> says, not what <b>you think</b>.</li>
+        <li><b>Time traps:</b> Spending too long on one question ruins your rhythm.</li>
+      </ul>
+      <div class="bg-[#ffe3e3] border-l-4 border-[#f87171] p-4 mt-4 rounded">
+        <p class="italic">⏰ Don’t reread whole paragraphs — read strategically, not emotionally.</p>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f87171]">Mini Challenge</h2>
+      <p>“According to the passage, why do students often struggle with Multiple Choice questions?”</p>
+
+      <div class="space-y-2 mt-4" id="quiz1">
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(1, this)">🔘 Because they read too fast and miss key words</button>
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(2, this)">🔘 Because the questions are too long to understand</button>
+        <button class="block w-full text-left bg-[#fff5f5] hover:bg-[#ffe3e3] p-3 rounded transition" onclick="checkAnswer(3, this)">🔘 Because they rely on personal opinion instead of text evidence</button>
+      </div>
+      <p id="result1" class="mt-3 font-medium"></p>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#f87171]">3. Time-Saving Strategy</h2>
+      <ul class="list-disc ml-6 mt-3 space-y-2">
+        <li>Spend <b>1 minute</b> reading the question carefully.</li>
+        <li>Spend <b>2 minutes</b> scanning the passage for relevant info.</li>
+        <li>Spend <b>1 minute</b> confirming your answer logically.</li>
+      </ul>
+      <p class="mt-3 text-gray-600 italic">That’s about 4 minutes per question — efficient and accurate.</p>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#f87171]">🌿 You Did It!</h2>
+      <p>Excellent work — you’ve completed Lesson 5 of Summage Academy’s IELTS Reading course.  
+      Next up: <br><b>Lesson 6: Matching Headings</b></p>
+    </section>
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+  <script>
+    function checkAnswer(option, element) {
+      const result = document.getElementById('result1');
+      const buttons = document.querySelectorAll('#quiz1 button');
+      buttons.forEach(btn => btn.classList.remove('bg-green-100', 'bg-red-100'));
+      
+      if (option === 3) {
+        element.classList.add('bg-green-100');
+        result.textContent = '✅ Correct! Personal opinion often misleads — always trust the passage.';
+        result.className = 'mt-3 text-green-600 font-semibold';
+      } else {
+        element.classList.add('bg-red-100');
+        result.textContent = '❌ Not quite. The main reason is misunderstanding due to relying on personal opinion.';
+        result.className = 'mt-3 text-red-600 font-semibold';
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Academy — Cue Card Practice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #e1efff 0%, #e3f0ff 100%);
+    }
+    .card {
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="max-w-5xl mx-auto mt-4 bg-gradient-to-r from-[#ff824d] to-[#ff4d4d] p-3 rounded-2xl shadow-lg flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="/otherassets/logo_white.jpg" alt="Summage" class="w-10 h-10 rounded-xl shadow-md" />
+      <div>
+        <h1 class="text-white text-lg font-semibold leading-tight">Summage</h1>
+        <p class="text-white/80 text-xs -mt-1">Thoughtful notes</p>
+      </div>
+    </div>
+    <button onclick="history.back()" class="bg-white/20 hover:bg-white/30 text-white text-sm px-4 py-2 rounded-xl transition">
+      Back
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto text-center mt-10 px-4">
+    <div class="bg-gradient-to-r from-[#459cff] to-[#3b82f6] rounded-3xl py-10 px-6 shadow-md">
+      <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight">Lesson 8: Cue Card Practice</h1>
+      <p class="text-white/90 mt-3 text-lg md:text-xl">Sample Cue Cards for IELTS Speaking Part 2</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Intro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-2xl font-bold mb-3 text-[#3b82f6]">Cue Card Practice Overview</h2>
+      <p>In this lesson, you'll get sample cue cards for IELTS Speaking Part 2 and learn how to structure your responses.</p>
+    </section>
+
+    <!-- Cue Cards -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#3b82f6]">💡 Sample Cue Cards</h2>
+      
+      <div class="space-y-4">
+        <!-- Card 1 -->
+        <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 rounded">
+          <p class="font-semibold">Describe a memorable trip you took.</p>
+          <ul class="list-disc ml-6 mt-2 text-sm text-gray-700">
+            <li>Where you went</li>
+            <li>Who you went with</li>
+            <li>What happened</li>
+            <li>Why it was memorable</li>
+          </ul>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 rounded">
+          <p class="font-semibold">Describe a person who inspired you.</p>
+          <ul class="list-disc ml-6 mt-2 text-sm text-gray-700">
+            <li>Who the person is</li>
+            <li>What they did</li>
+            <li>How they influenced you</li>
+            <li>Why you admire them</li>
+          </ul>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-blue-50 border-l-4 border-[#3b82f6] p-4 rounded">
+          <p class="font-semibold">Describe a book you recently read.</p>
+          <ul class="list-disc ml-6 mt-2 text-sm text-gray-700">
+            <li>What the book is about</li>
+            <li>Why you chose it</li>
+            <li>What you learned</li>
+            <li>Would you recommend it?</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Telegram Button -->
+      <div class="mt-6 text-center">
+        <p class="text-gray-600 mb-2 italic">📌 Find more cue cards and practice materials on our Telegram channel:</p>
+        <a href="https://t.me/YourChannelLink" target="_blank" 
+           class="inline-flex items-center justify-center bg-[#459cff] hover:bg-[#3b82f6] text-white font-semibold px-6 py-3 rounded-xl transition">
+           <img src="/otherassets/telegram-icon.png" alt="Telegram" class="w-5 h-5 mr-2" />
+           Join Our Telegram
+        </a>
+      </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="card bg-white p-6 rounded-2xl fade-in">
+      <h2 class="text-xl font-semibold mb-3 text-[#3b82f6]">🎯 Tips for Cue Card Practice</h2>
+      <ul class="list-disc ml-6 space-y-2 text-gray-700">
+        <li>Use the 1-minute preparation wisely: plan intro, examples, conclusion.</li>
+        <li>Speak fluently and try to expand your answer with details.</li>
+        <li>Include personal examples and feelings to make your answer vivid.</li>
+        <li>Use a variety of vocabulary and idiomatic expressions when possible.</li>
+      </ul>
+    </section>
+
+    <!-- Outro -->
+    <section class="card bg-white p-6 rounded-2xl fade-in text-center">
+      <h2 class="text-2xl font-bold mb-3 text-[#3b82f6]">🌿 Keep Practicing!</h2>
+      <p>Well done! Keep using cue cards and aim to speak fluently.  
+      Next up: <br><b>Lesson 9: Abstract Questions</b></p>
+    </section>
+
+  </main>
+
+  <footer class="text-center py-4 text-gray-500 text-sm">
+    © 2025 Summage — Crafted with ❤️ for learners worldwide.
+  </footer>
+
+</body>
+</html>
