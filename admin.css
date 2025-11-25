@@ -1,0 +1,245 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa 0%, #f0fdfa 100%);
+  min-height: 100vh;
+  color: #1a1a1a;
+}
+
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* LOGIN */
+#loginScreen {
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  padding: 44px 32px;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.logo {
+  width: 96px; height: 96px;
+  border-radius: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 20px rgba(242,75,11,0.25);
+}
+
+.login-card h2 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 36px;
+  color: #f24b0b;
+}
+
+.subtitle { color: #007a52; margin: 8px 0 24px; font-weight: 500; }
+
+.login-card input {
+  width: 100%; padding: 16px; margin: 10px 0;
+  border: 2px solid #eee; border-radius: 14px; font-size: 16px;
+}
+.login-card input:focus { outline: none; border-color: #f24b0b; }
+
+.login-card button {
+  width: 100%; padding: 16px; background: #f24b0b; color: white;
+  border: none; border-radius: 14px; font-size: 17px; font-weight: 600; cursor: pointer;
+  margin-top: 16px;
+}
+.login-card button:hover { background: #e03a00; }
+
+.error { color: #e03a00; margin: 12px 0; min-height: 24px; }
+.loading { margin-top: 16px; color: #007a52; display: none; }
+
+/* HEADER */
+.dash-header {
+  background: white;
+  padding: 18px 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  position: sticky; top: 0; z-index: 100;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #f24b0b;
+  cursor: pointer;
+  display: none; /* Hidden on desktop by default */
+}
+
+.header-brand {
+  display: flex; align-items: center; gap: 16px;
+}
+
+.header-logo { width: 52px; height: 52px; border-radius: 14px; }
+
+.dash-header h1 {
+  font-family: 'Baloo 2', cursive;
+  color: #f24b0b;
+  font-size: 26px;
+}
+
+.btn-logout {
+  background: #f24b0b; color: white; border: none;
+  padding: 11px 22px; border-radius: 12px; font-weight: 600; cursor: pointer;
+}
+.btn-logout:hover { background: #e03a00; }
+
+/* MAIN CONTAINER */
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: white;
+  width: 250px;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+  transition: left 0.3s ease;
+  z-index: 99;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-btn {
+  background: none;
+  border: none;
+  padding: 15px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+  color: #444;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.sidebar-btn:hover {
+  background: #f5f5f5;
+}
+
+.sidebar-btn.active {
+  background: #f24b0b;
+  color: white;
+}
+
+/* CONTENT AREA */
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.content-section {
+  display: none;
+}
+
+.content-section.active {
+  display: block;
+}
+
+/* HERO GREETING (now inside home section) */
+.hero-greeting {
+  text-align: center;
+  padding: 60px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.greeting-main {
+  font-family: 'Baloo 2', cursive;
+  font-size: 52px;
+  color: #007a52;
+  background: linear-gradient(90deg, #007a52, #f24b0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.greeting-emoji {
+  font-size: 68px;
+  margin-top: 16px;
+  display: block;
+}
+
+.greeting-sub {
+  margin-top: 24px;
+  font-size: 18px;
+  color: #444;
+  max-width: 600px;
+}
+
+.greeting-sub span { color: #f24b0b; font-weight: 600; }
+
+/* Future widgets placeholder */
+.future-widgets {
+  text-align: center;
+  padding: 60px 20px;
+  color: #aaa;
+}
+
+/* Tool sections styling (example for team-manager) */
+.content-section h2 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 36px;
+  color: #f24b0b;
+  margin-bottom: 20px;
+}
+
+.tool-placeholder {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    width: 250px;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .main-container {
+    flex-direction: column;
+  }
+
+  .content-area {
+    padding: 10px;
+  }
+
+  .greeting-main { font-size: 42px; }
+  .greeting-emoji { font-size: 56px; }
+  .greeting-sub { font-size: 17px; }
+  .dash-header { padding: 16px; }
+  .header-brand { margin-left: 40px; } /* Space for menu button */
+}
