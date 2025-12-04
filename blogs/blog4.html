@@ -1,120 +1,13 @@
-<!-- article.html -->
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Summage — Article</title>
-<style>
-  :root{
-    --brand: #f24b0b;       /* your brand color */
-    --text: #333;
-    --muted: #666;
-    --bg: #fafafa;
-    --card: #fff;
-    --radius: 10px;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  }
-
-  /* Reset / layout */
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;padding:24px}
-  a{color:var(--brand);text-decoration:underline}
-
-  /* NAVBAR (simple) */
-  .nav{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:12px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--brand), #fb6b39);
-    color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.08);
-  }
-  .brand{display:flex;align-items:center;gap:12px}
-  .brand img{width:48px;height:48px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.12)}
-  .brand .title{font-weight:700;font-size:18px;line-height:1;margin:0}
-  .brand .subtitle{font-size:12px;opacity:0.95;margin:0}
-
-  .nav-actions{display:flex;gap:8px;align-items:center}
-  .nav-actions a,.nav-actions button{background:rgba(255,255,255,0.12);padding:8px 12px;border-radius:10px;color:#fff;font-weight:600;text-decoration:none;border:0;cursor:pointer}
-  .nav-actions a:active,.nav-actions button:active{transform:translateY(1px)}
-
-  /* MAIN layout */
-  .container{max-width:1100px;margin:20px auto 0}
-  .hero{
-    display:flex;gap:24px;align-items:flex-start;background:var(--card);padding:22px;border-radius:12px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.04);
-  }
-
-  /* left content */
-  .main{flex:1;min-width:0}
-  .kicker{display:inline-block;color:var(--brand);font-weight:700;font-size:13px;margin-bottom:8px}
-  h1{margin:6px 0 10px;font-size:34px;line-height:1.02}
-  p.lead{color:var(--muted);margin:0 0 16px;font-size:15px}
-
-  /* 60/40 split block */
-  .split{display:flex;gap:16px;align-items:flex-start;margin-bottom:16px}
-  .split .text{flex:0 0 60%}
-  .split .image{flex:0 0 40%}
-  .split .image img{width:100%;height:auto;border-radius:8px;display:block}
-
-  /* general article text */
-  article p{margin:0 0 12px 0;font-size:15px}
-  article ul{margin:8px 0 12px 20px}
-  .meta{color:var(--muted);font-size:13px;margin-top:10px}
-
-  /* right column (small objects) */
-  .aside{width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
-  .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 18px rgba(0,0,0,0.03)}
-  .card h4{margin:0 0 6px 0;font-size:15px}
-  .card p{margin:0;color:var(--muted);font-size:14px}
-
-  /* language modal (small & reused) */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:none;align-items:center;justify-content:center;z-index:60}
-  .modal{background:#fff;padding:16px;border-radius:10px;width:320px;text-align:center;border:1px solid rgba(0,0,0,0.06);box-shadow: 0 12px 40px rgba(0,0,0,0.08)}
-  .lang-grid{display:flex;gap:8px;justify-content:center;margin-top:12px}
-  .lang-option{padding:8px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;background:#fff;min-width:80px}
-  .lang-option[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
-  .modal small{display:block;color:var(--muted);margin-top:8px}
-
-  /* responsive: tablet/mobile */
-  @media (max-width:900px){
-    .hero{flex-direction:column}
-    .aside{width:100%}
-  }
-  @media (max-width:520px){
-    body{padding:14px}
-    .brand img{width:40px;height:40px;border-radius:8px}
-    .brand .title{font-size:16px}
-    .nav-actions a{padding:8px 10px;font-size:14px}
-    h1{font-size:22px}
-    .split{flex-direction:column}
-    .split .image img{width:90%;margin:8px auto 0;display:block} /* image ~90% width on mobile */
-    .aside{order:2}
-  }
-  .lang-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; }
-
-/* hide the img by default (desktop) */
-.lang-btn img { display:none; width:20px; height:20px; object-fit:contain; }
-
-/* text label styling kept (desktop) */
-.lang-btn .lang-text { font-size:13px; color:inherit; }
-
-/* MOBILE: show icon only, hide text visually but keep it for accessibility */
-@media (max-width: 520px) {
-  .lang-btn { padding:8px; border-radius:10px; }
-  .lang-btn img { display:block; }
-  .lang-btn .lang-text {
-    /* hide the visible text but keep available to screen readers */
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0 0 0 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-  }
-}
-</style>
+  <!-- Yandex.RTB -->
+  <script>window.yaContextCb=window.yaContextCb||[]</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Summage — How to Make Your 2026 Much More Progressive</title>
+  <link rel="stylesheet" href="blog.css">
 </head>
 <body>
 
@@ -129,7 +22,7 @@
     </div>
 
     <div class="nav-actions">
-      <a id="backBtn" href="../blogs.html">Back to blogs</a>
+      <a id="backBtn" href="../blogs.html">← Back to blogs</a>
       <button class="lang-btn" id="open-lang" aria-label="Choose language">
         <img src="../icons/languages.png" alt="" aria-hidden="true">
         <span class="lang-text">Language</span>
@@ -140,63 +33,74 @@
   <div class="container">
     <main class="hero" role="main" aria-labelledby="article-title">
       <section class="main">
-        <span class="kicker" id="kicker" data-t="kicker">IELTS Speaking</span>
-        <h1 id="article-title" data-t="title">How to Improve Your IELTS Speaking Band Score?</h1>
-        <p class="lead" id="lead" data-t="lead">A practical, straight-talking guide to calm your nerves, grow fluency, and raise your IELTS Speaking band.</p>
+        <span class="kicker" id="kicker">Productivity & Growth</span>
+        <h1 id="article-title">How to Make Your 2026 a Year of Real Progress?</h1>
+        <p class="lead" id="lead">A grounded and spiritually mindful roadmap to help you enter 2026 with clarity, purpose, and momentum.</p>
 
         <article id="article-body" aria-live="polite">
-          <p id="p1" data-t="p1">Most students, especially in the Speaking part, freeze or stutter — their ideas seem to vanish just when they need them most. That’s normal, and the good news is: it’s fixable.</p>
+          <p id="p1">Every year, people say “next year I’ll change,” yet most lose direction long before the year ends. Real progress doesn’t come from hype — it comes from clarity, discipline, and simple actions done consistently for the sake of growth and, above all, the pleasure of Allah.</p>
 
-          <p id="p2" data-t="p2">In this article we’ll look at ways to overcome those moments and find practical solutions that work for regular learners — not just exam gurus.</p>
+          <!-- Yandex.RTB -->
+          <div id="yandex_rtb_R-A-17680991-5"></div>
+          <script>
+            window.yaContextCb.push(() => {
+              Ya.Context.AdvManager.render({
+                "blockId": "R-A-17680991-5",
+                "renderTo": "yandex_rtb_R-A-17680991-5"
+              })
+            })
+          </script>
 
-          <p id="p3" data-t="p3">Speaking from my own experience, the main cause is usually a lack of ready ideas. Reading — especially books that make you think — gives you time and language to shape opinions. Videos often give facts quickly, but books teach you how to reflect and connect ideas. That habit builds mental material you can use in any Part 1, 2, or 3 question.</p>
+          <p id="p2">Here’s a realistic, life-friendly framework for anyone who wants to make 2026 a year of genuine growth — not burnout.</p>
 
-          <p id="p4" data-t="p4">If you’re new to reading, start with short, practical books on self-improvement — they cover many topics and introduce useful vocabulary. One day you’ll read about habits, the next day about productivity, and these different themes give you examples and words that often appear in IELTS topics.</p>
+          <p id="p3">Begin with an honesty check: write down what truly mattered to you in 2025. Not the noise, not the trends — but the moments that gave you peace, strength, or pride. Most people discover only a few things truly move their heart. Those become your guiding principles for 2026 — your North Stars.</p>
 
-          <p id="p5" data-t="p5">I find reading quietly beautiful, especially today when many people only consume fast short content. Books slow your mind down and force you to form opinions — exactly the skill speaking tests reward.</p>
+          <p id="p4">Turn each North Star into one clear yearly goal and one daily or weekly habit. Example: “Spiritual growth” → Goal: complete Qur’an twice → Habit: read 2–3 pages after fajr daily. The habit is your engine; the goal is the finish line.</p>
 
-          <p id="p6" data-t="p6">So where should you put your focus? First: build a small daily habit of reading and noting short ideas. Second: practice producing those ideas aloud under a timer. Third: clean your feed — follow news and thoughtful sources rather than only entertainment.</p>
+          <p id="p5">Guard your deep-focus hours like treasure. One of the biggest distractions today is jumping between apps, messages, and “quick checks.” In 2026, commit to 2–3 hours of focus time — no notifications, no noise. This single practice will outperform entire days of unfocused work.</p>
 
-          <p id="p7" data-t="p7">You might ask: what’s the link between ideas and practice? Practice makes you familiar with common topics. As you practice more, you’ll have templates and examples ready and your brain will fill gaps faster on unfamiliar topics.</p>
+          <p id="p6">Do a quarterly reflection. Every 90 days, sit alone for one hour and ask yourself: “Am I actually moving forward?” Adjust your plans if needed. Growth requires direction, not blind grinding.</p>
 
-          <p id="p8" data-t="p8">Also tidy your social media: follow news accounts, short essays, or fact-based pages. You are what you read — feed your mind with quality input so it outputs better on test day.</p>
+          <p id="p7">Aim to read at least 24 meaningful books — two per month. Choose topics like biography, science, leadership, history, and Islamic wisdom. Books are the easiest way to borrow the experience and mistakes of great people.</p>
 
-          <p id="p9" data-t="p9">Yes — chatbots can help. I used ChatGPT to get Part 1 prompts, answered them aloud using speech-to-text, and reviewed the transcript. Practicing with an AI partner removes judgment and lets you try many topics quickly.</p>
+          <p id="p8">Create a simple “progress tracker” — a single Notion page or notebook where you mark your key habits each day. Green for completed, red for missed. When December arrives and you see 200–300 green days, you’ll understand the power of consistency.</p>
 
-          <p id="p10" data-t="p10">That’s all for today. I hope you found something useful — keep practicing, stay calm, and keep the habit. If you want, I can make cue cards or a printable 4-week calendar to follow each day. Tell me which and I’ll build it.</p>
+          <p id="p9">Learn to say no. Your energy is limited. Every unnecessary commitment steals from your goals and your peace. Protect your time the way you protect your earnings — with respect and boundaries.</p>
+
+          <p id="p10">Finally, celebrate your wins weekly. Every Sunday, write 3 things you did well — even the small ones. This trains your mind to see progress instead of problems. Small victories, collected over months, create massive change.</p>
 
           <div class="split" aria-label="text with image">
             <div class="text">
-              <h3 id="h3-compact" data-t="compact">Small summary</h3>
-              <p id="split-p" data-t="splitP">Here are the main things we covered:</p>
+              <h3 id="h3-compact" style="margin-top:0">Small summary</h3>
+              <p id="split-p">Main steps to make 2026 your strongest year:</p>
               <ul id="bullets">
-                <li id="b1" data-t="b1">Why ideas vanish and how to stop it</li>
-                <li id="b2" data-t="b2">How to build ideas quickly</li>
-                <li id="b3" data-t="b3">Bonus: training with AI and smart tools</li>
+                <li id="b1">Identify your 3–5 true priorities (your North Stars)</li>
+                <li id="b2">Turn each one into a yearly goal and a daily habit</li>
+                <li id="b3">Protect deep work, read more, track progress, reflect quarterly</li>
               </ul>
             </div>
             <div class="image">
-              <img src="../blogs/blog-images/illustration-mobile.png" alt="explainer image">
+              <img src="../blogs/blog-images/illustration-mobile.png" alt="person planning the year">
             </div>
           </div>
 
-          <p class="meta" id="meta"><time datetime="2025-09-24" data-t="meta">Published • Sep 24, 2025</time></p>
+          <p class="meta" id="meta"><time datetime="2025-12-01">Published • Dec 1, 2025</time></p>
         </article>
       </section>
 
       <aside class="aside" aria-label="related">
         <div class="card">
-          <h4 id="aside1-title" data-t="aside1Title">Lo-fi mood</h4>
-          <p id="aside1-body" data-t="aside1Body">Soft tones, simple layout — small details make the page feel warm.</p>
+          <h4 id="aside1-title">Lo-fi mood</h4>
+          <p id="aside1-body">Soft, calm layout to help create a peaceful reading experience.</p>
         </div>
-
         <div class="card">
-          <h4 id="aside2-title" data-t="aside2Title">Related post</h4>
-          <p><a id="related-link" href="..\blogs\blog2.html" data-t="relatedLink">How to use 100% of Your Brain?</a></p>
+          <h4 id="aside2-title">Related post</h4>
+          <p><a id="related-link" href="..\blogs\blog2.html">How to use 100% of Your Brain?</a></p>
         </div>
       </aside>
     </main>
   </div>
+
 
   <!-- Language modal -->
   <div id="lang-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
@@ -212,129 +116,222 @@
   </div>
 
 <script>
-/* --------------------------------------------------------------
-   AUTOMATIC TRANSLATION (Google Translate API)
-   -------------------------------------------------------------- */
-;(function () {
-  const STORAGE_KEY = 'summage_lang';
-  const CACHE_KEY   = 'summage_translations';
+  (function(){
+    const STORAGE_KEY = 'summage_lang';
 
-  /* ---- 1. Collect every translatable element ---- */
-  const nodes = Array.from(document.querySelectorAll('[data-t]')).reduce((map, el) => {
-    const key = el.dataset.t;
-    if (!map[key]) map[key] = [];
-    map[key].push(el);
-    return map;
-  }, {});
+    const DICT = {
+      en: {
+        kicker: "Productivity & Growth",
+        title: "How to Make Your 2026 Truly Transformative?",
+        lead: "A disciplined, faith-friendly plan to turn 2026 into your most intentional, structured, and spiritually aligned year.",
+        p1: "Every December we whisper to ourselves that the next year will be stronger. But promises fade when systems are weak. What separates a transformative year from an average one is not excitement — it’s structure, clarity, and small actions repeated with sincerity.",
+        p2: "Here is a simple, realistic framework that works for normal people who want consistent improvement, not empty hype.",
+        p3: "Begin with an honesty check: write what genuinely mattered to you in 2025. Not what looked good online — but what brought peace, growth, or meaning to your heart. Most people realize only 3–5 things truly matter. Those become your North Stars for 2026.",
+        p4: "Turn each North Star into one measurable goal and one habit. Example: “Health” → Goal: run a half-marathon → Habit: walk or run 4 times weekly. The habit is your daily responsibility; the goal is simply the direction.",
+        p5: "Guard your deep-focus hours like treasure. The biggest productivity drain last year was constant noise — notifications, scrolling, distractions. In 2026 dedicate 2–3 sacred hours daily with zero interruptions. One focused block beats 10 scattered hours.",
+        p6: "Do a quarterly self-audit. Every 90 days ask yourself: “Am I moving closer to the person I want to become?” Adjust or release projects that drain energy or no longer align with your direction.",
+        p7: "Read 24 beneficial books — just two each month. Books preserve decades of wisdom. Prioritize biography, science, and practical philosophy. They shape the way you think far more than quick videos.",
+        p8: "Create a progress tracker — one page where you mark your 3–5 main habits daily. Green for completed, red for missed. Reaching 300+ green days by December becomes its own source of momentum.",
+        p9: "Say no to commitments that don’t serve your purpose. Your time and attention are blessings — protect them. A respectful refusal can save months of wasted energy.",
+        p10: "End each week with gratitude. Every Sunday list three meaningful wins — even tiny ones. This trains your mind to recognize progress, and progress keeps you moving.",
+        compact: "Small summary",
+        splitP: "Key ideas to make 2026 your strongest year:",
+        bullets: [
+          "Identify your 3–5 true North Stars",
+          "Turn them into habits + quarterly self-reviews",
+          "Protect deep work, read more, practice discipline, track progress"
+        ],
+        meta: "Published • Dec 1, 2025",
+        aside1Title: "Lo-fi mood",
+        aside1Body: "Soft tones and simple structure — gentle design creates focus.",
+        aside2Title: "Related post",
+        relatedLink: "How to Use 100% of Your Brain?",
+        backDesktop: "← Back to blogs",
+        backMobile: "Back"
+      },
 
-  const keys = Object.keys(nodes);
-  const english = keys.reduce((obj, k) => (obj[k] = nodes[k][0].textContent.trim(), obj), {});
+      ru: {
+        kicker: "Продуктивность и рост",
+        title: "Как сделать 2026 год по-настоящему результативным?",
+        lead: "Дисциплинированный и реалистичный план, который поможет провести 2026 год осознанно, продуктивно и в гармонии с ценностями.",
+        p1: "Каждый декабрь мы шепчем себе, что следующий год будет сильнее. Но обещания тают там, где нет системы. Настоящий прогрессивный год строится не на эмоциях, а на ясности, структуре и маленьких ежедневных шагах.",
+        p2: "Вот простая и проверенная схема, которая подходит обычным людям, стремящимся к стабильному росту.",
+        p3: "Начни с честного анализа: что действительно имело значение в 2025 году? Не то, что красиво выглядело в сети — а то, что приносило спокойствие, развитие или смысл. Обычно таких вещей всего 3–5. Это и есть твои Полярные звезды.",
+        p4: "Преобразуй каждую Полярную звезду в годовую цель и ежедневную (или еженедельную) привычку. Пример: «Здоровье» → Цель: пробежать полумарафон → Привычка: ходить или бегать 4 раза в неделю.",
+        p5: "Охраняй глубокое фокусное время как ценность. Главный враг продуктивности — постоянные отвлечения. В 2026 году выделяй 2–3 часа в день без шума, без телефона, без лишнего.",
+        p6: "Каждые 90 дней проводи «аудит жизни». Спроси себя: «Я ближе к тому, кем хочу быть?» Корректируй или отпускай проекты, которые не дают роста.",
+        p7: "Прочитай 24 полезные книги — всего две в месяц. Книги — это десятилетия опыта, доступные за часы. Делай ставку на биографии, науку и практическую философию.",
+        p8: "Создай панель прогресса — одну страницу, где ты ежедневно отмечаешь главные привычки. Зеленый — выполнено, красный — пропущено. 300+ зеленых дней создают мощный рывок.",
+        p9: "Говори «нет» тому, что не служит твоим целям. Твоя энергия ограничена — береги её.",
+        p10: "Каждое воскресенье записывай три достижения недели. Даже маленькие. Так ты воспитываешь привычку замечать прогресс.",
+        compact: "Краткое резюме",
+        splitP: "Главные идеи, чтобы 2026 стал сильным годом:",
+        bullets: [
+          "Найди свои 3–5 Полярных звёзд",
+          "Преврати их в привычки + делай квартальный аудит",
+          "Защищай глубокую работу, больше читай, отслеживай прогресс"
+        ],
+        meta: "Опубликовано • 1 декабря 2025",
+        aside1Title: "Lo-fi настроение",
+        aside1Body: "Мягкие тона и простой дизайн создают спокойную атмосферу.",
+        aside2Title: "Похожая статья",
+        relatedLink: "Как использовать 100% своего мозга?",
+        backDesktop: "← Назад к блогам",
+        backMobile: "Назад"
+      },
 
-  /* ---- 2. Load / create translation cache ---- */
-  let cache = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+      uz: {
+        kicker: "Samaradorlik va o‘sish",
+        title: "2026 yilingizni haqiqiy o‘sish yiliga qanday aylantirasiz?",
+        lead: "2026 yilni maqsadli, tartibli va qadriyatlarga mos o‘tishi uchun real reja.",
+        p1: "Har dekabr «keyingi yil yaxshiroq bo‘ladi» deymiz. Ammo va’dalar tizim bo‘lmasa uzoqqa bormaydi. Kuchli yil — motivatsiya emas, balki aniqlik, tartib va har kuni qilinadigan kichik amallardan tug‘iladi.",
+        p2: "Mana oddiy odamlar uchun mos, sinovdan o‘tgan samarali usul.",
+        p3: "Avval rostgo‘y tahlil qiling: 2025 yilda haqiqiy ahamiyatga ega bo‘lgan narsalarni yozing. Internetga chiroyli ko‘rinadigan emas — sizga sokinlik, g‘urur yoki o‘sish bergan narsalar. Ko‘pincha bunday narsalar 3–5 taga teng bo‘ladi. Ular — sizning 2026 yildagi yo‘l yulduzlaringiz.",
+        p4: "Har bir yo‘l yulduzini yillik maqsad va kundalik/haftalik odatga aylantiring. Masalan: «Salomatlik» → Maqsad: yarim marafon → Odat: haftada 4 marta yugurish yoki yurish.",
+        p5: "Chuqur ish vaqtini xazina kabi asrang. Eng katta dushman — chalg‘ituvchi bildirishnomalar. 2026 yilda har kuni 2–3 soatlik toza, tinch, chalg‘imasdan ishlash vaqtini belgilang.",
+        p6: "Har 90 kunda «hayot auditi» qiling. «Men xohlagan odamga yaqinlashyapmanmi?» deb so‘rang. Mos kelmaydigan loyihalarni to‘xtating yoki o‘zgartiring.",
+        p7: "24 ta foydali kitob o‘qing — oyiga atigi ikki dona. Kitob — o‘n yillik tajribani arzon va tez o‘rganish yo‘li.",
+        p8: "Bir sahifalik «progress paneli» yarating. Unda 3–5 asosiy odatingizni har kuni belgilang. Yashil — bajarildi, qizil — bajarilmadi.",
+        p9: "Maqsadingizga xizmat qilmaydigan takliflarga muloyimlik bilan rad javobi bering. Vaqtingiz — eng katta ne’mat.",
+        p10: "Har yakshanba uchta kichik yutuqni yozib boring. Bu sizning ongni o‘sishni ko‘ra oladigan qilib tarbiyalaydi.",
+        compact: "Qisqa xulosa",
+        splitP: "2026 yilni kuchli yilga aylantiradigan fikrlar:",
+        bullets: [
+          "3–5 asosiy yo‘l yulduzingizni aniqlang",
+          "Ularni odatlarga aylantiring + har chorakda tahlil qiling",
+          "Chuqur ishni himoya qiling, ko‘proq o‘qing, intizomli bo‘ling"
+        ],
+        meta: "Chop etildi • 1 dekabr, 2025",
+        aside1Title: "Lo-fi kayfiyat",
+        aside1Body: "Yumshoq ranglar va sodda dizayn sahifani yoqimli qiladi.",
+        aside2Title: "O‘xshash maqola",
+        relatedLink: "Miyadan 100% foydalanish mumkinmi?",
+        backDesktop: "← Bloglarga qaytish",
+        backMobile: "Orqaga"
+      }
 
-  /* ---- 3. Google Translate (unofficial) ---- */
-  async function translateText(text, target) {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${target}&dt=t&q=${encodeURIComponent(text)}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    return data[0].map(line => line[0]).join('');
-  }
+    };
 
-  async function getTranslations(lang) {
-    if (cache[lang]) return cache[lang];
-
-    const translations = {};
-    const batch = 50;                         // Google limits request size
-    for (let i = 0; i < keys.length; i += batch) {
-      const chunk = keys.slice(i, i + batch);
-      const promises = chunk.map(k => translateText(english[k], lang));
-      const results = await Promise.all(promises);
-      chunk.forEach((k, idx) => translations[k] = results[idx]);
+    function getStoredLang(){
+      const v = localStorage.getItem(STORAGE_KEY);
+      return (v && DICT[v]) ? v : 'en';
     }
 
-    cache[lang] = translations;
-    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
-    return translations;
-  }
+    const elements = {
+      kicker: document.getElementById('kicker'),
+      title: document.getElementById('article-title'),
+      lead: document.getElementById('lead'),
+      p1: document.getElementById('p1'),
+      p2: document.getElementById('p2'),
+      p3: document.getElementById('p3'),
+      p4: document.getElementById('p4'),
+      p5: document.getElementById('p5'),
+      p6: document.getElementById('p6'),
+      p7: document.getElementById('p7'),
+      p8: document.getElementById('p8'),
+      p9: document.getElementById('p9'),
+      p10: document.getElementById('p10'),
+      compact: document.getElementById('h3-compact'),
+      splitP: document.getElementById('split-p'),
+      bullets: [document.getElementById('b1'), document.getElementById('b2'), document.getElementById('b3')],
+      meta: document.getElementById('meta'),
+      aside1Title: document.getElementById('aside1-title'),
+      aside1Body: document.getElementById('aside1-body'),
+      aside2Title: document.getElementById('aside2-title'),
+      relatedLink: document.getElementById('related-link'),
+      backBtn: document.getElementById('backBtn')
+    };
 
-  /* ---- 4. Apply language ---- */
-  async function apply(lang) {
-    let dict = english;                     // default = English
+    function applyLanguage(lang){
+      const D = DICT[lang] || DICT.en;
+      elements.kicker.textContent = D.kicker;
+      elements.title.textContent = D.title;
+      elements.lead.textContent = D.lead;
+      elements.p1.textContent = D.p1;
+      elements.p2.textContent = D.p2;
+      elements.p3.textContent = D.p3;
+      elements.p4.textContent = D.p4;
+      elements.p5.textContent = D.p5;
+      elements.p6.textContent = D.p6;
+      elements.p7.textContent = D.p7;
+      elements.p8.textContent = D.p8;
+      elements.p9.textContent = D.p9;
+      elements.p10.textContent = D.p10;
+      elements.compact.textContent = D.compact;
+      elements.splitP.textContent = D.splitP;
+      D.bullets.forEach((txt, i) => {
+        if(elements.bullets[i]) elements.bullets[i].textContent = txt;
+      });
+      elements.meta.innerHTML = '<time datetime="2025-12-01">' + D.meta + '</time>';
+      elements.aside1Title.textContent = D.aside1Title;
+      elements.aside1Body.textContent = D.aside1Body;
+      elements.aside2Title.textContent = D.aside2Title;
+      elements.relatedLink.textContent = D.relatedLink;
 
-    if (lang !== 'en') {
-      dict = await getTranslations(lang);
+      function updateBackText(){
+        const isMobile = window.innerWidth <= 420;
+        elements.backBtn.textContent = isMobile ? (D.backMobile || D.backDesktop) : D.backDesktop;
+      }
+      updateBackText();
     }
 
-    // ---- text ----
-    keys.forEach(k => {
-      const text = dict[k] || english[k];
-      nodes[k].forEach(el => {
-        if (el.tagName === 'TIME' && el.parentNode.id === 'meta') {
-          el.parentNode.innerHTML = `<time datetime="2025-09-24">${text}</time>`;
-        } else {
-          el.textContent = text;
-        }
+    let lang = getStoredLang();
+    applyLanguage(lang);
+
+    const openLangBtn = document.getElementById('open-lang');
+    const langModal = document.getElementById('lang-modal');
+    const langOptions = Array.from(document.querySelectorAll('.lang-option'));
+
+    function openLangModal(){
+      langModal.style.display = 'flex';
+      langModal.setAttribute('aria-hidden','false');
+      langOptions.forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
+      });
+    }
+    function closeLangModal(){
+      langModal.style.display = 'none';
+      langModal.setAttribute('aria-hidden','true');
+    }
+
+    openLangBtn.addEventListener('click', openLangModal);
+    langModal.addEventListener('click', (e) => {
+      if(e.target === langModal) closeLangModal();
+    });
+
+    langOptions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chosen = btn.dataset.lang;
+        if(!DICT[chosen]) return;
+        lang = chosen;
+        localStorage.setItem(STORAGE_KEY, chosen);
+        applyLanguage(chosen);
+        langOptions.forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === chosen ? 'true' : 'false'));
+        closeLangModal();
       });
     });
 
-    // ---- back-button (responsive) ----
-    const backBtn = document.getElementById('backBtn');
-    const isMobile = window.innerWidth <= 420;
-    const backText = isMobile ? (dict.backMobile ?? dict.backDesktop) : dict.backDesktop;
-    if (backText) backBtn.textContent = backText;
-    else backBtn.textContent = isMobile ? 'Back' : 'Back to blogs';
-
-    // ---- aria-pressed ----
-    document.querySelectorAll('.lang-option').forEach(b => {
-      b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false');
+    window.addEventListener('storage', (e) => {
+      if(e.key === STORAGE_KEY){
+        const newLang = (e.newValue && DICT[e.newValue]) ? e.newValue : 'en';
+        lang = newLang;
+        applyLanguage(newLang);
+      }
     });
-  }
 
-  /* ---- 5. Init ---- */
-  let currentLang = localStorage.getItem(STORAGE_KEY) || 'en';
-  apply(currentLang);
+    window.Summage = window.Summage || {};
+    window.Summage.setLang = function(code){ if(DICT[code]) { localStorage.setItem(STORAGE_KEY, code); applyLanguage(code); } };
 
-  /* ---- 6. Modal ---- */
-  const openBtn = document.getElementById('open-lang');
-  const modal   = document.getElementById('lang-modal');
-
-  openBtn.addEventListener('click', () => {
-    modal.style.display = 'flex';
-    modal.setAttribute('aria-hidden', 'false');
-  });
-  modal.addEventListener('click', e => { if (e.target === modal) close(); });
-  function close() { modal.style.display = 'none'; modal.setAttribute('aria-hidden', 'true'); }
-
-  document.querySelectorAll('.lang-option').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const chosen = btn.dataset.lang;
-      currentLang = chosen;
-      localStorage.setItem(STORAGE_KEY, chosen);
-      await apply(chosen);
-      close();
-    });
-  });
-
-  /* ---- 7. Sync across tabs ---- */
-  window.addEventListener('storage', e => {
-    if (e.key === STORAGE_KEY) {
-      currentLang = e.newValue || 'en';
-      apply(currentLang);
-    }
-  });
-
-  /* ---- 8. Responsive back-button ---- */
-  window.addEventListener('resize', () => {
-    const backBtn = document.getElementById('backBtn');
-    const isMobile = window.innerWidth <= 420;
-    const dict = currentLang === 'en' ? english : (cache[currentLang] || english);
-    backBtn.textContent = isMobile ? (dict.backMobile ?? dict.backDesktop) : dict.backDesktop;
-  });
-
-  /* expose for debugging */
-  window.Summage = { setLang: async code => { localStorage.setItem(STORAGE_KEY, code); await apply(code); } };
-})();
+    (function updateBackOnResize(){
+      const D = DICT[lang] || DICT.en;
+      function update(){
+        const isMobile = window.innerWidth <= 420;
+        document.getElementById('backBtn').textContent = isMobile ? (D.backMobile || D.backDesktop) : D.backDesktop;
+      }
+      window.addEventListener('resize', update);
+      update();
+    })();
+  })();
 </script>
 
 </body>

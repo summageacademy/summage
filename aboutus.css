@@ -303,3 +303,81 @@ footer {
 @media (max-width: 768px) {
   section { padding: 40px 30px; }
 }
+
+/* TRUST SECTION — Ufq Signature Style */
+.trust-section {
+  padding: 120px 20px;
+  text-align: center;
+  background: transparent;
+  animation: revealUp 1.2s ease forwards;
+  position: relative;
+}
+
+/* Underline Burst */
+.trust-section::after {
+  content: "";
+  width: 160px;
+  height: 4px;
+  background: #f24b0b;
+  display: block;
+  margin: 28px auto 0;
+  border-radius: 3px;
+  animation: growLine 1.2s ease;
+}
+
+@keyframes growLine {
+  0% { width: 0; opacity: 0; }
+  100% { width: 160px; opacity: 1; }
+}
+
+/* Bigger, bold brand-colored numbers */
+.trust-number {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 180px;               /* larger, premium */
+  color: #f24b0b;                 /* brand color */
+  line-height: 1;
+  margin-bottom: 20px;
+  display: inline-block;
+  min-width: 400px;               /* prevent jumping */
+}
+
+/* Plus sign sizing */
+.trust-number .plus {
+  font-size: 120px;
+  vertical-align: baseline;
+}
+
+/* Text matches other section text */
+.trust-text {
+  font-size: 26px;
+  color: #444;
+  font-weight: 500;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.95;
+}
+
+/* Fade/slide animation */
+@keyframes revealUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive scaling */
+@media (max-width: 1024px) {
+  .trust-number { font-size: 150px; }
+  .trust-number .plus { font-size: 100px; }
+}
+
+@media (max-width: 768px) {
+  .trust-number { font-size: 120px; min-width: auto; }
+  .trust-number .plus { font-size: 80px; }
+  .trust-text { font-size: 22px; }
+}
+
+@media (max-width: 480px) {
+  .trust-number { font-size: 90px; }
+  .trust-number .plus { font-size: 60px; }
+  .trust-text { font-size: 19px; }
+}
