@@ -255,32 +255,31 @@
     }
 
     /* lang button: keep text on desktop, icon on mobile */
-.lang-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; }
+    .lang-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; }
 
-/* hide the img by default (desktop) */
-.lang-btn img { display:none; width:20px; height:20px; object-fit:contain; }
+    /* hide the img by default (desktop) */
+    .lang-btn img { display:none; width:20px; height:20px; object-fit:contain; }
 
-/* text label styling kept (desktop) */
-.lang-btn .lang-text { font-size:13px; color:inherit; }
+    /* text label styling kept (desktop) */
+    .lang-btn .lang-text { font-size:13px; color:inherit; }
 
-/* MOBILE: show icon only, hide text visually but keep it for accessibility */
-@media (max-width: 520px) {
-  .lang-btn { padding:8px; border-radius:10px; }
-  .lang-btn img { display:block; }
-  .lang-btn .lang-text {
-    /* hide the visible text but keep available to screen readers */
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0 0 0 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-  }
-}
-
+    /* MOBILE: show icon only, hide text visually but keep it for accessibility */
+    @media (max-width: 520px) {
+      .lang-btn { padding:8px; border-radius:10px; }
+      .lang-btn img { display:block; }
+      .lang-btn .lang-text {
+        /* hide the visible text but keep available to screen readers */
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0 0 0 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+    }
 
   </style>
   <!-- Google tag (gtag.js) -->
@@ -393,41 +392,46 @@
         subtitle:{en:'Master your Listening skills', ru:'Прокачай свои навыки аудирования', uz:"Tinglab tushunish qobilyatingizni rivojlantiring"},
         body:{en:'How to organize and run an effective English club locally.', ru:'Как организовать и вести клуба по английскому.', uz:"Qanday qilib samarali ingliz klubi tashkil etish."},
         tags:['Listening','IELTS']},
-      { id:4, slug:'blog4.html', date:'2025-06-24', author:'A. Noor', img:'https://images.unsplash.com/photo-1506244470928-5b1f9c0a9f9d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=4',
-        title:{en:'Productivity Habits for Students', ru:'Привычки продуктивности для студентов', uz:"Talabalar uchun unumdorlik odatlari"},
-        subtitle:{en:'Routines, focus, and tiny wins.', ru:'Рутины, фокус и небольшие победы.', uz:"Rutinalar, diqqat va kichik yutuqlar."},
-        body:{en:'Small daily rituals that compound into big progress.', ru:'Маленькие ежедневные ритуалы.', uz:"Kichik kundalik odatlar katta natija beradi."},
-        tags:['Productivity']},
-      { id:5, slug:'blog5.html', date:'2025-05-17', author:'Salim', img:'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=5',
-        title:{en:'Mock Tests: How to Use Them Right', ru:'Пробные тесты: как правильно использовать', uz:"Mock testlardan qanday foydalanish kerak"},
-        subtitle:{en:'Timing, review, and improvement loop.', ru:'Тайминг, разбор и цикл улучшения.', uz:"Vaqtni boshqarish va tahlil."},
-        body:{en:'How to review and improve after each mock test.', ru:'Как разбирать ошибки после теста.', uz:"Har testdan keyin tahlil qilish."},
-        tags:['Mock Tests','IELTS']},
-      { id:6, slug:'blog6.html', date:'2025-04-10', author:'Team', img:'https://images.unsplash.com/photo-1536305030017-58aa8b6f5bdb?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=6',
-        title:{en:'Teaching Tips: Peer Feedback', ru:'Советы преподавателям: обратная связь', uz:"O'qituvchilar uchun fikr-mulohaza"},
-        subtitle:{en:'Create safe feedback loops.', ru:'Создание безопасной обратной связи.', uz:"Xavfsiz fikr almashish."},
-        body:{en:'How to give feedback that helps students grow.', ru:'Как давать полезную обратную связь.', uz:"Talabalarni rivojlantiruvchi fikr-mulohaza."},
-        tags:['Teaching']},
-      { id:7, slug:'blog7.html', date:'2025-02-09', author:'Rami', img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=7',
-        title:{en:'Public Speaking for Beginners', ru:'Публичные выступления для начинающих', uz:"Yangi boshlovchilar uchun ommaviy nutq"},
-        subtitle:{en:'Start small and build confidence.', ru:'Начинайте с малого и набирайте уверенность.', uz:"Kichikdan boshlang, ishonch hosil qiling."},
-        body:{en:'Practical tips on voice, posture, and structure.', ru:'Практические советы по голосу и позе.', uz:"Ovoz, holat va tuzilma bo'yicha maslahatlar."},
-        tags:['Public Speaking']},
-      { id:8, slug:'blog8.html', date:'2024-12-02', author:'Summage', img:'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=8',
-        title:{en:'How to Build Study Routines', ru:'Как выстроить учебные рутину', uz:"O'qish rutinasini qanday tashkil etish"},
-        subtitle:{en:'Consistency, breaks, and environment.', ru:'Последовательность, перерывы и окружение.', uz:"Izchillik, tanaffuslar va muhit."},
-        body:{en:'Build repeatable study habits that stick.', ru:'Как создать устойчивые привычки.', uz:"Barqaror odatlarni shakllantirish."},
-        tags:['Study Plan']},
-      { id:9, slug:'blog9.html', date:'2024-10-28', author:'Lia', img:'https://images.unsplash.com/photo-1485217988980-11786ced9454?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9',
-        title:{en:'Design Tips for Minimal Bloggers', ru:'Советы по дизайну для минималистов', uz:"Minimalist blogerlar uchun dizayn maslahatlari"},
-        subtitle:{en:'Whitespace, typography, and rhythm.', ru:'Пустое пространство, типографика и ритм.', uz:"Bo'shliq, tipografiya va ritm."},
-        body:{en:'Simple design choices that make content shine.', ru:'Простые решения для улучшения контента.', uz:"Mazmunni yorituvchi soddalik."},
-        tags:['Minimalism','Design']},
-      { id:10, slug:'blog10.html', date:'2024-09-03', author:'Team', img:'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=10',
-        title:{en:'Recruiting for Your Club', ru:'Набор участников для клуба', uz:"Klub uchun a'zolarni jalb qilish"},
-        subtitle:{en:'Posters, socials, word of mouth.', ru:'Плакаты, соцсети и сарафанное радио.', uz:"Plakatlar va ijtimoiy tarmoqlar."},
-        body:{en:'Practical channels to find members fast.', ru:'Практические каналы привлечения участников.', uz:"A'zolarni tez topish usullari."},
-        tags:['Club','Recruiting']},
+      { id:4, slug:'blogs/blog4.html', date:'2025-12-01', author:'Grok', img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop', title:{en:'How to Make Your 2026 Much More Progressive?', ru:'Как сделать 2026 год намного прогрессивнее?', uz:'2026 yilingizni ancha ilğor qanday qilish mumkin?'}, subtitle:{en:'A realistic plan to turn 2026 into your most intentional year yet.', ru:'Реалистичный план без воды для самого осознанного года.', uz:'2026 yilni eng maqsadli yilingizga aylantirish rejasi.'}, body:{en:'Systems, clarity, and small repeatable actions that actually work for normal people.', ru:'Системы, ясность и маленькие повторяемые действия, которые реально работают.', uz:'Oddiy odamlar uchun ishlaydigan tizim, aniqlik va kichik takrorlanadigan harakatlar.'}, tags:['Productivity','Growth','2026']},
+      { id:5, slug:'blogs/blog5.html', date:'2025-12-02', author:'ChatGPT', img:'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=10', title:{en:'How to Write Better Letters or Emails?', ru:'Как писать письма и email лучше?', uz:'Xat va emailni qanday yaxshiroq yozish mumkin?'}, subtitle:{en:'Clear, kind, and effective messages that people actually read.', ru:'Чёткие и доброжелательные сообщения, которые читают.', uz:'Aniq va muloyim xabarlar — odamlar o‘qiydigan xabarlar'}, body:{en:'Simple rules that instantly make your emails 10× clearer and more professional.', ru:'Простые правила, которые сразу делают письма в 10 раз лучше.', uz:'Bir zumda xabaringizni 10 baravar aniq va professional qiladigan qoidalar'}, tags:['Communication','Writing','Productivity']},
+      { id:6, slug:'blogs/blog6.html', date:'2025-12-03', author:'Team', img:'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=6', title:{en:'How to Organize Your Daily Routine?', ru:'Как организовать свой ежедневный распорядок?', uz:"Kunlik rejangizni qanday tartibga solish mumkin?"}, subtitle:{en:'A practical, mindful guide for clarity and focus.', ru:'Практическое руководство для ясности и концентрации.', uz:"Aniqlik va diqqatni jamlash bo‘yicha amaliy qo‘llanma."}, body:{en:'Learn how to structure your day, protect your focus, track habits, and make progress consistently.', ru:'Узнайте, как структурировать день, защищать фокус, отслеживать привычки и достигать прогресса стабильно.', uz:"Kunning har bir soatini qanday rejalashtirish, fokusni himoya qilish, odatlarni kuzatish va barqaror rivojlanish bo‘yicha yo‘l-yo‘riq."}, tags:['Productivity','Routine'] },
+      { id:7, slug:'blogs/blog7.html', date:'2025-12-03', author:'Team', img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=7', title:{en:'How to Network Better and Connect with Elite People?', ru:'Как лучше налаживать контакты с успешными людьми?', uz:"Qanday qilib yuqori darajadagi odatlar bilan tanishib, ularga yaqinlashish mumkin?"}, subtitle:{en:'Practical tips to form meaningful connections.', ru:'Практические советы по созданию ценных связей.', uz:"Foydali aloqalarni o‘rnatish bo‘yicha amaliy maslahatlar."}, body:{en:'Learn how to find the right circles, show genuine interest, offer help, and maintain strong relationships.', ru:'Узнайте, как находить правильные круги, проявлять искренний интерес, помогать и поддерживать крепкие связи.', uz:"To‘g‘ri muhitni topish, haqiqiy qiziqish ko‘rsatish, yordam berish va mustahkam aloqalarni saqlashni o‘rganing."}, tags:['Networking']},
+      { id:8, slug:'blogs/blog8.html', date:'2025-12-03', author:'Summage', img:'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=8', title:{en:'How to Build Study Routines', ru:'Как выстроить учебную рутину', uz:"O'qish rutinasini qanday tashkil etish"}, subtitle:{en:'Consistency, breaks, and active learning', ru:'Последовательность, перерывы и активное обучение', uz:"Izchillik, tanaffuslar va faol o‘rganish"}, body:{en:'Practical tips to create effective, repeatable study habits that improve focus and retention.', ru:'Практические советы по созданию эффективных привычек, улучшающих концентрацию и запоминание.', uz:"Samarali, barqaror o‘rganish odatlarini shakllantirish bo‘yicha amaliy maslahatlar, diqqat va eslab qolishni yaxshilaydi."}, tags:['Study Plan','Learning','Productivity']},
+      { id:9, slug:'blogs/blog9.html', date:'2025-12-03', author:'ChatGPT', img:'https://images.unsplash.com/photo-1485217988980-11786ced9454?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9',
+        title:{en:'How to Be a Topper Student in Class', ru:'Как стать лучшим учеником в классе', uz:"Sinfdagi eng yaxshi o‘quvchi bo‘lish qanday"},
+        subtitle:{en:'Discipline, smart study, and consistent habits', ru:'Дисциплина, умная учёба и последовательные привычки', uz:"Intizom, aqlli o‘rganish va izchil odatlar"},
+        body:{en:'Practical strategies and mindset tips to help you excel in your studies and consistently achieve top grades.', ru:'Практические советы и подходы, которые помогут вам добиться успеха в учёбе и регулярно получать высокие оценки.', uz:"O‘qishda muvaffaqiyat qozonish va doimiy yuqori baholar olish uchun amaliy strategiyalar va fikrlar."},
+        tags:['Study Tips','Topper Mindset']},
+      { id:10, slug:'blogs/blog10.html', date:'2025-12-04', author:'Team', img:'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=10', title:{en:'How to Debate on Any Topic and Win?', ru:'Как дебатировать на любую тему и побеждать?', uz:"Qanday qilib har qanday mavzuda munozara qilib g‘alaba qozonish mumkin?"}, subtitle:{en:'Develop persuasive skills, think clearly, and win confidently.', ru:'Развивайте навыки убеждения, ясно мыслите и уверенно побеждайте.', uz:"Ishonchli munozara qilish, fikrlarni aniq ifodalash va g‘alaba qozonish."}, body:{en:'A practical guide to debate confidently, structure arguments, listen actively, and engage your audience.', ru:'Практическое руководство по уверенной дебатам, структурированию аргументов, активному слушанию и вовлечению аудитории.', uz:"Ishonch bilan munozara qilish, argumentlarni strukturalash, faol tinglash va auditoriyani jalb qilish bo‘yicha amaliy qo‘llanma."}, tags:['Debate','Communication','Skills']},
+      { id:11, slug:'blogs/blog11.html', date:'2025-12-04', author:'Admin', img:'https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3', title:{en:'TOEFL or IELTS? What Are the Differences?', ru:'TOEFL или IELTS? В чем различия?', uz:"TOEFL va IELTS o‘rtasidagi farqlar qanday?"}, subtitle:{en:'A friendly guide to choosing the exam that fits your style.', ru:'Дружественное руководство по выбору экзамена, который подходит вам.', uz:"Sizga qulay bo‘lgan imtihonni tanlash bo‘yicha qulay qo‘llanma."}, body:{en:'Clear explanations about speaking, writing, reading, scoring, and which exam is more comfortable for each type of student.', ru:'Понятные объяснения о говорении, письме, чтении, системе оценивания и выборе удобного экзамена для разных студентов.', uz:"Speaking, writing, reading, ball berish tizimi va qaysi imtihon kimga qulayligi haqida sodda tushuntirishlar."}, tags:['English','Exams','IELTS','TOEFL']},
+      { id:12, slug:'blogs/blog12.html', date:'2025-12-05', author:'Team', img:'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3', title:{en:'How to Learn Any Language Much Faster?', ru:'Как выучить любой язык намного быстрее?', uz:"Qanday qilib istalgan tilni juda tez o‘rganish mumkin?"}, subtitle:{en:'A simple and friendly guide showing proven methods to speed up your language learning journey.', ru:'Простое и дружелюбное руководство с методами, которые действительно ускоряют изучение языка.', uz:"Til o‘rganish jarayonini tezlashtirishga yordam beradigan sodda va samarali qo‘llanma."}, body:{en:'Learn practical methods like daily exposure, focusing on high-frequency words, early speaking, reading short texts, and using spaced repetition apps to boost your language learning.', ru:'Изучите практические методы: ежедневное погружение, изучение самых частотных слов, раннее говорение, чтение коротких текстов и использование приложений с интервальными повторениями, чтобы ускорить обучение языку.', uz:"Kundalik tinglash, eng ko‘p ishlatiladigan so‘zlarni o‘rganish, erta gapirish, qisqa matnlarni o‘qish va interval takrorlash ilovalaridan foydalanish kabi amaliy usullar bilan til o‘rganishni tezlashtiring."}, tags:['Language Learning','Productivity','Study Tips','Skills']},
+      { 
+  id: 13, 
+  slug: 'blogs/blog13.html', 
+  date: '2025-12-06', 
+  author: 'Summage', 
+  img: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop', 
+  title: {
+    en: 'How to Talk to Anyone and Make New Connections', 
+    ru: 'Как разговаривать с кем угодно и заводить новые знакомства', 
+    uz: 'Qanday qilib har kim bilan suhbat qurish va yangi tanishlar orttirish mumkin'
+  }, 
+  subtitle: {
+    en: 'A practical guide to confidently starting conversations and building meaningful relationships.', 
+    ru: 'Практическое руководство по уверенному началу разговоров и построению значимых отношений.', 
+    uz: 'Suhbatni ishonch bilan boshlash va mazmunli munosabatlar qurish bo‘yicha amaliy qo‘llanma.'
+  }, 
+  body: {
+    en: 'Meeting new people can feel intimidating, but connection is a skill you can practice. Real success comes from listening, curiosity, and genuine interest.', 
+    ru: 'Знакомство с новыми людьми может пугать, но это навык, который можно тренировать. Настоящий успех строится на внимании, любопытстве и искреннем интересе.', 
+    uz: 'Yangi odamlar bilan tanishish qo‘rqinchli bo‘lishi mumkin, lekin bu — mashq qilinadigan ko‘nikma. Haqiqiy muvaffaqiyat tinglash, qiziqish va samimiy e’tibordan keladi.'
+  }, 
+  tags: ['Communication','Social Skills']
+}
+
+
+
+
     ];
 
     const $ = (s) => document.querySelector(s);

@@ -84,6 +84,13 @@
     </p>
   </section>
 
+  <section class="trust-section">
+    <div class="trust-number"><span id="counter">0</span><span class="plus">+</span></div>
+    <p class="trust-text">students already trust us</p>
+  </section>
+
+
+
   <!-- HISTORY -->
   <section>
     <h2>History</h2>
@@ -170,6 +177,21 @@
     "description": "Summage Academy is a modern educational platform focused on accessible, creative, and skill-based learning for students and youth in Uzbekistan."
   }
   </script>
+  <script>
+    let count = 0;
+    let target = 150;
+    let speed = 12;
+
+    let interval = setInterval(() => {
+      if (count >= target) {
+        clearInterval(interval);
+      } else {
+        count++;
+        document.getElementById("counter").innerText = count;
+      }
+    }, speed);
+  </script>
+
 
 </body>
 </html>
