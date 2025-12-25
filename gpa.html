@@ -57,6 +57,15 @@
             <div class="input-row">
               <div class="input-box">
                 <input type="text" id="subject" placeholder="Subject (optional)" maxlength="25">
+                <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        "blockId": "R-A-17680991-6",
+                        "type": "fullscreen",
+                        "platform": "desktop"
+                    })
+                })
+                </script>
               </div>
               <div class="input-box">
                 <!-- PC: Native select -->
@@ -191,17 +200,10 @@
   <script src="menu.js"></script>
   <script src="gpa.js"></script>
   <!-- Yandex.RTB R-A-17680991-6 -->
-  <script>
-  window.yaContextCb.push(() => {
-      Ya.Context.AdvManager.render({
-          "blockId": "R-A-17680991-6",
-          "type": "fullscreen",
-          "platform": "desktop"
-      })
-  })
-  </script>
+  
 </body>
 
 </html>
+
 
 
