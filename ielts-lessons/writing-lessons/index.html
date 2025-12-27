@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <!-- Yandex.RTB -->
+  <script>window.yaContextCb=window.yaContextCb||[]</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Summage Writing Lessons</title>
+  <link rel="icon" href="/otherassets/logo.jpg" type="image/jpeg" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* --- Base / Shared (derived from your provided CSS) --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-padding-top: 92px; }
+    html, body { overflow-x: hidden; }
+    body {
+      font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 70%);
+      color: #2d2a26;
+      padding: 24px 6%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- Header --- */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+      padding: 18px 28px;
+      border-radius: 12px;
+      z-index: 1100;
+      box-shadow: 0 4px 10px rgba(15,15,15,0.03);
+    }
+    .title-group { display: flex; flex-direction: column; align-items: flex-start; }
+    h1 { font-size: clamp(1.6rem, 3.8vw, 2.4rem); font-weight: 700; color: #2d2a26; margin-bottom: 6px; }
+    h2 { font-size: clamp(1rem, 2.2vw, 1.2rem); font-weight: 400; color: #4e4a45; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+      background-color: #F4320B; color: #fff; border-radius: 14px;
+      padding: 10px 16px; font-size: 0.95rem; font-weight: 600;
+      box-shadow: 0 3px 6px rgba(244,50,11,0.12);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .back-btn:hover { background-color:#d92b09; transform: translateY(-2px); }
+
+    /* --- Page layout --- */
+    .lessons-wrapper { display: grid; grid-template-columns: 1fr 420px; gap: 28px; align-items: start; width: 100%; }
+
+    /* --- Main modules column --- */
+    .modules-col { display: flex; flex-direction: column; gap: 18px; }
+
+    .module-card { background: #fff; border-radius: 14px; box-shadow: 0 6px 14px rgba(14,20,20,0.035); overflow: hidden; border: 1px solid rgba(16,24,32,0.04); will-change: transform; }
+
+    .module-toggle {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 20px; cursor: pointer; background: linear-gradient(135deg,#a7f3d0,#34d399);
+      border: none; font-weight: 700; font-size: 1.05rem; color: #fff;
+    }
+    .module-toggle:hover { filter: brightness(0.98); }
+    .chev { font-size: 22px; color: #fff; transition: transform .22s ease; transform-origin: center; }
+    .module-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); }
+
+    /* IMPORTANT: ensure module body uses border-box so padding included in scrollHeight calculations */
+    .module-body { background: #fbfbfb; max-height: 0; overflow: hidden; transition: max-height 420ms cubic-bezier(.2,.9,.2,1), opacity 240ms ease; opacity: 0; will-change: max-height, opacity; box-sizing: border-box; }
+    .module-body.open { padding: 18px; opacity: 1; }
+
+    .lesson-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+    .lesson-link { display: flex; flex-direction: column; justify-content: center; gap: 6px; text-decoration: none; border-radius: 12px; padding: 14px; min-height: 86px; background: linear-gradient(135deg, #ffffff, #fffdfc); border: 1px solid rgba(244,82,11,0.10); color: #7a2b00; font-weight: 700; box-shadow: 0 6px 12px rgba(244,82,11,0.05); transition: transform .16s ease, box-shadow .16s ease, background .16s ease; will-change: transform, opacity; backface-visibility: hidden; }
+    .lesson-link:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(244,82,11,0.07); background: linear-gradient(135deg,#f8717108,#f8717103); }
+    .lesson-title { font-size: 1rem; color: #7a2b00; }
+    .lesson-sub { font-size: 0.88rem; color: #8b4a35; opacity: 0.9; font-weight: 600; }
+
+    /* animation for lesson cards */
+    @keyframes slideUpFade { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .module-body.animate-children .lesson-link { animation-name: slideUpFade; animation-duration: 360ms; animation-timing-function: cubic-bezier(.2,.9,.2,1); animation-fill-mode: both; animation-delay: var(--delay, 0ms); opacity: 0; }
+
+    @media (max-width: 1024px) { .lessons-wrapper { grid-template-columns: 1fr; } }
+
+    /* Right column (sidebar) */
+    .sidebar { display: flex; flex-direction: column; gap: 14px; }
+    .mock-card { display: inline-flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center; text-align: center; background: linear-gradient(135deg,#fde2e4,#fbcfe8); border-radius: 14px; padding: 18px; box-shadow: 0 6px 16px rgba(0,0,0,0.05); color: inherit; text-decoration: none; transition: transform .22s ease, box-shadow .22s ease; will-change: transform; }
+    .mock-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(0,0,0,0.08); }
+    .mock-card img { width: 54%; max-width: 160px; object-fit: contain; margin: 8px auto 0; }
+    .mock-title { font-weight: 800; color: #3f3434; margin: 12px 0 4px; }
+    .mock-sub { color: #6b6060; font-weight: 600; }
+
+    .blog-card { background: linear-gradient(145deg,#fff9e6,#fff3c2); border-radius: 12px; padding: 12px; border: 1px solid #ffd16633; }
+    .blog-row { display:flex; gap:12px; align-items:center; padding:8px; border-radius:10px; background:#fff; border:1px solid #fff1d0; text-decoration: none; color: inherit; transition: transform .16s ease, box-shadow .16s ease; will-change: transform, opacity; }
+    .blog-row:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+    .blog-row img { width:72px; object-fit:contain; }
+    .blog-row h3 { color:#A66B00; font-size:1rem; margin: 0; }
+
+    .promo-image-mobile { display:none; width:100%; margin: 18px auto; text-align:center; }
+    .promo-image-mobile img { max-width: 92%; height:auto; border-radius:12px; box-shadow: 0 8px 26px rgba(0,0,0,0.08); }
+
+    /* NEW FOOTER: compact square buttons (mobile) imported design */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-end;
+      z-index: 1100;
+      padding: 8px;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,#2fd8ab,#06a87c);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      border: 1px solid rgba(0,0,0,0.04);
+      text-decoration: none;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .nav-btn img { width: 26px; height: 26px; display: block; }
+    .nav-btn:active { transform: translateY(2px) scale(.99); }
+    .nav-btn:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.14); }
+
+    /* Center button bigger and elevated */
+    .nav-btn.center {
+      width: 76px;
+      height: 76px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,#f9734b,#ffab25);
+      box-shadow: 0 14px 36px rgba(255,120,50,0.22);
+      transform-origin: center;
+      margin-bottom: 6px;
+    }
+    .nav-btn.center img { width: 34px; height: 34px; filter: brightness(0) invert(1); }
+
+    @media (min-width: 768px) {
+      .bottom-nav { display: none; }
+    }
+
+    /* Ensure older footer rules are effectively removed (in case of cached CSS) */
+    .footer-nav { display: none !important; }
+
+    @media (max-width: 767px) {
+      body { padding-bottom: 110px; }
+      .lessons-wrapper { display: block; }
+      .modules-col { gap: 12px; }
+      .lesson-grid { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .promo-image-mobile { display:block; }
+      /* hide original footer-nav if present */
+      .footer-nav { display: none !important; }
+      .module-toggle { padding: 16px; }
+      .module-body.open { padding: 14px; }
+      main { padding-bottom: 92px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .module-body,
+      .lesson-link,
+      .module-toggle,
+      .chev,
+      .mock-card,
+      .blog-row { transition: none !important; animation: none !important; }
+    }
+
+    .no-js .module-body { max-height: none !important; padding: 18px; opacity: 1; }
+    a:focus, button:focus { outline: 3px solid rgba(6,168,124,0.18); outline-offset: 2px; }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-LZP4KSPR1V');
+  </script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="title-group">
+      <h1>IELTS Writing Lessons</h1>
+    </div>
+    <a class="back-btn" href="/main-menu/">Back</a>
+  </header>
+
+  <main class="lessons-wrapper">
+
+    <section class="modules-col" aria-label="IELTS Writing Modules">
+
+      <!-- Module 1 -->
+      <!--default lesson file name: wlesson1.html, number is according to the lesson number-->
+      <article class="module-card">
+        <button class="module-toggle" aria-expanded="false" aria-controls="w1-body" onclick="toggleModule(event)">
+          Task 1: Academic & General <span class="chev">›</span>
+        </button>
+        <div id="w1-body" class="module-body" role="region" aria-hidden="true">
+          <div class="lesson-grid">
+            <a class="lesson-link" href="/lessons\writing\wlesson1.html" data-i="0">
+              <div class="lesson-title">Lesson 1 — Task 1 Overview</div>
+              <div class="lesson-sub">Academic graphs & General Letter differences</div>
+            </a>
+            <a class="lesson-link" href="/lessons\writing\wlesson2.html" data-i="1">
+              <div class="lesson-title">Lesson 2 — Describing Trends</div>
+              <div class="lesson-sub">Language for rises, falls, stability</div>
+            </a>
+            <a class="lesson-link" href="/lessons\writing\wlesson3.html" data-i="2">
+              <div class="lesson-title">Lesson 3 — Comparing Data</div>
+              <div class="lesson-sub">Percentages, ratios, and comparisons</div>
+            </a>
+            <a class="lesson-link" href="/lessons\writing\wlesson4.html" data-i="3">
+              <div class="lesson-title">Lesson 4 — Formal Letter Structure</div>
+              <div class="lesson-sub">Tone, salutations, and register</div>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Module 2 -->
+      <article class="module-card">
+        <button class="module-toggle" aria-expanded="false" aria-controls="w2-body" onclick="toggleModule(event)">
+          Task 2: Essays & Arguments <span class="chev">›</span>
+        </button>
+        <div id="w2-body" class="module-body" role="region" aria-hidden="true">
+          <div class="lesson-grid">
+            <a class="lesson-link" href="/lessons/writing/wlesson5.html" data-i="0">
+              <div class="lesson-title">Lesson 5 — Essay Types</div>
+              <div class="lesson-sub">Agree/disagree, discuss, advantage/disadvantage</div>
+            </a>
+            <a class="lesson-link" href="/lessons/writing/wlesson6.html" data-i="1">
+              <div class="lesson-title">Lesson 6 — Thesis & Topic Sentences</div>
+              <div class="lesson-sub">Strong introductions and clear paragraphs</div>
+            </a>
+            <a class="lesson-link" href="/lessons/writing/wlesson7.html" data-i="2">
+              <div class="lesson-title">Lesson 7 — Coherence & Cohesion</div>
+              <div class="lesson-sub">Linking devices & paragraph flow</div>
+            </a>
+            <a class="lesson-link" href="/lessons/writing/wlesson8.html" data-i="3">
+              <div class="lesson-title">Lesson 8 — Developing Arguments</div>
+              <div class="lesson-sub">Examples, evidence, balancing points</div>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Module 3 -->
+      <article class="module-card">
+        <button class="module-toggle" aria-expanded="false" aria-controls="w3-body" onclick="toggleModule(event)">
+          Grammar & Lexical Resource <span class="chev">›</span>
+        </button>
+        <div id="w3-body" class="module-body" role="region" aria-hidden="true">
+          <div class="lesson-grid">
+            <a class="lesson-link" href="/profile.html" data-i="0">
+              <div class="lesson-title">Lesson 9 — Complex Sentences</div>
+              <div class="lesson-sub">Relative clauses, conditionals, subordination</div>
+            </a>
+            <a class="lesson-link" href="/profile.html" data-i="1">
+              <div class="lesson-title">Lesson 10 — Word Choice & Collocation</div>
+              <div class="lesson-sub">Academic vocabulary & collocations</div>
+            </a>
+            <a class="lesson-link" href="/profile.html" data-i="2">
+              <div class="lesson-title">Lesson 11 — Grammar Accuracy</div>
+              <div class="lesson-sub">Common errors & quick fixes</div>
+            </a>
+            <a class="lesson-link" href="/profile.html" data-i="3">
+              <div class="lesson-title">Lesson 12 — Tone & Formality</div>
+              <div class="lesson-sub">When to be formal vs neutral</div>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Module 4 -->
+      <article class="module-card">
+        <button class="module-toggle" aria-expanded="false" aria-controls="w4-body" onclick="toggleModule(event)">
+          Full Practice & Band Boosters <span class="chev">›</span>
+        </button>
+        <div id="w4-body" class="module-body" role="region" aria-hidden="true">
+          <div class="lesson-grid">
+            <a class="lesson-link" href="/profile.html" data-i="0">
+              <div class="lesson-title">Lesson 13 — Timed Task 1 Practice</div>
+              <div class="lesson-sub">Write clearly under 20 minutes</div>
+            </a>
+            <a class="lesson-link" href="/profile.html" data-i="1">
+              <div class="lesson-title">Lesson 14 — Timed Task 2 Practice</div>
+              <div class="lesson-sub">Essay under 40 minutes</div>
+            </a>
+            <a class="lesson-link" href="/profile.html" data-i="2">
+              <div class="lesson-title">Lesson 15 — Examiner's Checklist</div>
+              <div class="lesson-sub">What examiners mark & how to hit bands</div>
+            </a>
+            <a class="lesson-link" href="/profile.html" data-i="3">
+              <div class="lesson-title">Lesson 16 — Move 6.5→7.5+</div>
+              <div class="lesson-sub">Targeted edits to up your band</div>
+            </a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- RIGHT SIDEBAR column for desktop -->
+    <aside class="sidebar" aria-label="Resources & Promo">
+      <a class="mock-card animated" href="/ielts-mocks/" role="button" aria-label="Open Writing Mock Exam" style="--sd: 80ms;">
+        <img src="/icons/writing.png" alt="Mock icon">
+        <div class="mock-title">Writing Mock Exam</div>
+        <div class="mock-sub">Full timed tasks with model answers.</div>
+      </a>
+
+      <div class="blog-card">
+        <a class="blog-row animated" href="/blog-posts/" style="--sd: 160ms">
+          <img src="/icons/blog1.png" alt="Blog">
+          <div>
+            <h3>Essay Strategies</h3>
+            <p style="margin-top:6px;color:#6b6060;">How to structure perfect paragraphs.</p>
+          </div>
+        </a>
+
+        <div style="height:12px"></div>
+
+        <a class="blog-row animated" href="/blog-posts/" style="--sd: 240ms">
+          <img src="/icons/blog2.png" alt="Tips">
+          <div>
+            <h3>Task 1 Cheatsheet</h3>
+            <p style="margin-top:6px;color:#6b6060;">Quick language for graphs and letters.</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="promo-image-mobile">
+        <img id="randomPromo" src="" alt="Promo">
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- NEW FOOTER: three separate square-ish buttons, center larger (imported design) -->
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a class="nav-btn" href="/blog-posts/" aria-label="Blogs">
+      <img src="/icons/blogfooter.png" alt="Blogs">
+    </a>
+
+    <a class="nav-btn center" href="/main-menu/" aria-label="Home">
+      <img src="/icons/home.png" alt="Home">
+    </a>
+
+    <a class="nav-btn" href="/profile.html" aria-label="Profile">
+      <img src="/icons/profile-user.png" alt="Profile">
+    </a>
+  </nav>
+
+  <script>
+    (function () {
+      function setMaxHeight(element, value) { requestAnimationFrame(() => { element.style.maxHeight = value; }); }
+
+      function setChildDelays() {
+        document.querySelectorAll('.module-body').forEach(body => {
+          const children = body.querySelectorAll('.lesson-link');
+          children.forEach((el, idx) => { const i = el.getAttribute('data-i') || idx; el.style.setProperty('--delay', (i * 70) + 'ms'); });
+        });
+      }
+
+      window.toggleModule = function toggleModule(e) {
+        const btn = e.currentTarget || e.target;
+        const module = btn.closest('.module-card');
+        const body = module.querySelector('.module-body');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+        if (expanded) {
+          // CLOSE: animate from current height -> 0 then cleanup
+          btn.setAttribute('aria-expanded', 'false');
+          body.setAttribute('aria-hidden', 'true');
+
+          // ensure we have a proper starting maxHeight equal to current content height
+          const start = body.scrollHeight + 'px';
+          body.style.maxHeight = start;
+
+          // next frame: remove 'open' (which sets opacity:0 and padding->0), then set maxHeight to 0 to animate
+          requestAnimationFrame(() => {
+            body.classList.remove('open');
+            requestAnimationFrame(() => {
+              body.style.maxHeight = '0px';
+            });
+          });
+
+          // cleanup after transition
+          const onEnd = (ev) => {
+            if (ev.propertyName === 'max-height') {
+              body.style.maxHeight = null;
+              body.removeEventListener('transitionend', onEnd);
+            }
+          };
+          body.addEventListener('transitionend', onEnd);
+
+        } else {
+          // OPEN: add open first (so padding included), then measure and animate from 0 -> measured
+          btn.setAttribute('aria-expanded', 'true');
+          body.setAttribute('aria-hidden', 'false');
+
+          // add open so padding is applied and scrollHeight includes padding
+          body.classList.add('open');
+          // set initial maxHeight 0 then measure
+          body.style.maxHeight = '0px';
+
+          requestAnimationFrame(() => {
+            const end = body.scrollHeight + 'px';
+            // animate to measured height
+            body.style.maxHeight = end;
+
+            // trigger child animations
+            body.classList.remove('animate-children');
+            setTimeout(() => {
+              body.classList.add('animate-children');
+              setTimeout(() => body.classList.remove('animate-children'), 900);
+            }, 20);
+          });
+
+          // on small screens, ensure opened module scrolls into view after animation starts
+          if (window.innerWidth <= 767) {
+            setTimeout(() => { body.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 180);
+          }
+        }
+      };
+
+      document.addEventListener('keydown', function (ev) { if ((ev.key === 'Enter' || ev.key === ' ') && document.activeElement.classList.contains('module-toggle')) { ev.preventDefault(); document.activeElement.click(); } });
+
+      (function setRandomPromo(){ const promoData = [ { src: 'otherassets/telegramlink.jpg', alt: 'Join our Telegram channel' }, { src: 'otherassets/youtubelink.jpg', alt: 'Watch our YouTube channel' } ]; const promoEl = document.getElementById('randomPromo'); if (!promoEl) return; const pick = promoData[Math.floor(Math.random() * promoData.length)]; promoEl.src = pick.src; promoEl.alt = pick.alt; })();
+
+      function animateSidebar() { const items = document.querySelectorAll('.sidebar .animated'); items.forEach((el, idx) => { el.style.setProperty('--sd', (80 + idx * 80) + 'ms'); el.classList.add('appear'); }); }
+
+      let resizeTimeout; window.addEventListener('resize', function(){ clearTimeout(resizeTimeout); resizeTimeout = setTimeout(()=> { const openBodies = document.querySelectorAll('.module-body.open'); openBodies.forEach(b => { requestAnimationFrame(() => { b.style.maxHeight = b.scrollHeight + 'px'; }); }); }, 80); });
+
+      document.addEventListener('DOMContentLoaded', function () { setChildDelays(); animateSidebar(); });
+
+      document.documentElement.classList.remove('no-js');
+    })();
+  </script>
+  <!-- Yandex.RTB R-A-17680991-3 -->
+  <script>
+  window.yaContextCb.push(() => {
+      Ya.Context.AdvManager.render({
+          "blockId": "R-A-17680991-3",
+          "type": "floorAd",
+          "platform": "desktop"
+      })
+  })
+  </script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="/firebase-init.js"></script>
+  <script src="/auth-guard.js"></script>
+  
+</body>
+</html>

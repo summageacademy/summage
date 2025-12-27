@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin • Summage Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/otherassets/logo.jpg" type="image/jpeg" />
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- MOBILE BLOCKER WITH BACK BUTTON -->
+  <div id="mobileBlocker">
+    <img src="/otherassets/logo.jpg" alt="Summage Academy">
+    <h1>Desktop Only</h1>
+    <p><strong>The Admin Panel is only available on Desktop computers.</strong><br><br>
+      Please use a laptop or PC to access all features.</p>
+    
+    <button onclick="window.history.back()" class="back-btn">
+      Back to Website
+    </button>
+
+    <p style="margin-top: 20px; font-size: 14px; color: #777;">
+      Or <a href="/index.html" style="color: #f24b0b; text-decoration: underline; font-weight:600;">go to Home Page</a>
+    </p>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="loginScreen" class="screen active">
+    <div class="login-card">
+      <img src="/otherassets/logo.jpg" alt="Summage" class="logo">
+      <h2>Admin Panel</h2>
+      <p class="subtitle">Summage Academy</p>
+      <div id="loginError" class="error"></div>
+      <input type="email" id="loginEmail" placeholder="Email" />
+      <input type="password" id="loginPassword" placeholder="Password" />
+      <button id="loginBtn">Login</button>
+      <div class="loading" id="loginLoading">Please wait...</div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="screen">
+    <header class="dash-header">
+      <button id="hamburgerBtn" class="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="header-left">
+        <img src="/otherassets/logo.jpg" alt="Logo" class="header-logo">
+        <h1>Admin Panel</h1>
+      </div>
+
+      <div class="header-right">
+        <a href="/index.html" class="back-to-site-btn">Back to Website</a>
+        <button id="logoutBtn" class="btn-logout">Logout</button>
+      </div>
+    </header>
+
+    <div class="dashboard-body">
+      <div id="overlay" class="overlay"></div>
+
+      <aside id="sidebar" class="sidebar">
+        <nav class="sidebar-nav">
+          <button class="sidebar-btn active" data-section="home">Home</button>
+          <button class="sidebar-btn" data-section="team">Team Members</button>
+          <button class="sidebar-btn" data-section="courses">Courses</button>
+          <button class="sidebar-btn" data-section="students">Students</button>
+          <button class="sidebar-btn" data-section="analytics">Analytics</button>
+          <button class="sidebar-btn" data-section="settings">Settings</button>
+          <!-- Admins button - hidden by default, shown only for superadmin -->
+          <button class="sidebar-btn" data-section="admins" style="display:none;">Admins</button>
+        </nav>
+      </aside>
+
+      <main class="content-area">
+        <section id="home" class="content-section active">
+          <div class="hero-greeting">
+            <div class="tasks-left">
+              <p class="today-date" id="todayDate"></p>
+              <div class="task-container">Write Blog Post <input type="checkbox" class="task-check"></div>
+              <div class="task-container">Write Article <input type="checkbox" class="task-check"></div>
+              <div class="task-container">Visit Site Pages <input type="checkbox" class="task-check"></div>
+            </div>
+            <div class="greeting-right">
+              <div id="dynamicGreeting"></div>
+              <p class="greeting-sub">Welcome back, <span id="adminEmail">admin</span>! Ready to crush it today?</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="team" class="content-section">
+          <!-- Team Members list will be injected here by JS -->
+        </section>
+
+        <section id="admins" class="content-section">
+          <h2 class="section-title">Admins Management</h2>
+          <div class="tool-card" style="padding:40px;">
+            <h3 style="margin-bottom:20px; color:var(--orange);">Add New Admin</h3>
+            <input type="email" id="newAdminEmail" placeholder="Email" style="width:100%; padding:14px; margin:10px 0; border-radius:12px; border:2px solid #eee;" />
+            <input type="password" id="newAdminPass" placeholder="Password (min 6 chars)" style="width:100%; padding:14px; margin:10px 0; border-radius:12px; border:2px solid #eee;" />
+            <button onclick="addNewAdmin(document.getElementById('newAdminEmail').value.trim(), document.getElementById('newAdminPass').value.trim())" 
+                    style="padding:14px 28px; background:var(--orange); color:white; border:none; border-radius:12px; font-weight:600; cursor:pointer; margin-top:10px;">
+              Add Admin
+            </button>
+            <p style="margin-top:30px; color:#666; font-size:15px;">Only superadmin (abrorahmeed@gmail.com) can add new admins.</p>
+          </div>
+        </section>
+
+        <section id="courses" class="content-section">
+          <h2 class="section-title">Courses</h2>
+          <div class="tool-card">Create and organize all courses in one place.</div>
+        </section>
+
+        <section id="students" class="content-section">
+          <div class="students-full-scroll">
+            <h2 class="section-title">Students Management</h2>
+
+            <!-- Students Stats -->
+            <div class="students-stats-grid">
+              <div class="analytics-card">
+                <div class="analytics-icon">👨‍🎓</div>
+                <div class="analytics-value" id="totalStudents">0</div>
+                <div class="analytics-label">Total Students</div>
+              </div>
+              <div class="analytics-card">
+                <div class="analytics-icon">🟢</div>
+                <div class="analytics-value" id="activeStudents">0</div>
+                <div class="analytics-label">Active This Week</div>
+              </div>
+              <div class="analytics-card">
+                <div class="analytics-icon">✨</div>
+                <div class="analytics-value" id="newStudents">0</div>
+                <div class="analytics-label">New This Week</div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="students-controls">
+              <input type="text" id="studentSearch" placeholder="🔍 Search students by name or email..." />
+              <button id="exportStudents" class="action-btn">📊 Export CSV</button>
+              <button id="refreshStudents" class="action-btn" style="background:var(--green);">🔄 Refresh</button>
+            </div>
+
+            <!-- Students List -->
+            <div id="studentsList" class="students-grid">
+              <!-- Loaded by JS -->
+            </div>
+
+            <!-- Pagination -->
+            <div id="studentsPagination" class="pagination">
+              <button id="prevPage" class="action-btn" style="background:#eee; color:#666;">← Prev</button>
+              <span id="pageInfo">Page 1</span>
+              <button id="nextPage" class="action-btn" style="background:#eee; color:#666;">Next →</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="analytics" class="content-section">
+          <h2 class="section-title">Analytics Overview</h2>
+          
+          <div class="analytics-grid">
+            <div class="analytics-card">
+              <div class="analytics-icon">👥</div>
+              <div class="analytics-value" id="totalUsers">0</div>
+              <div class="analytics-label">Total Users</div>
+            </div>
+            
+            <div class="analytics-card">
+              <div class="analytics-icon">🪙</div>
+              <div class="analytics-value" id="totalCoins">0</div>
+              <div class="analytics-label">Total Coins in Circulation</div>
+            </div>
+          </div>
+
+          <p style="text-align:center; margin-top:40px; color:#666; font-size:15px;">
+            Data updates in real-time • Only visible to admins
+          </p>
+        </section>
+
+        <section id="settings" class="content-section">
+          <h2 class="section-title">Settings</h2>
+
+          <div class="settings-grid">
+            <!-- Theme Toggle -->
+            <div class="settings-card">
+              <h3>Appearance</h3>
+              <div class="setting-item">
+                <label>Dark Mode</label>
+                <button id="themeToggle" class="toggle-btn">
+                  <span class="toggle-slider"></span>
+                </button>
+              </div>
+              <p class="setting-desc">Switch between light and dark theme</p>
+            </div>
+
+            <!-- Display Name -->
+            <div class="settings-card">
+              <h3>Profile</h3>
+              <div class="setting-item">
+                <label>Your Email</label>
+                <p id="settingsEmail" style="color:#666; margin:8px 0;">Loading...</p>
+              </div>
+              <div class="setting-item">
+                <label>Display Name</label>
+                <input type="text" id="displayNameInput" placeholder="Enter new name" />
+                <button id="saveNameBtn">Save Name</button>
+              </div>
+              <p id="nameStatus" class="status-msg"></p>
+            </div>
+
+            <!-- Password Change -->
+            <div class="settings-card">
+              <h3>Security</h3>
+              <div class="setting-item">
+                <label>New Password</label>
+                <input type="password" id="newPassword" placeholder="Min 6 characters" />
+              </div>
+              <div class="setting-item">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Repeat password" />
+                <button id="changePasswordBtn">Change Password</button>
+              </div>
+              <p id="passwordStatus" class="status-msg"></p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+    authDomain: "summage-backend.firebaseapp.com",
+    projectId: "summage-backend",
+    storageBucket: "summage-backend.firebasestorage.app",
+    messagingSenderId: "128191434358",
+    appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  const SUPERADMIN_EMAIL = "abrorahmeed@gmail.com";
+
+  // === APPLY SAVED DARK MODE IMMEDIATELY ON PAGE LOAD ===
+  const savedTheme = localStorage.getItem('adminTheme');
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+
+  // Update toggle button state on load (for Settings tab)
+  const toggleBtn = document.getElementById('themeToggle');
+  if (toggleBtn && savedTheme === 'dark') {
+    toggleBtn.classList.add('active');
+  }
+
+  function updateGreeting() {
+    const h = new Date().getHours();
+    let text = "Good Night", emoji = "🌙";
+    if (h >= 5 && h < 12) { text = "Good Morning"; emoji = "🌅"; }
+    else if (h < 17) { text = "Good Afternoon"; emoji = "☀️"; }
+    else if (h < 22) { text = "Good Evening"; emoji = "🌇"; }
+
+    document.getElementById("dynamicGreeting").innerHTML = `
+      <div class="greeting-main">${text}</div>
+      <div class="greeting-emoji">${emoji}</div>
+    `;
+  }
+
+  // Sidebar & Hamburger - MAIN SECTION SWITCHING LOGIC
+  document.querySelectorAll('.sidebar-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.section).classList.add('active');
+
+      document.getElementById('hamburgerBtn').classList.remove('active');
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('active');
+
+      // Load data for specific tabs
+      if (btn.dataset.section === 'analytics') {
+        loadAnalytics();
+      }
+
+      if (btn.dataset.section === 'settings') {
+        loadSettings();
+      }
+
+      // Students tab will be handled separately below to avoid conflict
+    };
+  });
+
+  // EXTRA: Auto-load Students when the Students tab becomes active
+  const studentsSidebarBtn = document.querySelector('.sidebar-btn[data-section="students"]');
+  if (studentsSidebarBtn) {
+    studentsSidebarBtn.addEventListener('click', () => {
+      // Use a tiny delay to ensure the section is active before loading
+      setTimeout(() => {
+        if (document.getElementById('students').classList.contains('active')) {
+          loadStudents();
+        }
+      }, 100);
+    });
+  }
+
+  document.getElementById('hamburgerBtn').onclick = () => {
+    document.getElementById('hamburgerBtn').classList.toggle('active');
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('active');
+  };
+
+  document.getElementById('overlay').onclick = () => {
+    document.getElementById('hamburgerBtn').classList.remove('active');
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('active');
+  };
+
+  // Login
+  document.getElementById('loginBtn').onclick = () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass = document.getElementById('loginPassword').value;
+    if (!email || !pass) {
+      document.getElementById('loginError').textContent = "Please fill all fields";
+      return;
+    }
+    document.getElementById('loginLoading').style.display = "block";
+    document.getElementById('loginError').textContent = "";
+
+    auth.signInWithEmailAndPassword(email, pass)
+      .catch(err => {
+        document.getElementById('loginLoading').style.display = "none";
+        document.getElementById('loginError').textContent = "Wrong email or password";
+      });
+  };
+
+  document.getElementById('logoutBtn').onclick = () => auth.signOut();
+
+  // Auth State
+  auth.onAuthStateChanged(user => {
+    document.getElementById('loginLoading').style.display = "none";
+
+    if (!user) {
+      document.getElementById('loginScreen').classList.add('active');
+      document.getElementById('dashboard').classList.remove('active');
+      return;
+    }
+
+    db.collection('admins').doc(user.uid).get()
+      .then(doc => {
+        if (!doc.exists) {
+          auth.signOut();
+          document.getElementById('loginError').textContent = "Access denied — you are not an admin.";
+          return;
+        }
+
+        const isSuperAdmin = user.email === SUPERADMIN_EMAIL;
+
+        document.getElementById('loginScreen').classList.remove('active');
+        document.getElementById('dashboard').classList.add('active');
+        document.getElementById('adminEmail').textContent = user.email.split('@')[0];
+
+        updateGreeting();
+
+        const today = new Date();
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById('todayDate').innerHTML = `Today's date: ${today.toLocaleDateString('en-US', options)}`;
+
+        // Tasks persistence
+        const taskKey = 'adminTasks_' + today.toDateString();
+        const savedTasks = JSON.parse(localStorage.getItem(taskKey)) || [false, false, false];
+        const checks = document.querySelectorAll('.task-check');
+        checks.forEach((check, i) => {
+          check.checked = savedTasks[i];
+          check.addEventListener('change', () => {
+            savedTasks[i] = check.checked;
+            localStorage.setItem(taskKey, JSON.stringify(savedTasks));
+          });
+        });
+        document.querySelectorAll('.task-container').forEach((container, i) => {
+          container.addEventListener('click', e => {
+            if (e.target !== checks[i]) {
+              checks[i].checked = !checks[i].checked;
+              savedTasks[i] = checks[i].checked;
+              localStorage.setItem(taskKey, JSON.stringify(savedTasks));
+            }
+          });
+        });
+
+        // Show Admins tab only for superadmin
+        const adminsBtn = document.querySelector('.sidebar-btn[data-section="admins"]');
+        if (adminsBtn) {
+          adminsBtn.style.display = isSuperAdmin ? "flex" : "none";
+        }
+
+        // Load team members
+        loadTeamMembers();
+
+        // Load analytics if active
+        if (document.getElementById('analytics').classList.contains('active')) {
+          loadAnalytics();
+        }
+
+        // Load settings if active
+        if (document.getElementById('settings').classList.contains('active')) {
+          loadSettings(user);
+        }
+      })
+      .catch(err => {
+        console.error("Firestore error:", err);
+        auth.signOut();
+      });
+  });
+
+  function loadTeamMembers() {
+    db.collection('admins').orderBy('createdAt', 'desc').get()
+      .then(snapshot => {
+        const container = document.getElementById('team');
+        let html = `<h2 class="section-title">Team Members</h2>`;
+        html += `<div class="team-list" style="display:grid; gap:20px; margin-top:20px;">`;
+
+        if (snapshot.empty) {
+          html += `<p>No admins yet.</p>`;
+        } else {
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            html += `
+              <div class="team-member" style="background:white; padding:20px; border-radius:16px; box-shadow:var(--shadow);">
+                <strong style="font-size:18px;">${data.displayName || 'Admin'}</strong><br>
+                <small style="color:#666;">${data.email}</small><br>
+                <span style="color:var(--orange); font-weight:600;">${data.role || 'admin'}</span><br>
+                <small style="color:#888;">Joined: ${data.createdAt ? data.createdAt.toDate().toLocaleDateString() : 'N/A'}</small>
+              </div>
+            `;
+          });
+        }
+
+        html += `</div>`;
+        container.innerHTML = html;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  function loadAnalytics() {
+    const totalUsersEl = document.getElementById('totalUsers');
+    const totalCoinsEl = document.getElementById('totalCoins');
+
+    totalUsersEl.textContent = 'Loading...';
+    totalCoinsEl.textContent = 'Loading...';
+
+    db.collection('users').get()
+      .then(snapshot => {
+        const totalUsers = snapshot.size;
+        let totalCoins = 0;
+
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          if (data.coins && typeof data.coins === 'number') {
+            totalCoins += data.coins;
+          }
+        });
+
+        totalUsersEl.textContent = totalUsers.toLocaleString();
+        totalCoinsEl.textContent = totalCoins.toLocaleString();
+      })
+      .catch(err => {
+        console.error("Analytics error:", err);
+        totalUsersEl.textContent = 'Error';
+        totalCoinsEl.textContent = 'Error';
+      });
+  }
+
+  // Settings Functions
+  function loadSettings(user = auth.currentUser) {
+    if (!user) return;
+
+    document.getElementById('settingsEmail').textContent = user.email;
+
+    db.collection('admins').doc(user.uid).get()
+      .then(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          document.getElementById('displayNameInput').value = data.displayName || '';
+        }
+      });
+  }
+
+  // Dark Mode Toggle
+  document.getElementById('themeToggle')?.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    document.getElementById('themeToggle').classList.toggle('active', isDark);
+    localStorage.setItem('adminTheme', isDark ? 'dark' : 'light');
+  });
+
+  // Change Display Name
+  document.getElementById('saveNameBtn')?.addEventListener('click', () => {
+    const newName = document.getElementById('displayNameInput').value.trim();
+    const statusEl = document.getElementById('nameStatus');
+
+    if (!newName) {
+      statusEl.textContent = "Name cannot be empty";
+      statusEl.style.color = '#e74c3c';
+      return;
+    }
+
+    db.collection('admins').doc(auth.currentUser.uid).update({
+      displayName: newName
+    })
+    .then(() => {
+      statusEl.textContent = "Display name updated!";
+      statusEl.style.color = '#007a52';
+      document.getElementById('adminEmail').textContent = newName;
+    })
+    .catch(err => {
+      statusEl.textContent = "Error: " + err.message;
+      statusEl.style.color = '#e74c3c';
+    });
+  });
+
+  // Change Password
+  document.getElementById('changePasswordBtn')?.addEventListener('click', () => {
+    const newPass = document.getElementById('newPassword').value;
+    const confirmPass = document.getElementById('confirmPassword').value;
+    const statusEl = document.getElementById('passwordStatus');
+
+    if (newPass.length < 6) {
+      statusEl.textContent = "Password must be at least 6 characters";
+      statusEl.style.color = '#e74c3c';
+      return;
+    }
+
+    if (newPass !== confirmPass) {
+      statusEl.textContent = "Passwords do not match";
+      statusEl.style.color = '#e74c3c';
+      return;
+    }
+
+    auth.currentUser.updatePassword(newPass)
+      .then(() => {
+        statusEl.textContent = "Password changed successfully!";
+        statusEl.style.color = '#007a52';
+        document.getElementById('newPassword').value = "";
+        document.getElementById('confirmPassword').value = "";
+      })
+      .catch(err => {
+        statusEl.textContent = "Error: " + err.message;
+        statusEl.style.color = '#e74c3c';
+      });
+  });
+
+  function addNewAdmin(email, password) {
+    if (!email || !password || password.length < 6) {
+      alert("Please enter valid email and password (min 6 characters)");
+      return;
+    }
+
+    if (auth.currentUser?.email !== SUPERADMIN_EMAIL) {
+      alert("Only the superadmin can add new admins.");
+      return;
+    }
+
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(cred => {
+        return db.collection('admins').doc(cred.user.uid).set({
+          email: email,
+          displayName: email.split('@')[0],
+          role: "admin",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      })
+      .then(() => {
+        alert("New admin added successfully!");
+        document.getElementById('newAdminEmail').value = "";
+        document.getElementById('newAdminPass').value = "";
+        loadTeamMembers();
+      })
+      .catch(err => {
+        alert("Error: " + err.message);
+      });
+  }
+
+  window.addNewAdmin = addNewAdmin;
+
+  // ==================== STUDENTS SECTION ====================
+
+  let allStudents = [];
+  let filteredStudents = [];
+  let currentPage = 1;
+  const studentsPerPage = 12;
+
+  function loadStudents() {
+    const container = document.getElementById('studentsList');
+    container.innerHTML = '<div class="loading-students">⏳ Loading students...</div>';
+    
+    db.collection('users')
+      .orderBy('createdAt', 'desc')
+      .get()
+      .then(snapshot => {
+        allStudents = [];
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          allStudents.push({
+            id: doc.id,
+            ...data,
+            displayName: data.displayName || data.email?.split('@')[0] || 'Student',
+            courses: data.courses ? Object.keys(data.courses || {}).length : 0,
+            isActive: data.lastActive && (Date.now() - data.lastActive.toMillis()) < 7*24*60*60*1000
+          });
+        });
+        
+        filteredStudents = [...allStudents];
+        updateStudentsStats();
+        renderStudents();
+      })
+      .catch(err => {
+        console.error('Error loading students:', err);
+        container.innerHTML = '<div style="text-align:center;padding:60px;color:#e74c3c;">Error loading students</div>';
+      });
+  }
+
+  function updateStudentsStats() {
+    const total = allStudents.length;
+    const active = allStudents.filter(s => s.isActive).length;
+    const newThisWeek = allStudents.filter(s => 
+      s.createdAt && (Date.now() - s.createdAt.toMillis()) < 7*24*60*60*1000
+    ).length;
+    
+    document.getElementById('totalStudents').textContent = total.toLocaleString();
+    document.getElementById('activeStudents').textContent = active.toLocaleString();
+    document.getElementById('newStudents').textContent = newThisWeek.toLocaleString();
+  }
+
+  function renderStudents() {
+    const start = (currentPage - 1) * studentsPerPage;
+    const end = start + studentsPerPage;
+    const pageStudents = filteredStudents.slice(start, end);
+    
+    const container = document.getElementById('studentsList');
+    if (filteredStudents.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div style="font-size:64px; margin-bottom:20px;">👨‍🎓</div>
+          <h3 style="color:var(--orange); font-family:'Baloo 2', cursive; font-size:32px; margin-bottom:12px;">No students found</h3>
+          <p>${allStudents.length ? 'No students match your search.' : 'Students will appear here when they register.'}</p>
+        </div>
+      `;
+      document.getElementById('studentsPagination').style.display = 'none';
+      return;
+    }
+    
+    container.innerHTML = pageStudents.map(student => `
+      <div class="student-card" data-id="${student.id}">
+        <div class="student-actions">
+          <button class="action-btn-small" onclick="viewStudent('${student.id}')">🔍</button>
+          <button class="action-btn-small" onclick="editStudentCoins('${student.id}', event)">🪙</button>
+          <button class="action-btn-small delete-student" onclick="deleteStudent('${student.id}', event)" style="background:#e74c3c;">🗑️</button>
+        </div>
+        <div class="student-avatar">${student.displayName[0]?.toUpperCase()}</div>
+        <div class="student-name">${student.displayName}</div>
+        <div class="student-email">${student.email || 'No email'}</div>
+        <div class="student-stats">
+          <div class="stat-item">
+            <div class="stat-value">${student.coins || 0}</div>
+            <div class="stat-label">Coins</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">${student.courses}</div>
+            <div class="stat-label">Courses</div>
+          </div>
+        </div>
+        <div class="student-courses">${student.courses ? `${student.courses} Course${student.courses > 1 ? 's' : ''}` : 'No courses'}</div>
+      </div>
+    `).join('');
+    
+    updatePagination();
+  }
+
+  function updatePagination() {
+    const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
+    document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+    document.getElementById('studentsPagination').style.display = totalPages > 1 ? 'block' : 'none';
+    
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    if (prevBtn) prevBtn.disabled = currentPage === 1;
+    if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+  }
+
+  document.getElementById('prevPage')?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderStudents();
+    }
+  });
+
+  document.getElementById('nextPage')?.addEventListener('click', () => {
+    const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderStudents();
+    }
+  });
+
+  document.getElementById('studentSearch')?.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    filteredStudents = allStudents.filter(student => 
+      student.displayName?.toLowerCase().includes(query) ||
+      student.email?.toLowerCase().includes(query)
+    );
+    currentPage = 1;
+    renderStudents();
+  });
+
+  document.getElementById('refreshStudents')?.addEventListener('click', loadStudents);
+  document.getElementById('exportStudents')?.addEventListener('click', exportStudentsCSV);
+
+  function exportStudentsCSV() {
+    let csv = 'Name,Email,Coins,Courses,Join Date,Last Active\n';
+    allStudents.forEach(s => {
+      csv += `"${s.displayName || ''}","${s.email || ''}",${s.coins || 0},${s.courses},"${s.createdAt?.toDate().toLocaleDateString() || ''}","${s.lastActive?.toDate().toLocaleDateString() || ''}"\n`;
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `summage-students-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  function viewStudent(studentId) {
+    const student = allStudents.find(s => s.id === studentId);
+    if (!student) return;
+    
+    document.getElementById('studentModalContent').innerHTML = `
+      <h3 style="font-family:'Baloo 2', cursive; color:var(--orange); margin-bottom:20px;">${student.displayName}</h3>
+      <p><strong>Email:</strong> ${student.email || 'N/A'}</p>
+      <p><strong>Coins:</strong> ${student.coins || 0}</p>
+      <p><strong>Courses:</strong> ${student.courses || 0}</p>
+      <p><strong>Joined:</strong> ${student.createdAt?.toDate().toLocaleDateString() || 'N/A'}</p>
+      <p><strong>Last Active:</strong> ${student.lastActive?.toDate().toLocaleDateString() || 'N/A'}</p>
+      ${student.isActive ? '<p style="color:var(--green);"><strong>✅ Active this week</strong></p>' : ''}
+    `;
+    document.getElementById('studentModal').classList.add('active');
+  }
+
+  function editStudentCoins(studentId, event) {
+    event.stopPropagation();
+    const student = allStudents.find(s => s.id === studentId);
+    const coins = prompt(`Current coins: ${student.coins || 0}\nEnter new amount:`);
+    if (coins === null || isNaN(coins) || coins < 0) return;
+    
+    db.collection('users').doc(studentId).update({
+      coins: parseInt(coins),
+      lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+      loadStudents();
+      alert('Coins updated successfully!');
+    }).catch(err => {
+      alert('Error: ' + err.message);
+    });
+  }
+
+  function deleteStudent(studentId, event) {
+    event.stopPropagation();
+    if (!confirm('Delete this student? This cannot be undone.')) return;
+    
+    db.collection('users').doc(studentId).delete().then(() => {
+      loadStudents();
+      closeStudentModal();
+      alert('Student deleted.');
+    }).catch(err => {
+      alert('Error: ' + err.message);
+    });
+  }
+
+  function closeStudentModal() {
+    document.getElementById('studentModal').classList.remove('active');
+  }
+
+  // Add Modal HTML
+  const studentModalHTML = `
+  <div id="studentModal" class="student-modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeStudentModal()">×</button>
+      <div id="studentModalContent">Loading...</div>
+    </div>
+  </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', studentModalHTML);
+  window.closeStudentModal = closeStudentModal;
+
+</script>
+</body>
+</html>

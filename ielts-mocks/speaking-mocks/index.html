@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Yandex.RTB -->
+  <script>window.yaContextCb=window.yaContextCb||[]</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summage Speaking Tool</title>
+
+  <link rel="icon" href="/otherassets/logo.jpg" type="image/jpeg" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #cfe8ff, #ffffff);
+      color: #1a1a1a;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      z-index: 100;
+    }
+
+    header img {
+      height: 38px;
+      width: 38px;
+      border-radius: 10px;
+    }
+
+    header h1 {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #f24b0b;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #f24b0b;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    main {
+      margin-top: 70px;
+      padding: 15px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      padding-bottom: 100px; /* to prevent overlap with next button */
+    }
+
+    /* Dropdown */
+    .selector {
+      position: relative;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .select-btn {
+      width: 100%;
+      background: #fff;
+      border: 2px solid #048965;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #048965;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .options {
+      position: absolute;
+      top: 50px;
+      width: 100%;
+      background: white;
+      border: 2px solid #048965;
+      border-radius: 12px;
+      overflow: hidden;
+      display: none;
+      z-index: 10;
+    }
+
+    .options div {
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #1a1a1a;
+      transition: 0.2s;
+    }
+
+    .options div:hover {
+      background: #e8f0ff;
+    }
+
+    /* Flashcards */
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: left;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+
+    .card h2 {
+      color: #f24b0b;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .card ul {
+      list-style: disc;
+      margin-left: 20px;
+      margin-top: 8px;
+      color: #333;
+    }
+
+    .answer-card {
+      display: none;
+      background: #f0f6ff;
+    }
+
+    /* Buttons */
+    .show-answer {
+      background: #048965;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .next-btn {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 400px;
+      background: linear-gradient(90deg, #f24b0b, #d43a00);
+      color: white;
+      font-weight: 700;
+      padding: 15px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: 0.25s;
+      z-index: 50;
+    }
+
+    .next-btn:active {
+      transform: translateX(-50%) scale(0.98);
+    }
+
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-LZP4KSPR1V');
+  </script>
+</head>
+<body>
+
+  <header>
+    <img src="/otherassets/logo.jpg" alt="Summage Logo">
+    <h1>Speaking Practice</h1>
+    <a href="../">Back</a>
+  </header>
+
+  <main>
+    <div class="selector">
+      <div class="select-btn">Choose Part</div>
+      <div class="options">
+        <div data-part="1">Part 1</div>
+        <div data-part="2">Part 2</div>
+        <div data-part="3">Part 3</div>
+      </div>
+    </div>
+
+    <div id="question-card" class="card">
+      <h2>Choose a part to begin ✨</h2>
+      <p>Ready to practice your speaking?</p>
+    </div>
+
+    <div id="answer-card" class="card answer-card">
+      <h2>Sample Answer</h2>
+      <p id="answer-text">Your answer will appear here.</p>
+    </div>
+  </main>
+
+  <button class="next-btn" id="next-btn" disabled>Next Question</button>
+
+  <script>
+    const parts = {
+      1: [
+        { question: "What do you do in your free time?", answer: "In my free time, I enjoy a mix of activities that help me relax and stay productive. One of my favorite things to do is read books, especially novels or non-fiction, as they allow me to escape into different worlds or learn something new. For instance, I recently finished a historical fiction book that was both gripping and thought-provoking. I also love spending time outdoors, like going for walks or cycling, because it helps me clear my mind and stay active. On top of that, I often catch up with friends over coffee or try out new recipes in the kitchen, as cooking is a bit of a creative hobby for me. While I do enjoy these activities, I sometimes just unwind by watching a good series or movie when I need to switch off. Overall, I like to balance my free time between staying engaged and simply relaxing." },
+        { question: "Do you enjoy cooking?", answer: "I’d say I really enjoy cooking, as it’s not only a practical skill but also a creative outlet for me. I find it incredibly satisfying to experiment with different ingredients and flavors, especially when I’m preparing meals for my family or friends. For instance, I love trying out new recipes from various cuisines, like Italian or Thai, and tweaking them to suit my taste. That said, I don’t always have the time to cook elaborate dishes, so I tend to stick to simpler recipes during busy weeks." },
+        { question: "How often do you meet your friends?", answer: "I usually meet my friends about once or twice a week, depending on our schedules. We’re all quite busy with work or studies, so we make it a point to catch up over the weekend, often grabbing a coffee or going out for a meal. For example, we might meet at a local café to chat and unwind, or sometimes we plan activities like watching a movie or going for a hike. That said, with some of my closer friends, we also stay in touch through calls or texts almost daily, so even if we don’t meet in person, we’re still connected. I think these meetups are really important because they help us stay close and share what’s going on in our lives." },
+        { question: "What is your favorite type of music?", answer: "I really enjoy listening to a variety of music, but if I had to choose, I’d say indie and acoustic music are my favorites. There’s something about the raw, authentic sound of acoustic guitars and heartfelt lyrics that resonates with me. For example, I often listen to artists like Ed Sheeran or The Lumineers when I’m relaxing at home or driving. That said, I also appreciate upbeat pop music when I’m in the mood to lift my spirits. Music, for me, is a way to connect with my emotions, and I love discovering new artists or genres to broaden my taste."},
+        { question: "Do you like to travel?", answer: "Absolutely, traveling is one of my passions because it opens up new perspectives and experiences. I love exploring different cultures, trying local foods, and visiting historical sites. For instance, last year I traveled to Japan, and exploring Kyoto’s temples was unforgettable. However, I don’t get to travel as often as I’d like due to work commitments, so I make the most of short weekend trips nearby. Traveling not only broadens my horizons but also helps me appreciate the diversity of the world."},
+        { question: "How do you usually spend your weekends?", answer: "My weekends are usually a mix of relaxation and catching up on things I enjoy. On Saturdays, I often meet friends for brunch or go for a long walk in a nearby park to unwind from the week. For example, I love visiting a local nature reserve to enjoy the fresh air. On Sundays, I tend to focus on personal hobbies like reading or cooking a new dish. That said, if I’ve had a particularly busy week, I might just stay home and binge-watch a series. I try to strike a balance between being active and recharging for the week ahead."},
+        { question: "Do you prefer reading books or watching movies?", answer: "I enjoy both, but if I had to pick, I’d lean toward reading books because they allow me to imagine the story in my own way. Novels, especially thrillers or historical fiction, really draw me in with their detailed storytelling. For instance, I recently read a mystery novel that kept me hooked until the last page. That said, I also love watching movies, especially when I’m in the mood for something visual and immersive, like a sci-fi blockbuster. It really depends on my mood, but books tend to leave a deeper impression."},
+        { question: "What kind of food do you like to eat?", answer: "I’m a big foodie, so I enjoy a wide range of cuisines, but I’d say Italian and spicy Asian dishes are my top choices. There’s something so comforting about a well-made pasta dish, like a creamy carbonara, and I love the bold flavors of Thai or Indian curries. For example, I recently tried making a spicy tom yum soup at home, which was both challenging and rewarding. While I enjoy indulgent meals, I also try to balance them with healthier options like salads or grilled vegetables during the week."},
+        { question: "Do you like to exercise?", answer: "Yes, I enjoy exercising because it keeps me energized and helps me stay healthy. I usually go for a jog or do some yoga a few times a week, as they’re great for both physical and mental well-being. For instance, I find yoga particularly relaxing after a long day. That said, I’m not a gym enthusiast, so I prefer outdoor activities like cycling or hiking when the weather’s nice. Exercise, for me, is less about building muscle and more about feeling good and staying active."},
+        { question: "What is your favorite season?", answer: "I’d say autumn is my favorite season because of the cool weather and vibrant colors. The changing leaves and crisp air make it perfect for outdoor activities like hiking or simply enjoying a coffee outside. For example, last autumn, I went on a scenic walk through a nearby forest, and the views were breathtaking. That said, I also appreciate summer for its warmth, but autumn’s balance of mild weather and natural beauty really stands out for me."},
+        { question: "Do you enjoy shopping?", answer: "I enjoy shopping to an extent, especially for clothes or gadgets, but I’m not someone who spends hours in malls. I prefer shopping online because it’s more convenient, and I can compare prices easily. For instance, I recently bought a new pair of headphones after researching different brands. That said, I do enjoy visiting local markets for fresh produce or unique handmade items, as it feels more personal. Shopping is fun for me as long as it’s purposeful and not overwhelming."},
+        { question: "What is your favorite holiday or festival?", answer: "My favorite holiday is probably New Year’s because it’s a time for reflection and new beginnings. I love the excitement of celebrating with family or friends, whether it’s through a big dinner or watching fireworks. For example, last year, I hosted a small New Year’s party at home, and it was such a joyful evening. I also appreciate the chance to set goals for the year ahead, which makes the holiday feel meaningful and motivating."},
+        { question: "Do you like to watch sports?", answer: "I’m not a huge sports fan, but I do enjoy watching certain events, like soccer or tennis, especially during major tournaments like the World Cup or Wimbledon. There’s something exciting about the energy and competition. For instance, I watched the last World Cup final with friends, and we had a great time cheering together. That said, I’m more of a casual viewer and prefer playing sports like badminton with friends for fun rather than watching them regularly."},
+        { question: "What is your favorite place to visit in your city?", answer: "One of my favorite places to visit in my city is a local park that has a beautiful lake and walking trails. It’s a peaceful spot where I can relax, read a book, or just enjoy nature. For example, I often go there on weekends to unwind and take photos of the scenery. It’s also a great place to meet friends for a picnic. I think having such a calming space in a busy city makes it really special."},
+        { question: "Do you prefer spending time alone or with others?", answer: "I enjoy both, but it depends on my mood. Spending time alone allows me to recharge and focus on personal hobbies like reading or journaling. For instance, I love curling up with a good book on a quiet evening. However, I also value time with others because it’s a chance to connect and share experiences. Meeting friends for coffee or having family dinners always lifts my spirits. I think a balance of both is what keeps me happy."},
+        { question: "What kind of movies do you like?", answer: "I’m a fan of a wide range of movies, but I particularly enjoy thrillers and dramas because they keep me engaged with their intense plots and deep characters. For example, I recently watched a psychological thriller that had me guessing until the end. That said, I also enjoy lighthearted comedies when I want to relax and laugh. I think movies are a great way to experience different emotions and stories without leaving home."},
+      ],
+      2: [
+        { question: "Describe an animal you like.", bullets: ["What animal it is", "Where you saw it", "Why you like it"], answer: "I like dolphins because they’re intelligent and friendly. I saw them during a trip to the sea." },
+        { question: "Describe a book you recently read.", bullets: ["What it is about", "Why you chose it", "What you learned"], answer: "I recently read 'Atomic Habits', a book about building small habits that change your life." },
+        { question: "Describe a place you would like to visit in the future.", bullets: ["Where it is", "What you can do there", "Why you want to visit it"], answer: "I’d love to visit Switzerland because of its breathtaking mountains and peaceful atmosphere. I want to hike in the Alps and experience its clean, quiet villages." },
+        { question: "Describe a person who inspires you.", bullets: ["Who this person is", "How you know him/her", "Why he/she inspires you"], answer: "My inspiration is Elon Musk. I admire his creativity, persistence, and courage to take risks even after failures. His vision motivates me to dream big." },
+        { question: "Describe a historical building you have visited.", bullets: ["Where it is", "What it looks like", "Why it is important"], answer: "I visited the Registan in Samarkand. It’s a magnificent square with blue-tiled madrasahs. The architecture reflects the glory of ancient Islamic art and knowledge." },
+        { question: "Describe a piece of technology you find useful.", bullets: ["What it is", "How you use it", "Why it is useful"], answer: "My smartphone is the most useful device for me. I use it to study, communicate, and manage my schedule. It makes learning and life more efficient." },
+        { question: "Describe a memorable journey you had.", bullets: ["Where you went", "Who you went with", "What happened"], answer: "I once traveled to the Aral Sea with my family. Though the sea was almost gone, the trip was unforgettable because I learned how human actions affect nature." },
+        { question: "Describe a person you enjoy talking with.", bullets: ["Who this person is", "What you talk about", "Why you enjoy talking with him/her"], answer: "I enjoy talking with my grandfather. He shares stories from his youth and gives me wise advice. His calm tone and experience make me feel peaceful." },
+        { question: "Describe a gift you received that made you happy.", bullets: ["What it was", "Who gave it to you", "Why it made you happy"], answer: "My best friend once gave me a handwritten letter on my birthday. It was simple but full of emotion. It reminded me how meaningful friendship can be." },
+        { question: "Describe a difficult thing you did successfully.", bullets: ["What it was", "How you overcame difficulties", "How you felt after that"], answer: "I once learned to speak in public confidently. At first, I was nervous, but with practice and faith, I overcame my fear. That success changed my mindset." },
+        { question: "Describe your favorite season of the year.", bullets: ["What it is", "What the weather is like", "Why you like it"], answer: "My favorite season is spring because everything feels alive again. The flowers bloom, the air smells fresh, and people seem happier." },
+        { question: "Describe an interesting tradition in your country.", bullets: ["What it is", "When it is celebrated", "Why it is important"], answer: "In Uzbekistan, we celebrate Navruz, the New Year of nature. Families cook ‘sumalak’, visit relatives, and welcome spring with joy and gratitude." },
+        { question: "Describe a movie that you recently watched.", bullets: ["What it is about", "Who stars in it", "Why you liked it"], answer: "I recently watched 'Interstellar'. It’s about astronauts exploring space to save humanity. I liked its emotional depth and breathtaking visuals." },
+        { question: "Describe a skill you want to learn.", bullets: ["What it is", "How you will learn it", "Why you want to learn it"], answer: "I want to learn photography. I plan to take online courses and practice outdoors. Capturing moments beautifully feels like freezing time in art." },
+        { question: "Describe a city you have visited that you liked.", bullets: ["Where it is", "What you did there", "Why you liked it"], answer: "I once visited Bukhara, one of the oldest cities in Central Asia. Its historical sites and warm people made me feel proud of my culture." },
+        { question: "Describe a person who helped you in your studies.", bullets: ["Who he/she is", "How he/she helped you", "Why you are thankful"], answer: "My English teacher helped me a lot. She encouraged me to speak confidently and corrected my mistakes with patience. Her kindness motivated me deeply." },
+        { question: "Describe a piece of art you like.", bullets: ["What it is", "Where you saw it", "Why you like it"], answer: "I admire ‘The Starry Night’ by Vincent van Gogh. I saw it in a documentary, and its swirling sky made me feel the power of emotion in colors." },
+        { question: "Describe an important event in your life.", bullets: ["What happened", "When it happened", "Why it was important"], answer: "Winning my first public speaking competition was life-changing. It proved that hard work and faith can turn fear into strength." },
+        { question: "Describe a time when you taught someone something.", bullets: ["Who you taught", "What you taught", "How you felt"], answer: "I taught my younger cousin how to use a computer. Watching him learn quickly made me proud and patient at the same time." },
+        { question: "Describe a person you would like to meet.", bullets: ["Who this person is", "Why you want to meet him/her", "What you would talk about"], answer: "I’d love to meet Sheikh Omar Suleiman. His calm wisdom and inspiring lectures on faith always touch my heart. I’d ask him how to stay humble in success." },
+        { question: "Describe a special meal you enjoyed.", bullets: ["What it was", "Who you had it with", "Why it was special"], answer: "Once, I had a family dinner during Eid. Everyone gathered, laughed, and shared stories. The food tasted better because it was filled with love." },
+        { question: "Describe a piece of advice you received.", bullets: ["Who gave it", "What the advice was", "Why it was helpful"], answer: "My father once told me, ‘Never rush success, grow into it.’ That advice taught me patience and reminded me that progress takes time and faith." }
+
+      ],
+      3: [
+        { question: "Do you think technology affects relationships?", answer: "Yes, it has both positive and negative effects. It helps us stay connected but can also reduce real conversations." },
+        { question: "How can governments encourage people to be healthier?", answer: "They can build more parks, promote healthy diets, and raise awareness through education." },
+        { question: "How has technology changed the way people communicate?", answer: "It has made communication faster and easier through social media and messaging apps, but it also reduced face-to-face interaction." },
+        { question: "Do you think people spend too much time on their phones?", answer: "Yes, many people are addicted to screens, which affects their focus, sleep, and real-world relationships." },
+        { question: "How important is it to protect the environment?", answer: "It’s extremely important because our future depends on it. Without clean air, water, and soil, humanity can’t survive." },
+        { question: "What are the benefits of learning foreign languages?", answer: "Learning new languages opens career opportunities, helps us understand different cultures, and makes travel more enjoyable." },
+        { question: "Do you think children should learn how to cook?", answer: "Yes, cooking is a life skill. It teaches responsibility, creativity, and independence from a young age." },
+        { question: "How can people balance work and family life?", answer: "They can set clear boundaries, manage their time wisely, and prioritize meaningful moments with family." },
+        { question: "What role does education play in a person’s success?", answer: "Education builds knowledge, discipline, and confidence. It helps people understand the world and make better decisions." },
+        { question: "Why do some people prefer to live in cities rather than in the countryside?", answer: "Cities offer more job opportunities, entertainment, and modern facilities, though they can be stressful and crowded." },
+        { question: "Do you think social media has more benefits or drawbacks?", answer: "It has both, but the drawbacks are growing. While it connects people, it also spreads misinformation and causes comparison." },
+        { question: "How can countries reduce pollution?", answer: "Governments can invest in renewable energy, improve public transport, and enforce strict environmental laws." },
+        { question: "Why do some people prefer to work for themselves?", answer: "They value freedom, creativity, and control over their time rather than following others’ rules." },
+        { question: "Do you think traveling abroad is important for young people?", answer: "Yes, it broadens their minds, builds confidence, and helps them understand different cultures and lifestyles." },
+        { question: "What are the advantages of online education?", answer: "It’s flexible, affordable, and allows students to learn from anywhere, though it requires strong self-discipline." },
+        { question: "How can governments support small businesses?", answer: "They can lower taxes, provide funding, and create training programs to help entrepreneurs grow." },
+        { question: "Why do people enjoy watching movies?", answer: "Movies let people escape reality, feel emotions, and experience different stories and perspectives." },
+        { question: "How important is art in society?", answer: "Art expresses culture, history, and emotions. It inspires creativity and connects people beyond language." },
+        { question: "Why do some people avoid taking risks?", answer: "They fear failure or losing stability. It’s natural, but avoiding risks can also mean missing great opportunities." },
+        { question: "Do you think reading books is still popular today?", answer: "Not as much as before, but true readers still exist. Digital entertainment competes, yet books remain timeless." },
+        { question: "How can young people prepare for the future?", answer: "By learning practical skills, managing money wisely, and focusing on personal growth and resilience." },
+        { question: "Why is teamwork important in modern workplaces?", answer: "Because most problems require collaboration. Teamwork combines different skills and ideas for better results." },
+        { question: "Do you think success depends more on luck or hard work?", answer: "Hard work builds the foundation, but sometimes luck opens doors. Both matter, but effort matters more." },
+        { question: "How can schools make learning more interesting?", answer: "They can use interactive lessons, real-life examples, and technology to engage students actively." },
+        { question: "Do you think people are becoming too dependent on technology?", answer: "Yes, many can’t live without devices. It’s convenient but dangerous when it replaces real experiences." },
+        { question: "How can individuals help their communities?", answer: "By volunteering, sharing knowledge, and supporting local businesses or charity initiatives." },
+        { question: "Why do people like to buy branded products?", answer: "They believe branded items show status and quality, though sometimes it’s just psychological satisfaction." }
+
+      ]
+    };
+
+    const selectBtn = document.querySelector(".select-btn");
+    const options = document.querySelector(".options");
+    const nextBtn = document.getElementById("next-btn");
+    const questionCard = document.getElementById("question-card");
+    const answerCard = document.getElementById("answer-card");
+    const answerText = document.getElementById("answer-text");
+    let currentPart = null;
+
+    selectBtn.addEventListener("click", () => {
+      options.style.display = options.style.display === "block" ? "none" : "block";
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!selectBtn.contains(e.target) && !options.contains(e.target)) {
+        options.style.display = "none";
+      }
+    });
+
+    options.querySelectorAll("div").forEach(opt => {
+      opt.addEventListener("click", () => {
+        currentPart = opt.dataset.part;
+        selectBtn.textContent = "Part " + currentPart + " ⬇️";
+        options.style.display = "none";
+        nextBtn.disabled = false;
+        showRandomQuestion();
+      });
+    });
+
+    nextBtn.addEventListener("click", showRandomQuestion);
+
+    function showRandomQuestion() {
+      if (!currentPart) return;
+
+      const data = parts[currentPart];
+      const random = data[Math.floor(Math.random() * data.length)];
+      let html = `<h2>Part ${currentPart}</h2><p>${random.question}</p>`;
+
+      if (random.bullets) {
+        html += `<ul>${random.bullets.map(b => `<li>${b}</li>`).join("")}</ul>`;
+      }
+
+      questionCard.innerHTML = html + `<button class="show-answer">Show Answer</button>`;
+      answerCard.style.display = "none";
+      answerText.textContent = random.answer;
+
+      document.querySelector(".show-answer").addEventListener("click", () => {
+        answerCard.style.display = "block";
+      });
+    }
+  </script>
+  <!-- Yandex.RTB R-A-17680991-4 -->
+  <script>
+  window.yaContextCb.push(() => {
+      Ya.Context.AdvManager.render({
+          "blockId": "R-A-17680991-4",
+          "type": "topAd"
+      })
+  })
+  </script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="/firebase-init.js"></script>
+  <script src="/auth-guard.js"></script>
+
+</body>
+</html>

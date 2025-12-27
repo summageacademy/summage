@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth | Summage Academy</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #f0fdfa 100%);
+            min-height: 100vh;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            padding: 44px 40px;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .login-card h2 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 36px;
+            color: #f24b0b;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #007a52;
+            margin: 8px 0 40px;
+            font-weight: 500;
+            font-size: 17px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 16px 18px;
+            margin: 14px 0;
+            border: 2px solid #eee;
+            border-radius: 14px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .login-card input:focus {
+            outline: none;
+            border-color: #f24b0b;
+        }
+
+        .terms-container {
+            margin: 28px 0 20px;
+            text-align: left;
+            font-size: 14.5px;
+            color: #444;
+            line-height: 1.5;
+        }
+        .terms-container label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .terms-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        .terms-container a {
+            color: #f24b0b;
+            text-decoration: underline;
+        }
+
+        .main-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            position: relative;
+            transition: background 0.3s;
+        }
+        .main-btn.primary {
+            background: #f24b0b;
+            color: white;
+        }
+        .main-btn.primary:hover:not(:disabled) { background: #e03a00; }
+        .main-btn.login {
+            background: #007a52;
+            color: white;
+        }
+        .main-btn.login:hover:not(:disabled) { background: #006644; }
+        .main-btn.secondary {
+            background: #eee;
+            color: #444;
+            margin-top: 16px;
+        }
+        .main-btn.secondary:hover { background: #ddd; }
+        .main-btn:disabled {
+            background: #ff8a65;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .error {
+            color: #e03a00;
+            margin: 20px 0 10px;
+            min-height: 24px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .success-icon {
+            font-size: 70px;
+            margin-bottom: 24px;
+        }
+
+        .verification-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .verification-tip {
+            font-size: 15px;
+            color: #555;
+            margin: 20px 0 32px;
+            line-height: 1.6;
+        }
+
+        .loader {
+            display: none;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        button.main-btn.loading .button-text { display: none; }
+        button.main-btn.loading .loader { display: block; }
+    </style>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+    <!-- Initial Welcome Screen -->
+    <div id="initial-container" class="login-card">
+        <h2>Summage</h2>
+        <p class="subtitle">Master English with Us</p>
+        <button id="signup-btn" class="main-btn primary">Sign Up</button>
+        <button id="login-btn" class="main-btn login">Log In</button>
+    </div>
+
+    <!-- Sign Up Screen -->
+    <div id="signup-container" class="login-card" style="display:none;">
+        <h2>Sign Up</h2>
+        <p class="subtitle">Create your account</p>
+
+        <form id="signup-form">
+            <input type="email" id="signup-email" placeholder="Email" required>
+            <input type="password" id="signup-password" placeholder="Password (min 6 characters)" required minlength="6">
+
+            <div class="terms-container">
+                <label>
+                    <input type="checkbox" id="terms-checkbox" required>
+                    <span>I agree to the <a href="/terms/" target="_blank">Terms and Conditions</a> and <a href="/privacy/" target="_blank">Privacy Policy</a></span>
+                </label>
+            </div>
+
+            <button type="submit" id="signup-submit-btn" class="main-btn primary" disabled>
+                <span class="button-text">Create Account</span>
+                <div class="loader"></div>
+            </button>
+        </form>
+
+        <div id="signup-error" class="error"></div>
+        <button class="main-btn secondary" id="back-btn-signup">Back</button>
+    </div>
+
+    <!-- Log In Screen -->
+    <div id="login-container" class="login-card" style="display:none;">
+        <h2>Log In</h2>
+        <p class="subtitle">Welcome back!</p>
+
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+
+            <button type="submit" id="login-submit-btn" class="main-btn login">
+                <span class="button-text">Log In</span>
+                <div class="loader"></div>
+            </button>
+        </form>
+
+        <div id="login-error" class="error"></div>
+        <button class="main-btn secondary" id="back-btn-login">Back</button>
+    </div>
+
+    <!-- Verification Success Screen -->
+    <div id="verification-container" class="login-card" style="display:none;">
+        <div class="success-icon">📧</div>
+        <h2>Check Your Email!</h2>
+        <p class="verification-text">
+            We've sent a verification link to your email address.
+        </p>
+        <p class="verification-text">
+            Click the link to activate your account and begin your English learning journey with Summage Academy!
+        </p>
+        <p class="verification-tip">
+            <strong>Tip:</strong> If you don't see the email, please check your <strong>spam/junk</strong> folder.
+        </p>
+
+        <button id="resend-verification-btn" class="main-btn primary">
+            <span class="button-text">Resend Verification Email</span>
+            <div class="loader"></div>
+        </button>
+
+        <button class="main-btn secondary" id="go-to-login-btn">Go to Log In</button>
+
+        <div id="verification-message" class="error" style="margin-top: 16px;"></div>
+    </div>
+
+<script>
+    // Firebase config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+        authDomain: "summage-backend.firebaseapp.com",
+        projectId: "summage-backend",
+        storageBucket: "summage-backend.firebasestorage.app",
+        messagingSenderId: "128191434358",
+        appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Containers
+    const initialContainer = document.getElementById('initial-container');
+    const signupContainer = document.getElementById('signup-container');
+    const loginContainer = document.getElementById('login-container');
+    const verificationContainer = document.getElementById('verification-container');
+
+    // Elements
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    const signupSubmitBtn = document.getElementById('signup-submit-btn');
+    const loginSubmitBtn = document.getElementById('login-submit-btn');
+    const resendBtn = document.getElementById('resend-verification-btn');
+
+    const signupError = document.getElementById('signup-error');
+    const loginError = document.getElementById('login-error');
+    const verificationMessage = document.getElementById('verification-message');
+
+    // Friendly errors
+    const authErrorMessages = {
+        'auth/email-already-in-use': 'This email is already registered. Please log in instead.',
+        'auth/invalid-email': 'Please enter a valid email address.',
+        'auth/weak-password': 'Password should be at least 6 characters long.',
+        'auth/user-not-found': 'No account found with this email.',
+        'auth/wrong-password': 'Incorrect password.',
+        'auth/invalid-login-credentials': 'Incorrect email or password.',
+        'auth/too-many-requests': 'Too many attempts. Please try again later.',
+        'auth/network-request-failed': 'Network error. Check your connection.',
+        'default': 'Something went wrong. Please try again.'
+    };
+
+    function showError(el, msg) { el.textContent = msg; }
+    function clearError(el) { el.textContent = ''; }
+
+    function setLoading(btn, loading) {
+        if (loading) {
+            btn.classList.add('loading');
+            btn.disabled = true;
+        } else {
+            btn.classList.remove('loading');
+            btn.disabled = false;
+        }
+    }
+
+    // Navigation
+    document.getElementById('signup-btn').addEventListener('click', () => {
+        initialContainer.style.display = 'none';
+        signupContainer.style.display = 'block';
+        clearError(signupError);
+    });
+
+    document.getElementById('login-btn').addEventListener('click', () => {
+        initialContainer.style.display = 'none';
+        loginContainer.style.display = 'block';
+        clearError(loginError);
+    });
+
+    document.getElementById('back-btn-signup').addEventListener('click', () => {
+        signupContainer.style.display = 'none';
+        initialContainer.style.display = 'block';
+        document.getElementById('signup-form').reset();
+        termsCheckbox.checked = false;
+        signupSubmitBtn.disabled = true;
+        clearError(signupError);
+    });
+
+    document.getElementById('back-btn-login').addEventListener('click', () => {
+        loginContainer.style.display = 'none';
+        initialContainer.style.display = 'block';
+        document.getElementById('login-form').reset();
+        clearError(loginError);
+    });
+
+    document.getElementById('go-to-login-btn').addEventListener('click', () => {
+        verificationContainer.style.display = 'none';
+        loginContainer.style.display = 'block';
+        clearError(verificationMessage);
+    });
+
+    // Terms checkbox
+    termsCheckbox.addEventListener('change', () => {
+        signupSubmitBtn.disabled = !termsCheckbox.checked;
+    });
+
+    // Sign Up Flow
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('signup-email').value.trim();
+        const password = document.getElementById('signup-password').value;
+
+        setLoading(signupSubmitBtn, true);
+        clearError(signupError);
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                return db.collection('users').doc(user.uid).set({
+                    email: email,
+                    username: null,
+                    coins: 0,
+                    diamonds: 0,
+                    timeSpent: 0,
+                    agreedToTerms: true,
+                    agreedToPrivacy: true,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => user);
+            })
+            .then((user) => user.sendEmailVerification())
+            .then(() => auth.signOut())
+            .then(() => {
+                signupContainer.style.display = 'none';
+                verificationContainer.style.display = 'block';
+                verificationMessage.textContent = 'Verification email sent successfully!';
+                verificationMessage.style.color = '#007a52';
+            })
+            .catch((error) => {
+                const msg = authErrorMessages[error.code] || authErrorMessages['default'];
+                showError(signupError, msg);
+                setLoading(signupSubmitBtn, false);
+            });
+    });
+
+    // Resend Verification (simple guidance since user is signed out)
+    resendBtn.addEventListener('click', () => {
+        verificationMessage.textContent = 'To resend, please go to Log In and try signing in – we\'ll guide you if needed.';
+        verificationMessage.style.color = '#007a52';
+    });
+
+    // Log In with Verification Check
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        setLoading(loginSubmitBtn, true);
+        clearError(loginError);
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                if (userCredential.user.emailVerified) {
+                    window.location.href = '/main-menu/';
+                } else {
+                    auth.signOut();
+                    showError(loginError, 'Please verify your email first. Check your inbox (including spam) for the verification link.');
+                    setLoading(loginSubmitBtn, false);
+                }
+            })
+            .catch((error) => {
+                const msg = authErrorMessages[error.code] || authErrorMessages['default'];
+                showError(loginError, msg);
+                setLoading(loginSubmitBtn, false);
+            });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Yandex.RTB -->
+  <script>window.yaContextCb=window.yaContextCb||[]</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Research Hub | Summage IELTS</title>
+  <link rel="icon" href="/otherassets/logo.jpg" type="image/jpeg" />
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LZP4KSPR1V');
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: "IBM Plex Sans", sans-serif;
+      background: #f5f2eb;
+      padding: 24px 6%;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-bottom: 110px;
+      color: #2d2a26;
+    }
+
+    /* ========================= LOADER ========================= */
+    #loader {
+      position: fixed; inset: 0; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 99999; transition: opacity 180ms ease, visibility 180ms ease;
+      opacity: 1; visibility: visible; pointer-events: all;
+    }
+    #loader.loaded { opacity: 0; visibility: hidden; pointer-events: none; }
+    .spinner {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 6px solid rgba(6,168,124,.18);
+      border-top-color: #06a87c;
+      animation: spin 900ms linear infinite;
+      box-shadow: 0 6px 18px rgba(6,168,124,.12);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    body.no-scroll { overflow: hidden; touch-action: none; }
+
+    /* ----------------- HEADER ----------------- */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1100;
+    }
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1;
+      min-width: 0; /* Allows text wrapping inside flex */
+    }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #2d2a26;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    h2 {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 400;
+      color: #4e4a45;
+      max-width: 80%;
+    }
+
+    /* BACK BUTTON */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(4px, 1vw, 8px);
+      text-decoration: none;
+      background: #F4320B;
+      color: #fff;
+      border-radius: 14px;
+      padding: clamp(8px, 1.2vw, 14px) clamp(12px, 2vw, 22px);
+      font-size: clamp(.9rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      box-shadow: 0 3px 6px rgba(244, 50, 11, .2);
+      transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+      flex-shrink: 0;
+    }
+    .back-btn:hover {
+      background: #f54d2b;
+      box-shadow: 0 5px 10px rgba(244, 50, 11, .25);
+    }
+    .back-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(244, 50, 11, .2);
+    }
+
+    /* MAIN COMING SOON CONTENT */
+    .research-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 6%;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 60vh;
+    }
+
+    .research-icon {
+      font-size: clamp(4rem, 12vw, 8rem);
+      margin-bottom: 32px;
+      opacity: 0.9;
+    }
+
+    .research-title {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 800;
+      color: #7e22ce;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .research-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      color: #4e4a45;
+      margin-bottom: 32px;
+      max-width: 700px;
+      line-height: 1.5;
+    }
+
+    .research-description {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      color: #2d2a26;
+      margin-bottom: 40px;
+      max-width: 680px;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+
+    .notify-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #9d4edd, #7e22ce);
+      color: #fff;
+      padding: 18px 32px;
+      border-radius: 18px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(126, 34, 206, .3);
+      transition: all .24s ease;
+    }
+    .notify-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(126, 34, 206, .4);
+      background: linear-gradient(135deg, #aa55ee, #8a33df);
+    }
+    .notify-btn:active {
+      transform: translateY(0);
+    }
+
+    /* MOBILE FOOTER */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-end;
+      z-index: 1100;
+      padding: 8px;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2fd8ab, #06a87c);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+      border: 1px solid rgba(0, 0, 0, .04);
+      text-decoration: none;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .nav-btn img {
+      width: 26px;
+      height: 26px;
+    }
+    .nav-btn:active { transform: scale(.95); }
+    .nav-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
+    }
+    .nav-btn.center {
+      width: 76px;
+      height: 76px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #f9734b, #ffab25);
+      box-shadow: 0 14px 36px rgba(255, 120, 50, .22);
+      margin-bottom: 6px;
+    }
+    .nav-btn.center img {
+      width: 34px;
+      height: 34px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 767px) {
+      .header {
+        display: none;
+      }
+      .research-main {
+        margin-top: 40px;
+        gap: 40px;
+        justify-content: flex-start;
+        min-height: 70vh;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .bottom-nav { display: none; }
+      .research-main {
+        min-height: 70vh;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .back-btn {
+        position: fixed;
+        right: 6%;
+        top: 30px;
+        z-index: 1200;
+      }
+    }
+
+    /* LINKS */
+    a { text-decoration: none !important; }
+  </style>
+</head>
+
+<body class="no-scroll">
+
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Loading">
+    <div><div class="spinner" aria-hidden="true"></div></div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="title-group">
+      <h1>Research Hub</h1>
+      <h2>Academic insights, studies & resources – launching soon</h2>
+    </div>
+    <a href="/main-menu/" class="back-btn">Back</a>
+  </div>
+
+  <!-- MAIN COMING SOON CONTENT -->
+  <main class="research-main">
+    <div class="research-icon">🔬📊</div>
+    
+    <h1 class="research-title">Research Hub<br>Coming Soon</h1>
+    
+    <p class="research-subtitle">Deep dives into IELTS research, band score studies, and academic resources.</p>
+  </main>
+
+  <!-- MOBILE FOOTER -->
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a class="nav-btn" href="/blog-posts/" aria-label="Blogs">
+      <img src="/icons/blogfooter.png" alt="Blogs">
+    </a>
+    <a class="nav-btn center" href="/main-menu/" aria-label="Home">
+      <img src="/icons/home.png" alt="Home">
+    </a>
+    <a class="nav-btn" href="/profile/" aria-label="Profile">
+      <img src="/icons/profile-user.png" alt="Profile">
+    </a>
+  </nav>
+
+  <!-- Loader script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loader = document.getElementById('loader');
+      const images = document.querySelectorAll('img');
+      let loaded = 0;
+      const total = images.length;
+
+      const removeLoader = () => {
+        if (loader) {
+          loader.classList.add('loaded');
+          setTimeout(() => {
+            if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+            document.body.classList.remove('no-scroll');
+          }, 220);
+        }
+      };
+
+      if (total === 0) { setTimeout(removeLoader, 600); return; }
+
+      images.forEach(img => {
+        if (img.complete) loaded++;
+        else {
+          img.onload = () => { if (++loaded === total) removeLoader(); };
+          img.onerror = () => { if (++loaded === total) removeLoader(); };
+        }
+      });
+
+      if (loaded === total) removeLoader();
+      setTimeout(removeLoader, 2000);
+    });
+  </script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="/firebase-init.js"></script>
+  <script src="/auth-guard.js"></script>
+  
+</body>
+</html>

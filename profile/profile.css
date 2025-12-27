@@ -1,0 +1,374 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #e0f7fa 0%, #f0fdfa 100%);
+    min-height: 100vh;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 5vw 140px;
+    position: relative;
+}
+
+/* PC Navbar - visible only on desktop */
+.pc-navbar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(135deg, #f24b0b, #e03a00);
+    box-shadow: 0 4px 20px rgba(242,75,11,0.3);
+    z-index: 1000;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar-logo {
+    height: 50px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.navbar-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 36px;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.navbar-back-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.navbar-back-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-4px);
+}
+
+#profile-photo {
+    width: 35vw;
+    max-width: 140px;
+    height: 35vw;
+    max-height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 25px rgba(242,75,11,0.3);
+    margin-bottom: 24px;
+    transition: transform 0.3s ease;
+}
+
+#profile-photo:hover {
+    transform: translateY(-8px) scale(1.05);
+}
+
+.username-section {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
+}
+
+#username-display {
+    font-family: 'Baloo 2', cursive;
+    font-size: 11vw;
+    color: #f24b0b;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+#edit-pencil {
+    position: absolute;
+    bottom: 8px;
+    right: -10vw;
+    background: none;
+    border: none;
+    font-size: 8vw;
+    color: #f24b0b;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#edit-pencil:hover {
+    opacity: 1;
+    transform: translateY(-4px) rotate(15deg);
+}
+
+.stats-row {
+    display: flex;
+    gap: 4vw;
+    width: 90vw;
+    max-width: 420px;
+    margin: 0 auto 20px;
+}
+
+.stats-btn {
+    flex: 1;
+    padding: 6vw 4vw;
+    font-size: 8vw;
+    font-weight: 700;
+    color: white;
+    border: none;
+    border-radius: 6vw;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3vw;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stats-btn:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+#coins-btn {
+    flex: 0 0 60%;
+    background: linear-gradient(135deg, #f1c40f, #e67e22);
+}
+
+#diamonds-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.stats-icon {
+    font-size: 9vw;
+    transition: transform 0.3s ease;
+}
+
+.stats-btn:hover .stats-icon {
+    transform: scale(1.2) rotate(10deg);
+}
+
+#logout-btn, #my-nfts-btn {
+    width: 90vw;
+    max-width: 420px;
+    padding: 5vw;
+    color: white;
+    border: none;
+    border-radius: 5vw;
+    font-size: 5.5vw;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0 auto 20px;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+#logout-btn {
+    background: #e74c3c;
+}
+
+#logout-btn:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(231,76,60,0.4);
+    background: #c0392b;
+}
+
+#my-nfts-btn {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+#my-nfts-btn:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(155,89,182,0.4);
+    background: linear-gradient(135deg, #8e44ad, #7d3c98);
+}
+
+/* Mobile back button */
+#back-btn {
+    position: fixed;
+    bottom: 3vh;
+    left: 5vw;
+    right: 5vw;
+    padding: 5vw;
+    background: #f24b0b;
+    color: white;
+    font-size: 5.5vw;
+    font-weight: 600;
+    border: none;
+    border-radius: 6vw;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(242,75,11,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#back-btn:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(242,75,11,0.5);
+    background: #e03a00;
+}
+
+/* Modal */
+#username-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 5vw;
+}
+
+.modal-content {
+    background: white;
+    padding: 10vw 8vw;
+    border-radius: 8vw;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+#username-modal.active .modal-content {
+    transform: scale(1);
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90vw;
+    max-width: 420px;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+/* ==================== DESKTOP ONLY ==================== */
+@media (min-width: 768px) {
+    .pc-navbar {
+        display: flex;
+    }
+
+    body {
+        padding: 100px 20px 80px; /* Plenty of space below fixed navbar */
+    }
+
+    #profile-photo {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 24px;
+    }
+
+    #profile-photo:hover {
+        transform: translateY(-10px) scale(1.08);
+    }
+
+    .username-section {
+        margin-bottom: 28px;
+    }
+
+    #username-display {
+        font-size: 42px;             /* Smaller, cleaner headline */
+    }
+
+    #edit-pencil {
+        font-size: 28px;
+        right: -45px;
+        bottom: 8px;
+    }
+
+    .stats-row {
+        width: auto;                 /* No forced wide width */
+        max-width: 420px;            /* Limits the row width — makes it narrower */
+        gap: 20px;
+        margin: 0 auto 40px auto;    /* Centered with more bottom space */
+    }
+
+    .stats-btn {
+        flex: 1;
+        padding: 18px 16px;          /* Reduced padding → slimmer buttons */
+        font-size: 28px;             /* Smaller text */
+        border-radius: 20px;
+    }
+
+    #coins-btn {
+        flex: 1;                     /* Equal width again */
+    }
+
+    .stats-icon {
+        font-size: 36px;             /* Smaller icons */
+    }
+
+    .stats-btn:hover {
+        transform: translateY(-12px);
+    }
+
+    #my-nfts-btn,
+    #logout-btn {
+        width: 380px;                /* Fixed narrower width instead of 100% */
+        max-width: none;
+        padding: 16px;
+        font-size: 19px;
+        border-radius: 18px;
+        margin: 0 auto 24px auto;    /* Centered */
+    }
+
+    #my-nfts-btn:hover,
+    #logout-btn:hover {
+        transform: translateY(-12px);
+    }
+
+    #back-btn {
+        display: none;
+    }
+
+    .modal-content {
+        padding: 40px 50px;
+        max-width: 460px;
+        border-radius: 28px;
+    }
+
+    .modal-content h3 {
+        font-size: 32px;
+        margin-bottom: 24px;
+    }
+
+    #modal-username-input {
+        padding: 16px;
+        font-size: 18px;
+        border: 2px solid #ddd;
+        border-radius: 16px;
+        margin-bottom: 24px;
+        width: 100%;
+    }
+
+    .modal-buttons button {
+        padding: 14px 28px;
+        font-size: 18px;
+        border-radius: 16px;
+        margin: 0 10px;
+    }
+}

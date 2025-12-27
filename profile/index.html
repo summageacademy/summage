@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="profile.css">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+    <!-- PC Navbar -->
+    <div class="pc-navbar">
+        <div class="navbar-content">
+            <div class="navbar-left">
+                <img src="/otherassets/logo_white.jpg" alt="Summage Logo" class="navbar-logo">
+                <div class="navbar-title">Summage</div>
+            </div>
+            <button class="navbar-back-btn" onclick="window.location.href='/main-menu/'">← Back to Menu</button>
+        </div>
+    </div>
+
+    <img id="profile-photo" src="" alt="Profile Photo">
+
+    <div class="username-section">
+        <h2 id="username-display">Loading...</h2>
+        <button id="edit-pencil">✏️</button>
+    </div>
+
+    <div class="stats-row">
+        <div id="coins-btn" class="stats-btn">
+            <span id="coins-value">0</span>
+            <span class="stats-icon">🪙</span>
+        </div>
+        <div id="diamonds-btn" class="stats-btn">
+            <span id="diamonds-value">0</span>
+            <span class="stats-icon">💎</span>
+        </div>
+    </div>
+    <button id="my-nfts-btn">My NFTs</button>
+    <button id="logout-btn">Log Out</button>
+
+    <!-- Mobile back button -->
+    <button id="back-btn">Back to Menu</button>
+
+    <!-- Username Edit Modal -->
+    <div id="username-modal">
+        <div class="modal-content">
+            <h3>Edit Username</h3>
+            <input type="text" id="modal-username-input" placeholder="Enter new username">
+            <div class="modal-buttons">
+                <button id="modal-cancel-btn">Cancel</button>
+                <button id="modal-save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // Firebase config (summage-backend)
+    const firebaseConfig = {
+        apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+        authDomain: "summage-backend.firebaseapp.com",
+        projectId: "summage-backend",
+        storageBucket: "summage-backend.firebasestorage.app",
+        messagingSenderId: "128191434358",
+        appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let userDocRef = null;
+
+    // Auth guard + load data
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            window.location.href = '/auth.html';
+            return;
+        }
+
+        userDocRef = db.collection('users').doc(user.uid);
+
+        userDocRef.get().then((doc) => {
+            if (doc.exists) {
+                const data = doc.data();
+                const displayName = data.username || user.email.split('@')[0];
+                document.getElementById('username-display').textContent = displayName;
+
+                document.getElementById('coins-value').textContent = data.coins || 0;
+                document.getElementById('diamonds-value').textContent = data.diamonds || 0;
+            }
+        }).catch((err) => console.error("Error loading profile:", err));
+
+        // Random profile photo
+        const photoCount = 1;
+        const randomPhoto = Math.floor(Math.random() * photoCount) + 1;
+        document.getElementById('profile-photo').src = `photos/photo${randomPhoto}.jpg`;
+    });
+
+    // Modal controls
+    document.getElementById('edit-pencil').addEventListener('click', () => {
+        const modal = document.getElementById('username-modal');
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('active'), 10);
+        document.getElementById('modal-username-input').value = document.getElementById('username-display').textContent;
+        document.getElementById('modal-username-input').focus();
+    });
+
+    document.getElementById('modal-cancel-btn').addEventListener('click', () => {
+        const modal = document.getElementById('username-modal');
+        modal.style.display = 'none';
+        modal.classList.remove('active');
+    });
+
+    document.getElementById('modal-save-btn').addEventListener('click', () => {
+        const newUsername = document.getElementById('modal-username-input').value.trim();
+        if (newUsername && userDocRef) {
+            userDocRef.update({ username: newUsername })
+                .then(() => {
+                    document.getElementById('username-display').textContent = newUsername;
+                    const modal = document.getElementById('username-modal');
+                    modal.style.display = 'none';
+                    modal.classList.remove('active');
+                })
+                .catch((err) => alert('Failed to update username: ' + err.message));
+        }
+    });
+
+    document.getElementById('username-modal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('username-modal')) {
+            const modal = document.getElementById('username-modal');
+            modal.style.display = 'none';
+            modal.classList.remove('active');
+        }
+    });
+
+    // Mobile back button click
+    document.getElementById('back-btn').addEventListener('click', () => {
+        window.location.href = '/main-menu/';
+    });
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        auth.signOut().then(() => {
+            window.location.href = '/auth.html';
+        });
+    });
+
+        // My NFTs button click
+    document.getElementById('my-nfts-btn').addEventListener('click', () => {
+        window.location.href = '/my-nfts/index.html';
+    });
+</script>
+<!-- Simple Fixed-Delay Loader -->
+<div id="page-loader">
+  <div class="spinner"></div>
+</div>
+
+<style>
+  #page-loader {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: white; /* Clean "paper" look */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease-out;
+  }
+
+  .spinner {
+    width: 64px;
+    height: 64px;
+    border: 6px solid #f0f0f0;
+    border-top: 6px solid #f24b0b; /* Your brand orange */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  // Show loader for ~2 seconds, then fade out smoothly
+  setTimeout(() => {
+    const loader = document.getElementById('page-loader');
+    if (loader) {
+      loader.style.opacity = '0';
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 800); // Matches transition time
+    }
+  }, 1300); // 2 seconds delay — adjust if you want shorter/longer
+</script>
+</body>
+</html>

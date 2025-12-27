@@ -1,0 +1,113 @@
+/* ==================== DESKTOP ONLY ==================== */
+@media (min-width: 768px) {
+    .pc-navbar {
+        display: flex;
+    }
+
+    body {
+        padding: 100px 20px 80px; /* Space below fixed navbar */
+    }
+
+    .profile-container {
+        width: 100%;
+        max-width: 500px;            /* Nice fixed width for desktop */
+        padding-top: 40px;           /* Space after navbar */
+        gap: 32px;                   /* Consistent spacing between sections */
+    }
+
+    #profile-photo {
+        width: 160px;
+        height: 160px;
+        margin-bottom: 20px;
+    }
+
+    #profile-photo:hover {
+        transform: translateY(-10px) scale(1.08);
+    }
+
+    .username-section {
+        margin-bottom: 20px;
+    }
+
+    #username-display {
+        font-size: 48px;             /* Much smaller than before */
+    }
+
+    #edit-pencil {
+        font-size: 32px;
+        right: -50px;
+        bottom: 10px;
+    }
+
+    .stats-row {
+        width: 100%;
+        max-width: none;
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+
+    .stats-btn {
+        flex: 1;                     /* Now equal width! */
+        padding: 24px 20px;
+        font-size: 32px;
+        border-radius: 24px;
+    }
+
+    #coins-btn {
+        flex: 1;                     /* Override previous 60% */
+    }
+
+    .stats-icon {
+        font-size: 40px;
+    }
+
+    .stats-btn:hover {
+        transform: translateY(-12px);
+    }
+
+    #my-nfts-btn,
+    #logout-btn {
+        width: 100%;
+        max-width: none;
+        padding: 18px;
+        font-size: 20px;
+        border-radius: 20px;
+        margin-bottom: 24px;
+    }
+
+    #my-nfts-btn:hover,
+    #logout-btn:hover {
+        transform: translateY(-12px);
+    }
+
+    #back-btn {
+        display: none;
+    }
+
+    .modal-content {
+        padding: 40px 50px;
+        max-width: 480px;
+        border-radius: 28px;
+    }
+
+    .modal-content h3 {
+        font-size: 32px;
+        margin-bottom: 24px;
+    }
+
+    #modal-username-input {
+        padding: 16px;
+        font-size: 18px;
+        border: 2px solid #ddd;
+        border-radius: 16px;
+        margin-bottom: 24px;
+        width: 100%;
+    }
+
+    .modal-buttons button {
+        padding: 14px 28px;
+        font-size: 18px;
+        border-radius: 16px;
+        margin: 0 10px;
+    }
+}
