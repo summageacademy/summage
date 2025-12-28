@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Summage Academy - IELTS Mocks & Tools</title>
+  <title>Summage Academy - IELTS Writing Tools</title>
 
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
@@ -249,7 +249,23 @@
       transition: transform .14s ease, box-shadow .14s ease;
     }
 
+    .card .cta-ai {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      min-width: 160px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      color: #fff;
+      background: var(--accent-warm-a);
+      box-shadow: 0 10px 26px rgba(2,160,120,0.08);
+      transition: transform .14s ease, box-shadow .14s ease;
+    }
+
     .card .cta:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(2,160,120,0.12); }
+    .card .cta-ai:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(2,160,120,0.12); }
 
     /* ---------- MOBILE CTA LIST (NEW) ---------- */
     /* hidden by default (desktop shows cards) */
@@ -567,7 +583,7 @@
     </div>
 
     <div class="top-actions">
-      <a class="back-btn" href="/main-menu/" aria-label="Back to menu"> Back to Menu</a>
+      <a class="back-btn" href="/ielts-mocks/" aria-label="Back to menu">Back to IELTS Tools</a>
     </div>
   </header>
 
@@ -577,140 +593,56 @@
   <!-- Main: cards fill the available area (calculated to avoid tiny overflow) -->
   <main class="site-main" role="main" aria-label="Main content — band sections">
 
-    <!-- MOBILE TOP: visible only on small screens where the top-bar is hidden -->
-    <div class="mobile-top" aria-hidden="false">
-      <img src="/otherassets/logo.jpg" alt="Summage logo" class="logo-mobile" />
-      <div style="display:flex; flex-direction:column; min-width:0;">
-        <div class="title-mobile">Summage Mocks</div>
-      </div>
-    </div>
-
-    <!-- MOBILE CTA LIST (only visible on mobile) -->
-
-    <nav class="mobile-list" aria-label="Quick mocks (mobile)">
-      <a class="mobile-item" href="/ielts-mocks/reading-mocks/" aria-label="Reading Mocks — open reading mocks">
-        <span class="icon" aria-hidden="true"><img src="/icons/icon4.png" alt=""></span>
-        <span class="content">
-          <span class="title">Reading Mocks</span>
-          <span class="subtitle">Timed passages & explanations</span>
-        </span>
-        <span class="chev" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </span>
-      </a>
-
-      <a class="mobile-item" href="/ai-essay-checker/" aria-label="Listening Mocks — open listening mocks">
-        <span class="icon" aria-hidden="true"><img src="/otherassets/ai.png" alt=""></span>
-        <span class="content">
-          <span class="title">AI Writing Checker</span>
-          <span class="subtitle">Estimated Band Scores & Tips</span>
-        </span>
-        <span class="chev" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </span>
-      </a>
-
-      <a class="mobile-item" href="/ielts-mocks/writing-mocks/" aria-label="Writing Mocks — open writing mocks">
-        <span class="icon" aria-hidden="true"><img src="/icons/icon1.png" alt=""></span>
-        <span class="content">
-          <span class="title">Writing Mocks</span>
-          <span class="subtitle">Prompts, models & scoring tips</span>
-        </span>
-        <span class="chev" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </span>
-      </a>
-
-      <a class="mobile-item" href="/ielts-mocks/speaking-mocks/" aria-label="Speaking Mocks — open speaking mocks">
-        <span class="icon" aria-hidden="true"><img src="/icons/icon3.png" alt=""></span>
-        <span class="content">
-          <span class="title">Speaking Mocks</span>
-          <span class="subtitle">Quick prompts & sample answers</span>
-        </span>
-        <span class="chev" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </span>
-      </a>
-
-      <!-- <a class="mobile-item" href="profile.html" aria-label="Speaking Mocks — open speaking mocks">
-        <span class="icon" aria-hidden="true"><img src="icons/icon3.png" alt=""></span>
-        <span class="content">
-          <span class="title">Quick Tests</span>
-          <span class="subtitle">Quick Tests & Grammar</span>
-        </span>
-        <span class="chev" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </span>
-      </a> -->
-    </nav>
-
     <section class="cards-grid" aria-label="Band sections">
       <!-- CARD 1: Reading -->
       <article class="card" role="article" aria-labelledby="card1-title">
-        <img class="ill" src="/images/illustration1.jpg" alt="Reading illustration" loading="lazy">
+        <img class="ill" src="/otherassets/writingtopics.jpg" alt="Writing illustration" loading="lazy">
         <div class="card-body">
-          <h3 id="card1-title">Reading Mocks</h3>
+          <h3 id="card1-title">Writing Topics</h3>
 
           <!-- Desktop list -->
           <ul class="benefits" aria-label="Reading benefits">
-            <li>Real IELTS passage-style tests</li>
-            <li>Timed practice to boost speed</li>
+            <li>Real IELTS Writing Topics</li>
+            <li>Tips and Ideas</li>
             <li>Detailed answer explanations</li>
           </ul>
 
-          <!-- Mobile short description (shown on mobile only) -->
-          <p class="desc" aria-hidden="false">Practice real passages with timed tests and clear explanations to increase speed and accuracy.</p>
         </div>
         <div class="card-footer">
-          <a class="cta" href="/ielts-mocks/reading-mocks/" aria-label="Start Reading Mocks">Start Reading Mocks</a>
+          <a class="cta" href="/ielts-mocks/writing-mocks/" aria-label="Try Writing Topix Generator">Try Writing Topics</a>
         </div>
       </article>
 
       <!-- CARD 2: Listening -->
       <article class="card" role="article" aria-labelledby="card2-title">
-        <img class="ill" src="/images/illustration2.jpg" alt="Listening illustration" loading="lazy">
+        <img class="ill" src="/otherassets/summageai.png" alt="Summage AI" loading="lazy">
         <div class="card-body">
-          <h3 id="card2-title">Speaking Mocks</h3>
+          <h3 id="card2-title">AI Essay Checker</h3>
 
           <ul class="benefits" aria-label="Listening benefits">
-            <li>Authentic questions</li>
-            <li>IELTS Tier answers</li>
-            <li>Practice questions + tips</li>
+            <li>IELTS Band Estimation</li>
+            <li>IELTS Tier Examination</li>
+            <li>Tips and Ideas</li>
           </ul>
-
-          <p class="desc">Answer to authentic questions, follow transcripts and practice questions to improve comprehension under exam conditions.</p>
         </div>
         <div class="card-footer">
-          <a class="cta" href="/ielts-mocks/speaking-mocks/" aria-label="Start Listening Mocks">Start Speaking Mocks</a>
+          <a class="cta-ai" href="/ai-essay-checker/" aria-label="Start AI Checker">Try Summage AI</a>
         </div>
       </article>
 
-      
-
-      <!-- CARD 3: Writing (will be hidden on mobile) -->
-      <article class="card writing" role="article" aria-labelledby="card3-title">
-        <img class="ill" src="/images/illustration1.jpg" alt="Writing illustration" loading="lazy">
+      <article class="card" role="article" aria-labelledby="card2-title">
+        <img class="ill" src="/otherassets/writingpuzzle.jpg" alt="Summage Writing Puzzle" loading="lazy">
         <div class="card-body">
-          <h3 id="card3-title">Writing Tools</h3>
+          <h3 id="card2-title">Writing Puzzle</h3>
 
-          <ul class="benefits" aria-label="Writing benefits">
-            <li>Real prompts & model answers</li>
-            <li>Structure & coherence guidance</li>
-            <li>AI Essay Checker</li>
+          <ul class="benefits" aria-label="Listening benefits">
+            <li>Fix Writing Mistakes</li>
+            <li>Earn Coins for Solving Puzzles</li>
+            <li>Gamified Learning</li>
           </ul>
         </div>
         <div class="card-footer">
-          <a class="cta" href="/ielts-mocks/writing-tools/" aria-label="Start Writing Mocks">See Writing Tools</a>
+          <a class="cta" href="/profile.html" aria-label="Solve Writing Puzzles">Solve the Puzzles</a>
         </div>
       </article>
     </section>

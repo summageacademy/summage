@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Yandex.RTB -->
-  <script>window.yaContextCb=window.yaContextCb||[]</script>
-  <script src="https://yandex.ru/ads/system/context.js" async></script>
-  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Summage — How to Make Your 2026 Much More Progressive</title>
   <link rel="stylesheet" href="blog.css">
@@ -17,6 +13,24 @@
   
     gtag('config', 'G-LZP4KSPR1V');
   </script>
+  <style>
+    .ad-mobile,
+    .ad-desktop {
+      margin: 0 auto; /* centers the ad */
+    }
+
+    /* Show mobile ad on small screens, hide desktop */
+    @media (max-width: 768px) {
+      .ad-mobile { display: block; }
+      .ad-desktop { display: none; }
+    }
+
+    /* Show desktop ad on large screens, hide mobile */
+    @media (min-width: 769px) {
+      .ad-mobile { display: none; }
+      .ad-desktop { display: block; }
+    }
+  </style>
 </head>
 <body>
 
@@ -49,16 +63,34 @@
         <article id="article-body" aria-live="polite">
           <p id="p1">Meeting new people can feel intimidating, but connection is a skill you can practice. Real success in relationships comes from listening, curiosity, and genuine interest.</p>
 
-          <!-- Yandex.RTB -->
-          <div id="yandex_rtb_R-A-17680991-6"></div>
-          <script>
-            window.yaContextCb.push(() => {
-              Ya.Context.AdvManager.render({
-                "blockId": "R-A-17680991-6",
-                "renderTo": "yandex_rtb_R-A-17680991-6"
-              })
-            })
-          </script>
+          <div style="text-align: center; margin: 2rem 0;">
+            <!-- Mobile Ad: 300x250 (shows only on screens ≤768px) -->
+            <div class="ad-mobile">
+              <script>
+                atOptions = {
+                  'key' : '07ea34d382759742ec1591809c2ddb0c',
+                  'format' : 'iframe',
+                  'height' : 250,
+                  'width' : 300,
+                  'params' : {}
+                };
+              </script>
+              <script src="https://www.highperformanceformat.com/07ea34d382759742ec1591809c2ddb0c/invoke.js"></script>
+            </div>
+            <!-- Desktop Ad: 728x90 (shows only on screens >768px) -->
+            <div class="ad-desktop">
+              <script>
+                atOptions = {
+                  'key' : 'ceaf8105438da0ff050b200e0ef3c34a',
+                  'format' : 'iframe',
+                  'height' : 60,
+                  'width' : 468,
+                  'params' : {}
+                };
+              </script>
+              <script src="https://www.highperformanceformat.com/ceaf8105438da0ff050b200e0ef3c34a/invoke.js"></script>
+            </div>
+          </div>
 
           <p id="p2">Here’s a clear, actionable framework to help you start conversations naturally and leave a lasting impression.</p>
 
