@@ -10,6 +10,24 @@
   <link rel="stylesheet" href="blog.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+  <style>
+    .ad-mobile,
+    .ad-desktop {
+      margin: 0 auto; /* centers the ad */
+    }
+
+    /* Show mobile ad on small screens, hide desktop */
+    @media (max-width: 768px) {
+      .ad-mobile { display: block; }
+      .ad-desktop { display: none; }
+    }
+
+    /* Show desktop ad on large screens, hide mobile */
+    @media (min-width: 769px) {
+      .ad-mobile { display: none; }
+      .ad-desktop { display: block; }
+    }
+  </style>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -49,16 +67,34 @@
       <article id="article-body" aria-live="polite">
         <p id="p1">Debating is not just about arguing louder or being aggressive. It’s about thinking clearly, presenting ideas logically, and connecting with your audience effectively.</p>
 
-        <!-- Yandex.RTB -->
-        <div id="yandex_rtb_R-A-17680991-5"></div>
-        <script>
-          window.yaContextCb.push(() => {
-            Ya.Context.AdvManager.render({
-              "blockId": "R-A-17680991-5",
-              "renderTo": "yandex_rtb_R-A-17680991-5"
-            })
-          })
-        </script>
+        <div style="text-align: center; margin: 2rem 0;">
+            <!-- Mobile Ad: 300x250 (shows only on screens ≤768px) -->
+            <div class="ad-mobile">
+              <script>
+                atOptions = {
+                  'key' : '07ea34d382759742ec1591809c2ddb0c',
+                  'format' : 'iframe',
+                  'height' : 250,
+                  'width' : 300,
+                  'params' : {}
+                };
+              </script>
+              <script src="https://www.highperformanceformat.com/07ea34d382759742ec1591809c2ddb0c/invoke.js"></script>
+            </div>
+            <!-- Desktop Ad: 728x90 (shows only on screens >768px) -->
+            <div class="ad-desktop">
+              <script>
+                atOptions = {
+                  'key' : 'ceaf8105438da0ff050b200e0ef3c34a',
+                  'format' : 'iframe',
+                  'height' : 60,
+                  'width' : 468,
+                  'params' : {}
+                };
+              </script>
+              <script src="https://www.highperformanceformat.com/ceaf8105438da0ff050b200e0ef3c34a/invoke.js"></script>
+            </div>
+          </div>
 
         <p id="p2">Here is a structured approach to debate confidently and persuasively without feeling nervous or unprepared.</p>
 
