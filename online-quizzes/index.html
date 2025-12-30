@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Yandex.RTB -->
+  <script>window.yaContextCb=window.yaContextCb||[]</script>
+  <script src="https://yandex.ru/ads/system/context.js" async></script>
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quick Quizzes | Summage Academy</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LZP4KSPR1V');
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: "IBM Plex Sans", sans-serif;
+      background: #f5f2eb;
+      padding: 24px 6%;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-bottom: 140px;
+      color: #2d2a26;
+    }
+
+    /* ========================= LOADER ========================= */
+    #loader {
+      position: fixed; inset: 0; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 99999; transition: opacity 180ms ease, visibility 180ms ease;
+      opacity: 1; visibility: visible; pointer-events: all;
+    }
+    #loader.loaded { opacity: 0; visibility: hidden; pointer-events: none; }
+    .spinner {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 6px solid rgba(6,168,124,.18);
+      border-top-color: #06a87c;
+      animation: spin 900ms linear infinite;
+      box-shadow: 0 6px 18px rgba(6,168,124,.12);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    body.no-scroll { overflow: hidden; touch-action: none; }
+
+    /* ----------------- HEADER (PC) ----------------- */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1100;
+    }
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1;
+      min-width: 0;
+    }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #2d2a26;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    h2 {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 400;
+      color: #4e4a45;
+      max-width: 80%;
+    }
+
+    /* BACK BUTTON */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(4px, 1vw, 8px);
+      text-decoration: none;
+      background: #F4320B;
+      color: #fff;
+      border-radius: 14px;
+      padding: clamp(8px, 1.2vw, 14px) clamp(12px, 2vw, 22px);
+      font-size: clamp(.9rem, 1.5vw, 1.2rem);
+      font-weight: 600;
+      box-shadow: 0 3px 6px rgba(244, 50, 11, .2);
+      transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+      flex-shrink: 0;
+    }
+    .back-btn:hover {
+      background: #f54d2b;
+      box-shadow: 0 5px 10px rgba(244, 50, 11, .25);
+    }
+
+    /* HAMBURGER (mobile) */
+    .hamburger-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: #F4320B;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(244,50,11,.16);
+      transition: transform .14s ease;
+    }
+    .hamburger-btn:active { transform: scale(.95); }
+    .hamburger-icon {
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      display: block;
+      position: relative;
+    }
+    .hamburger-icon::before,
+    .hamburger-icon::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #fff;
+    }
+    .hamburger-icon::before { top: -7px; }
+    .hamburger-icon::after { top: 7px; }
+
+    /* MOBILE HEADER */
+    .mobile-header {
+      display: none;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      padding-top: 8px;
+    }
+
+    /* ----------------- CONTENT WRAPPER ----------------- */
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ----------------- PC CARDS ----------------- */
+    .pc-quizzes-main {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .pc-quiz-card {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.08);
+      overflow: hidden;
+      text-align: center;
+      transition: transform .24s ease, box-shadow .24s ease;
+      cursor: pointer;
+    }
+    .pc-quiz-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.12);
+    }
+
+    .pc-card-image {
+      height: 320px;
+      background: linear-gradient(135deg, #f0f8f5, #e6f5f0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .pc-card-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .pc-card-content {
+      padding: 22px 14px;
+    }
+    .pc-card-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #06a87c;
+      margin-bottom: 16px;
+    }
+    .pc-card-desc {
+      font-size: 1.1rem;
+      color: #4e4a45;
+      line-height: 1.5;
+    }
+
+    /* ----------------- MOBILE BUTTONS ----------------- */
+    .mobile-quizzes-main {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 100%;
+      align-items: stretch;
+    }
+
+    .mobile-quiz-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: #fff;
+      border-radius: 24px;
+      border: 2px solid #e5e5e5;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      transition: all .2s ease;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #2d2a26;
+    }
+
+    .mobile-quiz-btn:hover,
+    .mobile-quiz-btn:active {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.12);
+      border-color: #06a87c;
+    }
+
+    .mobile-quiz-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f0f8f5, #e6f5f0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.6rem;
+    }
+
+    .mobile-quiz-text {
+      flex: 1;
+      text-align: left;
+    }
+
+    .mobile-quiz-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #06a87c;
+      margin-bottom: 4px;
+    }
+
+    .mobile-quiz-subtitle {
+      font-size: 0.95rem;
+      color: #4e4a45;
+      line-height: 1.4;
+    }
+
+    /* ----------------- MOBILE FOOTER ----------------- */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-end;
+      z-index: 1100;
+      padding: 8px;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2fd8ab, #06a87c);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+      border: 1px solid rgba(0, 0, 0, .04);
+      text-decoration: none;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .nav-btn img {
+      width: 26px;
+      height: 26px;
+    }
+    .nav-btn:active { transform: scale(.95); }
+    .nav-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
+    }
+    .nav-btn.center {
+      width: 76px;
+      height: 76px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #f9734b, #ffab25);
+      box-shadow: 0 14px 36px rgba(255, 120, 50, .22);
+      margin-bottom: 6px;
+    }
+    .nav-btn.center img {
+      width: 34px;
+      height: 34px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ----------------------- SIDEBAR & OVERLAY (mobile) ----------------------- */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 1200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 200ms ease, visibility 200ms ease;
+    }
+    .sidebar-overlay.open { 
+      opacity: 1; 
+      visibility: visible; 
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: min(92vw, 320px);
+      background: #fff;
+      box-shadow: -18px 0 40px rgba(0,0,0,.12);
+      z-index: 1300;
+      transform: translateX(100%); /* Fully hidden off-screen */
+      transition: transform 260ms cubic-bezier(.2,.9,.2,1);
+      display: flex;
+      flex-direction: column;
+      padding: 18px;
+      gap: 12px;
+      overflow-y: auto;
+    }
+    .sidebar.open { 
+      transform: translateX(0); 
+    }
+
+    .sidebar .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .sidebar h3 {
+      font-size: 1.05rem;
+      color: #2d2a26;
+      font-weight: 700;
+    }
+    .sidebar .close-btn {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #2d2a26;
+      padding: 8px;
+      border-radius: 8px;
+    }
+    .sidebar .close-btn:active { transform: scale(.95); }
+
+    .sidebar .section {
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(0,0,0,.06);
+    }
+    .sidebar .item {
+      padding: 10px 6px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 140ms ease;
+      position: relative;
+    }
+    .sidebar .item:hover { background: rgba(6,168,124,.06); }
+    .sidebar .item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .sidebar .item > * {
+      position: relative;
+      z-index: 2;
+    }
+    .sidebar .item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(0,0,0,.06);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #06a87c;
+      flex-shrink: 0;
+    }
+    .sidebar .item-label {
+      font-weight: 600;
+      color: #2d2a26;
+    }
+
+    /* ----------------------- PC SIDEBAR ----------------------- */
+    .pc-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 25%;
+      height: 100vh;
+      background: #fff;
+      box-shadow: -18px 0 40px rgba(0,0,0,.12);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      padding: 18px;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    .pc-sidebar .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .pc-sidebar h3 {
+      font-size: 1.05rem;
+      color: #2d2a26;
+      font-weight: 700;
+    }
+
+    .pc-sidebar .sidebar-quote {
+      padding: 14px 12px;
+      margin: 6px 0 12px;
+      background: rgba(6,168,124,.06);
+      border-radius: 10px;
+      text-align: center;
+      font-style: italic;
+      color: #2d2a26;
+    }
+    .pc-sidebar .sidebar-quote .quote-text {
+      margin: 0 0 6px;
+      font-size: .95rem;
+      line-height: 1.4;
+    }
+    .pc-sidebar .sidebar-quote .quote-author {
+      display: block;
+      font-size: .8rem;
+      color: #6b6b6b;
+      font-weight: 600;
+    }
+
+    .pc-sidebar .section {
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(0,0,0,.06);
+    }
+    .pc-sidebar .item {
+      padding: 10px 6px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 140ms ease;
+      position: relative;
+    }
+    .pc-sidebar .item:hover { background: rgba(6,168,124,.06); }
+    .pc-sidebar .item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .pc-sidebar .item > * {
+      position: relative;
+      z-index: 2;
+    }
+    .pc-sidebar .item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(0,0,0,.06);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #06a87c;
+      flex-shrink: 0;
+    }
+    .pc-sidebar .item-label {
+      font-weight: 600;
+      color: #2d2a26;
+    }
+    .pc-sidebar .version {
+      font-size: .9rem;
+      color: #6b6b6b;
+      margin-top: auto;
+      padding-bottom: 12px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 767px) {
+      .header { display: none; }
+      .pc-quizzes-main { display: none; }
+      .pc-sidebar { display: none; } /* Hide PC sidebar on mobile */
+      .mobile-header { display: flex; }
+      .mobile-quizzes-main { display: flex; }
+      .hamburger-btn { display: inline-flex; }
+      .bottom-nav { display: flex; }
+      .sidebar-quote { display: none; } /* Extra safety - hide quote on mobile */
+    }
+
+    @media (min-width: 768px) {
+      .mobile-header,
+      .mobile-quizzes-main,
+      .sidebar-overlay,
+      .sidebar,
+      .hamburger-btn,
+      .bottom-nav { display: none; }
+      .pc-quizzes-main { display: grid; }
+    }
+
+    @media (min-width: 1024px) {
+      .back-btn {
+        position: absolute;
+        right: calc(25% + 20px);
+        top: 30px;
+      }
+      .content-wrapper {
+        width: 75%;
+        margin-right: 25%;
+        padding-right: 20px;
+      }
+    }
+    /* Sticky Bottom Leaderboard - Desktop Only */
+    .bottom-leaderboard {
+        position: fixed;
+        bottom: -120px; /* Start hidden below screen */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 780px;
+        z-index: 9999;
+        pointer-events: none; /* Only ad and close button are clickable */
+        transition: bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 16px;
+    }
+
+    .bottom-leaderboard.visible {
+        bottom: 20px;
+        pointer-events: auto;
+    }
+
+    /* Wrapper to allow close button to overlap */
+    .ad-wrapper {
+        position: relative;
+        width: 728px;
+        height: 90px;
+        margin: 0 auto;
+        pointer-events: auto; /* Enable interaction with ad and close */
+    }
+
+    /* Actual ad content */
+    .ad-content {
+        width: 100%;
+        height: 100%;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.15),
+            0 0 0 2px rgba(242, 75, 11, 0.2); /* Your brand orange glow */
+        overflow: hidden;
+    }
+
+    /* Close button - beautifully overlaid on top-right corner */
+    .ad-close-btn {
+        position: absolute;
+        top: -14px;
+        right: -14px;
+        width: 36px;
+        height: 36px;
+        background: #ffffff;
+        color: #f24b0b;
+        border: 3px solid #f24b0b;
+        border-radius: 50%;
+        font-size: 22px;
+        font-weight: bold;
+        line-height: 30px;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        transition: all 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ad-close-btn:hover {
+        background: #f24b0b;
+        color: white;
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .ad-close-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Show only on desktop */
+    @media (min-width: 1024px) {
+        .bottom-leaderboard {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    @media (max-width: 1023px) {
+        .bottom-leaderboard {
+            display: none;
+        }
+    }
+    a { text-decoration: none !important; }
+  </style>
+</head>
+
+<body class="no-scroll">
+
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Loading">
+    <div><div class="spinner" aria-hidden="true"></div></div>
+  </div>
+
+  <!-- PC HEADER -->
+  <div class="header">
+    <div class="title-group">
+      <h1>Quick Quizzes</h1>
+      <h2>Practice grammar and vocabulary in short, fun sessions</h2>
+    </div>
+    <a href="/main-menu/" class="back-btn">Back</a>
+  </div>
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="title-group">
+      <h1>Quick Quizzes</h1>
+    </div>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+      <span class="hamburger-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-wrapper">
+    <!-- PC CARDS -->
+    <main class="pc-quizzes-main">
+      <a href="/profile.html" class="pc-quiz-card">
+        <div class="pc-card-image">
+          <img src="https://media.istockphoto.com/id/1260329165/vector/english-grammar-examination-tiny-characters-correct-mistakes-and-errors-in-test-written-on.jpg?s=612x612&w=0&k=20&c=sNcC7HW-7ns2cwv0B1iOoHkLKmi9baMXxVSh-hQvokw=" alt="Grammar Quiz Illustration">
+        </div>
+        <div class="pc-card-content">
+          <h3 class="pc-card-title">Grammar Fix Quiz</h3>
+          <p class="pc-card-desc">Quick exercises to spot and correct grammar mistakes – perfect for fast improvement.</p>
+        </div>
+      </a>
+
+      <a href="/profile.html" class="pc-quiz-card">
+        <div class="pc-card-image">
+          <img src="https://media.istockphoto.com/id/1427598915/vector/word-game.jpg?s=612x612&w=0&k=20&c=FcR8Krh11wNQtOoku_1oatAupsYL5q6OCGHlm8rqYyQ=" alt="Vocabulary Quiz Illustration">
+        </div>
+        <div class="pc-card-content">
+          <h3 class="pc-card-title">Vocabulary Quiz</h3>
+          <p class="pc-card-desc">Build your word power with engaging quick questions and definitions.</p>
+        </div>
+      </a>
+    </main>
+
+    <!-- MOBILE BUTTONS -->
+    <div class="mobile-quizzes-main">
+      <a href="/profile.html" class="mobile-quiz-btn">
+        <div class="mobile-quiz-icon">📝</div>
+        <div class="mobile-quiz-text">
+          <div class="mobile-quiz-title">Grammar Fix Quiz</div>
+          <div class="mobile-quiz-subtitle">Spot & correct grammar mistakes fast</div>
+        </div>
+      </a>
+
+      <a href="/profile.html" class="mobile-quiz-btn">
+        <div class="mobile-quiz-icon">📚</div>
+        <div class="mobile-quiz-text">
+          <div class="mobile-quiz-title">Vocabulary Quiz</div>
+          <div class="mobile-quiz-subtitle">Build word power with quick questions</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- MOBILE FOOTER -->
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a class="nav-btn" href="/blog-posts/" aria-label="Blogs">
+      <img src="/icons/blogfooter.png" alt="Blogs">
+    </a>
+    <a class="nav-btn center" href="/main-menu/" aria-label="Home">
+      <img src="/icons/home.png" alt="Home">
+    </a>
+    <a class="nav-btn" href="/profile/" aria-label="Profile">
+      <img src="/icons/profile-user.png" alt="Profile">
+    </a>
+  </nav>
+
+  <!-- MOBILE SIDEBAR + OVERLAY -->
+  <div id="sidebarOverlay" class="sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
+  <aside id="sidebar" class="sidebar" role="dialog" aria-modal="true" aria-labelledby="sidebarTitle">
+    <div class="sidebar-header">
+      <h3 id="sidebarTitle">Menu & Tools</h3>
+      <button class="close-btn" id="sidebarCloseBtn" aria-label="Close menu">×</button>
+    </div>
+    <div class="section">
+      <a href="/gpa-calculator/" class="item">
+        <div class="item-icon">G</div>
+        <div class="item-label">GPA Calculator</div>
+      </a>
+      <a href="/research-hub/" class="item">
+        <div class="item-icon">R</div>
+        <div class="item-label">Research Hub</div>
+      </a>
+      <a href="/study-guide/" class="item">
+        <div class="item-icon">S</div>
+        <div class="item-label">Study Guide</div>
+      </a>
+    </div>
+    <div class="section">
+      <a href="/about/" class="item">
+        <div class="item-icon">A</div>
+        <div class="item-label">About Us</div>
+      </a>
+      <a href="/contacts/" class="item">
+        <div class="item-icon">C</div>
+        <div class="item-label">Contact Us</div>
+      </a>
+    </div>
+    <div class="section">
+      <a href="/privacy/" class="item">
+        <div class="item-icon">P</div>
+        <div class="item-label">Privacy Policy</div>
+      </a>
+      <a href="/terms/" class="item">
+        <div class="item-icon">T</div>
+        <div class="item-label">Terms & Conditions</div>
+      </a>
+    </div>
+    <div style="flex:1"></div>
+    <div class="section" style="padding-bottom:12px;">
+      <div style="font-size:.9rem;color:#6b6b6b;">Version 2.0</div>
+    </div>
+  </aside>
+
+  <!-- PC SIDEBAR -->
+  <aside class="pc-sidebar">
+    <div class="sidebar-header">
+      <h3>Menu & Tools</h3>
+    </div>
+
+    <div class="sidebar-quote" id="pcQuote">
+      <p class="quote-text">"The limits of my language mean the limits of my world."</p>
+      <small class="quote-author">— Ludwig Wittgenstein</small>
+    </div>
+
+    <div class="section">
+      <a href="/gpa-calculator/" class="item">
+        <div class="item-icon">G</div>
+        <div class="item-label">GPA Calculator</div>
+      </a>
+      <a href="/profile/" class="item">
+        <div class="item-icon">P</div>
+        <div class="item-label">Profile</div>
+      </a>
+      <a href="/online-quizzes/" class="item">
+        <div class="item-icon">O</div>
+        <div class="item-label">Online Quizzes</div>
+      </a>
+    </div>
+    <div class="section">
+      <a href="/about/" class="item">
+        <div class="item-icon">A</div>
+        <div class="item-label">About Us</div>
+      </a>
+      <a href="/contacts/" class="item">
+        <div class="item-icon">C</div>
+        <div class="item-label">Contact Us</div>
+      </a>
+    </div>
+    <div class="section">
+      <a href="/privacy/" class="item">
+        <div class="item-icon">P</div>
+        <div class="item-label">Privacy Policy</div>
+      </a>
+      <a href="/terms/" class="item">
+        <div class="item-icon">T</div>
+        <div class="item-label">Terms & Conditions</div>
+      </a>
+    </div>
+
+    <div style="flex:1"></div>
+    <div class="version">Version 2.0</div>
+  </aside>
+
+  <!-- Universal Sticky Bottom Leaderboard Ad (Desktop Only) - Fixed Close Button -->
+  <div id="bottom-leaderboard-ad" class="bottom-leaderboard">
+      <div class="ad-wrapper">
+          <!-- PLACE YOUR 728x90 AD CODE HERE -->
+          <!-- Example placeholder - replace with real ad code -->
+          <div class="ad-content">
+              <div id="7SAD1569536254B1906" data-7pub="7SAD1569536254B1906"></div>
+              <script src="https://code.adclickppc.com/7s-banner-ad.js"></script>
+              <script>
+              (function() {
+                initBannerAd(['7SAD1569536254B1906', 'banner',  5])
+                }())
+              </script>
+          </div>
+
+          <!-- CLOSE BUTTON - Now properly overlaid on top -->
+          <button class="ad-close-btn" aria-label="Close ad">×</button>
+      </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loader = document.getElementById('loader');
+      const images = document.querySelectorAll('img');
+      let loaded = 0;
+      const total = images.length;
+
+      const removeLoader = () => {
+        if (loader) {
+          loader.classList.add('loaded');
+          setTimeout(() => {
+            if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+            document.body.classList.remove('no-scroll');
+          }, 220);
+        }
+      };
+
+      if (total === 0) { setTimeout(removeLoader, 600); return; }
+
+      images.forEach(img => {
+        if (img.complete) loaded++;
+        else {
+          img.onload = () => { if (++loaded === total) removeLoader(); };
+          img.onerror = () => { if (++loaded === total) removeLoader(); };
+        }
+      });
+
+      if (loaded === total) removeLoader();
+      setTimeout(removeLoader, 2000);
+    });
+  </script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="/firebase-init.js"></script>
+  <script src="/auth-guard.js"></script>
+
+  <!-- Sidebar + Random Quote -->
+  <script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    const openSidebar = () => {
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.add('open');
+      document.body.classList.add('no-scroll');
+      hamburgerBtn.setAttribute('aria-expanded', 'true');
+    };
+
+    const closeSidebar = () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('open');
+      document.body.classList.remove('no-scroll');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    };
+
+    if (hamburgerBtn) hamburgerBtn.addEventListener('click', openSidebar);
+    if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // Random quote for PC sidebar
+    const quotes = [
+      { text: "The limits of my language mean the limits of my world.", author: "Ludwig Wittgenstein" },
+      { text: "Learning another language is not only learning different words for the same things, but learning another way to think about things.", author: "Flora Lewis" },
+      { text: "Knowledge of languages is the doorway to wisdom.", author: "Roger Bacon" },
+      { text: "You can never understand one language until you understand at least two.", author: "Geoffrey Willans" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    const quoteText = document.querySelector('.quote-text');
+    const quoteAuthor = document.querySelector('.quote-author');
+    if (quoteText && quoteAuthor) {
+      quoteText.textContent = `"${randomQuote.text}"`;
+      quoteAuthor.textContent = `— ${randomQuote.author}`;
+    }
+  </script>
+  <script>
+        // Auto show with smooth slide-up + close functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const ad = document.getElementById('bottom-leaderboard-ad');
+            
+            if (window.innerWidth >= 1024) {
+                // Slide up after 1 second
+                setTimeout(() => {
+                    ad.classList.add('visible');
+                }, 1000);
+            }
+
+            // Close button
+            const closeBtn = ad.querySelector('.ad-close-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    ad.classList.remove('visible');
+                    ad.style.bottom = '-120px';
+                    setTimeout(() => {
+                        ad.style.visibility = 'hidden';
+                        ad.style.pointerEvents = 'none';
+                    }, 600);
+                });
+            }
+        });
+  </script>
+</body>
+</html>

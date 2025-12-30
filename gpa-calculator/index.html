@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Yandex.RTB -->
-  <script>window.yaContextCb=window.yaContextCb||[]</script>
-  <script src="https://yandex.ru/ads/system/context.js" async></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GPA Calculator - Summage Academy</title>
@@ -13,6 +10,95 @@
   <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/css/menu.css">
   <link rel="stylesheet" href="/css/gpa.css">
+  <style>
+    /* Sticky Bottom Leaderboard - Desktop Only */
+    .bottom-leaderboard {
+        position: fixed;
+        bottom: -120px; /* Start hidden below screen */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 780px;
+        z-index: 9999;
+        pointer-events: none; /* Only ad and close button are clickable */
+        transition: bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 16px;
+    }
+
+    .bottom-leaderboard.visible {
+        bottom: 20px;
+        pointer-events: auto;
+    }
+
+    /* Wrapper to allow close button to overlap */
+    .ad-wrapper {
+        position: relative;
+        width: 728px;
+        height: 90px;
+        margin: 0 auto;
+        pointer-events: auto; /* Enable interaction with ad and close */
+    }
+
+    /* Actual ad content */
+    .ad-content {
+        width: 100%;
+        height: 100%;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.15),
+            0 0 0 2px rgba(242, 75, 11, 0.2); /* Your brand orange glow */
+        overflow: hidden;
+    }
+
+    /* Close button - beautifully overlaid on top-right corner */
+    .ad-close-btn {
+        position: absolute;
+        top: -14px;
+        right: -14px;
+        width: 36px;
+        height: 36px;
+        background: #ffffff;
+        color: #f24b0b;
+        border: 3px solid #f24b0b;
+        border-radius: 50%;
+        font-size: 22px;
+        font-weight: bold;
+        line-height: 30px;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        transition: all 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ad-close-btn:hover {
+        background: #f24b0b;
+        color: white;
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .ad-close-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Show only on desktop */
+    @media (min-width: 1024px) {
+        .bottom-leaderboard {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    @media (max-width: 1023px) {
+        .bottom-leaderboard {
+            display: none;
+        }
+    }
+  </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -153,7 +239,7 @@
     </div>
     <div style="flex:1"></div>
     <div class="section" style="padding-bottom:12px;">
-      <div style="font-size:.9rem;color:#6b6b6b;">Version 1.0</div>
+      <div style="font-size:.9rem;color:#6b6b6b;">Version 2.0</div>
     </div>
   </aside>
 
@@ -164,7 +250,10 @@
     <div class="section">
       <a href="/gpa-calculator/" class="item"><div class="item-icon">G</div><div class="item-label">GPA Calculator</div></a>
       <a href="/profile/" class="item"><div class="item-icon">P</div><div class="item-label">Profile</div></a>
-      <a href="/study-guide/" class="item"><div class="item-icon">S</div><div class="item-label">Study Guide</div></a>
+      <a href="/online-quizzes/" class="item">
+        <div class="item-icon">O</div>
+        <div class="item-label">Online Quizzes</div>
+      </a>
     </div>
     <div class="section">
       <a href="/about/" class="item"><div class="item-icon">A</div><div class="item-label">About Us</div></a>
@@ -175,19 +264,55 @@
       <a href="/terms/" class="item"><div class="item-icon">T</div><div class="item-label">Terms & Conditions</div></a>
     </div>
     <div style="flex:1"></div>
-    <div class="version">Version 1.0</div>
+    <div class="version">Version 2.0</div>
   </aside>
-  <!-- Yandex.RTB R-A-17680991-3 -->
-  <script>
-  window.yaContextCb.push(() => {
-      Ya.Context.AdvManager.render({
-          "blockId": "R-A-17680991-3",
-          "type": "floorAd",
-          "platform": "desktop"
-      })
-  })
-  </script>
 
+  <!-- Universal Sticky Bottom Leaderboard Ad (Desktop Only) - Fixed Close Button -->
+  <div id="bottom-leaderboard-ad" class="bottom-leaderboard">
+      <div class="ad-wrapper">
+          <!-- PLACE YOUR 728x90 AD CODE HERE -->
+          <!-- Example placeholder - replace with real ad code -->
+          <div class="ad-content">
+              <div id="7SAD1569536254B1906" data-7pub="7SAD1569536254B1906"></div>
+              <script src="https://code.adclickppc.com/7s-banner-ad.js"></script>
+              <script>
+              (function() {
+                initBannerAd(['7SAD1569536254B1906', 'banner',  5])
+                }())
+              </script>
+          </div>
+
+          <!-- CLOSE BUTTON - Now properly overlaid on top -->
+          <button class="ad-close-btn" aria-label="Close ad">×</button>
+      </div>
+  </div>
+
+  <script>
+        // Auto show with smooth slide-up + close functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const ad = document.getElementById('bottom-leaderboard-ad');
+            
+            if (window.innerWidth >= 1024) {
+                // Slide up after 1 second
+                setTimeout(() => {
+                    ad.classList.add('visible');
+                }, 1000);
+            }
+
+            // Close button
+            const closeBtn = ad.querySelector('.ad-close-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    ad.classList.remove('visible');
+                    ad.style.bottom = '-120px';
+                    setTimeout(() => {
+                        ad.style.visibility = 'hidden';
+                        ad.style.pointerEvents = 'none';
+                    }, 600);
+                });
+            }
+        });
+  </script>
   <script src="/js/menu.js"></script>
   <script src="/js/gpa.js"></script>
 

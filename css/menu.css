@@ -225,14 +225,38 @@ h2 { font-size:clamp(1rem,2.5vw,1.4rem); font-weight:400; color:#4e4a45; }
 }
 @media (min-width:768px){ .bottom-nav{display:none;} }
 
-/* MOBILE RESPONSIVE */
+/* MOBILE RESPONSIVE - Comfortable centering + slight width increase */
 @media (max-width:1024px){
-  .content-wrapper{ flex-direction:column; gap:18px; }
-  .left-panel,.middle-panel{ max-width:100%; flex:1 1 auto; max-width: 340px; }
-  .mock-card,.blogs-card{ max-width:100%; height:auto; }
+  .content-wrapper{ 
+    flex-direction:column; 
+    gap:24px; 
+    align-items: center;           /* Centers everything horizontally */
+  }
+  .left-panel,
+  .middle-panel,
+  .right-panel {
+    width: 100%;
+    max-width: 380px;              /* Increased from 340px → uses more side space comfortably */
+    margin: 0 auto;                /* Perfect centering */
+  }
+  .mock-card,
+  .blogs-card{ 
+    max-width:100%; 
+    height:auto; 
+  }
 }
+
 @media (max-width:767px){
-  .buttons-container{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+  /* 2x2 IELTS grid — wider container, buttons still original size inside */
+  .buttons-container{ 
+    display:grid; 
+    grid-template-columns:repeat(2,1fr); 
+    gap:12px; 
+    width: 100%;
+    max-width: 380px;              /* Matches the panel above — increased from 340px */
+    margin: 0 auto;                /* Centers the grid perfectly */
+  }
+
   .lesson-btn p,.lesson-btn2 p,.lesson-btn3 p,.lesson-btn4 p{ display:none; }
   .mock-subtitle{ display:none; }
   .mock-title-desktop{ display:none; }
@@ -546,4 +570,46 @@ a:active {
 }
 .sidebar .item.active .item-icon, .pc-sidebar .item.active .item-icon {
   background: #06a87c; color: #fff;
+}
+
+/* ----------------- TALL MOBILE QUIZZES CARD (CLEAN CENTERED) ----------------- */
+.tall-mobile-quiz-card {
+  display: none;
+  margin-top: 6px; /* Reduced from 24px for tighter grouping */
+  width: 100%;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tall-mobile-quiz-card .a-quiz-card {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centers the text horizontally */
+  padding: 32px 28px; /* Generous vertical padding for tall feel */
+  background: linear-gradient(135deg, #34e8bb, #0bf0b7);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(255, 87, 63, .18);
+  text-decoration: none;
+  transition: transform .24s ease, box-shadow .24s ease;
+  text-align: center; /* Ensures text stays centered */
+}
+
+.tall-mobile-quiz-card .a-quiz-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(255, 87, 63, .28);
+}
+
+.quiz-card-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+/* Show only on tall mobile screens */
+@media (max-width: 767px) and (min-height: 911px) {
+  .tall-mobile-quiz-card {
+    display: block;
+  }
 }

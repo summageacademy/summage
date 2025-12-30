@@ -21,6 +21,28 @@
 </head>
 <body>
 
+    <!-- Left Skyscraper Ad (PC only) -->
+    <div class="skyscraper-ad left-ad">
+        <div id="7SAD156953A2E549B8F" data-7pub="7SAD156953A2E549B8F"></div>
+                      <script src="https://code.adclickppc.com/7s-banner-ad.js"></script>
+                      <script>
+                      (function() {
+                        initBannerAd(['7SAD156953A2E549B8F', 'banner',  5])
+                        }())
+                      </script>
+    </div>
+
+    <!-- Right Skyscraper Ad (PC only) -->
+    <div class="skyscraper-ad right-ad">
+        <div id="7SAD156953A2E549B8F" data-7pub="7SAD156953A2E549B8F"></div>
+                      <script src="https://code.adclickppc.com/7s-banner-ad.js"></script>
+                      <script>
+                      (function() {
+                        initBannerAd(['7SAD156953A2E549B8F', 'banner',  5])
+                        }())
+                      </script>
+    </div>
+
     <!-- PC Navbar -->
     <div class="pc-navbar">
         <div class="navbar-content">
@@ -159,11 +181,12 @@
         });
     });
 
-        // My NFTs button click
+    // My NFTs button click
     document.getElementById('my-nfts-btn').addEventListener('click', () => {
         window.location.href = '/my-nfts/index.html';
     });
 </script>
+
 <!-- Simple Fixed-Delay Loader -->
 <div id="page-loader">
   <div class="spinner"></div>
@@ -196,6 +219,47 @@
   }
 </style>
 
+<style>
+    /* Skyscraper ads - visible only on PC */
+    .skyscraper-ad {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 160px;
+        height: 600px;
+        z-index: 100;
+        display: none; /* Hidden on mobile by default */
+    }
+
+    .left-ad {
+        left: 20px;
+    }
+
+    .right-ad {
+        right: 20px;
+    }
+
+    .ad-placeholder {
+        width: 100%;
+        height: 100%;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+    }
+
+    /* Show only on desktop screens */
+    @media (min-width: 1200px) {
+        .skyscraper-ad {
+            display: block;
+        }
+    }
+</style>
+
 <script>
   // Show loader for ~2 seconds, then fade out smoothly
   setTimeout(() => {
@@ -204,9 +268,9 @@
       loader.style.opacity = '0';
       setTimeout(() => {
         loader.style.display = 'none';
-      }, 800); // Matches transition time
+      }, 800);
     }
-  }, 1300); // 2 seconds delay — adjust if you want shorter/longer
+  }, 1300);
 </script>
 </body>
 </html>

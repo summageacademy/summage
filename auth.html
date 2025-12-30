@@ -229,7 +229,6 @@
 
     <!-- Verification Success Screen -->
     <div id="verification-container" class="login-card" style="display:none;">
-        <div class="success-icon">📧</div>
         <h2>Check Your Email!</h2>
         <p class="verification-text">
             We've sent a verification link to your email address.
@@ -348,7 +347,7 @@
         signupSubmitBtn.disabled = !termsCheckbox.checked;
     });
 
-    // Sign Up Flow
+    // Sign Up Flow — NO Firestore write here anymore
     document.getElementById('signup-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.getElementById('signup-email').value.trim();
@@ -358,20 +357,7 @@
         clearError(signupError);
 
         auth.createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                return db.collection('users').doc(user.uid).set({
-                    email: email,
-                    username: null,
-                    coins: 0,
-                    diamonds: 0,
-                    timeSpent: 0,
-                    agreedToTerms: true,
-                    agreedToPrivacy: true,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                }).then(() => user);
-            })
-            .then((user) => user.sendEmailVerification())
+            .then((userCredential) => userCredential.user.sendEmailVerification())
             .then(() => auth.signOut())
             .then(() => {
                 signupContainer.style.display = 'none';
@@ -382,17 +368,19 @@
             .catch((error) => {
                 const msg = authErrorMessages[error.code] || authErrorMessages['default'];
                 showError(signupError, msg);
+            })
+            .finally(() => {
                 setLoading(signupSubmitBtn, false);
             });
     });
 
-    // Resend Verification (simple guidance since user is signed out)
+    // Resend Verification guidance
     resendBtn.addEventListener('click', () => {
         verificationMessage.textContent = 'To resend, please go to Log In and try signing in – we\'ll guide you if needed.';
         verificationMessage.style.color = '#007a52';
     });
 
-    // Log In with Verification Check
+    // Log In — Create Firestore doc ONLY if email is verified
     document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.getElementById('login-email').value.trim();
@@ -403,12 +391,39 @@
 
         auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                if (userCredential.user.emailVerified) {
-                    window.location.href = '/main-menu/';
+                const user = userCredential.user;
+
+                if (user.emailVerified) {
+                    // Check if user doc exists; create only if it doesn't
+                    return db.collection('users').doc(user.uid).get()
+                        .then((doc) => {
+                            if (!doc.exists) {
+                                return db.collection('users').doc(user.uid).set({
+                                    email: user.email,
+                                    username: null,
+                                    coins: 0,
+                                    diamonds: 0,
+                                    timeSpent: 0,
+                                    agreedToTerms: true,
+                                    agreedToPrivacy: true,
+                                    emailVerified: true,
+                                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                                });
+                            }
+                            // Doc already exists → just update lastLogin
+                            return db.collection('users').doc(user.uid).update({
+                                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                        })
+                        .then(() => {
+                            window.location.href = '/main-menu/';
+                        });
                 } else {
-                    auth.signOut();
-                    showError(loginError, 'Please verify your email first. Check your inbox (including spam) for the verification link.');
-                    setLoading(loginSubmitBtn, false);
+                    return auth.signOut().then(() => {
+                        showError(loginError, 'Please verify your email first. Check your inbox (including spam) for the verification link.');
+                        setLoading(loginSubmitBtn, false);
+                    });
                 }
             })
             .catch((error) => {

@@ -401,6 +401,26 @@
       }
     }
 
+        /* Mobile-only 320x50 Banner Ad */
+    .mobile-banner-ad {
+      display: none; /* Hidden by default */
+      margin: 32px auto;
+      text-align: center;
+    }
+
+    @media (max-width: 767px) {
+      .mobile-banner-ad {
+        display: block;
+      }
+    }
+
+    /* Optional: Add subtle top/bottom spacing on very small screens */
+    @media (max-width: 480px) {
+      .mobile-banner-ad {
+        margin: 24px auto;
+      }
+    }
+    
   </style>
 </head>
 <body>
@@ -417,6 +437,76 @@
 
 </header>
 
+<!-- Sticky Skyscraper Ads - Desktop Only (Positioned Lower) -->
+<div class="skyscraper-ad skyscraper-left">
+    <!-- PLACE YOUR LEFT AD CODE HERE -->
+    <div style="width: 160px; height: 600px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #999; font-size: 14px; text-align: center;">
+        <div id="7SAD156953A2E549B8F" data-7pub="7SAD156953A2E549B8F"></div>
+                      <script src="https://code.adclickppc.com/7s-banner-ad.js"></script>
+                      <script>
+                      (function() {
+                        initBannerAd(['7SAD156953A2E549B8F', 'banner',  5])
+                        }())
+                      </script>
+    </div>
+</div>
+
+<div class="skyscraper-ad skyscraper-right">
+    <!-- PLACE YOUR RIGHT AD CODE HERE -->
+    <div style="width: 160px; height: 600px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #999; font-size: 14px; text-align: center;">
+        <div id="7SAD156953A2E549B8F" data-7pub="7SAD156953A2E549B8F"></div>
+                      <script src="https://code.adclickppc.com/7s-banner-ad.js"></script>
+                      <script>
+                      (function() {
+                        initBannerAd(['7SAD156953A2E549B8F', 'banner',  5])
+                        }())
+                      </script>
+    </div>
+</div>
+
+<style>
+    /* Sticky Skyscraper Ads - Visible only on desktop */
+    .skyscraper-ad {
+        position: fixed;
+        top: 120px; /* Changed from centered to starting 120px from top */
+        width: 160px;
+        height: 600px;
+        z-index: 9999; /* On top of everything */
+        pointer-events: none; /* Click through the empty space */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease;
+    }
+
+    .skyscraper-left {
+        left: 10px; /* Distance from left edge */
+    }
+
+    .skyscraper-right {
+        right: 10px; /* Distance from right edge */
+    }
+
+    /* Allow clicks on the actual ad content */
+    .skyscraper-ad > * {
+        pointer-events: auto;
+    }
+
+    /* Show only on desktop (≥1024px) */
+    @media (min-width: 1024px) {
+        .skyscraper-ad {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    /* Optional: Hide on narrower screens to prevent overlap with content */
+    @media (max-width: 1400px) {
+        .skyscraper-ad {
+            display: none;
+        }
+    }
+</style>
+
 <main>
   <section class="hero">
     <h1>Ultimate IELTS Essay Checker</h1>
@@ -432,6 +522,15 @@
       <label><input type="radio" name="task" value="1" /> Task 1 (Graph/Report)</label>
       <div style="flex:1"></div>
       <button class="btn" id="checkBtn">Check My Essay</button>
+    </div>
+  </div>
+
+  <!-- MOBILE-ONLY 320x50 BANNER AD -->
+  <div class="mobile-banner-ad">
+    <!-- PLACE YOUR MOBILE BANNER AD CODE HERE -->
+    <!-- Example placeholder (replace with AdSense, etc.) -->
+    <div style="width: 320px; height: 50px; background: #f0f0f0; border: 1px dashed #ccc; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: sans-serif; color: #999; font-size: 14px; margin: 0 auto;">
+      Mobile Banner Ad<br>(320×50)
     </div>
   </div>
 
@@ -519,6 +618,7 @@
     <img src="/icons/profile-user.png" alt="Profile">
   </a>
 </nav>
+
 
 
 <script src="ai-checker.js"></script>

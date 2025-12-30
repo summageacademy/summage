@@ -74,7 +74,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 80px 30px 80px;
+  padding: 30px 80px;
   background: var(--header-bg);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--header-border);
