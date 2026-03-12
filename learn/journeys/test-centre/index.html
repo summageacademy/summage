@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tests Island - Summage Academy</title>
+    <meta name="description" content="Take English level, vocabulary, grammar and olympiad tests at Summage Academy" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+
+    <style>
+        /* ──────────────────────────────────────────────── */
+        /*           (your existing styles – unchanged)      */
+        /* ──────────────────────────────────────────────── */
+        html, body { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar, body::-webkit-scrollbar, .content::-webkit-scrollbar { display: none; }
+        ::-webkit-scrollbar { display: none !important; }
+        * { -webkit-overflow-scrolling: touch; margin:0; padding:0; box-sizing:border-box; }
+
+        * { font-family: 'Poppins', system-ui, sans-serif; }
+        html[lang="ru"] * { font-family: 'Montserrat', system-ui, sans-serif; }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c40e20; }
+
+        .logo-container { display: flex; align-items: center; gap: 14px; cursor: pointer; transition: transform 0.3s ease; }
+        .logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 14px; box-shadow: 0 2px 8px rgba(242,75,11,0.15); }
+        .logo-text { font-size: 26px; font-weight: 800; color: #f24b0b; text-transform: uppercase; letter-spacing: 1.2px; }
+
+        .language-selector { position: relative; }
+        .language-button { background: none; border: none; padding: 10px; cursor: pointer; border-radius: 50%; transition: all 0.25s ease; }
+        .language-button:hover { background: rgba(242,75,11,0.1); transform: scale(1.12); }
+        .language-button img { width: 26px; height: 26px; }
+
+        .language-flags {
+            position: absolute; top: 140%; right: 0; background: white; border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); opacity: 0; transform: translateY(-10px);
+            transition: all 0.25s ease; pointer-events: none; min-width: 140px; padding: 8px 0;
+            overflow: hidden; z-index: 200;
+        }
+        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+
+        .flag { padding: 13px 24px; display: flex; align-items: center; gap: 14px; cursor: pointer; white-space: nowrap; font-size: 15.5px; color: #333; }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0; }
+
+        .content { padding: 60px 5vw 120px; max-width: 1400px; margin: 0 auto; width: 100%; }
+
+        .level-header { display: flex; align-items: center; gap: 20px; margin-bottom: 32px; }
+        .level-number { font-size: 3.5rem; font-weight: 800; color: #f24b0b; line-height: 1; }
+        .level-title { font-size: 2.2rem; font-weight: 700; color: #222; }
+        .level-desc { font-size: 1.1rem; color: #666; margin-top: 4px; }
+
+        .test-card {
+            background: white; border: 1px solid #f0e6d9; border-radius: 20px; overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            display: flex; flex-direction: column; height: 100%;
+        }
+        .test-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(242,75,11,0.12); }
+
+        .test-header { padding: 28px 28px 20px; flex: 1; display: flex; flex-direction: column; }
+        .test-id { font-size: 13px; font-weight: 600; letter-spacing: 2px; color: #f24b0b; text-transform: uppercase; }
+        .test-title { font-size: 1.55rem; font-weight: 700; color: #222; margin-top: 6px; }
+        .test-desc { margin-top: 16px; font-size: 15.5px; line-height: 1.55; color: #555; flex: 1; }
+
+        .test-footer { border-top: 1px solid #f0e6d9; padding: 20px 28px; background: #fffaf5; margin-top: auto; }
+
+        .start-btn, .retake-btn {
+            color: white; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;
+            font-size: 15px; padding: 16px; border: none; border-radius: 50px; width: 100%;
+            transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .start-btn { background: #f24b0b; box-shadow: 0 4px 0 #c23a0a; }
+        .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c23a0a; }
+        .retake-btn { background: #4caf50; box-shadow: 0 4px 0 #388e3c; }
+        .retake-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #388e3c; }
+
+        .locked-btn {
+            background: #f4f4f4; color: #999; font-weight: 600; padding: 16px;
+            border-radius: 50px; width: 100%; display: flex; align-items: center; justify-content: center;
+            gap: 10px; cursor: not-allowed;
+        }
+
+        .no-olympiad {
+            background: white; border: 1px solid #f0e6d9; border-radius: 20px;
+            padding: 48px 32px; text-align: center; font-size: 1.15rem; color: #666;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .mobile-footer-bar {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+            padding: 14px 5vw; border-top: 1px solid rgba(0,0,0,0.08); z-index: 100;
+        }
+        .mobile-back-btn {
+            width: 100%; max-width: 90vw; margin: 0 auto; padding: 16px;
+            background: #f24b0b; color: white; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.8px; font-size: 15px; border: none; border-radius: 50px;
+            box-shadow: 0 4px 0 #c23a0a; transition: all 0.25s ease;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .content { padding: 40px 20px 100px; }
+            .level-title { font-size: 1.9rem; }
+            .navbar { padding: 20px; }
+            .mobile-footer-bar { display: block; }
+            .back-btn { display: none; }
+        }
+        .locked-btn.taken {
+            background: #6c757d;           /* gray */
+            color: white;
+            cursor: not-allowed;
+            box-shadow: 0 4px 0 #5a6268;
+            opacity: 0.9;
+        }
+
+        .locked-btn.taken:hover {
+            transform: none;
+            box-shadow: 0 4px 0 #5a6268;
+        }
+
+        /* Page loader / splash screen */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>  
+    <!-- Full-page loader with Lottie sandy owl -->
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <nav class="navbar">
+        <button id="desktop-back-btn" class="back-btn"><span data-key="back">Back</span></button>
+        <div class="logo-container" onclick="window.location.href='/'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+        <div class="language-selector">
+            <button id="lang-btn" class="language-button" aria-label="Select language">
+                <img src="/assets/images/lang/globe.webp" alt="">
+            </button>
+            <div id="lang-flags" class="language-flags">
+                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content" id="tests-container">
+        <div class="text-center py-20 text-[#666]">Loading your progress...</div>
+    </main>
+
+    <div class="mobile-footer-bar">
+        <button id="mobile-back-btn" class="mobile-back-btn"><span data-key="back">Back</span></button>
+    </div>
+
+    <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js';
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js';
+    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js';
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+        authDomain: "summage-backend.firebaseapp.com",
+        projectId: "summage-backend",
+        storageBucket: "summage-backend.firebasestorage.app",
+        messagingSenderId: "128191434358",
+        appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const translations = {
+        en: {
+            back: "Back",
+            levelTestsTitle: "Level Tests",
+            levelTestsDesc: "Determine your current English level",
+            vocabTitle: "Vocabulary Tests",
+            vocabDesc: "Expand your word knowledge",
+            grammarTitle: "Grammar Tests",
+            grammarDesc: "Master English grammar rules",
+            olympiadTitle: "Olympiad",
+            olympiadDesc: "Compete and win prizes",
+            noOlympiad: "No active olympiad test currently available.<br>Check back later!",
+            startTest: "Start Test",
+            taken: "Taken",
+            locked: "Locked"
+        },
+        ru: {
+            back: "Назад",
+            levelTestsTitle: "Тесты на уровень",
+            levelTestsDesc: "Определите свой текущий уровень английского",
+            vocabTitle: "Тесты по словарному запасу",
+            vocabDesc: "Расширьте свой словарный запас",
+            grammarTitle: "Тесты по грамматике",
+            grammarDesc: "Освойте правила английской грамматики",
+            olympiadTitle: "Олимпиада",
+            olympiadDesc: "Соревнуйтесь и выигрывайте призы",
+            noOlympiad: "На данный момент нет активных олимпиад.<br>Проверьте позже!",
+            startTest: "Начать тест",
+            taken: "Пройден",
+            locked: "Заблокировано"
+        },
+        uz: {
+            back: "Orqaga",
+            levelTestsTitle: "Daraja testlari",
+            levelTestsDesc: "Hozirgi ingliz tili darajangizni aniqlang",
+            vocabTitle: "Lug'at testlari",
+            vocabDesc: "So'z boyligingizni kengaytiring",
+            grammarTitle: "Grammatika testlari",
+            grammarDesc: "Ingliz grammatika qoidalarini o'zlashtiring",
+            olympiadTitle: "Olimpiada",
+            olympiadDesc: "Musobaqalashing va sovg'alar yuting",
+            noOlympiad: "Hozirda faol olimpiada testi mavjud emas.<br>Keyinroq tekshiring!",
+            startTest: "Testni boshlash",
+            taken: "Topshirilgan",
+            locked: "Bloklangan"
+        }
+    };
+
+    let currentLang = localStorage.getItem('summage_preferred_lang') || 'en';
+    let userData = { level: "beginner", completedTests: {} };
+
+    function t(key) {
+        return translations[currentLang]?.[key] || translations.en[key] || key;
+    }
+
+    function updateLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('summage_preferred_lang', lang);
+        document.documentElement.lang = lang;
+        renderAll();
+    }
+
+    function renderAll() {
+        console.log("renderAll called | level:", userData.level || "(not set)");
+
+        const container = document.getElementById('tests-container');
+
+        let levelCards = '';
+
+        levelCards += `
+            <div class="test-card">
+                <div class="test-header">
+                    <div class="test-id">A1 – A2</div>
+                    <div class="test-title">Beginner / Elementary</div>
+                    <p class="test-desc">Level placement test</p>
+                </div>
+                <div class="test-footer">
+                    ${userData.completedTests?.['level_a1-a2']
+                        ? `<button class="locked-btn taken" disabled><i class="fa-solid fa-check"></i> ${t('taken')}</button>`
+                        : `<a href="level-test-a1-a2.html" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
+                </div>
+            </div>
+        `;
+
+        if (userData.level === "beginner" || userData.level === "intermediate" || userData.level === "advanced") {
+            levelCards += `
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-id">B1</div>
+                        <div class="test-title">Intermediate</div>
+                        <p class="test-desc">Level placement test</p>
+                    </div>
+                    <div class="test-footer">
+                        ${userData.completedTests?.['level_b1']
+                            ? `<button class="locked-btn taken" disabled><i class="fa-solid fa-check"></i> ${t('taken')}</button>`
+                            : `<a href="level-test-b1.html" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
+                    </div>
+                </div>
+            `;
+        }
+
+        if (userData.level === "intermediate" || userData.level === "advanced") {
+            levelCards += `
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-id">B2 – C1</div>
+                        <div class="test-title">Upper-Intermediate / Advanced</div>
+                        <p class="test-desc">Level placement test</p>
+                    </div>
+                    <div class="test-footer">
+                        ${userData.completedTests?.['level_b2-c1']
+                            ? `<button class="locked-btn taken" disabled><i class="fa-solid fa-check"></i> ${t('taken')}</button>`
+                            : `<a href="level-test-b2-c1.html" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
+                    </div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = `
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-16">
+                    <div class="level-header">
+                        <div class="level-number">01</div>
+                        <div>
+                            <h2 class="level-title">${t('levelTestsTitle')}</h2>
+                            <p class="level-desc">${t('levelTestsDesc')}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        ${levelCards || '<div class="text-center py-12 text-gray-600">No level tests available yet.</div>'}
+                    </div>
+                </div>
+
+                <div class="mb-16">
+                    <div class="level-header">
+                        <div class="level-number">02</div>
+                        <div>
+                            <h2 class="level-title">${t('vocabTitle')}</h2>
+                            <p class="level-desc">${t('vocabDesc')}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="test-card">
+                            <div class="test-header">
+                                <div class="test-id">TEST 01</div>
+                                <div class="test-title">Everyday Words</div>
+                                <p class="test-desc">Basic vocabulary for daily life</p>
+                            </div>
+                            <div class="test-footer">
+                                <a href="vocab-test-1.html" class="start-btn">${t('startTest')}</a>
+                            </div>
+                        </div>
+                        <!-- ... (other vocab cards remain the same) ... -->
+                        <div class="test-card">
+                            <div class="test-header">
+                                <div class="test-id">TEST 06</div>
+                                <div class="test-title">Advanced Vocabulary</div>
+                                <p class="test-desc">Challenging & rare words</p>
+                            </div>
+                            <div class="test-footer">
+                                <a href="vocab-test-6.html" class="start-btn">${t('startTest')}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-16">
+                    <div class="level-header">
+                        <div class="level-number">03</div>
+                        <div>
+                            <h2 class="level-title">${t('grammarTitle')}</h2>
+                            <p class="level-desc">${t('grammarDesc')}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- grammar cards remain the same -->
+                        <div class="test-card">
+                            <div class="test-header">
+                                <div class="test-id">TEST 03</div>
+                                <div class="test-title">Complex Sentences</div>
+                                <p class="test-desc">Clauses, passives, reported speech</p>
+                            </div>
+                            <div class="test-footer">
+                                <a href="grammar-test-3.html" class="start-btn">${t('startTest')}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="level-header">
+                        <div class="level-number">04</div>
+                        <div>
+                            <h2 class="level-title">${t('olympiadTitle')}</h2>
+                            <p class="level-desc">${t('olympiadDesc')}</p>
+                        </div>
+                    </div>
+                    <div class="no-olympiad">
+                        ${t('noOlympiad')}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Loader hide trigger - content is now ready
+        if (minTimePassed) hideLoader();
+    }
+
+    async function loadUserData() {
+        onAuthStateChanged(auth, async (user) => {
+            const container = document.getElementById('tests-container');
+
+            if (!user) {
+                container.innerHTML = `
+                    <div class="text-center py-20">
+                        <p class="text-xl mb-6">Please sign in to track your test progress</p>
+                        <a href="/login" class="inline-block bg-[#f24b0b] text-white font-bold py-4 px-12 rounded-3xl">Sign In</a>
+                    </div>`;
+                setTimeout(hideLoader, 800); // hide for guests
+                return;
+            }
+
+            try {
+                const userRef = doc(db, "users", user.uid);
+                const snap = await getDoc(userRef);
+                if (snap.exists()) {
+                    userData = { ...snap.data(), completedTests: snap.data().completedTests || {} };
+                    console.log("Firestore data loaded:", userData.level);
+                }
+                renderAll();
+            } catch (err) {
+                console.error("Firestore error:", err);
+                renderAll(); // fallback render
+            }
+        });
+    }
+
+    function goBack() {
+        if (history.length > 1) history.back();
+        else window.location.href = '/learn/';
+    }
+
+    // ────────────────────────────────────────────────
+    // SPLASH SCREEN / LOTTIE LOADER LOGIC
+    // ────────────────────────────────────────────────
+    const loader = document.getElementById('pageLoader');
+    const owl = document.getElementById('splashOwl');
+
+    const MIN_DURATION = 1600; // minimum show time (ms)
+    let minTimePassed = false;
+
+    setTimeout(() => {
+        if (owl) {
+            owl.style.opacity = '1';
+            owl.style.transform = 'scale(1) translateY(0)';
+        }
+    }, 400);
+
+    setTimeout(() => {
+        minTimePassed = true;
+        if (document.readyState === 'complete') hideLoader();
+    }, MIN_DURATION);
+
+    window.addEventListener('load', () => {
+        if (minTimePassed) hideLoader();
+        else setTimeout(hideLoader, MIN_DURATION);
+    });
+
+    function hideLoader() {
+        if (!loader || loader.classList.contains('hidden')) return;
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 1400);
+    }
+
+    setTimeout(() => hideLoader(), 8000); // safety fallback
+
+    // Event listeners
+    window.addEventListener('load', () => {
+        loadUserData();
+
+        document.getElementById('lang-btn')?.addEventListener('click', e => {
+            e.stopPropagation();
+            document.getElementById('lang-flags')?.classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(el => {
+            el.addEventListener('click', e => {
+                e.stopPropagation();
+                updateLanguage(el.dataset.lang);
+                document.getElementById('lang-flags')?.classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('lang-flags')?.classList.remove('show');
+        });
+
+        document.getElementById('desktop-back-btn')?.addEventListener('click', goBack);
+        document.getElementById('mobile-back-btn')?.addEventListener('click', goBack);
+    });
+</script>
+</body>
+</html>

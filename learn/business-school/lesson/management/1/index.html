@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Summage - Fundamentals of Modern Management</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+    authDomain: "summage-backend.firebaseapp.com",
+    projectId: "summage-backend",
+    storageBucket: "summage-backend.firebasestorage.app",
+    messagingSenderId: "128191434358",
+    appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let bubbles = [
+    "Hey there! Welcome to Lesson 1! Today, we will focus on... Self Leadership.",
+    "This is the most important lesson in the whole course, trust me.",
+    "Because everything, including your team, your business, your future. All starts with how well you lead yourself.",
+    "I learned this the hard way… spent years trying to fix everyone else while I was a mess inside.",
+    "Let’s begin with emotions. You feel angry, stressed or super tired. What do you usually do?",
+    "Most of us just react. We shout, we scroll, we eat junk, we make bad calls.",
+    "But real leaders pause. They feel it and they name it. And only after calming down they choose what to do next.",
+    "That small pause changes everything. Practice it this week, okay?",
+    "Now, motivation vs discipline. Everyone loves motivation, right? New year, new me vibe.",
+    "But motivation disappears faster than morning fog in Tashkent.",
+    "Discipline is what keeps you going when you don’t feel like it.",
+    "James Clear in Atomic Habits says it best: you don’t rise to your goals, you fall to your systems.",
+    "So don’t wait to feel motivated, rather, build tiny habits that force you forward.",
+    "Energy is even more important than time, if I tell you. You can have all day, but if you’re exhausted, nothing really happens.",
+    "I protect my mornings like gold. Coffee, short walk, no phone for first hour and these tiny habits are game changers.",
+    "You must see sleep, movement, real food, 10 minutes of sunlight and even 5 minutes of breathing as your daily fuel.",
+    "Let's move, shall we? My friend, know what you actually care about. Your values!",
+    "If you don’t write them down, you’ll say yes to everything and burn out in six months.",
+    "Take 5 minutes today: what 3–5 things matter most to you? Family? Growth? Freedom? Write them.",
+    "When you’re confused or overwhelmed, look at that list and I guarantee you it brings clarity pretty fast.",
+    "Alrighttt... Decisions under uncertainty... this one scares almost everyone.",
+    "You never have 100% information. Waiting for perfect moment is equal to doing nothing.",
+    "Ask one question: what’s the worst realistic thing that can happen? Can I survive it?",
+    "Yes? Then just move. Most decisions are reversible anyway.",
+    "And one last thing we must talk about is Deep Work! Cal Newport changed how I work forever, if I tell you.",
+    "Real progress doesn’t come from answering messages all day.",
+    "It comes from 90–120 minutes of focused and no-distraction work.",
+    "Do you know how important this is? We live in a world full of people who can't focus even for 5 minutes.",
+    "Just by mastering your focus, you will be ahead of many people today... And you must also keep improving every single day.",
+    "Even if it is 1% improvement. That 1% daily compounds and in a year, oh wow,  you will be a completely different person.",
+    "Okay… enough from me for now.",
+    "Let’s see what stuck. Three quick questions. But promise you will answer honestly, okay?",
+    "Ready? Here we go!"
+  ];
+
+  const lessonCards = [
+    { title: "Welcome to Self Leadership", body: `<p>Self leadership is important aspect of life. With this skill, you can control your emotions, manage your thoughts and stay disciplined even when motivation is not here.</p>` },
+    { title: "The Real Starting Point", body: `<p>The real starting point is finding yourself, your goals and needs. After knowing what you want, you can go after your goals and make them come true. This eventually helps you to lead others.</p>` },
+    { title: "Emotional Regulation", body: `<p>Denying what you are feeling is not good for you. It reduces self-compassion and confidence. It is okay to feel depressed, sad and lazy. You should feel it, hear it and acknowledge it. After you became aware of your feelings, emotions you can decide what to do.</p>` },
+    { title: "Discipline Beats Motivation", body: `<p>Discipline helps you even when you are feeling sad, depressed, angry and disappointed. Motivation gets away easily, but discipline stays. It helps us develop even when we are feeling sad or stressed.</p>` },
+    { title: "Tiny Habits Win", body: `<p>Small, boring and repeated actions > waiting for inspiration.</p><p><em>— Atomic Habits</em></p>` },
+    { title: "Protect Your Energy", body: `<p>Your energy is key to everything. You develop energy by eating healthy food, sleeping on time and doing what you love. You protect your energy by healthy daily routine and exercising.</p>` },
+    { title: "Know Your Values", body: `<p>Set three to five values for yourself. They help you to navigate you throughout your life. They help you when you are confused.</p>` },
+    { title: "Decide Under Uncertainty", body: `<p>Ask yourself one question. \n What happens if I do this? \n It helps you to think about outcomes of situations, and you can make decision by relying on it.</p>` },
+    { title: "Deep Work = Real Progress", body: `<p>When everyone around you multitasking, procrastinating you can achieve something real by focusing on one thing at a time. It helps you to be master of the thing you are working on.` },
+    { title: "1% Better Compounds", body: `<p>Small daily improvements become massive change over time. Be 1% better than yesterday. It can feel small at first but over the time it will be seen in your achievements. Starting big kills motivation.</p>` },
+    { title: "Quick Check Time", body: `<p>Three questions to see what stayed with you. Answer honestly. \n Also, before you sleep write down three thing you achieved today. Even small accomplishments. It helps you to track your progress and feel satisfied with your day.</p>` },
+    { title: "You finished Lesson 1!", body: `<p>Train your self-leadership everyday as Self-leadership is daily practice rather than one-time task. You got this!</p>` }
+  ];
+
+  // New: map each bubble index → which card to show (card changes only on topic shift)
+  const bubbleToCardMap = [
+    0, 0, 1, 1,           // Welcome + real starting point (4 bubbles)
+    2, 2, 2, 2,           // Emotional Regulation (4 bubbles)
+    3, 3, 3, 4,           // Discipline vs Motivation + Atomic Habits (4 bubbles)
+    4, 5, 5,              // Energy Management (3 bubbles)
+    5,                    // Values (1 bubble for emphasis)
+    6, 6, 6,              // Decisions under uncertainty (3 bubbles)
+    6, 7, 7,              // Deep Work (3 bubbles)
+    7,                    // 1% better (1 bubble)
+    7, 8, 8, 8,           // Quiz intro + ready (4 bubbles)
+    8, 9, 9, 10, 10,                    // Final card after quiz (completion message)
+    10                    // You finished!
+  ];
+
+  const finalQuizzes = [
+    {
+      question: "What’s more reliable for long-term results?",
+      options: [
+        "Waiting to feel super motivated every day",
+        "Building small consistent habits and systems",
+        "Setting huge yearly goals and hoping",
+        "Copying what successful people show online"
+      ],
+      correct: 1
+    },
+    {
+      question: "When making decisions with limited info, what should you ask yourself?",
+      options: [
+        "Wait until everything is clear and perfect",
+        "What’s the worst realistic outcome — can I survive it?",
+        "Ask 10 people what they think first",
+        "Avoid deciding if you feel stressed"
+      ],
+      correct: 1
+    },
+    {
+      question: "Which book teaches the power of focused, no-distraction work blocks?",
+      options: [
+        "Atomic Habits",
+        "The 7 Habits of Highly Effective People",
+        "Deep Work",
+        "How to Win Friends and Influence People"
+      ],
+      correct: 2
+    }
+  ];
+
+  const professorImages = ["/assets/images/redy.jpg", "/assets/images/redy2.jpg", "/assets/images/redy3.jpg"];
+
+  // ── DOM Elements ──
+  const speechBubble         = document.getElementById("speechBubble");
+  const professorImg         = document.getElementById("professorImg");
+  const mobileBubbleContainer = document.getElementById("mobileBubbleContainer");
+  const mobileProfessorImg   = document.getElementById("mobileProfessorImg");
+  const mobileSpeechText     = document.getElementById("mobileSpeechText");
+  const prevBtn              = document.getElementById("prevBtn");
+  const nextBtn              = document.getElementById("nextBtn");
+  const completionCard       = document.getElementById("completion-card");
+  const goToLesson2Btn       = document.getElementById("goToLesson2");
+  const backToMenuBtn        = document.getElementById("backToMenu");
+  const lessonCard           = document.getElementById("lessonCard");
+  const cardTitle            = document.getElementById("cardTitle");
+  const cardBody             = document.getElementById("cardBody");
+  const quizModal            = document.getElementById("quiz-modal");
+  const quizQuestion         = document.getElementById("quiz-question");
+  const quizOptions          = document.getElementById("quiz-options");
+  const quizTitle            = document.querySelector(".quiz-title");
+
+  let currentUser           = null;
+  let currentBubbleIndex    = 0;
+  let isAnimating           = false;
+  let nextBtnCooldown       = false;
+  let quizActive            = false;
+  let correctAnswers        = 0;
+  let currentQuizIndex      = 0;
+
+  // ── Greeting (unchanged) ──
+  async function loadUserNameAndUpdateGreeting() {
+    if (!currentUser?.uid) return;
+    try {
+      let displayName = null;
+      let profileRef = doc(db, "users", currentUser.uid, "profile", "info");
+      let snap = await getDoc(profileRef);
+
+      if (snap.exists() && snap.data()?.displayName?.trim()) {
+        displayName = snap.data().displayName.trim();
+      } else {
+        profileRef = doc(db, "users", currentUser.uid);
+        snap = await getDoc(profileRef);
+        if (snap.exists()) {
+          const data = snap.data();
+          displayName = data.displayName || data.name || data.fullName || null;
+        }
+      }
+
+      let greetingName = "friend";
+      if (displayName) {
+        greetingName = displayName.split(/\s+/)[0];
+        greetingName = greetingName.charAt(0).toUpperCase() + greetingName.slice(1).toLowerCase();
+      }
+
+      const possibleGreetings = [
+        `Salom ${greetingName}! Welcome to Lesson 1 — Self Leadership.`,
+        `Hey ${greetingName}, ready to become the leader of your own life first?`,
+        `Hello ${greetingName}! This lesson is about mastering yourself before leading others.`,
+        `Salom ${greetingName}! Let's start where everything real begins — inside you.`,
+        `Hi ${greetingName}, great to see you. Self-leadership is the foundation — let's build it strong.`
+      ];
+
+      bubbles[0] = possibleGreetings[Math.floor(Math.random() * possibleGreetings.length)];
+      if (currentBubbleIndex === 0) showBubble(0);
+    } catch (err) {
+      console.error("Failed to load user name:", err);
+    }
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    if (!user) signInAnonymously(auth).catch(console.error);
+    else loadUserNameAndUpdateGreeting();
+  });
+
+  function showBubble(index) {
+    if (index < 0 || index >= bubbles.length) return;
+    currentBubbleIndex = index;
+
+    const randImg = professorImages[Math.floor(Math.random() * professorImages.length)];
+    if (professorImg) professorImg.src = randImg;
+    if (mobileProfessorImg) mobileProfessorImg.src = randImg;
+
+    const text = bubbles[index];
+
+    if (speechBubble) speechBubble.classList.remove("visible");
+    if (mobileSpeechText) mobileSpeechText.classList.remove("visible");
+
+    nextBtn.disabled = true;
+    nextBtnCooldown = true;
+    isAnimating = true;
+
+    setTimeout(() => {
+      if (speechBubble) speechBubble.textContent = text;
+      if (mobileSpeechText) mobileSpeechText.textContent = text;
+
+      if (speechBubble) speechBubble.classList.add("visible");
+      if (mobileSpeechText) mobileSpeechText.classList.add("visible");
+
+      // Update card ONLY when the topic/section changes (using map)
+      const targetCardIndex = bubbleToCardMap[index] || 0;
+      if (targetCardIndex !== currentCardIndex) {
+        updateLessonCard(targetCardIndex);
+        currentCardIndex = targetCardIndex; // remember last card
+      }
+
+      setTimeout(() => {
+        isAnimating = false;
+        startNextButtonCountdown(2);
+      }, 400);
+    }, 400);
+  }
+
+  let currentCardIndex = 0; // new variable to track last shown card
+
+  function startNextButtonCountdown(seconds) {
+    let count = seconds;
+    const originalText = nextBtn.textContent;
+
+    const interval = setInterval(() => {
+      if (count > 0) {
+        nextBtn.textContent = count;
+        count--;
+      } else {
+        nextBtn.textContent = originalText;
+        nextBtnCooldown = false;
+        if (!quizActive) nextBtn.disabled = false;
+        clearInterval(interval);
+      }
+    }, 1000);
+  }
+
+  function updateLessonCard(index) {
+    const card = lessonCards[index];
+    cardTitle.textContent = card.title;
+    cardBody.innerHTML = card.body;
+
+    lessonCard.classList.remove("visible");
+    void lessonCard.offsetWidth;
+    lessonCard.classList.add("visible");
+  }
+
+  // ── Final Quiz & Completion (unchanged) ──
+  function showFinalQuiz() {
+    quizActive = true;
+    nextBtn.disabled = true;
+    correctAnswers = 0;
+    currentQuizIndex = 0;
+    showNextQuizQuestion();
+  }
+
+  function showNextQuizQuestion() {
+    if (currentQuizIndex >= finalQuizzes.length) {
+      if (correctAnswers === finalQuizzes.length) {
+        quizTitle.textContent = "You did it! 🎉";
+        quizQuestion.textContent = "Perfect! Lesson 1 is done.";
+        quizOptions.innerHTML = `<p style="color:#10b981; font-weight:600; margin:20px 0;">Great job — keep practicing these ideas every day.</p>`;
+        setTimeout(() => {
+          quizModal.style.display = "none";
+          quizActive = false;
+          markLessonCompleted();
+        }, 2200);
+      } else {
+        quizModal.style.display = "none";
+        quizActive = false;
+        currentBubbleIndex = 0;
+        showBubble(0);
+        updateLessonCard(0);
+        alert("Some answers were off. Let’s go back and review the key points together!");
+      }
+      return;
+    }
+
+    const quiz = finalQuizzes[currentQuizIndex];
+    quizTitle.textContent = `Final Check (${currentQuizIndex + 1}/${finalQuizzes.length})`;
+    quizQuestion.textContent = quiz.question;
+
+    quizOptions.innerHTML = "";
+    quiz.options.forEach((option, i) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-option-btn";
+      btn.textContent = option;
+      btn.onclick = () => handleFinalQuizAnswer(i, quiz.correct);
+      quizOptions.appendChild(btn);
+    });
+
+    quizModal.style.display = "flex";
+  }
+
+  function handleFinalQuizAnswer(selected, correct) {
+    if (selected === correct) correctAnswers++;
+    currentQuizIndex++;
+    showNextQuizQuestion();
+  }
+
+  async function markLessonCompleted() {
+    if (!currentUser) {
+      showCompletionCard();
+      return;
+    }
+    try {
+      const progressRef = doc(db, "users", currentUser.uid, "progress", "management");
+      await setDoc(progressRef, { lessons: { "1": true } }, { merge: true });
+      console.log("Lesson 1 marked as completed");
+    } catch (err) {
+      console.error("Save failed:", err);
+    }
+    showCompletionCard();
+  }
+
+  function showCompletionCard() {
+    completionCard.style.display = "flex";
+  }
+
+  prevBtn.addEventListener("click", () => {
+    if (currentBubbleIndex > 0 && !isAnimating && !quizActive && !nextBtnCooldown) {
+      showBubble(currentBubbleIndex - 1);
+      // On prev, also sync card to the correct one for that bubble
+      const targetCardIndex = bubbleToCardMap[currentBubbleIndex] || 0;
+      if (targetCardIndex !== currentCardIndex) {
+        updateLessonCard(targetCardIndex);
+        currentCardIndex = targetCardIndex;
+      }
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    if (isAnimating || quizActive || nextBtnCooldown) return;
+
+    if (currentBubbleIndex < bubbles.length - 1) {
+      const nextIndex = currentBubbleIndex + 1;
+      showBubble(nextIndex);
+      // Card update is now handled inside showBubble via map
+    } else {
+      showFinalQuiz();
+    }
+  });
+
+  goToLesson2Btn.addEventListener("click", () => {
+    window.location.href = "/learn/business-school/lesson/management/2/";
+  });
+
+  backToMenuBtn.addEventListener("click", () => {
+    window.location.href = "/learn/business-school/?id=management";
+  });
+
+  function goBack() {
+    const before = window.location.href;
+    history.back();
+    setTimeout(() => {
+      if (window.location.href === before) {
+        window.location.assign('/learn/business-school/?id=management');
+      }
+    }, 50);
+  }
+
+  document.getElementById('desktop-back-btn')?.addEventListener('click', goBack);
+
+  // Initial load
+  showBubble(0);
+  updateLessonCard(0);
+
+  // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+</script>
+  <link rel="stylesheet" href="/learn/business-school/lesson/lesson-style.css">
+</head>
+<body>
+  <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+  <header>
+    <button class="header-back-btn" id="desktop-back-btn">Back</button>
+    <div class="header-brand">
+      <img src="/assets/logo.jpg" alt="Summage Logo" class="header-logo">
+      SUMMAGE
+    </div>
+  </header>
+  
+  <div class="main-content">
+    <!-- DYNAMIC LESSON CARD (replaces old hero + key-points + extra-info) -->
+    <div class="lesson-card" id="lessonCard">
+      <h2 class="card-title" id="cardTitle"></h2>
+      <div class="card-body" id="cardBody"></div>
+    </div>
+  </div>
+
+  <!-- Desktop professor + bubble -->
+  <div class="professor-section">
+    <div class="professor-wrapper">
+      <div class="speech-bubble" id="speechBubble"></div>
+      <img id="professorImg" class="professor" src="/assets/images/redy.jpg" alt="Professor">
+    </div>
+  </div>
+
+  <!-- Mobile Bubble Container -->
+  <div class="mobile-bubble-container" id="mobileBubbleContainer">
+    <img class="mobile-professor" id="mobileProfessorImg" src="/assets/images/redy.jpg" alt="Professor">
+    <div class="mobile-text-wrapper">
+      <div class="mobile-speech-text" id="mobileSpeechText"></div>
+    </div>
+  </div>
+
+  <div class="globe-deco">
+    <img src="/assets/images/globus.jpg" alt="Decorative globe illustration">
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-buttons">
+      <button class="nav-btn back-btn" id="prevBtn">What was that?</button>
+      <button class="nav-btn" id="nextBtn">OK</button>
+    </div>
+  </div>
+
+  <!-- Quiz Modal -->
+  <div id="quiz-modal">
+    <div class="quiz-content">
+      <h2 class="quiz-title">Quick Check</h2>
+      <p id="quiz-question" class="quiz-question"></p>
+      <div id="quiz-options" class="quiz-options"></div>
+      <small style="color:#6b7280; margin-top:16px; display:block;">Answer correctly to continue</small>
+    </div>
+  </div>
+
+  <!-- Completion Card -->
+  <div id="completion-card">
+    <div class="card-content">
+      <h2 class="card-title">You have completed Lesson 1!</h2>
+      <p style="color:#4b5563; margin-bottom:24px;">Great job! You're making solid progress.</p>
+
+      <div class="card-buttons">
+        <button class="card-btn" id="goToLesson2">Go to Lesson 2</button>
+        <button class="card-btn secondary" id="backToMenu">Back to Business School</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

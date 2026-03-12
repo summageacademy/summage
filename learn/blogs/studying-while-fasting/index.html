@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Study Effectively While Fasting – Summage Academy Blog</title>
+    <meta name="description" content="Research-based strategies and practical tips for maintaining focus energy and productivity during periods of fasting. Ideal for students preparing for exams such as IELTS.">
+    <meta name="keywords" content="study while fasting, fasting productivity, focus during fasting, exam preparation fasting, study tips intermittent fasting, Summage Academy blog">
+    <meta name="author" content="Summage Academy">
+    <meta name="robots" content="index, follow">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html {
+            overflow-y: scroll;
+            scrollbar-width: none;
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .language-selector {
+            position: relative;
+        }
+
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+
+        .language-button img {
+            width: 26px;
+            height: 26px;
+        }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+
+        .language-flags.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .flag {
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .flag:hover {
+            background: #f24b0b10;
+        }
+
+        .flag img {
+            width: 28px;
+            border-radius: 6px;
+        }
+
+        .blog-container {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 5vw 120px;
+            width: 100%;
+        }
+
+        .blog-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #06a87c;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .blog-subtitle {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #f24b0b;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .blog-meta {
+            font-size: 1rem;
+            color: #888;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .blog-intro {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .blog-section {
+            margin-bottom: 48px;
+        }
+
+        .blog-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .blog-section p,
+        .blog-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 16px;
+        }
+
+        .blog-section ul {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .blog-section li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fffaf5;
+            padding: 16px 20px;
+            border-left: 5px solid #06a87c;
+            border-radius: 8px;
+            margin: 24px 0;
+            font-style: italic;
+        }
+
+        a {
+            text-decoration: none;
+            color: #06a87c;
+            font-weight: bold;
+        }
+
+        .last-updated {
+            font-size: 1rem;
+            color: #888;
+            text-align: center;
+            margin-top: 40px;
+            font-style: italic;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 80px 5vw 40px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 2;
+            display: block;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #f24b0b;
+        }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #888;
+        }
+
+        .mobile-footer-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px 5vw;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+
+        .mobile-back-btn {
+            width: 100%;
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 14px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mobile-back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                padding: 20px;
+                justify-content: space-between;
+            }
+
+            .back-btn {
+                display: none;
+            }
+
+            .blog-container {
+                padding: 60px 20px 100px;
+            }
+
+            .blog-title {
+                font-size: 2.4rem;
+            }
+
+            .blog-section h2 {
+                font-size: 1.6rem;
+            }
+
+            footer {
+                display: none;
+            }
+
+            .mobile-footer-bar {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <button class="back-btn" id="desktop-back-btn">Back</button>
+
+        <div class="logo-container" onclick="window.location.href='https://summage.org'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+
+        <div class="language-selector">
+            <button class="language-button" id="lang-btn" aria-label="Select language">
+                <img src="/assets/images/lang/globe.webp" alt="">
+            </button>
+            <div class="language-flags" id="lang-flags">
+                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="blog-container">
+        <h1 class="blog-title" data-key="blogTitle">How to Study Effectively While Fasting</h1>
+        <div class="blog-subtitle" data-key="blogSubtitle">Practical Strategies to Maintain Focus and Productivity</div>
+        <div class="blog-meta" data-key="blogMeta">Published: February 2026 • 7 min read</div>
+
+        <p class="blog-intro" data-key="blogIntro">
+            Fasting whether for health cultural religious or personal reasons can create unique challenges for concentration memory and sustained mental effort. Research on intermittent fasting circadian rhythms and cognitive performance shows that students can still achieve strong results by adjusting timing nutrition workload and recovery habits. Here are evidence-informed strategies used by high-performing learners during fasting periods.
+        </p>
+
+        <div class="blog-section">
+            <h2 data-key="sec1Title">1. Align Study Sessions with Your Peak Alertness Windows</h2>
+            <p data-key="sec1Text">Cognitive performance usually follows a daily rhythm. During fasting many people experience higher alertness shortly after the pre-fast meal and again a few hours after breaking the fast.</p>
+            <ul>
+                <li data-key="sec1Bullet1">Schedule demanding tasks like reading comprehension essay writing and complex problem-solving in the 2 to 4 hours following your pre-fast meal.</li>
+                <li data-key="sec1Bullet2">Reserve lighter review vocabulary building or listening practice for the post-fast period when energy often rebounds.</li>
+                <li data-key="sec1Bullet3">Limit intensive study during mid-afternoon hours when fatigue and reduced hydration tend to be most noticeable.</li>
+            </ul>
+        </div>
+
+        <div class="blog-section">
+            <h2 data-key="sec2Title">2. Optimize Nutrition at the Pre-Fast Meal</h2>
+            <p data-key="sec2Text">The composition of your last meal before fasting significantly influences sustained attention and prevents energy crashes later in the day.</p>
+            <div class="highlight" data-key="sec2Highlight">Prioritize complex carbohydrates such as oats and whole grains lean protein like eggs yogurt and legumes healthy fats from nuts and avocado fiber-rich fruits like bananas and berries and 2 to 3 large glasses of water.</div>
+            <p data-key="sec2Text2">Limit high-sugar foods excessive caffeine and heavy fried items as they often lead to quicker drops in blood glucose and alertness.</p>
+        </div>
+
+        <div class="blog-section">
+            <h2 data-key="sec3Title">3. Work in Short High-Focus Intervals</h2>
+            <p data-key="sec3Text">Extended sessions are more difficult when energy is limited. Shorter deliberate blocks with built-in breaks help maintain quality output.</p>
+            <ul>
+                <li data-key="sec3Bullet1">Try 25 to 30 minutes of focused work followed by a 5-minute break Pomodoro-style.</li>
+                <li data-key="sec3Bullet2">Alternatively use 45-minute sessions with 10 to 15-minute breaks to allow brief movement or eye rest.</li>
+                <li data-key="sec3Bullet3">Use breaks for light stretching deep breathing or simply looking away from screens. All of these improve subsequent focus.</li>
+            </ul>
+        </div>
+
+        <div class="blog-section">
+            <h2 data-key="sec4Title">4. Protect Sleep Quantity and Timing</h2>
+            <p data-key="sec4Text">Sleep disruption is one of the strongest predictors of reduced performance during fasting periods. Strategic sleep scheduling can help compensate.</p>
+            <ul>
+                <li data-key="sec4Bullet1">Aim to sleep shortly after your evening meal to maximize total rest hours.</li>
+                <li data-key="sec4Bullet2">If your schedule allows consider a split-sleep pattern: rest early evening wake early for focused study then return to sleep after the pre-fast meal.</li>
+                <li data-key="sec4Bullet3">A 60 to 90 minute nap in the early afternoon if feasible has been shown to significantly improve memory consolidation and mood.</li>
+            </ul>
+        </div>
+
+        <div class="blog-section">
+            <h2 data-key="sec5Title">5. Stay Hydrated and Manage Visual Fatigue</h2>
+            <p data-key="sec5Text">Even mild dehydration impairs attention working memory and reaction time. Maximize fluid intake during non-fasting windows.</p>
+            <p data-key="sec5Text2">Reduce screen brightness follow the 20-20-20 rule every 20 minutes look 20 feet away for 20 seconds and consciously blink more frequently to prevent dry-eye fatigue.</p>
+        </div>
+
+        <div class="blog-section">
+            <h2 data-key="sec6Title">6. Leverage Fasting to Strengthen Self-Regulation</h2>
+            <p data-key="sec6Text">Periods of fasting naturally train impulse control and delayed gratification. These skills directly support better study habits. Capitalize on this by creating distraction-free zones silencing notifications using website blockers during work blocks and setting clear daily priorities. Remind yourself that managing discomfort today builds mental resilience for future challenges.</p>
+        </div>
+
+        <p class="last-updated" data-key="lastUpdated">Last updated: February 2026</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Summage Academy</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/contacts/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="/authentication/">Start Learning</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="/help-centre/">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/terms/">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="current-year"></span> Summage Academy. Education without barriers.
+        </div>
+    </footer>
+
+    <div class="mobile-footer-bar">
+        <button class="mobile-back-btn" id="mobile-back-btn">Back</button>
+    </div>
+
+    <script>
+        const LANG_STORAGE_KEY = 'summage_preferred_lang';
+        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || 'en';
+
+        const translations = {
+            en: {
+                back: "Back",
+                blogTitle: "How to Study Effectively While Fasting",
+                blogSubtitle: "Practical Strategies to Maintain Focus and Productivity",
+                blogMeta: "Published: February 2026 • 7 min read",
+                blogIntro: "Fasting whether for health cultural religious or personal reasons can create unique challenges for concentration memory and sustained mental effort. Research on intermittent fasting circadian rhythms and cognitive performance shows that students can still achieve strong results by adjusting timing nutrition workload and recovery habits. Here are evidence-informed strategies used by high-performing learners during fasting periods.",
+                sec1Title: "1. Align Study Sessions with Your Peak Alertness Windows",
+                sec1Text: "Cognitive performance usually follows a daily rhythm. During fasting many people experience higher alertness shortly after the pre-fast meal and again a few hours after breaking the fast.",
+                sec1Bullet1: "Schedule demanding tasks like reading comprehension essay writing and complex problem-solving in the 2 to 4 hours following your pre-fast meal.",
+                sec1Bullet2: "Reserve lighter review vocabulary building or listening practice for the post-fast period when energy often rebounds.",
+                sec1Bullet3: "Limit intensive study during mid-afternoon hours when fatigue and reduced hydration tend to be most noticeable.",
+                sec2Title: "2. Optimize Nutrition at the Pre-Fast Meal",
+                sec2Text: "The composition of your last meal before fasting significantly influences sustained attention and prevents energy crashes later in the day.",
+                sec2Highlight: "Prioritize complex carbohydrates such as oats and whole grains lean protein like eggs yogurt and legumes healthy fats from nuts and avocado fiber-rich fruits like bananas and berries and 2 to 3 large glasses of water.",
+                sec2Text2: "Limit high-sugar foods excessive caffeine and heavy fried items as they often lead to quicker drops in blood glucose and alertness.",
+                sec3Title: "3. Work in Short High-Focus Intervals",
+                sec3Text: "Extended sessions are more difficult when energy is limited. Shorter deliberate blocks with built-in breaks help maintain quality output.",
+                sec3Bullet1: "Try 25 to 30 minutes of focused work followed by a 5-minute break Pomodoro-style.",
+                sec3Bullet2: "Alternatively use 45-minute sessions with 10 to 15-minute breaks to allow brief movement or eye rest.",
+                sec3Bullet3: "Use breaks for light stretching deep breathing or simply looking away from screens. All of these improve subsequent focus.",
+                sec4Title: "4. Protect Sleep Quantity and Timing",
+                sec4Text: "Sleep disruption is one of the strongest predictors of reduced performance during fasting periods. Strategic sleep scheduling can help compensate.",
+                sec4Bullet1: "Aim to sleep shortly after your evening meal to maximize total rest hours.",
+                sec4Bullet2: "If your schedule allows consider a split-sleep pattern: rest early evening wake early for focused study then return to sleep after the pre-fast meal.",
+                sec4Bullet3: "A 60 to 90 minute nap in the early afternoon if feasible has been shown to significantly improve memory consolidation and mood.",
+                sec5Title: "5. Stay Hydrated and Manage Visual Fatigue",
+                sec5Text: "Even mild dehydration impairs attention working memory and reaction time. Maximize fluid intake during non-fasting windows.",
+                sec5Text2: "Reduce screen brightness follow the 20-20-20 rule every 20 minutes look 20 feet away for 20 seconds and consciously blink more frequently to prevent dry-eye fatigue.",
+                sec6Title: "6. Leverage Fasting to Strengthen Self-Regulation",
+                sec6Text: "Periods of fasting naturally train impulse control and delayed gratification. These skills directly support better study habits. Capitalize on this by creating distraction-free zones silencing notifications using website blockers during work blocks and setting clear daily priorities. Remind yourself that managing discomfort today builds mental resilience for future challenges.",
+                lastUpdated: "Last updated: February 2026"
+            },
+            ru: {
+                back: "Назад",
+                blogTitle: "Как эффективно учиться во время поста",
+                blogSubtitle: "Практические стратегии поддержания концентрации и продуктивности",
+                blogMeta: "Опубликовано: февраль 2026 • 7 мин чтения",
+                blogIntro: "Пост независимо от причин будь то здоровье культура религия или личный выбор создаёт особые условия для концентрации памяти и длительной умственной работы. Исследования интервального голодания циркадных ритмов и когнитивной производительности показывают что при правильной организации времени питания нагрузки и отдыха студенты могут сохранять высокие результаты. Вот проверенные стратегии.",
+                sec1Title: "1. Согласуйте учёбу с периодами максимальной бодрости",
+                sec1Text: "Когнитивные способности имеют суточный ритм. Во время поста многие ощущают пик ясности ума вскоре после предпостного приёма пищи и через несколько часов после его окончания.",
+                sec1Bullet1: "Планируйте сложные задачи вроде чтения письма и анализа на 2–4 часа после предпостного приёма пищи.",
+                sec1Bullet2: "Лёгкие повторения словарный запас и аудирование оставьте на время после окончания поста.",
+                sec1Bullet3: "Избегайте интенсивной работы в середине дня когда усталость и обезвоживание наиболее выражены.",
+                sec2Title: "2. Сделайте предпостный приём пищи максимально полезным",
+                sec2Text: "Состав последнего приёма пищи перед постом сильно влияет на устойчивость внимания в течение дня.",
+                sec2Highlight: "Приоритет: сложные углеводы овсянка и цельнозерновые белок яйца йогурт и бобовые полезные жиры орехи и авокадо фрукты с клетчаткой бананы и ягоды плюс 2–3 больших стакана воды.",
+                sec2Text2: "Ограничьте сахар избыток кофеина и жареное поскольку они вызывают быстрые спады энергии.",
+                sec3Title: "3. Работайте короткими интенсивными блоками",
+                sec3Text: "Длинные сессии даются тяжелее при ограниченной энергии. Короткие блоки с перерывами помогают сохранять качество.",
+                sec3Bullet1: "25–30 минут сосредоточенной работы плюс 5 минут отдыха в стиле Помодоро.",
+                sec3Bullet2: "Или 45 минут плюс 10–15 минут перерыва для движения и отдыха глаз.",
+                sec3Bullet3: "В перерывах лёгкая растяжка дыхательные упражнения или взгляд вдаль. Всё это улучшает последующую концентрацию.",
+                sec4Title: "4. Защищайте количество и качество сна",
+                sec4Text: "Нарушение сна — один из главных факторов снижения результатов во время поста. Правильное расписание сна помогает компенсировать.",
+                sec4Bullet1: "Ложитесь спать вскоре после вечернего приёма пищи чтобы набрать максимум часов сна.",
+                sec4Bullet2: "При возможности используйте раздельный сон: ранний вечерний отдых ранний подъём для учёбы затем сон после предпостного приёма пищи.",
+                sec4Bullet3: "Дневной сон 60–90 минут в начале дня существенно улучшает запоминание и настроение.",
+                sec5Title: "5. Поддерживайте гидратацию и берегите глаза",
+                sec5Text: "Даже лёгкое обезвоживание ухудшает внимание память и скорость реакции. Максимально пейте в не-постные окна.",
+                sec5Text2: "Уменьшайте яркость экрана соблюдайте правило 20-20-20 чаще моргайте.",
+                sec6Title: "6. Используйте пост для развития саморегуляции",
+                sec6Text: "Пост тренирует контроль импульсов и способность откладывать удовольствие. Эти навыки напрямую помогают в учёбе. Создавайте зоны без отвлечений выключайте уведомления блокируйте сайты на время работы ставьте чёткие приоритеты на день. Напоминайте себе что преодоление дискомфорта сегодня укрепляет устойчивость к будущим трудностям.",
+                lastUpdated: "Последнее обновление: февраль 2026"
+            },
+            uz: {
+                back: "Orqaga",
+                blogTitle: "Ro‘za tutgan holda samarali o‘qish",
+                blogSubtitle: "Diqqat va samaradorlikni saqlash uchun amaliy strategiyalar",
+                blogMeta: "Chop etilgan: 2026 fevral • 7 daqiqa o‘qish",
+                blogIntro: "Ro‘za sog‘liq madaniyat diniy yoki shaxsiy sabablarga ko‘ra bo‘ladimi diqqat xotira va uzoq muddatli aqliy mehnat uchun o‘ziga xos qiyinchiliklar tug‘diradi. Intervallik ro‘za sirkadiyalik ritmlar va kognitiv samaradorlik bo‘yicha tadqiqotlar shuni ko‘rsatadiki vaqt ovqatlanish va dam olishni to‘g‘ri tashkil qilish orqali talabalar yuqori natijalarga erishishi mumkin. Mana yuqori natija ko‘rsatgan o‘quvchilar qo‘llagan isbotlangan usullar.",
+                sec1Title: "1. O‘qishni eng yuqori hushyorlik vaqtlariga moslashtiring",
+                sec1Text: "Kognitiv qobiliyatlar kunlik ritmga ega. Ro‘za paytida ko‘pchilik ovqatlanishdan oldingi va keyingi soatlarda yuqori diqqatni his qiladi.",
+                sec1Bullet1: "Qiyin vazifalarni matn o‘qish insho yozish va murakkab masalalarni ro‘za oldi ovqatidan keyingi 2–4 soatga rejalashtiring.",
+                sec1Bullet2: "Yengil takrorlash so‘z boyligi va tinglashni ro‘zadan keyingi davrga qoldiring.",
+                sec1Bullet3: "Tushdan keyingi soatlarda intensiv o‘qishdan qoching charchoq va suvsizlanish kuchliroq bo‘ladi.",
+                sec2Title: "2. Ro‘za oldi ovqatni to‘g‘ri tuzing",
+                sec2Text: "Ro‘zadan oldingi oxirgi ovqat tarkibi kun davomida diqqat barqarorligiga katta ta’sir qiladi.",
+                sec2Highlight: "Afzallik bering: murakkab uglevodlar jo‘xori va to‘liq don oqsil tuxum yogurt va dukkaklilar foydali yog‘lar yong‘oq va avokado tolali mevalar banan va rezavorlar hamda 2–3 katta stakan suv.",
+                sec2Text2: "Shakar ortiqcha kofein va qovurilgan taomlarni kamaytiring ular tez energiya pasayishiga olib keladi.",
+                sec3Title: "3. Qisqa va yuqori diqqatli bloklarda ishlang",
+                sec3Text: "Energiya cheklangan paytda uzoq sessiyalar qiyinlashadi. Qisqa bloklar sifatni saqlashga yordam beradi.",
+                sec3Bullet1: "25–30 daqiqa diqqatli ish keyin 5 daqiqa tanaffus Pomodoro usuli.",
+                sec3Bullet2: "Yoki 45 daqiqa keyin 10–15 daqiqa tanaffus harakat va ko‘z dam olish uchun.",
+                sec3Bullet3: "Tanaffusda yengil cho‘zilish chuqur nafas olish yoki ekrandan uzoqqa qarash. Bularning hammasi keyingi diqqatni yaxshilaydi.",
+                sec4Title: "4. Uyqu miqdori va vaqtini himoya qiling",
+                sec4Text: "Uyqu buzilishi ro‘za paytida samaradorlik pasayishining asosiy sabablaridan biridir. Strategik uyqu jadvali yordam beradi.",
+                sec4Bullet1: "Kechki ovqatdan keyin tezroq uxlang umumiy uyqu soatlari ko‘payadi.",
+                sec4Bullet2: "Imkon bo‘lsa bo‘laklangan uyqu: erta kech uxlab erta uyg‘onib o‘qish keyin ro‘za oldi ovqatdan so‘ng yana uxlash.",
+                sec4Bullet3: "Tushdan keyin 60–90 daqiqalik uyqu xotira va kayfiyatni sezilarli yaxshilaydi.",
+                sec5Title: "5. Suv ichish va ko‘zni asrash",
+                sec5Text: "Engil suvsizlanish ham diqqat xotira va reaksiya tezligini pasaytiradi. Ro‘za bo‘lmagan vaqtda suvni maksimal iching.",
+                sec5Text2: "Ekranni xira qiling 20-20-20 qoidasiga rioya qiling ko‘proq ko‘z qisib turing.",
+                sec6Title: "6. Ro‘zani o‘z-o‘zini boshqarishni kuchaytirish uchun ishlating",
+                sec6Text: "Ro‘za impulsni nazorat qilish va kechiktirilgan zavq olish qobiliyatini rivojlantiradi. Bu ko‘nikmalar o‘qishda juda muhim. Chalg‘ituvchilardan xoli muhit yarating bildirishnomalarni o‘chiring saytlarni vaqtincha bloklang kunlik aniq vazifalar qo‘ying. Bugungi noqulaylikni yengish kelajakdagi sinovlarga tayyorgarlik ekanini eslang.",
+                lastUpdated: "Oxirgi yangilanish: 2026 yil fevral"
+            }
+        };
+
+        function goBack() {
+            const before = window.location.href;
+            history.back();
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/learn/');
+                }
+            }, 50);
+        }
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem(LANG_STORAGE_KEY, lang);
+
+            document.getElementById('desktop-back-btn').textContent = translations[lang].back;
+            const mobileBtn = document.getElementById('mobile-back-btn');
+            if (mobileBtn) mobileBtn.textContent = translations[lang].back;
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    if (el.tagName === 'P' && el.innerHTML.includes('<div') || el.innerHTML.includes('<a')) {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        document.getElementById('desktop-back-btn').addEventListener('click', goBack);
+        document.getElementById('mobile-back-btn').addEventListener('click', goBack);
+
+        document.getElementById('lang-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('lang-flags').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(flag => {
+            flag.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateLanguage(flag.dataset.lang);
+                document.getElementById('lang-flags').classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('lang-flags').classList.remove('show');
+        });
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        updateLanguage(currentLang);
+    </script>
+</body>
+</html>
