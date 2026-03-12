@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - Summage Academy</title>
+    <meta name="description" content="Summage Academy Marketplace: buy study tools, boosts and items with coins and diamonds." />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Hide scrollbar completely */
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        ::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html[lang="ru"] * {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .language-selector { position: relative; }
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+        .language-button img { width: 26px; height: 26px; }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .flag {
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; border-radius: 6px; }
+
+        .marketplace-container {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 5vw 120px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .marketplace-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #06a87c;
+            margin-bottom: 24px;
+        }
+
+        .marketplace-subtitle {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        .empty-state {
+            margin: 80px auto;
+            max-width: 480px;
+        }
+
+        .empty-icon {
+            font-size: 6rem;
+            margin-bottom: 24px;
+            opacity: 0.4;
+        }
+
+        .empty-message {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .empty-text {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .cta-btn {
+            padding: 14px 36px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 80px 5vw 40px;
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul { list-style: none; }
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 2;
+            display: block;
+            transition: color 0.3s;
+        }
+        .footer-column a:hover { color: #f24b0b; }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #888;
+        }
+
+        .mobile-footer-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px 5vw;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+
+        .mobile-back-btn {
+            width: 100%;
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 14px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+        }
+
+        .mobile-back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        @media (max-width: 900px) {
+            .navbar { padding: 20px; }
+            .back-btn { display: none; }
+            .marketplace-container { padding: 60px 20px 100px; }
+            .marketplace-title { font-size: 2.4rem; }
+            footer { display: none; }
+            .mobile-footer-bar { display: block; }
+            .empty-icon { font-size: 5rem; }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl, .page-loader, .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <nav class="navbar">
+        <button class="back-btn" id="desktop-back-btn">Back</button>
+
+        <div class="logo-container">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Marketplace</div>
+        </div>
+
+        <div class="language-selector">
+            <button class="language-button" id="lang-btn" aria-label="Select language">
+                <img src="/assets/images/lang/globe.webp" alt="">
+            </button>
+            <div class="language-flags" id="lang-flags">
+                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="marketplace-container">
+        <div class="empty-state">
+            <div class="empty-icon">🛒</div>
+            <div class="empty-message" data-key="emptyMessage">Nothing in the marketplace yet...</div>
+            <p class="empty-text" data-key="emptyText">We're preparing the first items for you. Keep learning, earn coins & diamonds and come back soon!</p>
+            <button class="cta-btn" onclick="window.location.href='/learn/'">
+                <span data-key="continueLearning">Continue Learning</span>
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Summage Academy</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/contacts/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="/learn/">Start Learning</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="/help-centre/">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/terms/">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="current-year"></span> Summage Academy. Education without barriers.
+        </div>
+    </footer>
+
+    <div class="mobile-footer-bar">
+        <button class="mobile-back-btn" id="mobile-back-btn">Back</button>
+    </div>
+
+    <script>
+        const LANG_STORAGE_KEY = 'summage_preferred_lang';
+        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || 'en';
+
+        const translations = {
+            en: {
+                back: "Back",
+                marketplaceTitle: "Marketplace",
+                marketplaceSubtitle: "Coming soon — powerful study tools, avatars, boosts and certificates",
+                emptyMessage: "Nothing in the marketplace yet...",
+                emptyText: "We're preparing the first items for you. Keep learning, earn coins & diamonds and come back soon!",
+                continueLearning: "Continue Learning"
+            },
+            ru: {
+                back: "Назад",
+                marketplaceTitle: "Маркетплейс",
+                marketplaceSubtitle: "Скоро появится — мощные учебные инструменты, аватары, бусты и сертификаты",
+                emptyMessage: "В маркетплейсе пока ничего нет...",
+                emptyText: "Мы готовим для вас первые товары. Продолжайте учиться, зарабатывайте монеты и алмазы и возвращайтесь скоро!",
+                continueLearning: "Продолжить обучение"
+            },
+            uz: {
+                back: "Orqaga",
+                marketplaceTitle: "Marketpleys",
+                marketplaceSubtitle: "Tez orada — kuchli o‘quv vositalari, avatarlar, boostlar va sertifikatlar",
+                emptyMessage: "Marketpleysda hali hech narsa yo‘q...",
+                emptyText: "Biz siz uchun birinchi tovarlarni tayyorlayapmiz. O‘qishni davom ettiring, tanga va olmoslar ishlab toping va tez orada qaytib keling!",
+                continueLearning: "O‘qishni davom ettirish"
+            }
+        };
+
+        function goBack() {
+            const before = window.location.href;
+            history.back();
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/learn/');
+                }
+            }, 50);
+        }
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem(LANG_STORAGE_KEY, lang);
+            document.documentElement.lang = lang;
+
+            document.getElementById('desktop-back-btn').textContent = translations[lang].back;
+            const mobileBtn = document.getElementById('mobile-back-btn');
+            if (mobileBtn) mobileBtn.textContent = translations[lang].back;
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        document.getElementById('desktop-back-btn').addEventListener('click', goBack);
+        document.getElementById('mobile-back-btn').addEventListener('click', goBack);
+
+        document.getElementById('lang-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('lang-flags').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(flag => {
+            flag.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateLanguage(flag.dataset.lang);
+                document.getElementById('lang-flags').classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('lang-flags').classList.remove('show');
+        });
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        updateLanguage(currentLang);
+
+        // Splash screen (same as your terms page)
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Summage Academy</title>
+    <meta name="description" content="Read Summage Academy's Privacy Policy and Terms of Service. We are committed to protecting your privacy and providing transparent, fair terms for our completely free IELTS and English learning platform." />
+    <meta name="keywords" content="Summage Academy privacy policy, Summage terms of service, free IELTS privacy, data protection education, terms free online courses, Summage legal" />
+    <meta name="author" content="Summage Academy" />
+    <meta name="robots" content="index, follow" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ──────────────────────────────────────────────── */
+        /* Hide scrollbar completely - cross-browser        */
+        /* ──────────────────────────────────────────────── */
+        html, body {
+            scrollbar-width: none;          /* Firefox */
+            -ms-overflow-style: none;       /* IE + legacy Edge */
+            overflow-y: scroll;             /* scrolling still works */
+        }
+
+        body::-webkit-scrollbar,
+        html::-webkit-scrollbar {
+            display: none;                  /* Chrome, Safari, new Edge */
+            width: 0;
+            height: 0;
+            background: transparent;
+        }
+
+        /* Also hide on any other scrollable elements */
+        * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+        /* ──────────────────────────────────────────────── */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html[lang="ru"] * {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .language-selector { position: relative; }
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+        .language-button img { width: 26px; height: 26px; }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .flag {
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; border-radius: 6px; }
+
+        /* Terms Content */
+        .terms-container {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 5vw 120px;
+            width: 100%;
+        }
+
+        .terms-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #06a87c;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .terms-intro {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .terms-section {
+            margin-bottom: 48px;
+        }
+
+        .terms-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .terms-section p,
+        .terms-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 16px;
+        }
+
+        .terms-section ul {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .terms-section li {
+            margin-bottom: 8px;
+        }
+        a {
+            text-decoration: none;
+            color: #06a87c;
+            font-weight: bold;
+        }
+        
+        .last-updated {
+            font-size: 1rem;
+            color: #888;
+            text-align: center;
+            margin-top: 40px;
+            font-style: italic;
+        }
+
+        /* Footer (desktop only) */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 80px 5vw 40px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul { list-style: none; }
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 2;
+            display: block;
+            transition: color 0.3s;
+        }
+        .footer-column a:hover { color: #f24b0b; }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #888;
+        }
+
+        /* Mobile Fixed Bottom Bar */
+        .mobile-footer-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px 5vw;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+
+        .mobile-back-btn {
+            width: 100%;
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 14px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mobile-back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .navbar { padding: 20px; justify-content: space-between; }
+            .back-btn { display: none; }
+            .terms-container { padding: 60px 20px 100px; }
+            .terms-title { font-size: 2.4rem; }
+            .terms-section h2 { font-size: 1.6rem; }
+            footer { display: none; }
+            .mobile-footer-bar { display: block; }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <button class="back-btn" id="desktop-back-btn">Back</button>
+
+        <div class="logo-container" onclick="window.location.href='https://summage.org'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+
+        <div class="language-selector">
+            <button class="language-button" id="lang-btn" aria-label="Select language">
+                <img src="/assets/images/lang/globe.webp" alt="">
+            </button>
+            <div class="language-flags" id="lang-flags">
+                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Privacy Policy Content -->
+    <div class="terms-container">
+        <h1 class="terms-title" data-key="privacyTitle">Privacy Policy</h1>
+        <p class="terms-intro" data-key="privacyIntro">At Summage Academy (summage.org), we are committed to protecting your privacy and handling your personal information responsibly. This Privacy Policy explains how we collect, use, disclose, and protect your data on our free educational platform for English learning and IELTS preparation.</p>
+
+        <div class="terms-section">
+            <h2 data-key="sec1Title">1. Information We Collect</h2>
+            <p data-key="sec1Text">We collect only the minimum information necessary to provide our services:</p>
+            <ul>
+                <li data-key="sec1Bullet1">Account information: email address, display name, and password (stored securely in hashed form)</li>
+                <li data-key="sec1Bullet2">Usage and progress data: lessons completed, scores, learning progress (tied to your account)</li>
+                <li data-key="sec1Bullet3">Technical and device information: IP address, browser type, device details, approximate location (from IP), pages visited, and time spent (via Google Analytics and our internal analytics)</li>
+            </ul>
+            <p data-key="sec1Para2">We do not collect phone numbers, precise geolocation, payment details (platform is 100% free), user-generated content, or sensitive personal data.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec2Title">2. How We Use Your Information</h2>
+            <p data-key="sec2Text">We use your data solely to:</p>
+            <ul>
+                <li data-key="sec2Bullet1">Create and manage your account and provide access to learning tools</li>
+                <li data-key="sec2Bullet2">Track and display your learning progress and personalize your experience</li>
+                <li data-key="sec2Bullet3">Analyze platform usage to improve content, features, and performance</li>
+                <li data-key="sec2Bullet4">Maintain security, prevent abuse, and comply with legal obligations</li>
+            </ul>
+            <p data-key="sec2Para2">We do not use your data for automated decisions with legal effects or for marketing emails (unless you subscribe separately in the future).</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec3Title">3. Data Sharing</h2>
+            <p data-key="sec3Text">We do not sell your personal information. We share data only with:</p>
+            <ul>
+                <li data-key="sec3Bullet1">Trusted service providers acting on our behalf (data processors): Firebase (for authentication and data storage) and Google Analytics (for usage insights)</li>
+                <li data-key="sec3Bullet2">Authorities if required by law, to protect rights/safety, or in case of business transfer (merger/sale)</li>
+            </ul>
+            <p data-key="sec3Para2">These providers may process data in the United States or other countries. We rely on appropriate safeguards (e.g., Google's standard contractual clauses and Data Privacy Framework where applicable).</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec4Title">4. Cookies & Tracking</h2>
+            <p data-key="sec4Text">We use essential cookies for site functionality (e.g., keeping you logged in). We also use Google Analytics cookies to understand how visitors use the platform and improve it. Currently, we do not use advertising cookies or third-party ad trackers. When we implement ads (e.g., Google AdSense) in the future, we will update this policy and provide relevant opt-out information.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec5Title">5. Data Retention & Deletion</h2>
+            <p data-key="sec5Text">We keep your account data while your account is active. Analytics data is retained according to Google Analytics defaults (typically up to 26 months) or our internal needs for security and improvement. Upon request, we will delete your account and associated personal data.</p>
+            <p data-key="sec5Para2">To request deletion, email us at support@summage.org or message us via Telegram with your registered email. Deletion is handled manually and may take a few days.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec6Title">6. Children's Privacy</h2>
+            <p data-key="sec6Text">Our platform welcomes learners of all ages, including children. However, we do not knowingly collect personal information from children under 13 without appropriate parental consent as required by laws such as COPPA (in the US). If you are a parent/guardian and believe we have collected data from your child under 13, contact us immediately at support@summage.org. We will investigate and delete such data if confirmed.</p>
+            <p data-key="sec6Para2">We recommend parental supervision for young learners. Note: Email is considered personal information under children's privacy laws.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec7Title">7. Data Security</h2>
+            <p data-key="sec7Text">We use reasonable security measures, including HTTPS encryption, secure password hashing, and Firebase's built-in security features. However, no online service is 100% secure, and we cannot guarantee absolute protection against all risks.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec8Title">8. Your Rights</h2>
+            <p data-key="sec8Text">Depending on your location (e.g., GDPR for EU users), you may have rights to access, correct, delete, or restrict your data. To exercise these, contact us at support@summage.org with your request and registered email. We will respond within applicable legal timeframes.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec9Title">9. Changes to This Policy</h2>
+            <p data-key="sec9Text">We may update this Privacy Policy from time to time. Changes will be posted here with a new "Last updated" date. For significant changes, we will notify you via email or a platform announcement.</p>
+        </div>
+
+        <p class="last-updated" data-key="lastUpdated">Last updated: February 2026</p>
+    </div>
+
+    <!-- Desktop Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Summage Academy</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/contacts/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="/learn/">Start Learning</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="/help-centre/">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/terms/">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="current-year"></span> Summage Academy. Education without barriers.
+        </div>
+    </footer>
+
+    <!-- Mobile Back Button Bar -->
+    <div class="mobile-footer-bar">
+        <button class="mobile-back-btn" id="mobile-back-btn">Back</button>
+    </div>
+
+    <script>
+        const LANG_STORAGE_KEY = 'summage_preferred_lang';
+        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || 'en';
+
+        const translations = {
+            en: {
+                back: "Back",
+                privacyTitle: "Privacy Policy",
+                privacyIntro: "At Summage Academy (summage.org), we are committed to protecting your privacy and handling your personal information responsibly. This Privacy Policy explains how we collect, use, disclose, and protect your data on our free educational platform for English learning and IELTS preparation.",
+                sec1Title: "1. Information We Collect",
+                sec1Text: "We collect only the minimum information necessary to provide our services:",
+                sec1Bullet1: "Account information: email address, display name, and password (stored securely in hashed form)",
+                sec1Bullet2: "Usage and progress data: lessons completed, scores, learning progress (tied to your account)",
+                sec1Bullet3: "Technical and device information: IP address, browser type, device details, approximate location (from IP), pages visited, and time spent (via Google Analytics and our internal analytics)",
+                sec1Para2: "We do not collect phone numbers, precise geolocation, payment details (platform is 100% free), user-generated content, or sensitive personal data.",
+                sec2Title: "2. How We Use Your Information",
+                sec2Text: "We use your data solely to:",
+                sec2Bullet1: "Create and manage your account and provide access to learning tools",
+                sec2Bullet2: "Track and display your learning progress and personalize your experience",
+                sec2Bullet3: "Analyze platform usage to improve content, features, and performance",
+                sec2Bullet4: "Maintain security, prevent abuse, and comply with legal obligations",
+                sec2Para2: "We do not use your data for automated decisions with legal effects or for marketing emails (unless you subscribe separately in the future).",
+                sec3Title: "3. Data Sharing",
+                sec3Text: "We do not sell your personal information. We share data only with:",
+                sec3Bullet1: "Trusted service providers acting on our behalf (data processors): Firebase (for authentication and data storage) and Google Analytics (for usage insights)",
+                sec3Bullet2: "Authorities if required by law, to protect rights/safety, or in case of business transfer (merger/sale)",
+                sec3Para2: "These providers may process data in the United States or other countries. We rely on appropriate safeguards (e.g., Google's standard contractual clauses and Data Privacy Framework where applicable).",
+                sec4Title: "4. Cookies & Tracking",
+                sec4Text: "We use essential cookies for site functionality (e.g., keeping you logged in). We also use Google Analytics cookies to understand how visitors use the platform and improve it. Currently, we do not use advertising cookies or third-party ad trackers. When we implement ads (e.g., Google AdSense) in the future, we will update this policy and provide relevant opt-out information.",
+                sec5Title: "5. Data Retention & Deletion",
+                sec5Text: "We keep your account data while your account is active. Analytics data is retained according to Google Analytics defaults (typically up to 26 months) or our internal needs for security and improvement. Upon request, we will delete your account and associated personal data.",
+                sec5Para2: "To request deletion, email us at support@summage.org or message us via Telegram with your registered email. Deletion is handled manually and may take a few days.",
+                sec6Title: "6. Children's Privacy",
+                sec6Text: "Our platform welcomes learners of all ages, including children. However, we do not knowingly collect personal information from children under 13 without appropriate parental consent as required by laws such as COPPA (in the US). If you are a parent/guardian and believe we have collected data from your child under 13, contact us immediately at support@summage.org. We will investigate and delete such data if confirmed.",
+                sec6Para2: "We recommend parental supervision for young learners. Note: Email is considered personal information under children's privacy laws.",
+                sec7Title: "7. Data Security",
+                sec7Text: "We use reasonable security measures, including HTTPS encryption, secure password hashing, and Firebase's built-in security features. However, no online service is 100% secure, and we cannot guarantee absolute protection against all risks.",
+                sec8Title: "8. Your Rights",
+                sec8Text: "Depending on your location (e.g., GDPR for EU users), you may have rights to access, correct, delete, or restrict your data. To exercise these, contact us at support@summage.org with your request and registered email. We will respond within applicable legal timeframes.",
+                sec9Title: "9. Changes to This Policy",
+                sec9Text: "We may update this Privacy Policy from time to time. Changes will be posted here with a new \"Last updated\" date. For significant changes, we will notify you via email or a platform announcement.",
+                lastUpdated: "Last updated: February 2026"
+            },
+            ru: {
+                back: "Назад",
+                privacyTitle: "Безопасность Данных",
+                privacyIntro: "В Summage Academy (summage.org) мы привержены защите вашей конфиденциальности и ответственному обращению с вашей личной информацией. Настоящая Политика конфиденциальности объясняет, как мы собираем, используем, раскрываем и защищаем ваши данные на нашей бесплатной образовательной платформе для изучения английского языка и подготовки к IELTS.",
+                sec1Title: "1. Собираемая информация",
+                sec1Text: "Мы собираем только минимально необходимую информацию для предоставления наших услуг:",
+                sec1Bullet1: "Информация об аккаунте: адрес электронной почты, отображаемое имя и пароль (хранится в безопасной хэшированной форме)",
+                sec1Bullet2: "Данные использования и прогресса: пройденные уроки, баллы, прогресс обучения (привязан к вашему аккаунту)",
+                sec1Bullet3: "Техническая и информация об устройстве: IP-адрес, тип браузера, детали устройства, приблизительное местоположение (по IP), посещенные страницы и время (через Google Analytics и нашу внутреннюю аналитику)",
+                sec1Para2: "Мы не собираем номера телефонов, точное местоположение, платежные данные (платформа полностью бесплатна), пользовательский контент или чувствительные личные данные.",
+                sec2Title: "2. Как мы используем вашу информацию",
+                sec2Text: "Мы используем ваши данные исключительно для:",
+                sec2Bullet1: "Создания и управления вашим аккаунтом, предоставления доступа к учебным инструментам",
+                sec2Bullet2: "Отслеживания и отображения вашего учебного прогресса, персонализации опыта",
+                sec2Bullet3: "Анализа использования платформы для улучшения контента, функций и производительности",
+                sec2Bullet4: "Обеспечения безопасности, предотвращения злоупотреблений и соблюдения юридических обязательств",
+                sec2Para2: "Мы не используем ваши данные для автоматизированных решений с юридическими последствиями или для маркетинговых email-рассылок (если только вы отдельно не подпишетесь в будущем).",
+                sec3Title: "3. Передача данных",
+                sec3Text: "Мы не продаем вашу личную информацию. Данные передаются только:",
+                sec3Bullet1: "Надежным поставщикам услуг, действующим от нашего имени (обработчики данных): Firebase (для аутентификации и хранения данных) и Google Analytics (для анализа использования)",
+                sec3Bullet2: "Органам власти по требованию закона, для защиты прав/безопасности или в случае передачи бизнеса (слияние/продажа)",
+                sec3Para2: "Эти поставщики могут обрабатывать данные в США или других странах. Мы полагаемся на соответствующие гарантии (например, стандартные договорные положения Google и Data Privacy Framework, где применимо).",
+                sec4Title: "4. Куки и отслеживание",
+                sec4Text: "Мы используем необходимые куки для функциональности сайта (например, поддержание входа в систему). Также используем куки Google Analytics, чтобы понять, как посетители используют платформу и улучшить ее. В настоящее время мы не используем рекламные куки или трекеры третьих сторон. При внедрении рекламы (например, Google AdSense) в будущем мы обновим эту политику и предоставим информацию об отказе.",
+                sec5Title: "5. Хранение и удаление данных",
+                sec5Text: "Мы храним данные вашего аккаунта, пока аккаунт активен. Данные аналитики хранятся в соответствии с настройками Google Analytics (обычно до 26 месяцев) или нашими внутренними потребностями в безопасности и улучшении. По запросу мы удалим ваш аккаунт и связанные личные данные.",
+                sec5Para2: "Для запроса удаления напишите нам на support@summage.org или в Telegram, указав ваш зарегистрированный email. Удаление выполняется вручную и может занять несколько дней.",
+                sec6Title: "6. Конфиденциальность детей",
+                sec6Text: "Наша платформа приветствует учащихся всех возрастов, включая детей. Однако мы не собираем сознательно личную информацию от детей младше 13 лет без соответствующего согласия родителей, как того требуют законы, такие как COPPA (в США). Если вы родитель/опекун и считаете, что мы собрали данные вашего ребенка младше 13 лет, немедленно свяжитесь с нами по support@summage.org. Мы проведем проверку и удалим такие данные при подтверждении.",
+                sec6Para2: "Мы рекомендуем родительский контроль для юных учащихся. Примечание: адрес электронной почты считается личной информацией согласно законам о конфиденциальности детей.",
+                sec7Title: "7. Безопасность данных",
+                sec7Text: "Мы применяем разумные меры безопасности, включая шифрование HTTPS, безопасное хэширование паролей и встроенные функции безопасности Firebase. Однако ни один онлайн-сервис не является на 100% безопасным, и мы не можем гарантировать абсолютную защиту от всех рисков.",
+                sec8Title: "8. Ваши права",
+                sec8Text: "В зависимости от вашего местоположения (например, GDPR для пользователей ЕС) у вас могут быть права на доступ, исправление, удаление или ограничение ваших данных. Для реализации этих прав свяжитесь с нами по support@summage.org, указав запрос и зарегистрированный email. Мы ответим в установленные законом сроки.",
+                sec9Title: "9. Изменения в политике",
+                sec9Text: "Мы можем время от времени обновлять настоящую Политику конфиденциальности. Изменения будут размещены здесь с новой датой «Последнее обновление». О значительных изменениях мы уведомим вас по электронной почте или объявлением на платформе.",
+                lastUpdated: "Последнее обновление: февраль 2026"
+            },
+            uz: {
+                back: "Orqaga",
+                privacyTitle: "Maxfiylik siyosati",
+                privacyIntro: "Summage Academy (summage.org) da biz sizning maxfiyligingizni himoya qilishga va shaxsiy ma'lumotlaringizga mas'uliyat bilan yondashishga sodiqmiz. Ushbu Maxfiylik siyosati bepul ingliz tili o'rganish va IELTS tayyorgarligi platformamizda ma'lumotlarni qanday yig'ish, ishlatish, oshkor qilish va himoya qilishimizni tushuntiradi.",
+                sec1Title: "1. To'playdigan ma'lumotlar",
+                sec1Text: "Biz faqat xizmatlarimizni taqdim etish uchun zarur minimal ma'lumotlarni yig'amiz:",
+                sec1Bullet1: "Akkount ma'lumotlari: elektron pochta manzili, ko'rsatiladigan ism va parol (xavfsiz hash shaklida saqlanadi)",
+                sec1Bullet2: "Foydalanish va o'quv jarayoni ma'lumotlari: o'tilgan darslar, ballar, o'quv taraqqiyoti (sizning akkountingizga bog'langan)",
+                sec1Bullet3: "Texnik va qurilma ma'lumotlari: IP manzil, brauzer turi, qurilma tafsilotlari, taxminiy joylashuv (IP dan), tashrif buyurilgan sahifalar va sarflangan vaqt (Google Analytics va ichki analitikamiz orqali)",
+                sec1Para2: "Biz telefon raqamlari, aniq joylashuv, to'lov ma'lumotlari (platforma 100% bepul), foydalanuvchi tomonidan yaratilgan kontent yoki maxfiy shaxsiy ma'lumotlarni yig'maymiz.",
+                sec2Title: "2. Ma'lumotlardan qanday foydalanamiz",
+                sec2Text: "Ma'lumotlaringizni faqat quyidagi maqsadlarda ishlatamiz:",
+                sec2Bullet1: "Akkountingizni yaratish va boshqarish, o'quv vositalariga kirishni ta'minlash",
+                sec2Bullet2: "O'quv taraqqiyotingizni kuzatish va ko'rsatish, tajribangizni shaxsiylashtirish",
+                sec2Bullet3: "Platforma foydalanishini tahlil qilish orqali kontent, funksiyalar va ishlashni yaxshilash",
+                sec2Bullet4: "Xavfsizlikni ta'minlash, suiiste'mollarni oldini olish va qonuniy majburiyatlarga rioya qilish",
+                sec2Para2: "Biz ma'lumotlarni qonuniy oqibatlarga olib keladigan avtomatlashtirilgan qarorlar yoki marketing email-lari uchun ishlatmaymiz (agar siz kelajakda alohida obuna bo'lmasangiz).",
+                sec3Title: "3. Ma'lumot almashish",
+                sec3Text: "Shaxsiy ma'lumotlaringizni sotmaymiz. Ma'lumotlar faqat quyidagilar bilan ulashiladi:",
+                sec3Bullet1: "Bizning nomimizdan harakat qiluvchi ishonchli xizmat ko'rsatuvchilar (ma'lumot ishlovchilar): Firebase (autentifikatsiya va ma'lumot saqlash uchun) va Google Analytics (foydalanish tahlili uchun)",
+                sec3Bullet2: "Qonun talab qilganda, huquqlar/xavfsizlikni himoya qilish uchun yoki biznes o'tkazish (birlashtirish/sotish) holatida organlarga",
+                sec3Para2: "Bu provayderlar ma'lumotlarni AQSh yoki boshqa mamlakatlarda qayta ishlashi mumkin. Biz mos kafolatlarga (masalan, Google ning standart shartnoma bandlari va Data Privacy Framework, agar qo'llanilsa) tayanamiz.",
+                sec4Title: "4. Kukilar va kuzatuv",
+                sec4Text: "Biz sayt funksionalligi uchun zarur kukilardan foydalanamiz (masalan, tizimga kirishni saqlash). Shuningdek, tashrif buyuruvchilar platformadan qanday foydalanishini tushunish va uni yaxshilash uchun Google Analytics kukilaridan foydalanamiz. Hozirda reklama kukilari yoki uchinchi tomon reklama kuzatuvlaridan foydalanmaymiz. Kelajakda reklama (masalan, Google AdSense) joriy etilganda ushbu siyosatni yangilaymiz va rad etish bo'yicha ma'lumot beramiz.",
+                sec5Title: "5. Ma'lumotlarni saqlash va o'chirish",
+                sec5Text: "Akkountingiz faol bo'lsa, akkount ma'lumotlarini saqlaymiz. Analitika ma'lumotlari Google Analytics standartlariga muvofiq (odatda 26 oygacha) yoki xavfsizlik va yaxshilash uchun ichki ehtiyojlarimizga ko'ra saqlanadi. So'rov bo'yicha akkountingiz va bog'liq shaxsiy ma'lumotlarni o'chiramiz.",
+                sec5Para2: "O'chirish so'rovini support@summage.org ga email orqali yoki Telegram orqali ro'yxatdan o'tgan emailingiz bilan yuboring. O'chirish qo'lda amalga oshiriladi va bir necha kun talab qilishi mumkin.",
+                sec6Title: "6. Bolalar maxfiyligi",
+                sec6Text: "Platformamiz barcha yoshdagi o'quvchilarni, shu jumladan bolalarni qabul qiladi. Biroq, AQSh COPPA qonuni kabi qonunlar talab qilganidek, 13 yoshdan kichik bolalardan ota-ona roziligisiz shaxsiy ma'lumotlarni atayin yig'maymiz. Agar siz ota-ona/vasiy bo'lsangiz va farzandingizdan 13 yoshdan kichik ma'lumotlar yig'ilgan deb hisoblasangiz, darhol support@summage.org ga murojaat qiling. Tasdiqlansa, bunday ma'lumotlarni o'chiramiz.",
+                sec6Para2: "Yosh o'quvchilar uchun ota-ona nazoratini tavsiya qilamiz. Eslatma: elektron pochta bolalar maxfiyligi qonunlarida shaxsiy ma'lumot hisoblanadi.",
+                sec7Title: "7. Ma'lumotlar xavfsizligi",
+                sec7Text: "Biz HTTPS shifrlash, xavfsiz parol hash qilish va Firebase ning o'rnatilgan xavfsizlik xususiyatlari kabi oqilona xavfsizlik choralaridan foydalanamiz. Biroq, hech qanday onlayn xizmat 100% xavfsiz emas va biz barcha xavflardan mutlaq himoya kafolatlay olmaymiz.",
+                sec8Title: "8. Sizning huquqlaringiz",
+                sec8Text: "Joylashuvingizga qarab (masalan, Yevropa Ittifoqi foydalanuvchilari uchun GDPR), ma'lumotlaringizga kirish, tuzatish, o'chirish yoki cheklash huquqiga ega bo'lishingiz mumkin. Bularni amalga oshirish uchun so'rovingiz va ro'yxatdan o'tgan emailingiz bilan support@summage.org ga murojaat qiling. Qonuniy muddatlarda javob beramiz.",
+                sec9Title: "9. Siyosat o'zgarishlari",
+                sec9Text: "Ushbu Maxfiylik siyosatini vaqti-vaqti bilan yangilashimiz mumkin. O'zgarishlar bu yerda yangi «Oxirgi yangilanish» sanasi bilan joylashtiriladi. Muhim o'zgarishlar haqida emailingiz orqali yoki platformada e'lon qilish orqali xabar beramiz.",
+                lastUpdated: "Oxirgi yangilanish: 2026 yil fevral"
+            }
+        };
+
+        function goBack() {
+            const before = window.location.href;
+            
+            history.back();
+            
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/');
+                }
+            }, 50);
+        }
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem(LANG_STORAGE_KEY, lang);
+            document.documentElement.lang = lang;
+
+            document.getElementById('desktop-back-btn').textContent = translations[lang].back;
+            const mobileBtn = document.getElementById('mobile-back-btn');
+            if (mobileBtn) mobileBtn.textContent = translations[lang].back;
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    if (el.tagName === 'P' && el.innerHTML.includes('<a')) {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        document.getElementById('desktop-back-btn').addEventListener('click', goBack);
+        document.getElementById('mobile-back-btn').addEventListener('click', goBack);
+
+        document.getElementById('lang-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('lang-flags').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(flag => {
+            flag.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateLanguage(flag.dataset.lang);
+                document.getElementById('lang-flags').classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('lang-flags').classList.remove('show');
+        });
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        updateLanguage(currentLang);
+
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Summage AI - Your IELTS Essay Assistant</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; margin:0; overflow:hidden; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+      color: #1f2937;
+    }
+
+    /* ── Custom Modal (aligned with grammar checker) ── */
+    .custom-modal-backdrop {
+      position: fixed; inset:0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      display: flex; align-items:center; justify-content:center;
+      z-index: 2000; opacity:0; pointer-events:none;
+      transition: opacity 0.3s ease;
+    }
+    .custom-modal-backdrop.active { opacity:1; pointer-events:all; }
+
+    .custom-modal {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      width: 90%; max-width: 420px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.28);
+      position: relative;
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      border: 1px solid rgba(242,75,11,0.18);
+    }
+    .custom-modal.active { transform: scale(1); }
+
+    .modal-close-btn {
+      position: absolute; top:16px; right:20px;
+      background:none; border:none; font-size:2.2rem;
+      color:#6b7280; cursor:pointer; transition:all 0.25s;
+    }
+    .modal-close-btn:hover { color:#f24b0b; transform:rotate(90deg); }
+
+    .modal-title { font-size:1.5rem; font-weight:700; text-align:center; margin-bottom:16px; padding-right:40px; }
+    .modal-message { font-size:1.1rem; color:#4b5563; line-height:1.6; text-align:center; margin-bottom:24px; }
+
+    .type-error .modal-title { color:#dc2626; }
+    .type-warning .modal-title { color:#f59e0b; }
+    .type-success .modal-title { color:#059669; }
+
+    /* Sidebar & layout (mostly unchanged) */
+    .sidebar { position:fixed; inset:0 auto 0 0; width:260px; background:rgba(255,255,255,0.92); backdrop-filter:blur(16px);
+      border-right:1px solid rgba(0,0,0,0.06); padding:32px 24px; z-index:100; display:none; }
+
+    .logo-container { display:flex; align-items:center; gap:14px; }
+    .logo-img { width:44px; height:44px; border-radius:12px; box-shadow:0 4px 12px rgba(242,75,11,0.18); }
+    .logo-text { font-size:1.8rem; font-weight:800; color:#f24b0b; letter-spacing:1px; text-transform:uppercase; }
+
+    .ai-info-box { margin:32px 0; padding:20px; background:rgba(242,75,11,0.06); border-radius:16px; border-left:5px solid #f24b0b; }
+    .ai-info-box h3 { color:#f24b0b; font-size:1.4rem; margin-bottom:12px; }
+    .ai-info-box p, .ai-info-box li { font-size:0.95rem; color:#4b5563; }
+    .ai-info-box ul { list-style:none; padding-left:0; margin-top:12px; }
+    .ai-info-box li { margin:10px 0; }
+
+    .user-stats-box {
+      margin: 32px 0;
+      padding: 20px;
+      background: rgba(6,168,124,0.08);
+      border-radius: 16px;
+      border-left: 5px solid #06a87c;
+    }
+
+    .sidebar-back-btn {
+      display:flex; align-items:center; justify-content:center; gap:12px; width:100%; margin-top:48px;
+      padding:16px 28px; font-size:1.05rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px;
+      color:white; background:linear-gradient(145deg,#f24b0b,#ff6b3d); border:none; border-radius:50px;
+      cursor:pointer; box-shadow:0 6px 0 #c23a0a; transition:all 0.25s cubic-bezier(0.34,1.12,0.48,1);
+    }
+    .sidebar-back-btn:hover { transform:translateY(-3px); box-shadow:0 9px 0 #c23a0a; }
+    .sidebar-back-btn:active { transform:translateY(2px); box-shadow:0 2px 0 #c23a0a; }
+
+    .mobile-top {
+      position:fixed; top:0; left:0; right:0; height:64px;
+      background:rgba(255,255,255,0.9); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(0,0,0,0.06); display:flex; align-items:center; justify-content:space-between;
+      padding:0 20px; z-index:100;
+    }
+
+    .mobile-coin-badge {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin-left: 12px;
+      padding: 4px 10px;
+      background: rgba(242, 75, 11, 0.12);
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f24b0b;
+    }
+    .coin-icon { font-size: 1.1rem; }
+
+    .language-selector { position:relative; }
+    .lang-btn {
+      background:none; border:none; padding:8px; cursor:pointer; border-radius:50%;
+      transition:all 0.25s ease; display:flex; align-items:center; justify-content:center;
+    }
+    .lang-btn:hover { background:rgba(242,75,11,0.1); transform:scale(1.12); }
+    .lang-btn img {
+      width:  28px;
+      height: 28px;
+      object-fit: cover;          /* ← key change */
+      object-position: center;    /* can try: center top / center bottom too */
+      border-radius: 0%;
+    }
+    .language-flags {
+      position:absolute; top:140%; right:0; background:white; border-radius:12px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.15); opacity:0; transform:translateY(-10px);
+      transition:all 0.25s ease; pointer-events:none; min-width:160px;
+    }
+    .language-flags.show { opacity:1; transform:translateY(0); pointer-events:all; }
+
+    .flag { padding:12px 18px; display:flex; align-items:center; gap:12px; cursor:pointer; }
+    .flag:hover { background:#f24b0b10; }
+    .flag img { width:28px; border-radius:6px; }
+
+    .desktop-lang-btn {
+      position:fixed; top:20px; right:24px;
+      background:rgba(255,255,255,0.9); backdrop-filter:blur(12px);
+      border-radius:50%; padding:12px; box-shadow:0 4px 12px rgba(0,0,0,0.12);
+      z-index:95; display:none;
+    }
+
+    .mobile-bottom-ai {
+      position:fixed; bottom:0; left:0; right:0; height:80px;
+      background:rgba(255,255,255,0.9); backdrop-filter:blur(12px);
+      border-top:1px solid rgba(0,0,0,0.08); z-index:100; display:none;
+      align-items:center; justify-content:center; padding:0 20px;
+    }
+
+    .mobile-back-btn {
+      width:100%; max-width:360px; padding:14px;
+      background:#f24b0b; color:white; font-weight:700; text-transform:uppercase;
+      letter-spacing:0.8px; font-size:15px; border:none; border-radius:50px;
+      cursor:pointer; box-shadow:0 4px 0 #c23a0a; transition:all 0.25s ease;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+    }
+
+    .main-view {
+      height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch;
+      padding-top:64px; padding-bottom:92px;
+    }
+
+    .main-view::-webkit-scrollbar { display:none; }
+    .main-view { scrollbar-width:none; -ms-overflow-style:none; }
+
+    @media (min-width:769px) {
+      .sidebar { display:block; }
+      .mobile-top, .mobile-bottom-ai { display:none; }
+      .main-view { margin-left:260px; padding-top:0; padding-bottom:0; }
+      .desktop-lang-btn { display:block; }
+      .main-view::-webkit-scrollbar { width:10px; }
+      .main-view::-webkit-scrollbar-track { background:#f1f1f1; }
+      .main-view::-webkit-scrollbar-thumb { background:#f24b0b; border-radius:10px; }
+    }
+
+    @media (max-width:768px) {
+      .sidebar { display:none; }
+      .mobile-top, .mobile-bottom-ai { display:flex; }
+      .mobile-coin-badge { display:flex; }
+    }
+
+    /* ── Hero & CTA (unchanged) ── */
+    .ai-hero {
+      min-height: calc(100vh - 64px - 80px);
+      display: flex; align-items:center; justify-content:center;
+      padding:40px 24px;
+      background:linear-gradient(135deg, #fffaf5 0%, #fef3f0 100%);
+    }
+
+    .hero-content { max-width:900px; text-align:center; }
+
+    .hero-content h1 {
+      font-size:clamp(2.8rem,9vw,5rem); font-weight:800; color:#f24b0b;
+      margin-bottom:1rem; line-height:1.1;
+    }
+
+    .hero-content p {
+      font-size:clamp(1.2rem,4vw,1.4rem); color:#4b5563;
+      margin-bottom:2.5rem; max-width:720px; margin-left:auto; margin-right:auto;
+    }
+
+    .ai-cta-box {
+      background:white; border-radius:24px; padding:32px 24px;
+      box-shadow:0 16px 60px rgba(242,75,11,0.14);
+      border:1px solid rgba(242,75,11,0.15);
+    }
+
+    .task-selector { display:flex; flex-direction:column; gap:12px; margin-bottom:24px; }
+    .task-selector label { font-size:1.1rem; color:#111827; font-weight:600; }
+    .task-selector select, .task-selector input {
+      padding:12px 16px; border:2px solid #e5e7eb; border-radius:12px;
+      font-size:1rem; background:white;
+    }
+
+    .textarea-wrapper textarea {
+      width:100%; padding:16px; border:2px solid #e5e7eb; border-radius:12px;
+      font-size:1.1rem; line-height:1.7; resize:vertical; min-height:220px;
+      font-family:inherit;
+    }
+    .textarea-wrapper textarea:focus {
+      outline:none; border-color:#f24b0b; box-shadow:0 0 0 3px rgba(242,75,11,0.12);
+    }
+
+    .analyze-btn {
+      margin-top:24px; padding:16px 56px; background:#06a87c; color:white;
+      border:none; border-radius:50px; font-size:1.2rem; font-weight:700;
+      cursor:pointer; box-shadow:0 6px 0 #058f66; transition:all 0.25s;
+    }
+    .analyze-btn:hover { transform:translateY(-3px); box-shadow:0 10px 0 #058f66; }
+
+    .results-section {
+      margin-top:48px; padding:32px 24px; background:#f9fafb;
+      border-radius:24px; box-shadow:0 8px 24px rgba(242,75,11,0.08); display:none;
+    }
+
+    .results-section h2 { text-align:center; font-size:2rem; color:#111827; margin-bottom:32px; }
+
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:24px; }
+
+    .stat-card {
+      background:white; padding:24px; border-radius:16px;
+      text-align:center; box-shadow:0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    .stat-card h3 { font-size:1.2rem; color:#4b5563; margin-bottom:12px; }
+    .stat-value { font-size:2.5rem; font-weight:800; color:#f24b0b; }
+    .stat-desc { font-size:0.95rem; color:#6b7280; margin-top:8px; }
+
+    .grammar-errors, .spelling-errors, .vocabulary-feedback, .complexity-feedback,
+    .topic-relevance, .structure-feedback { margin-top:32px; }
+
+    .grammar-list, .spelling-list { list-style:none; padding:0; }
+
+    .grammar-item, .spelling-item {
+      padding:12px; background:rgba(242,75,11,0.06); border-radius:8px;
+      margin-bottom:12px; color:#111827;
+    }
+
+    .coherence-feedback, .vocabulary-feedback, .complexity-feedback,
+    .topic-relevance, .structure-feedback {
+      margin-top:32px; padding:20px; background:rgba(5,150,105,0.06);
+      border-radius:16px;
+    }
+
+    @media (max-width:768px) {
+      .ai-hero, .ai-cta-box, .results-section { padding: 24px 16px; }
+      .stats-grid { grid-template-columns:1fr; }
+    }
+    .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+  </style>
+</head>
+<body>
+  <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+  <!-- Desktop Sidebar -->
+  <div class="sidebar">
+    <div class="logo-container">
+      <img src="/assets/logo.webp" alt="Summage Logo" class="logo-img">
+      <div class="logo-text">Summage</div>
+    </div>
+
+    <div class="ai-info-box">
+      <h3>Summage AI</h3>
+      <p>Your intelligent companion for IELTS Writing Task 1 & Task 2.</p>
+      <ul>
+        <li>Band score prediction (0–9)</li>
+      </ul>
+    </div>
+
+    <div class="user-stats-box">
+      <h3>Your Rewards</h3>
+      <div style="display: flex; justify-content: space-around; margin-top: 16px;">
+        <div style="text-align: center;">
+          <div style="font-size: 2.1rem; font-weight: 800; color: #f59e0b;" id="user-coins">0</div>
+          <div style="font-size: 0.9rem; color: #4b5563;">Coins</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 2.1rem; font-weight: 800; color: #3b82f6;" id="user-diamonds">0</div>
+          <div style="font-size: 0.9rem; color: #4b5563;">Diamonds</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="sidebar-back-btn" onclick="goBack()">
+      Back
+    </button>
+  </div>
+
+  <!-- Mobile top bar -->
+  <div class="mobile-top">
+    <div class="logo-container">
+      <img src="/assets/logo.webp" alt="Summage" class="logo-img">
+      <div class="logo-text">Summage</div>
+    </div>
+
+    <div class="mobile-coin-badge" id="mobile-coin-display">
+      <span class="coin-icon">🪙</span>
+      <span id="m-coins">0</span>
+    </div>
+
+    <div class="language-selector">
+      <button class="lang-btn" id="mobileLangBtn" aria-label="Select language">
+        <img src="/assets/images/lang/globe.webp" alt="Current Language">
+      </button>
+      <div class="language-flags" id="mobileLangMenu">
+        <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+        <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+        <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop floating language button -->
+  <div class="desktop-lang-btn language-selector">
+    <button class="lang-btn" id="desktopLangBtn">
+      <img src="/assets/images/lang/globe.webp" alt="Language">
+    </button>
+    <div class="language-flags" id="desktopLangMenu">
+      <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+      <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+      <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+    </div>
+  </div>
+
+  <!-- Mobile bottom bar -->
+  <div class="mobile-bottom-ai">
+    <button class="mobile-back-btn" id="mobile-back-btn">
+      Back
+    </button>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-view">
+    <section class="ai-hero">
+      <div class="hero-content">
+        <h1 data-lang-key="aiHeroTitle">Summage AI</h1>
+        <p data-lang-key="aiHeroSubtitle">Your personal IELTS Writing assistant — get instant feedback, band score estimation, and detailed improvement suggestions</p>
+        
+        <div class="ai-cta-box">
+          <div class="task-selector">
+            <label for="task-type">Select Task Type</label>
+            <select id="task-type">
+              <option value="task1">Task 1 (Graphs, Charts, Maps)</option>
+              <option value="task2">Task 2 (Essays, Opinions)</option>
+            </select>
+
+            <label for="topic">Enter Essay Topic/Theme</label>
+            <input id="topic" placeholder="e.g., Impact of Technology on Society" type="text">
+          </div>
+
+          <p data-lang-key="aiCtaText">Paste your essay below to get started</p>
+          <div class="textarea-wrapper">
+            <textarea id="essay-text" placeholder="Write or paste your IELTS essay here... (Task 1 or Task 2)" rows="12"></textarea>
+          </div>
+          <button class="analyze-btn" id="analyze-btn" data-lang-key="aiAnalyzeBtn">Analyze Essay</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results section (unchanged) -->
+    <section class="results-section" id="results-section">
+      <h2>Analysis Results</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Word Count</h3>
+          <div class="stat-value" id="word-count">0</div>
+          <p class="stat-desc">Task 1 min: 150 | Task 2 min: 250</p>
+        </div>
+        <!-- ... rest of stats cards unchanged ... -->
+        <div class="stat-card">
+          <h3>Estimated Band</h3>
+          <div class="stat-value" id="band-score">0</div>
+          <p class="stat-desc">Based on comprehensive analysis</p>
+        </div>
+        <div class="stat-card">
+          <h3>Grammar Errors</h3>
+          <div class="stat-value" id="grammar-errors-count">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Spelling Errors</h3>
+          <div class="stat-value" id="spelling-errors-count">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Vocabulary Score</h3>
+          <div class="stat-value" id="vocabulary-score">0%</div>
+        </div>
+        <div class="stat-card">
+          <h3>Complexity Score</h3>
+          <div class="stat-value" id="complexity-score">0%</div>
+        </div>
+        <div class="stat-card">
+          <h3>Coherence Score</h3>
+          <div class="stat-value" id="coherence-score">0%</div>
+        </div>
+        <div class="stat-card">
+          <h3>Topic Relevance</h3>
+          <div class="stat-value" id="topic-relevance">0%</div>
+        </div>
+        <div class="stat-card">
+          <h3>Paragraph Count</h3>
+          <div class="stat-value" id="paragraph-count">0</div>
+        </div>
+      </div>
+
+      <div class="grammar-errors">
+        <h3>Grammar Feedback</h3>
+        <ul class="grammar-list" id="grammar-list"></ul>
+      </div>
+
+      <div class="spelling-errors">
+        <h3>Spelling Feedback</h3>
+        <ul class="spelling-list" id="spelling-list"></ul>
+      </div>
+
+      <div class="vocabulary-feedback">
+        <h3>Vocabulary Feedback</h3>
+        <p id="vocabulary-feedback-text">No feedback yet.</p>
+      </div>
+
+      <div class="complexity-feedback">
+        <h3>Sentence Complexity Feedback</h3>
+        <p id="complexity-feedback-text">No feedback yet.</p>
+      </div>
+
+      <div class="coherence-feedback">
+        <h3>Coherence & Overall Quality</h3>
+        <p id="coherence-feedback-text">No feedback yet.</p>
+      </div>
+
+      <div class="topic-relevance">
+        <h3>Topic Relevance Feedback</h3>
+        <p id="topic-relevance-feedback">No feedback yet.</p>
+      </div>
+
+      <div class="structure-feedback">
+        <h3>Structure Feedback</h3>
+        <p id="structure-feedback-text">No feedback yet.</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ────────────────────────────────────────────────
+    // Firebase Initialization
+    // ────────────────────────────────────────────────
+    const firebaseConfig = {
+      apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+      authDomain: "summage-backend.firebaseapp.com",
+      projectId: "summage-backend",
+      storageBucket: "summage-backend.firebasestorage.app",
+      messagingSenderId: "128191434358",
+      appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // ── Translations ──
+    const translations = {
+      en: {
+        aiHeroTitle: "Summage AI",
+        aiHeroSubtitle: "Your personal IELTS Writing assistant — get instant feedback, band score estimation, and detailed improvement suggestions",
+        aiCtaText: "Paste your essay below to get started",
+        aiAnalyzeBtn: "Analyze Essay",
+        rewardTitle: "Reward Unlocked!",
+        rewardEarned: "Great job! You earned 10 coins + 1 diamond (Band 7+)",
+        goodEffort: "Good effort!",
+        keepPracticing: "Band {band} — keep practicing to reach 7+ and earn rewards!",
+        signInPrompt: "Sign in to collect rewards for high band scores!",
+        cooldownWarning: "You can earn another reward in {minutes} minutes. Keep practicing!",
+        cooldownTitle: "Reward on Cooldown"
+      },
+      ru: {
+        aiHeroTitle: "Summage AI",
+        aiHeroSubtitle: "Ваш личный помощник по письму IELTS — мгновенная обратная связь, оценка баллов и рекомендации",
+        aiCtaText: "Вставьте ваше эссе ниже, чтобы начать",
+        aiAnalyzeBtn: "Анализировать эссе",
+        rewardTitle: "Награда получена!",
+        rewardEarned: "Отличная работа! Вы получили 10 монет + 1 алмаз (Band 7+)",
+        goodEffort: "Хорошая попытка!",
+        keepPracticing: "Band {band} — продолжайте практиковаться, чтобы достичь 7+ и получать награды!",
+        signInPrompt: "Войдите, чтобы получать награды за высокие баллы!",
+        cooldownWarning: "Вы сможете получить следующую награду через {minutes} минут. Продолжайте практиковаться!",
+        cooldownTitle: "Награда на паузе"
+      },
+      uz: {
+        aiHeroTitle: "Summage AI",
+        aiHeroSubtitle: "IELTS yozuv bo'yicha shaxsiy yordamchi — tezkor fikr, ball bashorati va takomillashtirish maslahatlari",
+        aiCtaText: "Quyida esse yozing yoki joylashtiring",
+        aiAnalyzeBtn: "Esse tahlili",
+        rewardTitle: "Mukofot ochildi!",
+        rewardEarned: "Ajoyib ish! Siz 10 tanga + 1 olmos oldingiz (Band 7+)",
+        goodEffort: "Yaxshi harakat!",
+        keepPracticing: "Band {band} — 7+ ga yetish va mukofot olish uchun mashq qiling!",
+        signInPrompt: "Yuqori ballar uchun mukofot olish uchun tizimga kiring!",
+        cooldownWarning: "{minutes} daqiqadan keyin yana mukofot olishingiz mumkin. Mashq qilishda davom eting!",
+        cooldownTitle: "Mukofot vaqtincha to'xtatilgan"
+      }
+    };
+
+    const LANG_KEY = 'summage_preferred_lang';
+    let currentLang = localStorage.getItem(LANG_KEY) || 'en';
+
+    function updateLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem(LANG_KEY, lang);
+
+      document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const key = el.dataset.langKey;
+        if (translations[lang]?.[key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      const mobileBack = document.getElementById('mobile-back-btn');
+      if (mobileBack) {
+        const backText = lang === 'en' ? 'Back' : lang === 'ru' ? 'Назад' : 'Orqaga';
+        mobileBack.innerHTML = `${backText}`;
+      }
+    }
+
+    // Language menu handlers
+    document.getElementById('mobileLangBtn')?.addEventListener('click', e => {
+      e.stopPropagation();
+      document.getElementById('mobileLangMenu')?.classList.toggle('show');
+    });
+
+    document.getElementById('desktopLangBtn')?.addEventListener('click', e => {
+      e.stopPropagation();
+      document.getElementById('desktopLangMenu')?.classList.toggle('show');
+    });
+
+    document.querySelectorAll('.flag').forEach(flag => {
+      flag.addEventListener('click', e => {
+        e.stopPropagation();
+        updateLanguage(flag.dataset.lang);
+        document.querySelectorAll('.language-flags.show').forEach(menu => menu.classList.remove('show'));
+      });
+    });
+
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.language-flags.show').forEach(menu => menu.classList.remove('show'));
+    });
+
+    updateLanguage(currentLang);
+
+    // ── Back navigation ──
+    function goBack() {
+      const before = window.location.href;
+      history.back();
+      setTimeout(() => {
+        if (window.location.href === before) {
+          window.location.assign('/learn/');
+        }
+      }, 60);
+    }
+
+    document.getElementById('mobile-back-btn')?.addEventListener('click', goBack);
+
+    // ── Modal System ──
+    const modalBackdrop = document.createElement('div');
+    modalBackdrop.className = 'custom-modal-backdrop';
+    modalBackdrop.innerHTML = `
+      <div class="custom-modal">
+        <button class="modal-close-btn">×</button>
+        <div class="modal-title"></div>
+        <div class="modal-message"></div>
+      </div>
+    `;
+    document.body.appendChild(modalBackdrop);
+
+    const modal = modalBackdrop.querySelector('.custom-modal');
+    const modalTitle = modal.querySelector('.modal-title');
+    const modalMessage = modal.querySelector('.modal-message');
+    const modalClose = modal.querySelector('.modal-close-btn');
+
+    function showModal(title, message, type = 'info') {
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      modal.className = 'custom-modal';
+      if (type) modal.classList.add(`type-${type}`);
+      modalBackdrop.classList.add('active');
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modalBackdrop.classList.remove('active');
+      modal.classList.remove('active');
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', e => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function showError(msg)    { showModal("Error", msg, "error"); }
+    function showWarning(msg)  { showModal("Warning", msg, "warning"); }
+    function showSuccess(msg)  { showModal("Success", msg, "success"); }
+
+    // ── Rewards Display ──
+    const coinsEl       = document.getElementById('user-coins');
+    const diamondsEl    = document.getElementById('user-diamonds');
+    const mCoinsEl      = document.getElementById('m-coins');
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        coinsEl.textContent = "—";
+        diamondsEl.textContent = "—";
+        mCoinsEl.textContent = "—";
+        return;
+      }
+
+      const userRef = db.collection('users').doc(user.uid);
+
+      userRef.onSnapshot(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          const coins = data.coins ?? 0;
+          const diamonds = data.diamonds ?? 0;
+          coinsEl.textContent = coins;
+          diamondsEl.textContent = diamonds;
+          mCoinsEl.textContent = coins;
+        } else {
+          userRef.set({
+            coins: 0,
+            diamonds: 0,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(err => console.error("User doc creation failed:", err));
+        }
+      }, err => console.error("Firestore snapshot error:", err));
+    });
+
+    // ── Essay Analysis + Reward Logic ──
+    document.getElementById('analyze-btn').addEventListener('click', analyzeEssay);
+
+    async function analyzeEssay() {
+      const taskType = document.getElementById('task-type').value;
+      const topic = document.getElementById('topic').value.trim().toLowerCase();
+      const essay = document.getElementById('essay-text').value.trim();
+
+      if (!essay) {
+        showError("Please write or paste your essay first.");
+        return;
+      }
+
+      if (isNonsense(essay)) {
+        showError("This does not appear to be a valid essay.\nPlease provide a proper IELTS response.");
+        return;
+      }
+
+      // ── Core metrics ──
+      const words = essay.split(/\s+/).filter(w => w.length > 0).length;
+      document.getElementById('word-count').textContent = words;
+
+      const band = calculateBandScore(words, taskType, essay);
+      document.getElementById('band-score').textContent = band.toFixed(1);
+
+      const grammarErrors = checkGrammar(essay);
+      document.getElementById('grammar-errors-count').textContent = grammarErrors.length;
+      document.getElementById('grammar-list').innerHTML = grammarErrors
+        .map(err => `<li class="grammar-item">${err}</li>`).join('') ||
+        '<li class="grammar-item">No major grammar issues detected.</li>';
+
+      const spellingErrors = checkSpelling(essay);
+      document.getElementById('spelling-errors-count').textContent = spellingErrors.length;
+      document.getElementById('spelling-list').innerHTML = spellingErrors
+        .map(err => `<li class="spelling-item">${err}</li>`).join('') ||
+        '<li class="spelling-item">No common spelling mistakes found.</li>';
+
+      const vocab = calculateVocabulary(essay);
+      document.getElementById('vocabulary-score').textContent = vocab.score + '%';
+      document.getElementById('vocabulary-feedback-text').textContent = vocab.feedback;
+
+      const complexity = calculateComplexity(essay);
+      document.getElementById('complexity-score').textContent = complexity.score + '%';
+      document.getElementById('complexity-feedback-text').textContent = complexity.feedback;
+
+      const coherence = calculateCoherence(essay);
+      document.getElementById('coherence-score').textContent = coherence.score + '%';
+      document.getElementById('coherence-feedback-text').textContent = coherence.feedback;
+
+      const relevance = calculateTopicRelevance(essay, topic);
+      document.getElementById('topic-relevance').textContent = relevance.score + '%';
+      document.getElementById('topic-relevance-feedback').textContent = relevance.feedback;
+
+      const structure = analyzeStructure(essay, taskType);
+      document.getElementById('paragraph-count').textContent = structure.paragraphCount;
+      document.getElementById('structure-feedback-text').textContent = structure.feedback;
+
+      // Show results section
+      document.getElementById('results-section').style.display = 'block';
+      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+
+      // ── Reward logic (Band 7+ → 10 coins + 1 diamond, 30 min cooldown) ──
+      const user = auth.currentUser;
+
+      if (band >= 7.0) {
+        if (user) {
+          try {
+            const userRef = db.collection('users').doc(user.uid);
+            const userDoc = await userRef.get();
+
+            if (!userDoc.exists) {
+              await userRef.set({
+                coins: 0,
+                diamonds: 0,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+            }
+
+            const data = userDoc.data() || {};
+            const lastReward = data.lastRewardTimestamp;
+
+            let canReward = true;
+            let remainingMinutes = 0;
+
+            if (lastReward) {
+              const lastTime = lastReward.toDate();
+              const now = new Date();
+              const diffMs = now - lastTime;
+              const diffMinutes = diffMs / (1000 * 60);
+
+              if (diffMinutes < 30) {
+                canReward = false;
+                remainingMinutes = Math.ceil(30 - diffMinutes);
+              }
+            }
+
+            if (canReward) {
+              await userRef.update({
+                coins: firebase.firestore.FieldValue.increment(10),
+                diamonds: firebase.firestore.FieldValue.increment(1),
+                lastRewardTimestamp: firebase.firestore.FieldValue.serverTimestamp()
+              });
+
+              showModal(
+                translations[currentLang].rewardTitle,
+                translations[currentLang].rewardEarned,
+                "success"
+              );
+            } else {
+              const msg = translations[currentLang].cooldownWarning.replace('{minutes}', remainingMinutes);
+              showModal(translations[currentLang].cooldownTitle, msg, "warning");
+            }
+          } catch (err) {
+            console.error("Reward processing failed:", err);
+            showError("Failed to save reward. Please try again.");
+          }
+        } else {
+          showWarning(translations[currentLang].signInPrompt);
+        }
+      } else if (band >= 5.5) {
+        const msg = translations[currentLang].keepPracticing.replace('{band}', band.toFixed(1));
+        showModal(translations[currentLang].goodEffort, msg, "info");
+      }
+
+      showSuccess("Essay analyzed successfully!");
+    }
+
+    // ── Helper Functions ──
+    function isNonsense(essay) {
+      const repeatedChars = /(.)\1{5,}/.test(essay);
+      const noSentences = essay.split(/[.!?]/).filter(s => s.trim()).length < 2;
+      const randomPattern = !/[a-zA-Z]{3,}/.test(essay);
+      const highRepetition = findRepeatedWords(essay).length > essay.split(/\s+/).length * 0.5;
+      const noPunctuation = !/[.,!?]/.test(essay);
+      return repeatedChars || noSentences || randomPattern || highRepetition || noPunctuation;
+    }
+
+    function calculateBandScore(words, taskType, essay) {
+      const minWords = taskType === 'task1' ? 150 : 250;
+      let score = 0;
+      if (words < minWords * 0.5) score = 1;
+      else if (words < minWords) score = 4 + (words / minWords) * 2;
+      else if (words < minWords * 1.2) score = 6.5;
+      else score = 8 + Math.min((words - minWords) / 100, 1);
+
+      score -= checkGrammar(essay).length * 0.5;
+      score += calculateVocabulary(essay).score / 50;
+      score += calculateComplexity(essay).score / 50;
+      score += calculateCoherence(essay).score / 50;
+      return Math.max(0, Math.min(9, score));
+    }
+
+    function checkGrammar(essay) {
+      const errors = [];
+      if (!essay.endsWith('.') && !essay.endsWith('!') && !essay.endsWith('?')) {
+        errors.push('Essay does not end with proper punctuation.');
+      }
+      const sentences = essay.split(/[.!?]/).filter(s => s.trim());
+      if (sentences.length < 5) errors.push('Too few sentences - aim for at least 5-7.');
+      const repeated = findRepeatedWords(essay);
+      if (repeated.length) errors.push(`Repeated words: ${repeated.join(', ')} - vary your vocabulary.`);
+      if (essay.charAt(0) !== essay.charAt(0).toUpperCase()) errors.push('First letter should be capitalized.');
+      sentences.forEach(s => {
+        if (s.split(/\s+/).length > 40) errors.push('Potential run-on sentence detected.');
+      });
+      return errors;
+    }
+
+    function checkSpelling(essay) {
+      const errors = [];
+      const misspellings = {
+        'recieve': 'receive', 'definately': 'definitely', 'occured': 'occurred',
+        'seperate': 'separate', 'goverment': 'government', 'enviroment': 'environment',
+        'succesful': 'successful', 'arguement': 'argument', 'wierd': 'weird'
+      };
+      const words = essay.toLowerCase().split(/\s+/);
+      words.forEach(w => {
+        if (misspellings[w]) errors.push(`"${w}" should be "${misspellings[w]}"`);
+      });
+      return errors;
+    }
+
+    function calculateVocabulary(essay) {
+      const words = essay.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+      const unique = new Set(words).size;
+      const diversity = words.length ? (unique / words.length) * 100 : 0;
+      const score = Math.min(Math.round(diversity), 100);
+      let feedback = 'Excellent vocabulary diversity.';
+      if (score < 50) feedback = 'Limited vocabulary — try using more synonyms and varied terms.';
+      else if (score < 70) feedback = 'Good range — reduce repetition of the same words.';
+      return { score, feedback };
+    }
+
+    function calculateComplexity(essay) {
+      const sentences = essay.split(/[.!?]/).filter(s => s.trim());
+      const lengths = sentences.map(s => s.split(/\s+/).length);
+      const avg = lengths.length ? lengths.reduce((a,b)=>a+b,0)/lengths.length : 0;
+      const longRatio = lengths.filter(l => l > 15).length / lengths.length * 100 || 0;
+      let score = Math.min(Math.round((avg * 5) + longRatio) / 2, 100);
+      let feedback = 'Strong sentence complexity and variety.';
+      if (score < 50) feedback = 'Use more complex structures (clauses, passives, conditionals).';
+      else if (score < 70) feedback = 'Moderate complexity — try adding more compound/complex sentences.';
+      return { score, feedback };
+    }
+
+    function calculateCoherence(essay) {
+      const sentences = essay.split(/[.!?]/).filter(s => s.trim());
+      const lengths = sentences.map(s => s.split(/\s+/).length);
+      const avg = lengths.length ? lengths.reduce((a,b)=>a+b,0)/lengths.length : 0;
+      const variety = lengths.length ? Math.max(...lengths) - Math.min(...lengths) : 0;
+      const linkingWords = ['however','therefore','moreover','furthermore','in addition','on the other hand','for example','in conclusion','firstly','secondly','finally'];
+      let linkCount = 0;
+      linkingWords.forEach(word => {
+        linkCount += (essay.toLowerCase().match(new RegExp(`\\b${word}\\b`, 'g')) || []).length;
+      });
+      let score = 50;
+      if (avg > 10) score += 15;
+      if (variety > 5) score += 15;
+      if (sentences.length > 5) score += 10;
+      if (linkCount > 3) score += 10;
+      score = Math.min(score, 100);
+      let feedback = 'Excellent coherence and logical flow.';
+      if (score < 60) feedback = 'Improve flow — use more linking words and vary sentence length.';
+      else if (score < 80) feedback = 'Good overall flow — consider adding more transition phrases.';
+      return { score, feedback };
+    }
+
+    function calculateTopicRelevance(essay, topic) {
+      if (!topic) return { score: 0, feedback: 'No topic provided — relevance cannot be fully assessed.' };
+      const tWords = topic.split(/\s+/).map(w => w.toLowerCase());
+      const eWords = essay.toLowerCase().split(/\s+/);
+      const matches = tWords.filter(w => eWords.includes(w)).length;
+      const score = tWords.length ? Math.round((matches / tWords.length) * 100) : 0;
+      let feedback = 'Highly relevant to the topic.';
+      if (score < 50) feedback = 'Low relevance — make sure to address the main topic directly.';
+      else if (score < 80) feedback = 'Moderate relevance — include more keywords from the topic.';
+      return { score, feedback };
+    }
+
+    function analyzeStructure(essay, taskType) {
+      const paras = essay.split(/\n\s*\n/).filter(p => p.trim());
+      const count = paras.length;
+      const minParas = taskType === 'task1' ? 3 : 4;
+      let feedback = 'Well-structured with clear paragraphing.';
+      if (count < minParas) feedback = `Too few paragraphs — aim for at least ${minParas}.`;
+      else if (paras.some(p => p.split(/\s+/).length < 40)) feedback = 'Some paragraphs are too short — develop ideas more fully.';
+      return { paragraphCount: count, feedback };
+    }
+
+    function findRepeatedWords(essay) {
+      const words = essay.toLowerCase().split(/\s+/);
+      const count = {};
+      words.forEach(w => count[w] = (count[w] || 0) + 1);
+      return Object.keys(count).filter(w => count[w] > 3 && w.length > 3);
+    }
+
+    // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+  </script>
+</body>
+</html>

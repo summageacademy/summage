@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grammar Checker - Summage Academy</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; margin:0; overflow:hidden; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+      color: #1f2937;
+    }
+
+    /* Custom Modal */
+    .custom-modal-backdrop {
+      position: fixed; inset:0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      display: flex; align-items:center; justify-content:center;
+      z-index: 2000; opacity:0; pointer-events:none;
+      transition: opacity 0.3s ease;
+    }
+    .custom-modal-backdrop.active { opacity:1; pointer-events:all; }
+
+    .custom-modal {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      width: 90%; max-width: 420px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.28);
+      position: relative;
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      border: 1px solid rgba(242,75,11,0.18);
+    }
+    .custom-modal.active { transform: scale(1); }
+
+    .modal-close-btn {
+      position: absolute; top:16px; right:20px;
+      background:none; border:none; font-size:2.2rem;
+      color:#6b7280; cursor:pointer; transition:all 0.25s;
+    }
+    .modal-close-btn:hover { color:#f24b0b; transform:rotate(90deg); }
+
+    .modal-title { font-size:1.5rem; font-weight:700; text-align:center; margin-bottom:16px; padding-right:40px; }
+    .modal-message { font-size:1.1rem; color:#4b5563; line-height:1.6; text-align:center; margin-bottom:24px; }
+
+    .type-error .modal-title { color:#dc2626; }
+    .type-warning .modal-title { color:#f59e0b; }
+    .type-success .modal-title { color:#059669; }
+
+    /* Layout */
+    .sidebar { position:fixed; inset:0 auto 0 0; width:260px; background:rgba(255,255,255,0.92); backdrop-filter:blur(16px);
+      border-right:1px solid rgba(0,0,0,0.06); padding:32px 24px; z-index:100; display:none; }
+    .logo-container { display:flex; align-items:center; gap:14px; }
+    .logo-img { width:44px; height:44px; border-radius:12px; box-shadow:0 4px 12px rgba(242,75,11,0.18); }
+    .logo-text { font-size:1.8rem; font-weight:800; color:#f24b0b; letter-spacing:1px; text-transform:uppercase; }
+
+    .grammar-info-box { margin:32px 0; padding:20px; background:rgba(242,75,11,0.06); border-radius:16px; border-left:5px solid #f24b0b; }
+    .grammar-info-box h3 { color:#f24b0b; font-size:1.4rem; margin-bottom:12px; }
+    .grammar-info-box p, .grammar-info-box li { font-size:0.95rem; color:#4b5563; }
+    .grammar-info-box ul { list-style:none; padding-left:0; margin-top:12px; }
+    .grammar-info-box li { margin:10px 0; }
+
+    /* User Rewards Box (added from IELTS page) */
+    .user-stats-box {
+      margin: 32px 0;
+      padding: 20px;
+      background: rgba(6,168,124,0.08);
+      border-radius: 16px;
+      border-left: 5px solid #06a87c;
+    }
+
+    .sidebar-back-btn {
+      display:flex; align-items:center; justify-content:center; gap:12px; width:100%; margin-top:48px;
+      padding:16px 28px; font-size:1.05rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px;
+      color:white; background:linear-gradient(145deg,#f24b0b,#ff6b3d); border:none; border-radius:50px;
+      cursor:pointer; box-shadow:0 6px 0 #c23a0a; transition:all 0.25s cubic-bezier(0.34,1.12,0.48,1);
+    }
+    .sidebar-back-btn:hover { transform:translateY(-3px); box-shadow:0 9px 0 #c23a0a; }
+    .sidebar-back-btn:active { transform:translateY(2px); box-shadow:0 2px 0 #c23a0a; }
+
+    .mobile-top {
+      position:fixed; top:0; left:0; right:0; height:64px;
+      background:rgba(255,255,255,0.9); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(0,0,0,0.06); display:flex; align-items:center; justify-content:space-between;
+      padding:0 20px; z-index:100;
+    }
+
+    .mobile-top .logo-container { display:flex; align-items:center; gap:10px; }
+    .mobile-top .logo-img { width:40px; height:40px; border-radius:10px; }
+    .mobile-top .logo-text { font-size:1.5rem; font-weight:800; color:#f24b0b; }
+
+    /* Mobile Coin Badge (added from IELTS page) */
+    .mobile-coin-badge {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin-left: 12px;
+      padding: 4px 10px;
+      background: rgba(242, 75, 11, 0.12);
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f24b0b;
+    }
+    .coin-icon { font-size: 1.1rem; }
+
+    .language-selector { position:relative; }
+    .lang-btn {
+      background:none; border:none; padding:8px; cursor:pointer; border-radius:50%;
+      transition:all 0.25s ease; display:flex; align-items:center; justify-content:center;
+    }
+    .lang-btn:hover { background:rgba(242,75,11,0.1); transform:scale(1.12); }
+    .lang-btn img {
+      width: 28px;
+      height: 28px;
+      object-fit: cover;          /* Changed from contain to cover for better filling */
+      object-position: center;    /* Ensures centering */
+      border-radius: 0%;          /* Changed from 50% to 0% to match AI */
+    }
+    .language-flags {
+      position:absolute; top:140%; right:0; background:white; border-radius:12px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.15); opacity:0; transform:translateY(-10px);
+      transition:all 0.25s ease; pointer-events:none; min-width:160px;
+    }
+    .language-flags.show { opacity:1; transform:translateY(0); pointer-events:all; }
+
+    .flag { padding:12px 18px; display:flex; align-items:center; gap:12px; cursor:pointer; }
+    .flag:hover { background:#f24b0b10; }
+    .flag img { width:28px; border-radius:6px; }
+
+    .desktop-lang-btn {
+      position:fixed; top:20px; right:24px;
+      background:rgba(255,255,255,0.9); backdrop-filter:blur(12px);
+      border-radius:50%; padding:12px; box-shadow:0 4px 12px rgba(0,0,0,0.12);
+      z-index:95; display:none;
+    }
+
+    .mobile-bottom-grammar {
+      position:fixed; bottom:0; left:0; right:0; height:80px;
+      background:rgba(255,255,255,0.9); backdrop-filter:blur(12px);
+      border-top:1px solid rgba(0,0,0,0.08); z-index:100; display:none;
+      align-items:center; justify-content:center; padding:0 20px;
+    }
+
+    .mobile-back-btn {
+      width:100%; max-width:360px; padding:14px;
+      background:#f24b0b; color:white; font-weight:700; text-transform:uppercase;
+      letter-spacing:0.8px; font-size:15px; border:none; border-radius:50px;
+      cursor:pointer; box-shadow:0 4px 0 #c23a0a; transition:all 0.25s ease;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+    }
+
+    .mobile-back-btn:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c23a0a; }
+    .mobile-back-btn:active { transform:translateY(1px); box-shadow:0 2px 0 #c23a0a; }
+
+    .main-view {
+      height:100%; overflow-y:auto; -webkit-overflow-scrolling:touch;
+      padding-top:64px; padding-bottom:92px;
+    }
+
+    .main-view::-webkit-scrollbar { display:none; }
+    .main-view { scrollbar-width:none; -ms-overflow-style:none; }
+
+    @media (min-width:769px) {
+      .sidebar { display:block; }
+      .mobile-top, .mobile-bottom-grammar { display:none; }
+      .main-view { margin-left:260px; padding-top:0; padding-bottom:0; }
+      .desktop-lang-btn { display:block; }
+      .main-view::-webkit-scrollbar { width:10px; }
+      .main-view::-webkit-scrollbar-track { background:#f1f1f1; }
+      .main-view::-webkit-scrollbar-thumb { background:#f24b0b; border-radius:10px; }
+    }
+
+    @media (max-width:768px) {
+      .sidebar { display:none; }
+      .mobile-top, .mobile-bottom-grammar { display:flex; }
+      .mobile-coin-badge { display: flex; }
+    }
+
+    .grammar-hero {
+      min-height:calc(100vh - 64px - 80px);
+      display:flex; align-items:center; justify-content:center;
+      padding:40px 24px;
+      background:linear-gradient(135deg, #fffaf5 0%, #fef3f0 100%);
+    }
+
+    .grammar-content { max-width:900px; text-align:center; }
+
+    .grammar-content h1 {
+      font-size:clamp(2.8rem,9vw,5rem); font-weight:800; color:#f24b0b;
+      margin-bottom:1rem; line-height:1.1;
+    }
+
+    .grammar-content p {
+      font-size:clamp(1.2rem,4vw,1.4rem); color:#4b5563;
+      margin-bottom:2.5rem; max-width:720px; margin-left:auto; margin-right:auto;
+    }
+
+    .grammar-cta-box {
+      background:white; border-radius:24px; padding:32px 24px;
+      box-shadow:0 16px 60px rgba(242,75,11,0.14);
+      border:1px solid rgba(242,75,11,0.15);
+    }
+
+    .textarea-wrapper textarea {
+      width:100%; padding:16px; border:2px solid #e5e7eb; border-radius:12px;
+      font-size:1.1rem; line-height:1.7; resize:vertical; min-height:280px;
+      font-family:inherit;
+    }
+
+    .textarea-wrapper textarea:focus {
+      outline:none; border-color:#f24b0b; box-shadow:0 0 0 3px rgba(242,75,11,0.12);
+    }
+
+    .check-btn {
+      margin-top:24px; padding:16px 56px; background:#f24b0b; color:white;
+      border:none; border-radius:50px; font-size:1.2rem; font-weight:700;
+      cursor:pointer; box-shadow:0 6px 0 #c23a0a; transition:all 0.25s;
+    }
+
+    .check-btn:hover { transform:translateY(-3px); box-shadow:0 10px 0 #c23a0a; }
+
+    .results-section {
+      margin-top:48px; padding:32px 24px; background:#f9fafb;
+      border-radius:24px; box-shadow:0 8px 24px rgba(242,75,11,0.08); display:none;
+    }
+
+    .results-section h2 {
+      text-align:center; font-size:2rem; color:#111827; margin-bottom:32px;
+    }
+
+    .stats-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:24px;
+    }
+
+    .stat-card {
+      background:white; padding:24px; border-radius:16px;
+      text-align:center; box-shadow:0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    .stat-card h3 { font-size:1.2rem; color:#4b5563; margin-bottom:12px; }
+    .stat-value { font-size:2.5rem; font-weight:800; color:#f24b0b; }
+    .stat-desc { font-size:0.95rem; color:#6b7280; margin-top:8px; }
+
+    .grammar-feedback, .spelling-feedback {
+      margin-top:32px;
+    }
+
+    .feedback-list { list-style:none; padding:0; }
+
+    .feedback-item {
+      padding:12px; background:rgba(242,75,11,0.06); border-radius:8px;
+      margin-bottom:12px; color:#111827;
+    }
+
+    .coherence-feedback {
+      margin-top:32px; padding:20px; background:rgba(5,150,105,0.06);
+      border-radius:16px;
+    }
+
+    @media (max-width:768px) {
+      .grammar-hero { padding:32px 16px; }
+      .grammar-cta-box { padding:24px 16px; }
+      .results-section { padding:24px 16px; }
+      .stats-grid { grid-template-columns:1fr; }
+    }
+
+    .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+  </style>
+</head>
+<body>
+  <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+  <!-- Desktop Sidebar -->
+  <div class="sidebar">
+    <div class="logo-container">
+      <img src="/assets/logo.webp" alt="Summage Logo" class="logo-img">
+      <div class="logo-text">Summage</div>
+    </div>
+
+    <div class="grammar-info-box">
+      <h3>Summage Grammar Checker</h3>
+      <p>Simple, fast grammar, spelling, punctuation & readability check</p>
+    </div>
+
+    <!-- User Rewards Box (added) -->
+    <div class="user-stats-box">
+      <h3>Your Rewards</h3>
+      <div style="display: flex; justify-content: space-around; margin-top: 16px;">
+        <div style="text-align: center;">
+          <div style="font-size: 2.1rem; font-weight: 800; color: #f59e0b;" id="user-coins">0</div>
+          <div style="font-size: 0.9rem; color: #4b5563;">Coins</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 2.1rem; font-weight: 800; color: #3b82f6;" id="user-diamonds">0</div>
+          <div style="font-size: 0.9rem; color: #4b5563;">Diamonds</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="sidebar-back-btn" onclick="goBack()">
+      Back
+    </button>
+  </div>
+
+  <!-- Mobile top bar -->
+  <div class="mobile-top">
+    <div class="logo-container">
+      <img src="/assets/logo.webp" alt="Summage" class="logo-img">
+      <div class="logo-text">Summage</div>
+    </div>
+
+    <!-- Mobile Coin Badge (added) -->
+    <div class="mobile-coin-badge" id="mobile-coin-display">
+      <span class="coin-icon">🪙</span>
+      <span class="coin-count" id="m-coins">0</span>
+    </div>
+
+    <div class="language-selector">
+      <button class="lang-btn" id="mobileLangBtn">
+        <img src="/assets/images/lang/globe.webp" alt="Language">
+      </button>
+      <div class="language-flags" id="mobileLangMenu">
+        <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+        <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+        <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop floating language button -->
+  <div class="desktop-lang-btn language-selector">
+    <button class="lang-btn" id="desktopLangBtn">
+      <img src="/assets/images/lang/globe.webp" alt="Language">
+    </button>
+    <div class="language-flags" id="desktopLangMenu">
+      <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+      <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+      <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+    </div>
+  </div>
+
+  <!-- Mobile bottom bar -->
+  <div class="mobile-bottom-grammar">
+    <button class="mobile-back-btn" id="mobile-back-btn">
+      <i class="fas fa-arrow-left-long"></i> Back
+    </button>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-view">
+    <section class="grammar-hero">
+      <div class="grammar-content">
+        <h1 data-lang-key="title">Grammar Checker</h1>
+        <p data-lang-key="subtitle">Paste your text — get instant grammar, spelling & readability feedback</p>
+        
+        <div class="grammar-cta-box">
+          <p data-lang-key="ctaText">Enter or paste your text here</p>
+          <div class="textarea-wrapper">
+            <textarea id="text-input" placeholder="Type or paste your English text here..." rows="14"></textarea>
+          </div>
+          <button class="check-btn" id="check-btn">Check Grammar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results section -->
+    <section class="results-section" id="results-section">
+      <h2>Grammar Check Results</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Word Count</h3>
+          <div class="stat-value" id="word-count">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Sentence Count</h3>
+          <div class="stat-value" id="sentence-count">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Grammar Issues</h3>
+          <div class="stat-value" id="grammar-issues">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Spelling Issues</h3>
+          <div class="stat-value" id="spelling-issues">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Readability Score</h3>
+          <div class="stat-value" id="readability-score">0%</div>
+        </div>
+      </div>
+
+      <div class="grammar-feedback">
+        <h3>Grammar & Punctuation Feedback</h3>
+        <ul class="feedback-list" id="grammar-list"></ul>
+      </div>
+
+      <div class="spelling-feedback">
+        <h3>Spelling Feedback</h3>
+        <ul class="feedback-list" id="spelling-list"></ul>
+      </div>
+
+      <div class="coherence-feedback">
+        <h3>Readability & Style Feedback</h3>
+        <p id="coherence-feedback-text">No feedback yet.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Custom Modal -->
+  <div class="custom-modal-backdrop" id="customModalBackdrop">
+    <div class="custom-modal" id="customModal">
+      <button class="modal-close-btn" id="customModalClose">×</button>
+      <div class="modal-title" id="customModalTitle"></div>
+      <div class="modal-message" id="customModalMessage"></div>
+    </div>
+  </div>
+
+  <script>
+    // Firebase Configuration (same as IELTS page)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+      authDomain: "summage-backend.firebaseapp.com",
+      projectId: "summage-backend",
+      storageBucket: "summage-backend.firebasestorage.app",
+      messagingSenderId: "128191434358",
+      appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Translations
+    const translations = {
+      en: { 
+        title: "Grammar Checker", 
+        subtitle: "Paste your text — get instant grammar, spelling & readability feedback", 
+        ctaText: "Enter or paste your text here" 
+      },
+      ru: { 
+        title: "Проверка грамматики", 
+        subtitle: "Вставьте текст — мгновенная проверка грамматики, орфографии и читаемости", 
+        ctaText: "Введите или вставьте текст сюда" 
+      },
+      uz: { 
+        title: "Grammatika tekshiruvi", 
+        subtitle: "Matnni joylashtiring — grammatika, imlo va o'qilish sifati tezkor tekshiruvi", 
+        ctaText: "Matnni kiriting yoki joylashtiring" 
+      }
+    };
+
+    const LANG_KEY = 'summage_preferred_lang';
+    let currentLang = localStorage.getItem(LANG_KEY) || 'en';
+
+    function updateLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem(LANG_KEY, lang);
+
+      document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const key = el.dataset.langKey;
+        if (translations[lang]?.[key]) el.textContent = translations[lang][key];
+      });
+
+      const backBtn = document.getElementById('mobile-back-btn');
+      if (backBtn) {
+        const backText = lang === 'en' ? 'Back' : lang === 'ru' ? 'Назад' : 'Orqaga';
+        backBtn.innerHTML = `<i class="fas fa-arrow-left-long"></i> ${backText}`;
+      }
+    }
+
+    // Language menu
+    document.getElementById('mobileLangBtn')?.addEventListener('click', e => {
+      e.stopPropagation();
+      document.getElementById('mobileLangMenu')?.classList.toggle('show');
+    });
+
+    document.getElementById('desktopLangBtn')?.addEventListener('click', e => {
+      e.stopPropagation();
+      document.getElementById('desktopLangMenu')?.classList.toggle('show');
+    });
+
+    document.querySelectorAll('.flag').forEach(flag => {
+      flag.addEventListener('click', e => {
+        e.stopPropagation();
+        updateLanguage(flag.dataset.lang);
+        document.getElementById('mobileLangMenu')?.classList.remove('show');
+        document.getElementById('desktopLangMenu')?.classList.remove('show');
+      });
+    });
+
+    document.addEventListener('click', () => {
+      document.getElementById('mobileLangMenu')?.classList.remove('show');
+      document.getElementById('desktopLangMenu')?.classList.remove('show');
+    });
+
+    // Improved back navigation (from IELTS page)
+    function goBack() {
+      const before = window.location.href;
+      history.back();
+      setTimeout(() => {
+        if (window.location.href === before) {
+          window.location.assign('/learn/');
+        }
+      }, 50);
+    }
+
+    document.getElementById('mobile-back-btn')?.addEventListener('click', goBack);
+
+    updateLanguage(currentLang);
+
+    // Modal
+    const modalBackdrop = document.getElementById('customModalBackdrop');
+    const modal = document.getElementById('customModal');
+    const modalTitle = document.getElementById('customModalTitle');
+    const modalMessage = document.getElementById('customModalMessage');
+    const modalClose = document.getElementById('customModalClose');
+
+    function showModal(title, message, type = 'info') {
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      modal.className = 'custom-modal';
+      modal.classList.add(`type-${type}`);
+      modalBackdrop.classList.add('active');
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      modalBackdrop.classList.remove('active');
+      modal.classList.remove('active');
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', e => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function showError(msg)    { showModal("Error", msg, "error"); }
+    function showWarning(msg)  { showModal("Warning", msg, "warning"); }
+    function showSuccess(msg)  { showModal("Success", msg, "success"); }
+
+    // Rewards Display (coins & diamonds) - added from IELTS page
+    const coinsEl = document.getElementById('user-coins');
+    const diamondsEl = document.getElementById('user-diamonds');
+    const mCoinsEl = document.getElementById('m-coins');
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        if (coinsEl) coinsEl.textContent = "—";
+        if (diamondsEl) diamondsEl.textContent = "—";
+        if (mCoinsEl) mCoinsEl.textContent = "—";
+        return;
+      }
+
+      const userRef = db.collection('users').doc(user.uid);
+
+      userRef.onSnapshot(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          const coins = data.coins ?? 0;
+          const diamonds = data.diamonds ?? 0;
+
+          if (coinsEl) coinsEl.textContent = coins;
+          if (diamondsEl) diamondsEl.textContent = diamonds;
+          if (mCoinsEl) mCoinsEl.textContent = coins;
+        } else {
+          userRef.set({
+            coins: 0,
+            diamonds: 0,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(err => console.error("Create user doc failed:", err));
+        }
+      }, err => console.error("Firestore listen error:", err));
+    });
+
+    // Grammar Analysis
+    document.getElementById('check-btn').addEventListener('click', () => {
+      const text = document.getElementById('text-input')?.value?.trim() || '';
+
+      if (!text) {
+        showError("Please enter or paste some text.");
+        return;
+      }
+
+      if (/(.)\1{6,}/.test(text) || !/[a-zA-Z]{3,}/.test(text) || text.split(/\s+/).length < 5) {
+        showWarning("Text looks like gibberish or too short.\nPlease enter proper English sentences.");
+        return;
+      }
+
+      const words = text.split(/\s+/).filter(w => w.trim()).length;
+      const sentences = text.split(/[.!?]+/).filter(s => s.trim()).length || 1;
+
+      const grammarIssues = [];
+      if (text[0] && text[0] !== text[0].toUpperCase()) {
+        grammarIssues.push("First letter should be capitalized.");
+      }
+      if (!/[.!?]$/.test(text.trim())) {
+        grammarIssues.push("Text should end with punctuation (., !, or ?).");
+      }
+      if (text.match(/\b(this|that|these|those)\s+(is|are|was|were)\b/gi)?.length) {
+        grammarIssues.push("Check subject-verb agreement after demonstratives (this/that/these/those).");
+      }
+      if (text.match(/\b(he|she|it)\s+(are|were)\b/gi)) {
+        grammarIssues.push("Singular subject (he/she/it) with plural verb detected.");
+      }
+      if (text.match(/\b(i|we|you|they)\s+(is|was)\b/gi)) {
+        grammarIssues.push("Plural subject with singular verb detected.");
+      }
+
+      const spellingIssues = [];
+      const commonErrors = {
+        'recieve': 'receive', 'definately': 'definitely', 'seperate': 'separate',
+        'goverment': 'government', 'occured': 'occurred', 'wierd': 'weird'
+      };
+      const wordsArr = text.toLowerCase().split(/\s+/);
+      wordsArr.forEach(w => {
+        if (commonErrors[w]) {
+          spellingIssues.push(`"${w}" should probably be "${commonErrors[w]}"`);
+        }
+      });
+
+      const avgSentenceLength = words / sentences;
+      let readabilityScore = 100 - Math.round(avgSentenceLength * 2.5);
+      if (readabilityScore < 0) readabilityScore = 0;
+      if (readabilityScore > 100) readabilityScore = 100;
+
+      let readabilityText = "Good readability.";
+      if (readabilityScore < 50) readabilityText = "Text may be hard to read — try shorter sentences.";
+      else if (readabilityScore < 75) readabilityText = "Moderate readability — vary sentence length.";
+
+      document.getElementById('word-count').textContent = words;
+      document.getElementById('sentence-count').textContent = sentences;
+      document.getElementById('grammar-issues').textContent = grammarIssues.length;
+      document.getElementById('spelling-issues').textContent = spellingIssues.length;
+      document.getElementById('readability-score').textContent = readabilityScore + '%';
+
+      document.getElementById('grammar-list').innerHTML = grammarIssues.length 
+        ? grammarIssues.map(i => `<li class="feedback-item">${i}</li>`).join('') 
+        : '<li class="feedback-item">No major grammar issues found.</li>';
+
+      document.getElementById('spelling-list').innerHTML = spellingIssues.length 
+        ? spellingIssues.map(i => `<li class="feedback-item">${i}</li>`).join('') 
+        : '<li class="feedback-item">No common spelling mistakes detected.</li>';
+
+      document.getElementById('coherence-feedback-text').textContent = readabilityText;
+
+      document.getElementById('results-section').style.display = 'block';
+      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+
+      showSuccess("Check complete!");
+    });
+
+    // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+  </script>
+</body>
+</html>

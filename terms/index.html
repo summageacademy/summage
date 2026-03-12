@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Summage Academy</title>
+    <meta name="description" content="Summage Academy Terms of Service: rules for using our free English learning and IELTS preparation platform." />
+    <meta name="keywords" content="Summage Academy terms of service, free IELTS terms, English learning rules, platform usage policy" />
+    <meta name="author" content="Summage Academy" />
+    <meta name="robots" content="index, follow" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Hide scrollbar completely */
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        ::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html[lang="ru"] * {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover { transform: scale(1.05); }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .language-selector { position: relative; }
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+        .language-button img { width: 26px; height: 26px; }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .flag {
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; border-radius: 6px; }
+
+        .terms-container {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 5vw 120px;
+            width: 100%;
+        }
+
+        .terms-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #06a87c;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .terms-intro {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .terms-section {
+            margin-bottom: 48px;
+        }
+
+        .terms-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .terms-section p,
+        .terms-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 16px;
+        }
+
+        .terms-section ul {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .terms-section li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #06a87c;
+            font-weight: bold;
+        }
+
+        .last-updated {
+            font-size: 1rem;
+            color: #888;
+            text-align: center;
+            margin-top: 40px;
+            font-style: italic;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 80px 5vw 40px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul { list-style: none; }
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 2;
+            display: block;
+            transition: color 0.3s;
+        }
+        .footer-column a:hover { color: #f24b0b; }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #888;
+        }
+
+        .mobile-footer-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px 5vw;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+
+        .mobile-back-btn {
+            width: 100%;
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 14px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mobile-back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        @media (max-width: 900px) {
+            .navbar { padding: 20px; justify-content: space-between; }
+            .back-btn { display: none; }
+            .terms-container { padding: 60px 20px 100px; }
+            .terms-title { font-size: 2.4rem; }
+            .terms-section h2 { font-size: 1.6rem; }
+            footer { display: none; }
+            .mobile-footer-bar { display: block; }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <nav class="navbar">
+        <button class="back-btn" id="desktop-back-btn">Back</button>
+
+        <div class="logo-container" onclick="window.location.href='https://summage.org'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+
+        <div class="language-selector">
+            <button class="language-button" id="lang-btn" aria-label="Select language">
+                <img src="/assets/images/lang/globe.webp" alt="">
+            </button>
+            <div class="language-flags" id="lang-flags">
+                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="terms-container">
+        <h1 class="terms-title" data-key="termsTitle">Terms of Service</h1>
+        <p class="terms-intro" data-key="termsIntro">Welcome to Summage Academy at summage.org. These Terms of Service govern your access to and use of our free educational platform for learning English and preparing for IELTS. By creating an account or using the platform you agree to these terms. If you do not agree please do not use the platform.</p>
+
+        <div class="terms-section">
+            <h2 data-key="sec1Title">1. Acceptance of Terms</h2>
+            <p data-key="sec1Text">These Terms form a legal agreement between you and Summage Academy. We may update these Terms at any time. Continued use after changes constitutes acceptance. We will notify you of material changes via email or a platform announcement.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec2Title">2. Eligibility and Accounts</h2>
+            <p data-key="sec2Text">To access main features lessons progress tracking and tools including AI essay and grammar checkers you must create an account with a valid email display name and password.</p>
+            <p data-key="sec2Para2">Users under eleven years old must obtain permission from a parent or guardian before creating an account. This permission can be informal for example telling your parents about Summage Academy and receiving their verbal agreement. Parents and guardians remain responsible for supervising use by children under their care.</p>
+            <p data-key="sec2Para3">You are responsible for keeping your account secure. Do not share login details. You must have the legal capacity to enter into binding contracts in your jurisdiction.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec3Title">3. Permitted Use and License</h2>
+            <p data-key="sec3Text">We grant you a limited non-exclusive non-transferable revocable license to access and use the platform solely for personal non-commercial English learning and IELTS preparation.</p>
+            <p data-key="sec3Para2">All content lessons videos exercises design logo tools and materials belong to Summage Academy or our licensors. You may not download copy reproduce distribute modify create derivative works from or use any content commercially without our prior written permission.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec4Title">4. Prohibited Conduct</h2>
+            <p data-key="sec4Text">You agree not to do any of the following:</p>
+            <ul>
+                <li data-key="sec4Bullet1">Use bots scripts automation or any unauthorized tools to access the platform earn coins or manipulate features violation may result in immediate account deletion</li>
+                <li data-key="sec4Bullet2">Share accounts or allow others to use your login credentials</li>
+                <li data-key="sec4Bullet3">Engage in fraud spam abuse harassment cheating on exercises or tests or any other harmful behavior</li>
+                <li data-key="sec4Bullet4">Use platform materials for commercial purposes such as reselling or teaching paid courses we may pursue legal action in such cases</li>
+                <li data-key="sec4Bullet5">Attempt to reverse-engineer scrape or copy content</li>
+                <li data-key="sec4Bullet6">Post or transmit illegal offensive or rights-infringing material where applicable in support or chat features</li>
+            </ul>
+            <p data-key="sec4Para2">Any violation of these rules may lead to account suspension deletion or other measures necessary to protect the platform and its users.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec5Title">5. In-Platform Currency Coins and Diamonds</h2>
+            <p data-key="sec5Text">The platform features a gamified system that lets you earn coins and diamonds through completing lessons making progress or participating in other activities. These are virtual in-game currencies only.</p>
+            <p data-key="sec5Para2">Coins and diamonds have no real-world monetary value. They cannot be exchanged for cash and are not considered real money or legal tender under any law. You may use them only within the platform to unlock certain in-game services or to purchase Summage Academy merchandise in the marketplace section if available. We reserve the right to modify limit or remove this system at any time without prior notice or compensation.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec6Title">6. Advertisements and Third-Party Services</h2>
+            <p data-key="sec6Text">The platform is free thanks to advertisements including those from third-party providers such as Google AdSense. We work to display only appropriate non-harmful and non-misleading ads although we cannot guarantee that every advertisement will meet these standards.</p>
+            <p data-key="sec6Para2">We are not responsible for the content of third-party advertisements linked websites or services. Any interaction with advertisements occurs at your own risk.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec7Title">7. AI Tools and Accuracy Disclaimer</h2>
+            <p data-key="sec7Text">Our platform offers AI-powered tools including IELTS essay band estimation grammar checking and similar features. These tools exist solely for practice and learning purposes.</p>
+            <p data-key="sec7Para2">Scores feedback corrections and band estimates generated by AI are estimates only. They may contain errors inaccuracies or biases. These outputs are not official IELTS scores and do not guarantee any examination results. Summage Academy is not affiliated with endorsed by or partnered with IELTS IDP British Council or any official examination authority. Official IELTS scoring is provided exclusively by authorized organizations.</p>
+            <p data-key="sec7Para3">Please do not treat AI outputs as final or definitive. Success in IELTS or English learning depends on your personal effort self-discipline and consistent practice. The platform provides preparation and instruction but never guarantees specific outcomes.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec8Title">8. Termination and Changes</h2>
+            <p data-key="sec8Text">We may suspend or terminate your account at any time if you violate these Terms to protect the platform and its users or for any other legitimate reason. We also reserve the right to modify suspend or discontinue any part of the platform without prior notice.</p>
+            <p data-key="sec8Para2">We may revise these Terms at any time. Revised Terms will be posted here and we will notify you of significant changes via email or platform announcement. Your continued use after any changes indicates acceptance of the updated Terms.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec9Title">9. Disclaimers and Limitation of Liability</h2>
+            <p data-key="sec9Text">The platform is provided as is without any warranties express or implied. We do not guarantee uninterrupted access error-free performance or achievement of any particular learning outcome.</p>
+            <p data-key="sec9Para2">To the maximum extent permitted by law Summage Academy shall not be liable for any indirect incidental consequential or punitive damages arising from your use of the platform.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec10Title">10. Governing Law and Disputes</h2>
+            <p data-key="sec10Text">These Terms are governed by the laws of the Republic of Uzbekistan. Any disputes will be resolved primarily in the courts of Tashkent Uzbekistan. For international users we also take into account applicable laws of England and the United States where relevant although Uzbek law remains primary.</p>
+        </div>
+
+        <div class="terms-section">
+            <h2 data-key="sec11Title">11. Contact Us</h2>
+            <p data-key="sec11Text">If you have any questions about these Terms please reach out to us at support@summage.org or through our Telegram channel.</p>
+        </div>
+
+        <p class="last-updated" data-key="lastUpdated">Last updated: February 2026</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Summage Academy</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/contacts/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="/learn/">Start Learning</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="/help-centre/">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/terms/">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="current-year"></span> Summage Academy. Education without barriers.
+        </div>
+    </footer>
+
+    <div class="mobile-footer-bar">
+        <button class="mobile-back-btn" id="mobile-back-btn">Back</button>
+    </div>
+
+    <script>
+        const LANG_STORAGE_KEY = 'summage_preferred_lang';
+        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || 'en';
+
+        const translations = {
+            en: {
+                back: "Back",
+                termsTitle: "Terms of Service",
+                termsIntro: "Welcome to Summage Academy at summage.org. These Terms of Service govern your access to and use of our free educational platform for learning English and preparing for IELTS. By creating an account or using the platform you agree to these terms. If you do not agree please do not use the platform.",
+                sec1Title: "1. Acceptance of Terms",
+                sec1Text: "These Terms form a legal agreement between you and Summage Academy. We may update these Terms at any time. Continued use after changes constitutes acceptance. We will notify you of material changes via email or a platform announcement.",
+                sec2Title: "2. Eligibility and Accounts",
+                sec2Text: "To access main features lessons progress tracking and tools including AI essay and grammar checkers you must create an account with a valid email display name and password.",
+                sec2Para2: "Users under eleven years old must obtain permission from a parent or guardian before creating an account. This permission can be informal for example telling your parents about Summage Academy and receiving their verbal agreement. Parents and guardians remain responsible for supervising use by children under their care.",
+                sec2Para3: "You are responsible for keeping your account secure. Do not share login details. You must have the legal capacity to enter into binding contracts in your jurisdiction.",
+                sec3Title: "3. Permitted Use and License",
+                sec3Text: "We grant you a limited non-exclusive non-transferable revocable license to access and use the platform solely for personal non-commercial English learning and IELTS preparation.",
+                sec3Para2: "All content lessons videos exercises design logo tools and materials belong to Summage Academy or our licensors. You may not download copy reproduce distribute modify create derivative works from or use any content commercially without our prior written permission.",
+                sec4Title: "4. Prohibited Conduct",
+                sec4Text: "You agree not to do any of the following:",
+                sec4Bullet1: "Use bots scripts automation or any unauthorized tools to access the platform earn coins or manipulate features violation may result in immediate account deletion",
+                sec4Bullet2: "Share accounts or allow others to use your login credentials",
+                sec4Bullet3: "Engage in fraud spam abuse harassment cheating on exercises or tests or any other harmful behavior",
+                sec4Bullet4: "Use platform materials for commercial purposes such as reselling or teaching paid courses we may pursue legal action in such cases",
+                sec4Bullet5: "Attempt to reverse-engineer scrape or copy content",
+                sec4Bullet6: "Post or transmit illegal offensive or rights-infringing material where applicable in support or chat features",
+                sec4Para2: "Any violation of these rules may lead to account suspension deletion or other measures necessary to protect the platform and its users.",
+                sec5Title: "5. In-Platform Currency Coins and Diamonds",
+                sec5Text: "The platform features a gamified system that lets you earn coins and diamonds through completing lessons making progress or participating in other activities. These are virtual in-game currencies only.",
+                sec5Para2: "Coins and diamonds have no real-world monetary value. They cannot be exchanged for cash and are not considered real money or legal tender under any law. You may use them only within the platform to unlock certain in-game services or to purchase Summage Academy merchandise in the marketplace section if available. We reserve the right to modify limit or remove this system at any time without prior notice or compensation.",
+                sec6Title: "6. Advertisements and Third-Party Services",
+                sec6Text: "The platform is free thanks to advertisements including those from third-party providers such as Google AdSense. We work to display only appropriate non-harmful and non-misleading ads although we cannot guarantee that every advertisement will meet these standards.",
+                sec6Para2: "We are not responsible for the content of third-party advertisements linked websites or services. Any interaction with advertisements occurs at your own risk.",
+                sec7Title: "7. AI Tools and Accuracy Disclaimer",
+                sec7Text: "Our platform offers AI-powered tools including IELTS essay band estimation grammar checking and similar features. These tools exist solely for practice and learning purposes.",
+                sec7Para2: "Scores feedback corrections and band estimates generated by AI are estimates only. They may contain errors inaccuracies or biases. These outputs are not official IELTS scores and do not guarantee any examination results. Summage Academy is not affiliated with endorsed by or partnered with IELTS IDP British Council or any official examination authority. Official IELTS scoring is provided exclusively by authorized organizations.",
+                sec7Para3: "Please do not treat AI outputs as final or definitive. Success in IELTS or English learning depends on your personal effort self-discipline and consistent practice. The platform provides preparation and instruction but never guarantees specific outcomes.",
+                sec8Title: "8. Termination and Changes",
+                sec8Text: "We may suspend or terminate your account at any time if you violate these Terms to protect the platform and its users or for any other legitimate reason. We also reserve the right to modify suspend or discontinue any part of the platform without prior notice.",
+                sec8Para2: "We may revise these Terms at any time. Revised Terms will be posted here and we will notify you of significant changes via email or platform announcement. Your continued use after any changes indicates acceptance of the updated Terms.",
+                sec9Title: "9. Disclaimers and Limitation of Liability",
+                sec9Text: "The platform is provided as is without any warranties express or implied. We do not guarantee uninterrupted access error-free performance or achievement of any particular learning outcome.",
+                sec9Para2: "To the maximum extent permitted by law Summage Academy shall not be liable for any indirect incidental consequential or punitive damages arising from your use of the platform.",
+                sec10Title: "10. Governing Law and Disputes",
+                sec10Text: "These Terms are governed by the laws of the Republic of Uzbekistan. Any disputes will be resolved primarily in the courts of Tashkent Uzbekistan. For international users we also take into account applicable laws of England and the United States where relevant although Uzbek law remains primary.",
+                sec11Title: "11. Contact Us",
+                sec11Text: "If you have any questions about these Terms please reach out to us at support@summage.org or through our Telegram channel.",
+                lastUpdated: "Last updated: February 2026"
+            },
+            ru: {
+                back: "Назад",
+                termsTitle: "Условия использования",
+                termsIntro: "Добро пожаловать в Summage Academy на summage.org. Настоящие Условия использования регулируют ваш доступ и использование нашей бесплатной образовательной платформы для изучения английского языка и подготовки к IELTS. Создавая аккаунт или используя платформу вы соглашаетесь с данными условиями. Если вы не согласны пожалуйста не используйте платформу.",
+                sec1Title: "1. Принятие условий",
+                sec1Text: "Настоящие Условия составляют юридическое соглашение между вами и Summage Academy. Мы вправе обновлять Условия в любое время. Продолжение использования после внесения изменений означает ваше согласие. О существенных изменениях мы уведомим вас по электронной почте или через объявление на платформе.",
+                sec2Title: "2. Право на использование и аккаунты",
+                sec2Text: "Для доступа к основным функциям урокам отслеживанию прогресса и инструментам включая проверку эссе и грамматики на базе ИИ необходимо создать аккаунт с действующим адресом электронной почты отображаемым именем и паролем.",
+                sec2Para2: "Пользователям младше одиннадцати лет необходимо получить разрешение родителя или опекуна перед созданием аккаунта. Разрешение может быть неформальным например рассказать родителям о Summage Academy и получить их устное согласие. Родители и опекуны несут ответственность за контроль использования детьми.",
+                sec2Para3: "Вы отвечаете за безопасность своего аккаунта. Не передавайте данные для входа третьим лицам. Вы должны обладать полной дееспособностью для заключения юридически обязывающих договоров в вашей юрисдикции.",
+                sec3Title: "3. Разрешенное использование и лицензия",
+                sec3Text: "Мы предоставляем вам ограниченную неисключительную непередаваемую отзывную лицензию на доступ и использование платформы исключительно в личных некоммерческих целях для изучения английского языка и подготовки к IELTS.",
+                sec3Para2: "Весь контент уроки видео упражнения дизайн логотип инструменты и материалы принадлежат Summage Academy или нашим лицензиарам. Без нашего предварительного письменного разрешения запрещено скачивать копировать воспроизводить распространять модифицировать создавать производные произведения или использовать контент в коммерческих целях.",
+                sec4Title: "4. Запрещенное поведение",
+                sec4Text: "Вы обязуетесь не совершать следующие действия:",
+                sec4Bullet1: "Использовать ботов скрипты автоматизацию или любые несанкционированные инструменты для доступа к платформе заработка монет или манипуляции функциями нарушение может повлечь немедленное удаление аккаунта",
+                sec4Bullet2: "Передавать аккаунты или разрешать другим лицам использовать ваши учетные данные",
+                sec4Bullet3: "Заниматься мошенничеством рассылкой спама оскорблениями домогательствами обманом на упражнениях или тестах либо любым иным вредоносным поведением",
+                sec4Bullet4: "Использовать материалы платформы в коммерческих целях например для перепродажи или преподавания платных курсов в таких случаях мы можем обратиться в суд",
+                sec4Bullet5: "Пытаться осуществлять обратную разработку сбор данных или копирование контента",
+                sec4Bullet6: "Размещать или передавать незаконный оскорбительный или нарушающий права материал если это применимо в разделах поддержки или чата",
+                sec4Para2: "Любое нарушение данных правил может повлечь приостановку удаление аккаунта или иные меры направленные на защиту платформы и ее пользователей.",
+                sec5Title: "5. Внутриплатформенная валюта монеты и алмазы",
+                sec5Text: "На платформе действует геймифицированная система позволяющая зарабатывать монеты и алмазы за выполнение уроков достижение прогресса или участие в других активностях. Это исключительно виртуальная игровая валюта.",
+                sec5Para2: "Монеты и алмазы не имеют реальной денежной стоимости не подлежат обмену на наличные средства и не признаются деньгами или законным платежным средством в соответствии с каким-либо законодательством. Их можно использовать только внутри платформы для получения определенных игровых услуг или покупки мерча Summage Academy в разделе маркетплейс если он доступен. Мы оставляем за собой право в любое время изменять ограничивать или полностью удалять данную систему без предварительного уведомления и компенсации.",
+                sec6Title: "6. Реклама и сторонние сервисы",
+                sec6Text: "Платформа остается бесплатной благодаря рекламе в том числе от сторонних провайдеров таких как Google AdSense. Мы прилагаем усилия чтобы показывать только подходящую безвредную и не вводящую в заблуждение рекламу однако не можем гарантировать полное отсутствие неподходящих объявлений.",
+                sec6Para2: "Мы не несем ответственности за содержание сторонней рекламы связанные веб-сайты или сервисы. Любое взаимодействие с рекламой осуществляется на ваш страх и риск.",
+                sec7Title: "7. Инструменты ИИ и отказ от гарантий точности",
+                sec7Text: "На платформе представлены инструменты на базе искусственного интеллекта включая оценку эссе по шкале IELTS проверку грамматики и аналогичные функции. Эти инструменты предназначены исключительно для практики и обучения.",
+                sec7Para2: "Баллы отзывы исправления и предполагаемые оценки созданные ИИ являются лишь приблизительными. Они могут содержать ошибки неточности или системные смещения. Данные результаты не являются официальными баллами IELTS и не гарантируют успех на экзамене. Summage Academy не имеет аффилированности одобрения или партнерства с IELTS IDP British Council или любым официальным экзаменационным органом. Официальная оценка IELTS предоставляется исключительно уполномоченными организациями.",
+                sec7Para3: "Не рассматривайте результаты ИИ как окончательные. Успех в IELTS и изучении английского языка зависит от ваших личных усилий самодисциплины и регулярной практики. Платформа предлагает подготовку и обучение но никогда не гарантирует конкретных результатов.",
+                sec8Title: "8. Прекращение и изменения",
+                sec8Text: "Мы вправе приостановить или удалить ваш аккаунт в любое время в случае нарушения настоящих Условий для защиты платформы и пользователей либо по любой иной обоснованной причине. Мы также оставляем за собой право изменять приостанавливать или полностью прекращать работу любой части платформы без предварительного уведомления.",
+                sec8Para2: "Мы можем вносить изменения в настоящие Условия в любое время. Обновленные Условия будут опубликованы на этой странице а о значительных изменениях мы уведомим вас по электронной почте или через объявление на платформе. Продолжение использования после внесения изменений означает ваше согласие с обновленными Условиями.",
+                sec9Title: "9. Отказ от гарантий и ограничение ответственности",
+                sec9Text: "Платформа предоставляется в состоянии как есть без каких-либо явных или подразумеваемых гарантий. Мы не гарантируем бесперебойный доступ отсутствие ошибок или достижение каких-либо конкретных результатов обучения.",
+                sec9Para2: "В максимально допустимой законом степени Summage Academy не несет ответственности за любые косвенные случайные последующие или штрафные убытки возникшие в связи с использованием платформы.",
+                sec10Title: "10. Применимое право и разрешение споров",
+                sec10Text: "Настоящие Условия регулируются законодательством Республики Узбекистан. Споры подлежат рассмотрению преимущественно в судах города Ташкента Узбекистан. Для международных пользователей также учитываются применимые нормы права Англии и Соединенных Штатов Америки однако приоритет сохраняется за законодательством Узбекистана.",
+                sec11Title: "11. Связь с нами",
+                sec11Text: "Если у вас возникли вопросы по настоящим Условиям пожалуйста обращайтесь к нам по адресу support@summage.org или через наш Telegram-канал.",
+                lastUpdated: "Последнее обновление: февраль 2026"
+            },
+            uz: {
+                back: "Orqaga",
+                termsTitle: "Foydalanish shartlari",
+                termsIntro: "Summage Academy summage.org saytiga xush kelibsiz. Ushbu Foydalanish shartlari bepul ingliz tili o‘rganish va IELTS tayyorgarligi platformasidan foydalanishni tartibga soladi. Akkount yaratish yoki platformadan foydalanish orqali ushbu shartlarga rozilik bildirasiz. Agar rozi bo‘lmasangiz platformadan foydalanmang.",
+                sec1Title: "1. Shartlarni qabul qilish",
+                sec1Text: "Ushbu Shartlar siz va Summage Academy o‘rtasidagi yuridik shartnoma hisoblanadi. Biz Shartlarni istalgan vaqtda yangilashimiz mumkin. O‘zgarishlardan so‘ng foydalanishni davom ettirish qabul qilishni anglatadi. Muhim o‘zgarishlar haqida email yoki platformada e‘lon orqali xabar beramiz.",
+                sec2Title: "2. Huquq va akkountlar",
+                sec2Text: "Asosiy funksiyalar darslar taraqqiyotni kuzatish va vositalar shu jumladan AI esse va grammatika tekshiruvi dan foydalanish uchun haqiqiy email ko‘rsatiladigan ism va parol bilan akkount yaratish talab etiladi.",
+                sec2Para2: "O‘n bir yoshdan kichik foydalanuvchilar akkount yaratishdan oldin ota-ona yoki vasiy ruxsatini olishlari shart. Ruxsat norasmiy tarzda berilishi mumkin masalan ota-onalarga Summage Academy haqida aytib ularning og‘zaki roziligini olish. Ota-onalar va vasiylar farzandlarining foydalanishini nazorat qilish uchun mas‘uldirlar.",
+                sec2Para3: "Akkount xavfsizligi uchun siz mas‘ulsiz. Kirish ma‘lumotlarini boshqalar bilan ulashmang. Siz yashash joyingiz qonunlariga ko‘ra majburiy shartnomalar tuzish huquqiga ega bo‘lishingiz kerak.",
+                sec3Title: "3. Ruxsat etilgan foydalanish va litsenziya",
+                sec3Text: "Biz sizga shaxsiy notijorat maqsadlarda ingliz tili o‘rganish va IELTS tayyorgarligi uchun cheklangan eksklyuziv bo‘lmagan o‘tkazib bo‘lmaydigan qaytarib olinadigan litsenziya beramiz.",
+                sec3Para2: "Barcha kontent darslar video mashqlar dizayn logotip vositalar va materiallar Summage Academy yoki litsenziya beruvchilarimizga tegishli. Oldindan yozma ruxsatsiz yuklab olish nusxalash tarqatish o‘zgartirish hosila yaratish yoki tijorat maqsadlarida ishlatish taqiqlanadi.",
+                sec4Title: "4. Taqiqlangan harakatlar",
+                sec4Text: "Siz quyidagi harakatlarni qilmaslikka rozilik bildirasiz:",
+                sec4Bullet1: "Botlar skriptlar avtomatlashtirish yoki ruxsatsiz vositalardan foydalanish platformaga kirish tanga ishlab chiqarish yoki funksiyalarni boshqarish buzilish darhol akkount o‘chirilishiga olib kelishi mumkin",
+                sec4Bullet2: "Akkountlarni bo‘lishish yoki boshqalarga kirish huquqini berish",
+                sec4Bullet3: "Firibgarlik spam haqorat tajovuz mashq yoki testlarda aldash yoki boshqa zararli harakatlar",
+                sec4Bullet4: "Materiallarni tijorat maqsadlarida ishlatish masalan qayta sotish yoki pullik kurslarda o‘qitish bunday hollarda biz sudga murojaat qilishimiz mumkin",
+                sec4Bullet5: "Kontentni teskari muhandislik skreyping yoki nusxalashga urinish",
+                sec4Bullet6: "Noqonuniy haqoratli yoki huquqlarni buzuvchi material joylashtirish yoki uzatish agar yordam yoki chat bo‘limlarida qo‘llanilsa",
+                sec4Para2: "Ushbu qoidalarni buzish akkountni to‘xtatib turish o‘chirish yoki platforma va foydalanuvchilarni himoya qilish uchun zarur boshqa choralarga olib kelishi mumkin.",
+                sec5Title: "5. Platforma ichidagi valyuta tangalar va olmoslar",
+                sec5Text: "Platformada gamifikatsiya tizimi mavjud bo‘lib unda darslarni bajarish taraqqiyot yoki boshqa faoliyat orqali tanga va olmoslar ishlab topish mumkin. Bu faqat virtual o‘yin ichidagi valyuta hisoblanadi.",
+                sec5Para2: "Tanga va olmoslar real pul qiymatiga ega emas naqd pulga almashtirib bo‘lmaydi va hech qanday qonunga ko‘ra real pul yoki qonuniy to‘lov vositasi sifatida tan olinmaydi. Ularni faqat platforma ichida ma‘lum xizmatlarni ochish yoki marketplace bo‘limida Summage Academy tovarlarini sotib olish uchun ishlatish mumkin agar mavjud bo‘lsa. Biz ushbu tizimni istalgan vaqtda o‘zgartirish cheklash yoki butunlay olib tashlash huquqini saqlab qolamiz oldindan xabar berish yoki kompensatsiya to‘lash shart emas.",
+                sec6Title: "6. Reklama va uchinchi tomon xizmatlari",
+                sec6Text: "Platforma bepul bo‘lib uchinchi tomon provayderlari shu jumladan Google AdSense orqali reklama bilan qo‘llab-quvvatlanadi. Biz faqat mos zararsiz va chalg‘itmaydigan reklamalarni ko‘rsatishga intilamiz ammo har bir reklama shunday bo‘lishini kafolatlay olmaymiz.",
+                sec6Para2: "Uchinchi tomon reklama mazmuni bog‘langan veb-saytlar yoki xizmatlar uchun javobgar emasmiz. Reklama bilan o‘zaro aloqa o‘z xavf-xataringizda amalga oshiriladi.",
+                sec7Title: "7. AI vositalari va aniqlikdan voz kechish",
+                sec7Text: "Platformamizda IELTS esse band bahosini taxmin qilish grammatika tekshiruvi va shunga o‘xshash AI asosidagi vositalar mavjud. Ushbu vositalar faqat mashq va o‘rganish maqsadida taqdim etiladi.",
+                sec7Para2: "AI tomonidan yaratilgan baholar fikr-mulohazalar tuzatishlar va band taxminlari faqat taxminiy hisoblanadi. Ular xato noaniqlik yoki tarafkashliklarni o‘z ichiga olishi mumkin. Bu natijalar rasmiy IELTS ballari emas va imtihon natijalarini kafolatlamaydi. Summage Academy IELTS IDP British Council yoki boshqa rasmiy imtihon organlari bilan aloqador tasdiqlangan yoki hamkor emas. Rasmiy IELTS baholash faqat vakolatli tashkilotlar tomonidan amalga oshiriladi.",
+                sec7Para3: "AI natijalarini yakuniy deb hisoblamang. IELTS yoki ingliz tilidagi muvaffaqiyat sizning shaxsiy sa‘y-harakatlaringiz o‘z-o‘zini intizomingiz va doimiy mashg‘ulotingizga bog‘liq. Platforma tayyorgarlik va o‘qitishni taqdim etadi lekin hech qachon aniq natijalarni kafolatlamaydi.",
+                sec8Title: "8. Bekor qilish va o‘zgarishlar",
+                sec8Text: "Agar siz ushbu Shartlarni buzgan bo‘lsangiz platforma va foydalanuvchilarni himoya qilish maqsadida yoki boshqa asosli sabablarga ko‘ra biz istalgan vaqtda akkountingizni to‘xtatib turish yoki o‘chirishimiz mumkin. Shuningdek platformaning istalgan qismini oldindan xabarsiz o‘zgartirish to‘xtatib turish yoki butunlay to‘xtatish huquqini saqlab qolamiz.",
+                sec8Para2: "Ushbu Shartlarni istalgan vaqtda yangilashimiz mumkin. Yangilangan Shartlar shu yerda e‘lon qilinadi muhim o‘zgarishlar haqida email yoki platformada xabar beramiz. O‘zgarishlardan keyin foydalanishni davom ettirish yangilangan Shartlarni qabul qilganingizni bildiradi.",
+                sec9Title: "9. Kafolatlardan voz kechish va javobgarlikni cheklash",
+                sec9Text: "Platforma xuddi shunday holda taqdim etiladi hech qanday ochiq yoki nazarda tutilgan kafolatlarsiz. Biz uzluksiz kirish xatosiz ishlash yoki muayyan o‘quv natijalariga erishishni kafolatlamaymiz.",
+                sec9Para2: "Qonun ruxsat bergan eng yuqori darajada Summage Academy platformadan foydalanish natijasida yuzaga kelgan har qanday bilvosita tasodifiy keyingi yoki jarima zararlar uchun javobgar emas.",
+                sec10Title: "10. Qo‘llaniladigan qonun va nizolarni hal qilish",
+                sec10Text: "Ushbu Shartlar O‘zbekiston Respublikasi qonunlari bilan tartibga solinadi. Nizolar asosan Toshkent shahri O‘zbekiston sudlarida ko‘rib chiqiladi. Xalqaro foydalanuvchilar uchun Angliya va Amerika Qo‘shma Shtatlari qonunlari ham qo‘llanilishi mumkin ammo O‘zbekiston qonuni ustunlik qiladi.",
+                sec11Title: "11. Biz bilan bog‘lanish",
+                sec11Text: "Ushbu Shartlar bo‘yicha savollaringiz bo‘lsa iltimos support@summage.org manziliga yozing yoki Telegram kanalimiz orqali murojaat qiling.",
+                lastUpdated: "Oxirgi yangilanish: 2026 yil fevral"
+            }
+        };
+
+        function goBack() {
+            const before = window.location.href;
+            history.back();
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/');
+                }
+            }, 50);
+        }
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem(LANG_STORAGE_KEY, lang);
+            document.documentElement.lang = lang;
+
+            document.getElementById('desktop-back-btn').textContent = translations[lang].back;
+            const mobileBtn = document.getElementById('mobile-back-btn');
+            if (mobileBtn) mobileBtn.textContent = translations[lang].back;
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        document.getElementById('desktop-back-btn').addEventListener('click', goBack);
+        document.getElementById('mobile-back-btn').addEventListener('click', goBack);
+
+        document.getElementById('lang-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('lang-flags').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(flag => {
+            flag.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateLanguage(flag.dataset.lang);
+                document.getElementById('lang-flags').classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('lang-flags').classList.remove('show');
+        });
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        updateLanguage(currentLang);
+
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>
