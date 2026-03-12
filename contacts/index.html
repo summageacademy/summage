@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Summage Academy</title>
+    <meta name="description" content="Get in touch with Summage Academy! Free IELTS preparation support, partnerships, questions — we're here to help." />
+    <meta name="keywords" content="Summage Academy contact, free IELTS Uzbekistan, IELTS help, education support" />
+    <meta name="author" content="Summage Academy" />
+    <meta name="robots" content="index, follow" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ──────────────────────────────────────────────── */
+        /* Hide scrollbar completely - cross-browser        */
+        /* ──────────────────────────────────────────────── */
+        html, body {
+            scrollbar-width: none;          /* Firefox */
+            -ms-overflow-style: none;       /* IE + Edge legacy */
+            overflow-y: scroll;             /* keep scrolling possible */
+        }
+
+        body::-webkit-scrollbar,
+        html::-webkit-scrollbar {
+            display: none;                  /* Chrome, Safari, new Edge */
+            width: 0;
+            height: 0;
+            background: transparent;
+        }
+
+        /* Also hide on other scrollable elements if needed */
+        * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+        /* ──────────────────────────────────────────────── */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .language-selector { position: relative; }
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+        .language-button img { width: 26px; height: 26px; }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .flag {
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; border-radius: 6px; }
+
+        /* Contact Content */
+        .contact-container {
+            flex: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 5vw 140px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #06a87c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .contact-subtitle {
+            font-size: 1.4rem;
+            color: #555;
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 700px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .contact-info h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 32px;
+        }
+
+        .info-item {
+            margin-bottom: 28px;
+        }
+
+        .info-item span {
+            display: block;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.8px;
+        }
+
+        .info-item a {
+            font-size: 1.3rem;
+            color: #f24b0b;
+            text-decoration: none;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .info-item a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .social-links a {
+            padding: 14px 24px;
+            background: #06a87c;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 0 #037c5c;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #07c088;
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #06a87c;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 160px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #c23a0a;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 #c23a0a;
+        }
+
+        .form-response {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .form-response.show {
+            opacity: 1;
+        }
+
+        .form-response.success {
+            background: #e6f7f0;
+            color: #007a52;
+        }
+
+        .form-response.error {
+            background: #fce8e8;
+            color: #e63946;
+        }
+
+        a {
+            text-decoration: none;
+            color: #06a87c;
+            font-weight: bold;
+        }
+
+        /* Footer & Mobile */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 80px 5vw 40px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul { list-style: none; }
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 2;
+            display: block;
+            transition: color 0.3s;
+        }
+        .footer-column a:hover { color: #f24b0b; }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #888;
+        }
+
+        .mobile-footer-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px 5vw;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+
+        .mobile-back-btn {
+            width: 100%;
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 14px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mobile-back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        /* Mobile - Fully Optimized */
+        @media (max-width: 900px) {
+            .navbar { padding: 20px; justify-content: space-between; }
+            .back-btn { display: none; }
+
+            .contact-container { padding: 60px 20px 120px; }
+
+            .contact-title { font-size: 2.5rem; }
+
+            .contact-subtitle { font-size: 1.2rem; margin-bottom: 40px; }
+
+            .contact-grid { 
+                grid-template-columns: 1fr; 
+                gap: 40px; 
+            }
+
+            .contact-info, .contact-form {
+                padding: 32px 24px;
+            }
+
+            .contact-info h2 { font-size: 1.8rem; }
+
+            .contact-info p { font-size: 1.1rem; }
+
+            .info-item a { font-size: 1.2rem; }
+
+            .social-links {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .social-links a {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 14px;
+                font-size: 1rem;
+            }
+
+            .submit-btn {
+                padding: 16px;
+                font-size: 17px;
+            }
+
+            footer { display: none; }
+            .mobile-footer-bar { display: block; }
+        }
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <button class="back-btn" id="desktop-back-btn">Back</button>
+
+        <div class="logo-container" onclick="window.location.href='https://summage.org'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+
+        <div class="language-selector">
+            <button class="language-button" id="lang-btn" aria-label="Select language">
+                <img src="/assets/images/lang/globe.webp" alt="">
+            </button>
+            <div class="language-flags" id="lang-flags">
+                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Content -->
+    <div class="contact-container">
+        <h1 class="contact-title" data-key="contactTitle">Contact Us</h1>
+        <p class="contact-subtitle" data-key="contactSubtitle">We'd love to hear from you! Whether you have a question about IELTS prep, want to partner with us, or just want to say hello.</p>
+
+        <div class="contact-grid">
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h2 data-key="connectTitle">Let's Connect!</h2>
+                <p data-key="connectText">Got a question about IELTS, wanna team up or just feeling chatty? Drop us a line. We're all ears!</p>
+
+                <div class="info-item">
+                    <span data-key="emailLabel">Email</span>
+                    <a href="mailto:summage.socials@gmail.com">summage.socials@gmail.com</a>
+                </div>
+
+                <div class="info-item">
+                    <span data-key="telegramLabel">Telegram</span>
+                    <a href="https://t.me/summage_admin" target="_blank">@summage_admin</a>
+                </div>
+
+                <div class="info-item">
+                    <span data-key="instagramLabel">Instagram</span>
+                    <a href="https://instagram.com/summageacademy" target="_blank">@summageacademy</a>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://t.me/summage_uz" target="_blank">Telegram</a>
+                    <a href="https://instagram.com/summageacademy" target="_blank">Instagram</a>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required placeholder="Your Name" />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required placeholder="Your Email" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="Subject (Optional)" />
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="6" required placeholder="Your Message..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" data-key="sendBtn">Send Message</button>
+                </form>
+                <div class="form-response" id="formResponse"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Summage Academy</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/contacts/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="/learn/">Start Learning</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="/help-centre/">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/terms/">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="current-year"></span> Summage Academy. Education without barriers.
+        </div>
+    </footer>
+
+    <!-- Mobile Back Button -->
+    <div class="mobile-footer-bar">
+        <button class="mobile-back-btn" id="mobile-back-btn">Back</button>
+    </div>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init('9fJyhACKh68-QnijV');
+        })();
+
+        const SERVICE_ID = 'service_ug7jn3l';
+        const TEMPLATE_ID = 'template_22ssr7e';
+
+        const LANG_STORAGE_KEY = 'summage_preferred_lang';
+        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || 'en';
+
+        const translations = {
+            en: {
+                back: "Back",
+                contactTitle: "Contact Us",
+                contactSubtitle: "We'd love to hear from you! Whether you have a question about IELTS prep, want to partner with us, or just want to say hello.",
+                connectTitle: "Let's Connect!",
+                connectText: "Got a question about IELTS, wanna team up or just feeling chatty? Drop us a line. We're all ears!",
+                emailLabel: "Email",
+                telegramLabel: "Telegram",
+                instagramLabel: "Instagram",
+                sendBtn: "Send Message"
+            },
+            ru: {
+                back: "Назад",
+                contactTitle: "Свяжитесь с нами",
+                contactSubtitle: "Мы будем рады услышать от вас! Вопросы по IELTS, предложения о сотрудничестве или просто привет — пишите!",
+                connectTitle: "Давайте свяжемся!",
+                connectText: "Есть вопрос по IELTS, хотите сотрудничать или просто поболтать? Пишите нам, мы всегда на связи!",
+                emailLabel: "Email",
+                telegramLabel: "Telegram",
+                instagramLabel: "Instagram",
+                sendBtn: "Отправить сообщение"
+            },
+            uz: {
+                back: "Orqaga",
+                contactTitle: "Biz bilan bog'laning",
+                contactSubtitle: "Sizdan xabar kutamiz! IELTS haqida savol, hamkorlik taklifi yoki shunchaki salomlashish — yozing!",
+                connectTitle: "Bog'lanamiz!",
+                connectText: "IELTS bo'yicha savolingiz bormi, hamkorlik qilmoqchimisiz yoki shunchaki suhbatlashmoqchimisiz? Biz doim tayyormiz!",
+                emailLabel: "Email",
+                telegramLabel: "Telegram",
+                instagramLabel: "Instagram",
+                sendBtn: "Xabar yuborish"
+            }
+        };
+
+        function goBack() {
+            const before = window.location.href;
+            
+            history.back();
+            
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/');
+                }
+            }, 50);
+        }
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem(LANG_STORAGE_KEY, lang);
+
+            document.getElementById('desktop-back-btn').textContent = translations[lang].back;
+            const mobileBtn = document.getElementById('mobile-back-btn');
+            if (mobileBtn) mobileBtn.textContent = translations[lang].back;
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const responseDiv = document.getElementById('formResponse');
+
+            emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+                .then(() => {
+                    responseDiv.innerHTML = `<p class="success">Thank you! Your message has been sent. We'll reply soon!</p>`;
+                    responseDiv.classList.add('show', 'success');
+                    this.reset();
+                    setTimeout(() => responseDiv.classList.remove('show'), 5000);
+                })
+                .catch(err => {
+                    responseDiv.innerHTML = `<p class="error">Oops! Something went wrong. Please try again later.</p>`;
+                    responseDiv.classList.add('show', 'error');
+                    console.error('EmailJS error:', err);
+                });
+        });
+
+        // Back buttons
+        document.getElementById('desktop-back-btn').addEventListener('click', goBack);
+        document.getElementById('mobile-back-btn').addEventListener('click', goBack);
+
+        // Language selector
+        document.getElementById('lang-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('lang-flags').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(flag => {
+            flag.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateLanguage(flag.dataset.lang);
+                document.getElementById('lang-flags').classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('lang-flags').classList.remove('show');
+        });
+
+        // Year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Init
+        updateLanguage(currentLang);
+
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>

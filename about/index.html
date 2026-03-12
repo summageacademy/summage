@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Summage Academy</title>
+    <meta name="description" content="Discover Summage Academy's mission to provide free, world-class IELTS preparation and English education to everyone. Learn about our story, purpose, approach, and dedicated team." />
+    <meta name="keywords" content="Summage Academy about us, free IELTS preparation, free English learning, education without barriers, IELTS Uzbekistan, Summage mission, free online IELTS courses" />
+    <meta name="author" content="Summage Academy" />
+    <meta name="robots" content="index, follow" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ──────────────────────────────────────────────── */
+        /*           HIDE SCROLLBARS COMPLETELY             */
+        /* ──────────────────────────────────────────────── */
+
+        html, body {
+            scrollbar-width: none;          /* Firefox */
+            -ms-overflow-style: none;       /* IE & legacy Edge */
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        .content::-webkit-scrollbar,
+        .section-tabs::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+
+        * {
+            -webkit-overflow-scrolling: touch;   /* smoother momentum scroll on iOS */
+        }
+
+        /* ──────────────────────────────────────────────── */
+        /*                  Original styles                 */
+        /* ──────────────────────────────────────────────── */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html[lang="ru"] * {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Navbar - Blends with background */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Back Button - Properly centered text + arrow */
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .language-selector { position: relative; }
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+        .language-button img { width: 26px; height: 26px; }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .flag {
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; border-radius: 6px; }
+
+        /* Secondary Section Navigation */
+        .section-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            z-index: 99;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section-tabs {
+            display: flex;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            justify-content: center;
+            overflow-x: auto;
+            padding: 0 5vw;
+            scrollbar-width: none;
+        }
+
+        .section-tabs::-webkit-scrollbar { display: none; }
+
+        .section-tab {
+            padding: 12px 0;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #aaa;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .section-tab.active { color: #06a87c; }
+        .section-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #06a87c;
+            border-radius: 2px;
+        }
+        .section-tab:hover:not(.active) { color: #666; }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 80px 5vw 120px; /* Extra bottom padding for mobile footer */
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            overflow-y: auto;         /* still scrollable */
+        }
+
+        .section { display: none; animation: fadeIn 0.6s ease; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            margin-bottom: 100px;
+            flex-wrap: wrap;
+        }
+
+        .row.reverse { flex-direction: row-reverse; }
+
+        .row-img { flex: 1; min-width: 200px; text-align: center; }
+        .row-img img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 16px;
+        }
+
+        .row-text { flex: 1; min-width: 300px; }
+        .row-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #07bd6e;
+            margin-bottom: 24px;
+        }
+        .row-desc {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .separator {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ddd 20%, #ddd 80%, transparent);
+            margin: 80px 0;
+        }
+
+        /* Desktop Footer - Hidden on mobile */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 80px 5vw 40px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column ul { list-style: none; }
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 2;
+            display: block;
+            transition: color 0.3s;
+        }
+        .footer-column a:hover { color: #f24b0b; }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #888;
+        }
+
+        /* Mobile Fixed Bottom Bar */
+        .mobile-footer-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px 5vw;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+
+        .mobile-back-btn {
+            width: 100%;
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 14px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mobile-back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .navbar { padding: 20px; justify-content: space-between; }
+            .back-btn { display: none; } /* Hide desktop back button on mobile */
+            .section-nav { padding: 12px 0; }
+            .section-tabs { justify-content: flex-start; gap: 30px; padding: 0 20px; }
+            .row, .row.reverse { flex-direction: column; gap: 40px; }
+            .content { padding: 60px 20px 100px; } /* Space for mobile bar */
+            .row-title { font-size: 2.2rem; text-align: center; }
+            .row-desc { text-align: center; }
+            .row-img img { max-height: 200px;}
+
+            footer { display: none; } /* Hide full footer on mobile */
+
+            .mobile-footer-bar { display: block; }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <button class="back-btn" id="desktop-back-btn">Back</button>
+
+        <div class="logo-container" onclick="window.location.href='/'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+
+        <div class="language-selector">
+            <button class="language-button" id="lang-btn" aria-label="Select language">
+                <img src="/assets/images/lang/globe.webp" alt="">
+            </button>
+            <div class="language-flags" id="lang-flags">
+                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Secondary Section Navigation -->
+    <div class="section-nav">
+        <div class="section-tabs">
+            <div class="section-tab active" data-section="about">About Us</div>
+            <div class="section-tab" data-section="purpose">Purpose</div>
+            <div class="section-tab" data-section="approach">Approach</div>
+            <div class="section-tab" data-section="team">Team</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+        <!-- Your sections remain unchanged -->
+        <div id="about" class="section active">
+            <div class="row">
+                <div class="row-img"><img src="/assets/images/illustrations/history.webp" alt="Our Story"></div>
+                <div class="row-text">
+                    <h2 class="row-title" data-key="aboutTitle">Our Story</h2>
+                    <p class="row-desc" data-key="aboutText">We launched Summage Academy in Uzbekistan in 2025 with one clear purpose: high-quality English learning and serious IELTS preparation should be open to everyone, not only to those who can pay for expensive courses.</p>
+                </div>
+            </div>
+            <div class="separator"></div>
+            <div class="row reverse">
+                <div class="row-img"><img src="/assets/images/illustrations/growth.webp" alt="Growth"></div>
+                <div class="row-text">
+                    <h2 class="row-title" data-key="growthTitle">The Offspring</h2>
+                    <p class="row-desc" data-key="growthText">The idea started from our own observations. We kept seeing capable people held back simply because good instruction cost too much. That did not feel right, so we decided to build a platform that removes the financial barrier entirely. On October 21, 2025 we publicly launched Summage Academy, and since then thousands of learners from many different countries have joined us. They study on phones, tablets or computers, move forward at their own speed and never pay anything at all.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="purpose" class="section">
+            <div class="row">
+                <div class="row-img"><img src="/assets/images/illustrations/issue.webp" alt="The issue Summage Academy"></div>
+                <div class="row-text">
+                    <h2 class="row-title" data-key="issueTitle">The Issue</h2>
+                    <p class="row-desc" data-key="issueText">We created Summage Academy because we believe learning English well should not depend on how much money someone has or where they were born. Every day we see motivated people who want to speak fluently, pass IELTS, study abroad, get better jobs or simply feel more confident when talking to others. But too often a good teacher, structured course or quality materials stay out of reach because they cost too much. That never felt fair to us.</p>
+                </div>
+            </div>
+            <div class="separator"></div>
+            <div class="row reverse">
+                <div class="row-img"><img src="/assets/images/illustrations/mission.webp" alt="Our Mission Summage Academy"></div>
+                <div class="row-text">
+                    <h2 class="row-title" data-key="purposeTitle">Our Mission</h2>
+                    <p class="row-desc" data-key="purposeText">So our whole purpose is to change exactly that. We want to give every person, in Uzbekistan or anywhere else, the chance to learn proper English and prepare seriously for IELTS completely free of charge.</p>
+                </div>
+            </div>
+            <div class="separator"></div>
+            <div class="row">
+                <div class="row-img"><img src="/assets/images/illustrations/solution.webp" alt="Our Solution Summage Academy"></div>
+                <div class="row-text">
+                    <h2 class="row-title" data-key="solutionTitle">The Solution</h2>
+                    <p class="row-desc" data-key="solutionText">We keep the platform 100% free because we are convinced that real education opens doors. It helps people build brighter futures, connect across cultures and chase dreams they thought were impossible. If money or location stands in the way of that, then something is wrong. We are trying to fix it, one lesson at a time.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="approach" class="section">
+            <div class="row reverse">
+                <div class="row-img"><img src="/assets/images/illustrations/approach.webp" alt="Our Approach"></div>
+                <div class="row-text">
+                    <h2 class="row-title" data-key="approachTitle">Our Approach</h2>
+                    <p class="row-desc" data-key="approachText">We teach English and prepare for IELTS in a way that really works and feels good to learn. <br>Every lesson is carefully built on methods that research has shown help people understand deeply, use the language naturally in real situations, stay active while studying, see their progress clearly and keep motivation strong over time.</p>
+                </div>
+            </div>
+            <div class="separator"></div>
+            <div class="row">
+                <div class="row-img"><img src="/assets/images/illustrations/lessons.webp" alt="Cool lessons at Summage Academy"></div>
+                <div class="row-text">
+                    <h2 class="row-title" data-key="coollessonsTitle">Cool Lessons</h2>
+                    <p class="row-desc" data-key="coollessonsText">We mix different formats so the process stays interesting and never feels repetitive. Professors explain everything step by step in short clear videos, almost like having your own patient teacher guiding you. Comic-style stories make grammar points, vocabulary and everyday phrases much easier to remember. Interactive exercises let you practice right away, give instant feedback and help you build real confidence as you go. Visual aids, guided examples and short summaries appear exactly when needed to lock in what you just learned.</p>
+                </div>
+            </div>
+            <div class="separator"></div>
+            <div class="row reverse">
+                <div class="row-img"><img src="/assets/images/illustrations/gamificatioin.webp" alt="Gamified Learning with Summage Academy"></div>
+                <div class="row-text">
+                    <h2 class="row-title" data-key="gamificationTitle">Gamification</h2>
+                    <p class="row-desc" data-key="gamificationText">To help you study regularly we added a gentle gamification layer. You earn coins and diamonds simply for completing lessons and making steady progress. These have no real money value at all, they are just small friendly rewards that turn daily practice into a satisfying habit.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="team" class="section">
+            <div class="row">
+                <div class="row-img"><img src="/assets/images/team/abror.webp" alt="Abror Ahmeed, Founder of Summage Academy"></div>
+                <div class="row-text">
+                    <h2 class="row-title" >Abror Ahmeed</h2>
+                    <p class="row-desc" data-key="Abror">Founder and Chief Executive Officer. He initiated the project based on his own educational background and funded the company in its early years.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row-img"><img src="/assets/images/team/davlat.webp" alt="Davlat Beknazarov, Co-Founder of Summage Academy"></div>
+                <div class="row-text">
+                    <h2 class="row-title" style="color: #f24b0b;">Davlat Beknazarov</h2>
+                    <p class="row-desc" data-key="Davlat">Co-founder and Chief Strategy Officer. He oversees strategic development and external relations. Responsible for managing tasks among team members and controlling quality of materials.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row-img"><img src="/assets/images/team/zaxro.webp" alt="Zaxro Otajonova, Content Lead at Summage Academy"></div>
+                <div class="row-text">
+                    <h2 class="row-title" >Zaxro Otajonova</h2>
+                    <p class="row-desc" data-key="Zaxro">Content Creator and Educational Designer, in charge of lesson development and instructional materials.</p>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- Desktop Footer (visible only on desktop) -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Summage Academy</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/contacts/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="/authentication/">Start Learning</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="/help-centre/">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/terms/">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="current-year"></span> Summage Academy. Education without barriers.
+        </div>
+    </footer>
+
+    <!-- Mobile Fixed Back Button Bar -->
+    <div class="mobile-footer-bar">
+        <button class="mobile-back-btn" id="mobile-back-btn">Back</button>
+    </div>
+
+    <script>
+        const LANG_STORAGE_KEY = 'summage_preferred_lang';
+        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || 'en';
+
+        const translations = {
+            en: {
+                back: "Back",
+                about: "About Us",
+                purpose: "Purpose",
+                approach: "Approach",
+                team: "Team",
+                aboutTitle: "Our Story",
+                aboutText: "We launched Summage Academy in Uzbekistan in 2025 with one clear purpose: high-quality English learning and serious IELTS preparation should be open to everyone, not only to those who can pay for expensive courses.",
+                growthTitle: "The Offspring",
+                growthText: "The idea started from our own observations. We kept seeing capable people held back simply because good instruction cost too much. That did not feel right, so we decided to build a platform that removes the financial barrier entirely. On October 21, 2025 we publicly launched Summage Academy, and since then thousands of learners from many different countries have joined us. They study on phones, tablets or computers, move forward at their own speed and never pay anything at all.",
+                issueTitle: "The Issue",
+                issueText: "We created Summage Academy because we believe learning English well should not depend on how much money someone has or where they were born. Every day we see motivated people who want to speak fluently, pass IELTS, study abroad, get better jobs or simply feel more confident when talking to others. But too often a good teacher, structured course or quality materials stay out of reach because they cost too much. That never felt fair to us.",
+                purposeTitle: "Our Purpose",
+                purposeText: "So our whole purpose is to change exactly that. We want to give every person, in Uzbekistan or anywhere else, the chance to learn proper English and prepare seriously for IELTS completely free of charge.",
+                solutionTitle: "The Solution",
+                solutionText: "We keep the platform 100% free because we are convinced that real education opens doors. It helps people build brighter futures, connect across cultures and chase dreams they thought were impossible. If money or location stands in the way of that, then something is wrong. We are trying to fix it, one lesson at a time.",
+                approachTitle: "Our Approach",
+                approachText: "We teach English and prepare for IELTS in a way that really works and feels good to learn. Every lesson is carefully built on methods that research has shown help people understand deeply, use the language naturally in real situations, stay active while studying, see their progress clearly and keep motivation strong over time.",
+                coollessonsTitle: "Cool Lessons",
+                coollessonsText: "We mix different formats so the process stays interesting and never feels repetitive. Professors explain everything step by step in short clear videos, almost like having your own patient teacher guiding you. Comic-style stories make grammar points, vocabulary and everyday phrases much easier to remember. Interactive exercises let you practice right away, give instant feedback and help you build real confidence as you go. Visual aids, guided examples and short summaries appear exactly when needed to lock in what you just learned.",
+                gamificationTitle: "Gamification",
+                gamificationText: "To help you study regularly we added a gentle gamification layer. You earn coins and diamonds simply for completing lessons and making steady progress. These have no real money value at all, they are just small friendly rewards that turn daily practice into a satisfying habit.",
+                Abror: "Founder and Chief Executive Officer. He initiated the project based on his own educational background and funded the company in its early years.",
+                Davlat: "Co-founder and Chief Strategy Officer. He oversees strategic development and external relations. Responsible for managing tasks among team members and controlling quality of materials.",
+                Zaxro: "Content Creator and Educational Designer, in charge of lesson development and instructional materials."
+            },
+            ru: {
+                back: "Назад",
+                about: "О нас",
+                purpose: "Цель",
+                approach: "Подход",
+                team: "Команда",
+                aboutTitle: "Наша история",
+                aboutText: "Мы запустили Summage Academy в Узбекистане в 2025 году с одной ясной целью: качественное изучение английского языка и серьёзная подготовка к IELTS должны быть доступны каждому, а не только тем, кто может позволить себе дорогие курсы.",
+                growthTitle: "Как всё начиналось",
+                growthText: "Идея появилась из личного опыта и наблюдений. Мы часто видели талантливых и мотивированных людей, которым не хватало только одного — доступа к качественному обучению. Высокая стоимость курсов становилась для них барьером. Нам это казалось несправедливым, поэтому мы решили создать платформу, полностью устраняющую финансовые ограничения. 21 октября 2025 года мы официально запустили Summage Academy. С тех пор к нам присоединились тысячи студентов из разных стран. Они учатся с телефона, планшета или компьютера, продвигаются в удобном темпе и не платят ничего.",
+                issueTitle: "Проблема",
+                issueText: "Мы создали Summage Academy, потому что уверены: владение английским языком не должно зависеть от дохода семьи или места рождения. Каждый день мы видим людей, которые хотят свободно говорить, успешно сдать IELTS, поступить за границу, получить достойную работу или просто чувствовать себя увереннее. Однако качественные преподаватели, структурированные программы и современные материалы часто оказываются недоступными из-за высокой стоимости. Это не должно быть так.",
+                purposeTitle: "Наша цель",
+                purposeText: "Наша цель проста и принципиальна: дать каждому человеку, независимо от страны проживания, возможность бесплатно изучать английский язык на высоком уровне и серьёзно готовиться к экзамену IELTS.",
+                solutionTitle: "Решение",
+                solutionText: "Мы сохраняем платформу полностью бесплатной, потому что убеждены, что образование открывает реальные возможности. Оно помогает строить будущее, расширять горизонты и достигать целей, которые раньше казались недостижимыми. Если деньги или география становятся препятствием, значит систему нужно менять. Мы делаем это постепенно, создавая качественные уроки и доступную образовательную среду.",
+                approachTitle: "Наш подход",
+                approachText: "Мы обучаем английскому языку и готовим к IELTS так, чтобы процесс был эффективным и понятным. Каждый урок разработан на основе современных методик обучения, которые помогают глубоко понимать материал, применять язык в реальных ситуациях, активно вовлекаться в процесс, отслеживать прогресс и сохранять мотивацию.",
+                coollessonsTitle: "Современные уроки",
+                coollessonsText: "Мы используем разные форматы, чтобы обучение оставалось интересным и динамичным. Преподаватели объясняют материал по шагам в коротких и понятных видео. Комикс-истории помогают легче запоминать грамматику и лексику. Интерактивные задания дают возможность сразу применять знания и получать мгновенную обратную связь. Визуальные материалы и краткие выводы помогают закрепить результат.",
+                gamificationTitle: "Элементы геймификации",
+                gamificationText: "Чтобы поддерживать регулярность занятий, мы добавили систему поощрений. За выполнение уроков и стабильный прогресс начисляются монеты и алмазы. Они не имеют денежной ценности и служат лишь символическим стимулом, превращающим ежедневную практику в устойчивую привычку.",
+                Abror: "Основатель и генеральный директор. Инициировал проект на основе личного образовательного опыта и обеспечил финансирование компании на начальном этапе.",
+                Davlat: "Сооснователь и директор по стратегии. Отвечает за стратегическое развитие, внешние связи, распределение задач внутри команды и контроль качества материалов.",
+                Zaxro: "Автор образовательного контента и методист. Занимается разработкой уроков и созданием учебных материалов."
+            },
+            uz: {
+                back: "Orqaga",
+                about: "Biz haqimizda",
+                purpose: "Maqsad",
+                approach: "Yondashuv",
+                team: "Jamoa",
+                aboutTitle: "Bizning hikoyamiz",
+                aboutText: "Biz Summage Academy’ni 2025-yilda O‘zbekistonda aniq bir maqsad bilan tashkil qildik: sifatli ingliz tili ta’limi va IELTS’ga jiddiy tayyorgarlik hamma uchun ochiq bo‘lishi kerak, faqat qimmat kurslarga puli yetadiganlar uchungina emas.",
+                growthTitle: "Boshlanishi",
+                growthText: "G‘oya shaxsiy kuzatuvlarimizdan tug‘ildi. Biz ko‘plab qobiliyatli va intiluvchan insonlarni ko‘rdik, ammo ular sifatli ta’lim qimmatligi sabab orqada qolayotgan edi. Bu bizga adolatsiz tuyuldi. Shuning uchun moliyaviy to‘siqlarni butunlay olib tashlaydigan platforma yaratishga qaror qildik. 2025-yil 21-oktabr kuni Summage Academy’ni rasman ishga tushirdik. Shundan beri turli mamlakatlardan minglab o‘quvchilar bizga qo‘shildi. Ular telefon, planshet yoki kompyuter orqali o‘zlariga qulay tezlikda o‘qishadi va buning uchun hech qanday to‘lov qilishmaydi.",
+                issueTitle: "Muammo",
+                issueText: "Biz Summage Academy’ni shuning uchun yaratdikki, ingliz tilini mukammal o‘rganish insonning daromadi yoki tug‘ilgan joyiga bog‘liq bo‘lmasligi kerak, deb ishonamiz. Har kuni ingliz tilida erkin gaplashishni, IELTS’dan yuqori ball olishni, chet elda o‘qishni, yaxshi ish topishni yoki shunchaki o‘ziga bo‘lgan ishonchni oshirishni istaydigan insonlarni ko‘ramiz. Ammo ko‘pincha sifatli ustoz, puxta tuzilgan kurs va zamonaviy materiallar yuqori narx sabab ko‘pchilik uchun yetib bo‘lmas darajada qoladi. Bu adolatli emas.",
+                purposeTitle: "Bizning maqsadimiz",
+                purposeText: "Bizning asosiy maqsadimiz — O‘zbekistonda va dunyoning istalgan nuqtasida yashovchi har bir insonga ingliz tilini sifatli o‘rganish va IELTS’ga jiddiy tayyorgarlik ko‘rish imkonini mutlaqo bepul taqdim etish.",
+                solutionTitle: "Yechim",
+                solutionText: "Biz platformani 100 foiz bepul saqlaymiz, chunki haqiqiy ta’lim inson hayotida yangi eshiklarni ochishiga ishonamiz. Ta’lim yorqin kelajak qurishga, turli madaniyatlar bilan bog‘lanishga va ilgari imkonsizdek tuyulgan orzular sari intilishga yordam beradi. Agar pul yoki joylashuv bunga to‘sqinlik qilsa, demak tizimni o‘zgartirish kerak. Biz aynan shuni amalga oshiryapmiz — darsma-dars.",
+                approachTitle: "Bizning yondashuvimiz",
+                approachText: "Biz ingliz tilini va IELTS tayyorgarligini samarali hamda tushunarli usulda o‘rgatamiz. Har bir dars zamonaviy va ilmiy asoslangan metodikalarga tayangan holda ishlab chiqilgan. Bu usullar materialni chuqur tushunishga, tilni real hayotiy vaziyatlarda qo‘llay olishga, o‘qish jarayonida faol bo‘lishga, o‘z taraqqiyotini ko‘rib borishga va motivatsiyani saqlashga yordam beradi.",
+                coollessonsTitle: "Qiziqarli darslar",
+                coollessonsText: "Ta’lim jarayoni zerikarli bo‘lmasligi uchun turli formatlardan foydalanamiz. Ustozlar mavzularni qisqa va aniq videolarda bosqichma-bosqich tushuntiradi. Komiks uslubidagi hikoyalar grammatika va so‘z boyligini osonroq eslab qolishga yordam beradi. Interaktiv mashqlar bilimni darhol amalda sinab ko‘rish va tezkor fikr-mulohaza olish imkonini beradi. Vizual materiallar va qisqa xulosalar o‘rganilgan mavzuni mustahkamlashga xizmat qiladi.",
+                gamificationTitle: "Gamifikatsiya",
+                gamificationText: "Muntazam o‘qishni rag‘batlantirish uchun biz kichik o‘yin elementlarini qo‘shdik. Darslarni tugatganingiz va barqaror rivojlanayotganingiz uchun tangalar va olmoslar beriladi. Ular hech qanday pul qiymatiga ega emas, shunchaki kundalik o‘qishni yoqimli odatga aylantiradigan ramziy mukofotlardir.",
+                Abror: "Asoschi va Bosh direktor. Loyiha tashabbuskori bo‘lib, uni o‘zining ta’limiy tajribasiga tayangan holda yo‘lga qo‘ygan va dastlabki yillarda kompaniyani moliyalashtirgan.",
+                Davlat: "Hamkor asoschi va Strategiya bo‘yicha direktor. Strategik rivojlanish va tashqi aloqalar uchun mas’ul. Jamoa ichidagi vazifalarni taqsimlaydi hamda materiallar sifatini nazorat qiladi.",
+                Zaxro: "Kontent yaratuvchi va metodist. Darslarni ishlab chiqish va o‘quv materiallarini tayyorlash bilan shug‘ullanadi."
+            }
+        };
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem(LANG_STORAGE_KEY, lang);
+            document.documentElement.lang = lang;
+
+            // Update both back buttons
+            document.querySelector('.back-btn').textContent = translations[lang].back;
+            const mobileBtn = document.querySelector('.mobile-back-btn');
+            if (mobileBtn) mobileBtn.textContent = translations[lang].back;
+
+            // Update section tabs
+            document.querySelector('[data-section="about"]').textContent = translations[lang].about;
+            document.querySelector('[data-section="purpose"]').textContent = translations[lang].purpose;
+            document.querySelector('[data-section="approach"]').textContent = translations[lang].approach;
+            document.querySelector('[data-section="team"]').textContent = translations[lang].team;
+
+            // Update content
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Section switching
+        document.querySelectorAll('.section-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const sectionId = tab.getAttribute('data-section');
+                document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // Language selector
+        document.getElementById('lang-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('lang-flags').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(flag => {
+            flag.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateLanguage(flag.dataset.lang);
+                document.getElementById('lang-flags').classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('lang-flags').classList.remove('show');
+        });
+
+        function goBack() {
+            const before = window.location.href;
+            
+            history.back();
+            
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/');
+                }
+            }, 50);
+        }
+
+        // Attach smart back functionality
+        document.getElementById('desktop-back-btn').addEventListener('click', goBack);
+        document.getElementById('mobile-back-btn').addEventListener('click', goBack);
+
+        // Auto-update copyright year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Initial apply
+        updateLanguage(currentLang);
+
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>
