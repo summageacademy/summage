@@ -669,53 +669,81 @@
         });
       }
 
-      // ── FIXED: Island bubbles work on mobile ────────────────────────────────
+      // ── Island bubble interactions ──────────────────────────────────────────
+      // This version is more mobile-friendly: uses pointer events + better conflict handling
+
       document.querySelectorAll('.spot').forEach(spot => {
         const bubble = spot.querySelector('.bubble');
         if (!bubble) return;
 
+        let isBubbleOpen = false;
+
         const openBubble = () => {
+          // Close all others first
           document.querySelectorAll('.bubble').forEach(b => {
-            if (b !== bubble) b.style.display = 'none';
+            b.style.display = 'none';
+            b.closest('.spot')?.classList.remove('bubble-active');
           });
+
           bubble.style.display = 'block';
+          spot.classList.add('bubble-active');
+          isBubbleOpen = true;
         };
 
         const closeBubble = () => {
           bubble.style.display = 'none';
+          spot.classList.remove('bubble-active');
+          isBubbleOpen = false;
         };
 
-        if (window.innerWidth > 768) {
+        // ── Desktop hover ───────────────────────────────────────
+        if (window.matchMedia('(min-width: 769px)').matches) {
           spot.addEventListener('mouseenter', openBubble);
           spot.addEventListener('mouseleave', closeBubble);
-        } else {
-          spot.addEventListener('click', e => {
+        } 
+        // ── Mobile tap ──────────────────────────────────────────
+        else {
+          // Use pointerup instead of click → better for touch devices
+          spot.addEventListener('pointerup', function(e) {
+            // Prevent this from interfering with map drag
+            if (e.pointerType === 'touch' && window.getSelection().toString()) {
+              return; // skip if text was selected
+            }
+
             e.stopPropagation();
-            if (bubble.style.display === 'block') {
+            e.preventDefault(); // very important on mobile
+
+            // Toggle behavior
+            if (isBubbleOpen) {
               closeBubble();
             } else {
               openBubble();
             }
-          });
+          }, { passive: false });
         }
 
+        // Close button inside bubble
         const closeBtn = bubble.querySelector('.close-btn');
         if (closeBtn) {
-          closeBtn.addEventListener('click', e => {
+          closeBtn.addEventListener('pointerup', e => {
             e.stopPropagation();
+            e.preventDefault();
             closeBubble();
-          });
+          }, { passive: false });
         }
       });
 
+      // ── Close bubbles when tapping outside anywhere on mobile ───────────────
       if (window.innerWidth <= 768) {
-        document.addEventListener('click', e => {
+        document.addEventListener('pointerup', function(e) {
+          // Only act if touch/click didn't originate from a spot or bubble
           if (!e.target.closest('.spot') && !e.target.closest('.bubble')) {
-            document.querySelectorAll('.bubble').forEach(b => {
-              b.style.display = 'none';
+            document.querySelectorAll('.bubble').forEach(bubble => {
+              bubble.style.display = 'none';
             });
+            document.querySelectorAll('.spot').forEach(s => s.classList.remove('bubble-active'));
           }
-        });
+        }, { passive: true });
       }
 
       // ── Profile & Firebase logic ───────────────────────────────────────────
