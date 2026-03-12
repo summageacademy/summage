@@ -503,3 +503,45 @@ body.menu-open::before { content:''; position:fixed; inset:0; background:rgba(0,
     font-size: 0.98rem;
   }
 }
+
+
+/* More colorful modal buttons */
+.modal-footer button,
+.level-footer .save-btn {
+  min-width: 120px;
+  padding: 14px 32px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.24s ease;
+  box-shadow: 0 5px 0 #c23a0a;
+}
+
+/* Primary action (Save, OK, Done) → Orange */
+.modal-footer button:not(.modal-btn-secondary),
+.save-btn,
+.level-footer button:not([disabled]) {
+  background: #f24b0b;
+  color: white;
+}
+.modal-footer button:not(.modal-btn-secondary):hover:not(:disabled),
+.save-btn:hover:not(:disabled) {
+  background: #ff5a00;
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 #c23a0a;
+}
+
+/* Cancel / Close → softer gray-blue or green if you prefer */
+.modal-btn-secondary,
+.modal-footer button.modal-btn-secondary {
+  background: #10b981;          /* emerald green - or use #6b7280 for gray */
+  color: white;
+  box-shadow: 0 5px 0 #059669;
+}
+.modal-btn-secondary:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #047857;
+}
