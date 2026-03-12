@@ -330,9 +330,7 @@
       </div>
 
       <div class="level-options">
-        <button class="level-btn" data-level="noenglish" data-lang-key="levelNoEnglish">I don't know English</button>
         <button class="level-btn" data-level="beginner" data-lang-key="levelBeginner">Beginner</button>
-        <button class="level-btn" data-level="elementary" data-lang-key="levelElementary">Elementary</button>
         <button class="level-btn" data-level="intermediate" data-lang-key="levelIntermediate">Intermediate</button>
         <button class="level-btn" data-level="advanced" data-lang-key="levelAdvanced">Advanced</button>
       </div>
@@ -344,413 +342,580 @@
   </div>
 
   <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
-    authDomain: "summage-backend.firebaseapp.com",
-    projectId: "summage-backend",
-    storageBucket: "summage-backend.firebasestorage.app",
-    messagingSenderId: "128191434358",
-    appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+      authDomain: "summage-backend.firebaseapp.com",
+      projectId: "summage-backend",
+      storageBucket: "summage-backend.firebasestorage.app",
+      messagingSenderId: "128191434358",
+      appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
 
-  firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-  auth.onAuthStateChanged((user) => {
-    if (!user) {
-      window.location.href = '/authentication/';
-    }
-  });
-
-  const translations = {
-    en: {
-      navHome: "Home",
-      navTools: "Tools",
-      navSchool: "Business School",
-      navBlogs: "Blogs",
-      navProfile: "Profile",
-      titleTools: "Study Tools",
-      descTools: "Powerful tools to help you learn faster and smarter. Coming soon...",
-      titleSchool: "Business School",
-      descSchool: "Professional courses designed for real-world success. Available soon.",
-      titleBlogs: "Blogs Feed",
-      descBlogs: "Latest articles, tips and language learning insights.",
-      titleProfile: "Profile",
-      descProfile: "Your learning journey, achievements and settings.",
-      academyGrammar: "Grammar Academy",
-      academyWriting: "Writing Academy",
-      academyReading: "Reading Academy",
-      hq: "Headquarters",
-      btnEnter: "Enter Academy",
-      btnVisit: "Visit HQ",
-      courseManagementTitle: "Management & Leadership",
-      courseManagementDesc: "Build strong teams, master strategy, and lead with confidence in any business environment.",
-      courseMarketingTitle: "Digital Marketing",
-      courseMarketingDesc: "Grow brands with content, ads, SEO, social media and data-driven strategies.",
-      courseEntrepreneurshipTitle: "Entrepreneurship",
-      courseEntrepreneurshipDesc: "From idea to launch — build, grow and scale your own business step by step.",
-      courseBtn: "Start Course",
-      coins: "Coins",
-      diamonds: "Diamonds",
-      nftmenu: "Marketplace",
-      menuContacts: "Contacts",
-      menuHelpCentre: "Help Centre",
-      menuUserInfo: "My Info",
-      menuChangeName: "Change Name",
-      menuAvatars: "Change Avatar",
-      menuLogOut: "Log Out",
-      levelNoEnglish: "I don't know English",
-      levelBeginner: "Beginner",
-      levelElementary: "Elementary",
-      levelIntermediate: "Intermediate",
-      levelAdvanced: "Advanced",
-      toolSummageAITitle: "Summage AI",
-      toolSummageAIDesc: "Intelligent AI assistant for learning and productivity.",
-      toolQuizzesTitle: "Online Quizzes",
-      toolQuizzesDesc: "Interactive quizzes to test and improve your knowledge.",
-      toolVocabularyTitle: "Vocabulary Builder",
-      toolVocabularyDesc: "Expand your word power with daily exercises.",
-      toolGrammarTitle: "Grammar Checker",
-      toolGrammarDesc: "Instant grammar and style suggestions for your writing.",
-      levelHeaderTitle: "Welcome to Summage!",
-      levelHeaderDesc: "Please select your current English level so we can personalize your journey.",
-      btnDone: "Done",
-      blog1title:"How to Study Effectively While Fasting",
-      blog1desc: "Practical Strategies to Maintain Focus and Productivity",
-      blog2title: "Educational Challenges in Developing Countries",
-      blog2desc: "Insights for Students in Asia and Beyond",
-      searchblog: "Search articles", levelProfile: "Level:",
-      hqWelcomeTitle: "Choose the department you need",
-      hqHelp:         "Help Centre",
-      hqAbout:        "About Us",
-      hqPrivacy:      "Privacy Policy",
-      hqTerms:        "Terms of Service"
-    },
-    ru: {
-      navHome: "Главная",
-      navTools: "Инструменты",
-      navSchool: "Бизнес-школа",
-      navBlogs: "Блог",
-      navProfile: "Профиль",
-      titleTools: "Учебные инструменты",
-      descTools: "Мощные инструменты для более быстрого и умного обучения. Скоро...",
-      titleSchool: "Бизнес-школа",
-      descSchool: "Профессиональные курсы для успеха в реальном мире. Скоро доступны.",
-      titleBlogs: "Лента блога",
-      descBlogs: "Последние статьи, советы и инсайты по изучению языка.",
-      titleProfile: "Профиль",
-      descProfile: "Ваше обучение, достижения и настройки.",
-      academyGrammar: "Академия Грамматика",
-      academyWriting: "Академия Письма",
-      academyReading: "Reading Академия",
-      hq: "Штаб-квартира",
-      btnEnter: "Войти в Академию",
-      btnVisit: "Посетить Штаб",
-      courseManagementTitle: "Управление и Лидерство",
-      courseManagementDesc: "Создавайте сильные команды, осваивайте стратегию и уверенно руководите в любой бизнес-среде.",
-      courseMarketingTitle: "Цифровой Маркетинг",
-      courseMarketingDesc: "Развивайте бренды с помощью контента, рекламы, SEO, соцсетей и стратегий на основе данных.",
-      courseEntrepreneurshipTitle: "Предпринимательство",
-      courseEntrepreneurshipDesc: "От идеи до запуска — пошагово создавайте, развивайте и масштабируйте свой бизнес.",
-      courseBtn: "Начать курс",
-      coins: "Золота",
-      diamonds: "Алмазы",
-      nftmenu: "Маркетплейс",
-      menuContacts: "Контакты",
-      menuHelpCentre: "Центр Помощи",
-      menuUserInfo: "Мои Данные",
-      menuChangeName: "Изменить Имя",
-      menuAvatars: "Каталог Аватаров",
-      menuLogOut: "Выйти",
-      levelNoEnglish: "Я не знаю английский",
-      levelBeginner: "Начинающий",
-      levelElementary: "Элементарный",
-      levelIntermediate: "Средний",
-      levelAdvanced: "Продвинутый",
-      toolSummageAITitle: "Summage AI",
-      toolSummageAIDesc: "Интеллектуальный ИИ-помощник для обучения и продуктивности.",
-      toolQuizzesTitle: "Онлайн Викторины",
-      toolQuizzesDesc: "Интерактивные викторины для проверки и улучшения знаний.",
-      toolVocabularyTitle: "Построитель словаря",
-      toolVocabularyDesc: "Расширьте свой словарный запас с ежедневными упражнениями.",
-      toolGrammarTitle: "Проверка грамматики",
-      toolGrammarDesc: "Мгновенные предложения по грамматике и стилю для вашего письма.",
-      levelHeaderTitle: "Добро пожаловать в Summage!",
-      levelHeaderDesc: "Пожалуйста, выберите ваш текущий уровень английского, чтобы мы могли персонализировать ваш путь.",
-      btnDone: "Готово", searchblog: "Поиск статей...",
-      blog1title:"Как эффективно учиться во время поста",
-      blog1desc: "Практические стратегии поддержания концентрации и продуктивности",
-      blog2title: "Трудности просвещения в развивающемся мире.",
-      blog2desc: "Инсайты для студентов Азии и за её пределами", levelProfile: "Уровень:",
-      hqWelcomeTitle: "Добро пожаловать в штаб-квартиру Summage! 🌟",
-      hqHelp:         "Центр помощи",
-      hqAbout:        "О нас",
-      hqPrivacy:      "Политика конфиденциальности",
-      hqTerms:        "Условия использования"
-    },
-    uz: {
-      navHome: "Bosh sahifa",
-      navTools: "Vositalar",
-      navSchool: "Biznes maktabi",
-      navBlogs: "Blog",
-      navProfile: "Profil",
-      titleTools: "O'quv vositalari",
-      descTools: "Tezroq va aqlli o'rganishga yordam beradigan kuchli vositalar. Tez orada...",
-      titleSchool: "Biznes maktabi",
-      descSchool: "Real hayotda muvaffaqiyat uchun mo'ljallangan professional kurslar. Tez orada mavjud.",
-      titleBlogs: "Blog lentasi",
-      descBlogs: "So'nggi maqolalar, maslahatlar va til o'rganish bo'yicha tushunchalar.",
-      titleProfile: "Profil",
-      descProfile: "Sizning o'quv yo'lingiz, yutuqlaringiz va sozlamalaringiz.",
-      academyGrammar: "Grammatika Akademiyasi",
-      academyWriting: "Writing Akademiyasi",
-      academyReading: "Reading Academiyasi",
-      hq: "Bosh ofis",
-      btnEnter: "Akademiyaga kirish",
-      btnVisit: "Bosh ofisga tashrif",
-      courseManagementTitle: "Menejment va Liderlik",
-      courseManagementDesc: "Kuchli jamoalar tuzing, strategiyani o‘zlashtiring va har qanday biznes muhitida ishonch bilan rahbarlik qiling.",
-      courseMarketingTitle: "Raqamli Marketing",
-      courseMarketingDesc: "Kontent, reklama, SEO, ijtimoiy tarmoqlar va ma’lumotlarga asoslangan strategiyalar bilan brendlarni rivojlantiring.",
-      courseEntrepreneurshipTitle: "Tadbirkorlik",
-      courseEntrepreneurshipDesc: "Ideyadan ishga tushirishgacha — o‘z biznesingizni bosqichma-bosqich yarating, rivojlantiring va kengaytiring.",
-      courseBtn: "Kursni boshlash",
-      coins: "Tangalar",
-      diamonds: "Olmoslar",
-      nftmenu: "Marketpleys",
-      menuContacts: "Aloqa",
-      menuHelpCentre: "Yordam Markazi",
-      menuUserInfo: "Mening Ma'lumotlarim",
-      menuChangeName: "Ismni O'zgartirish",
-      menuAvatars: "Avatarlar",
-      menuLogOut: "Chiqish",
-      levelNoEnglish: "Men ingliz tilini bilmayman",
-      levelBeginner: "Boshlang'ich",
-      levelElementary: "Elementar",
-      levelIntermediate: "O'rta",
-      levelAdvanced: "Yuqori",
-      toolSummageAITitle: "Summage AI",
-      toolSummageAIDesc: "O'rganish va samaradorlik uchun aqlli AI yordamchisi.",
-      toolQuizzesTitle: "Onlayn Testlar",
-      toolQuizzesDesc: "Bilimingizni sinash va yaxshilash uchun interaktiv testlar.",
-      toolVocabularyTitle: "Lug'at Quruvchi",
-      toolVocabularyDesc: "Kunlik mashqlar bilan so'z boyligingizni kengaytiring.",
-      toolGrammarTitle: "Grammatika Tekshiruvi",
-      toolGrammarDesc: "Yozishingiz uchun darhol grammatika va uslub takliflari.",
-      levelHeaderTitle: "Summage ga xush kelibsiz!",
-      levelHeaderDesc: "Yo'lingizni shaxsiylashtirish uchun hozirgi ingliz tili darajangizni tanlang.",
-      btnDone: "Tayyor", searchblog: "Maqolalarni qidirish...",
-      blog1title:"Ro‘za tutgan holda samarali o‘qish", levelProfile: "Daraja:",
-      blog1desc: "Diqqat va samaradorlikni saqlash uchun amaliy strategiyalar",
-      blog2title: "Rivojlanayotgan mamlakatlardagi ta'lim muammolari",
-      blog2desc: "Osiyo va undan tashqaridagi talabalar uchun insaytlar",
-      hqWelcomeTitle: "Summage Bosh ofisiga xush kelibsiz! 🌟",
-      hqHelp:         "Yordam markazi",
-      hqAbout:        "Biz haqimizda",
-      hqPrivacy:      "Maxfiylik siyosati",
-      hqTerms:        "Foydalanish shartlari"
-    }
-  };
-
-  const LANG_KEY = 'summage_preferred_lang';
-  let currentLang = localStorage.getItem(LANG_KEY) || 'en';
-
-  function updateLanguage(lang) {
-    currentLang = lang;
-    localStorage.setItem(LANG_KEY, lang);
-    document.querySelectorAll('[data-lang-key]').forEach(el => {
-      const key = el.dataset.langKey;
-      const text = translations[lang][key] || translations['en'][key] || key; // Fallback to en or key itself
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-        el.placeholder = text;
-      } else {
-        el.textContent = text;
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = '/authentication/';
       }
     });
-  }
 
-  document.getElementById('mobileLangBtn')?.addEventListener('click', e => {
-    e.stopPropagation();
-    document.getElementById('mobileLangMenu').classList.toggle('show');
-  });
-
-  document.getElementById('desktopLangBtn')?.addEventListener('click', e => {
-    e.stopPropagation();
-    document.getElementById('desktopLangMenu').classList.toggle('show');
-  });
-
-  document.querySelectorAll('.flag').forEach(flag => {
-    flag.addEventListener('click', e => {
-      e.stopPropagation();
-      const lang = flag.dataset.lang;
-      updateLanguage(lang);
-      document.getElementById('mobileLangMenu')?.classList.remove('show');
-      document.getElementById('desktopLangMenu')?.classList.remove('show');
-    });
-  });
-
-  document.addEventListener('click', () => {
-    document.getElementById('mobileLangMenu')?.classList.remove('show');
-    document.getElementById('desktopLangMenu')?.classList.remove('show');
-  });
-
-  updateLanguage(currentLang);
-
-  document.querySelectorAll('[data-page]').forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      document.querySelectorAll('[data-page]').forEach(a => a.classList.remove('active'));
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      this.classList.add('active');
-      document.getElementById(this.dataset.page).classList.add('active');
-    });
-  });
-
-  const mapContainer = document.getElementById('mapContainer');
-  const mapContent   = document.getElementById('mapContent');
-
-  if (mapContainer && mapContent) {
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    function updateTransform() {
-      mapContent.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      const layers = [
-        { el: document.querySelector('.cloud-back'),  factor: 0.15 },
-        { el: document.querySelector('.cloud-mid'),   factor: 0.35 },
-        { el: document.querySelector('.cloud-front'), factor: 0.70 }
-      ];
-      layers.forEach(layer => {
-        if (layer.el) layer.el.style.transform = `translate(${currentX * layer.factor}px, ${currentY * layer.factor}px)`;
-      });
-    }
-
-    updateTransform();
-
-    function startDrag(e) {
-      isDragging = true;
-      const pointer = e.touches ? e.touches[0] : e;
-      startX = pointer.clientX - currentX;
-      startY = pointer.clientY - currentY;
-      mapContainer.style.cursor = 'grabbing';
-      e.preventDefault();
-    }
-
-    function drag(e) {
-      if (!isDragging) return;
-      const pointer = e.touches ? e.touches[0] : e;
-      currentX = pointer.clientX - startX;
-      currentY = pointer.clientY - startY;
-      const maxOffset = 300;
-      currentX = Math.max(-maxOffset, Math.min(maxOffset, currentX));
-      currentY = Math.max(-maxOffset, Math.min(maxOffset, currentY));
-      updateTransform();
-    }
-
-    function stopDrag() {
-      isDragging = false;
-      mapContainer.style.cursor = 'grab';
-    }
-
-    mapContainer.addEventListener('mousedown', startDrag);
-    mapContainer.addEventListener('touchstart', startDrag, { passive: false });
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag, { passive: false });
-    document.addEventListener('mouseup', stopDrag);
-    document.addEventListener('touchend', stopDrag);
-    document.addEventListener('touchcancel', stopDrag);
-    mapContainer.addEventListener('mouseleave', () => {
-      if (!isDragging) mapContainer.style.cursor = 'grab';
-    });
-  }
-
-  document.querySelectorAll('.spot').forEach(spot => {
-    const bubble = spot.querySelector('.bubble');
-    const closeBtn = bubble?.querySelector('.close-btn');
-
-    const openBubble = () => {
-      document.querySelectorAll('.bubble').forEach(b => {
-        if (b !== bubble) b.style.display = 'none';
-      });
-      if (bubble) bubble.style.display = 'block';
+    const translations = {
+      en: {
+        navHome: "Home",
+        navTools: "Tools",
+        navSchool: "Business School",
+        navBlogs: "Blogs",
+        navProfile: "Profile",
+        titleTools: "Study Tools",
+        descTools: "Powerful tools to help you learn faster and smarter. Coming soon...",
+        titleSchool: "Business School",
+        descSchool: "Professional courses designed for real-world success. Available soon.",
+        titleBlogs: "Blogs Feed",
+        descBlogs: "Latest articles, tips and language learning insights.",
+        titleProfile: "Profile",
+        descProfile: "Your learning journey, achievements and settings.",
+        academyGrammar: "Grammar Academy",
+        academyWriting: "Writing Academy",
+        academyReading: "Reading Academy",
+        hq: "Headquarters",
+        btnEnter: "Enter Academy",
+        btnVisit: "Visit HQ",
+        courseManagementTitle: "Management & Leadership",
+        courseManagementDesc: "Build strong teams, master strategy, and lead with confidence in any business environment.",
+        courseMarketingTitle: "Digital Marketing",
+        courseMarketingDesc: "Grow brands with content, ads, SEO, social media and data-driven strategies.",
+        courseEntrepreneurshipTitle: "Entrepreneurship",
+        courseEntrepreneurshipDesc: "From idea to launch — build, grow and scale your own business step by step.",
+        courseBtn: "Start Course",
+        coins: "Coins",
+        diamonds: "Diamonds",
+        nftmenu: "Marketplace",
+        menuContacts: "Contacts",
+        menuHelpCentre: "Help Centre",
+        menuUserInfo: "My Info",
+        menuChangeName: "Change Name",
+        menuAvatars: "Change Avatar",
+        menuLogOut: "Log Out",
+        levelNoEnglish: "I don't know English",
+        levelBeginner: "Beginner",
+        levelElementary: "Elementary",
+        levelIntermediate: "Intermediate",
+        levelAdvanced: "Advanced",
+        toolSummageAITitle: "Summage AI",
+        toolSummageAIDesc: "Intelligent AI assistant for learning and productivity.",
+        toolQuizzesTitle: "Online Quizzes",
+        toolQuizzesDesc: "Interactive quizzes to test and improve your knowledge.",
+        toolVocabularyTitle: "Vocabulary Builder",
+        toolVocabularyDesc: "Expand your word power with daily exercises.",
+        toolGrammarTitle: "Grammar Checker",
+        toolGrammarDesc: "Instant grammar and style suggestions for your writing.",
+        levelHeaderTitle: "Welcome to Summage!",
+        levelHeaderDesc: "Please select your current English level so we can personalize your journey.",
+        btnDone: "Done",
+        blog1title:"How to Study Effectively While Fasting",
+        blog1desc: "Practical Strategies to Maintain Focus and Productivity",
+        blog2title: "Educational Challenges in Developing Countries",
+        blog2desc: "Insights for Students in Asia and Beyond",
+        searchblog: "Search articles", levelProfile: "Level:",
+        hqWelcomeTitle: "Choose the department you need",
+        hqHelp:         "Help Centre",
+        hqAbout:        "About Us",
+        hqPrivacy:      "Privacy Policy",
+        hqTerms:        "Terms of Service"
+      },
+      ru: {
+        navHome: "Главная",
+        navTools: "Инструменты",
+        navSchool: "Бизнес-школа",
+        navBlogs: "Блог",
+        navProfile: "Профиль",
+        titleTools: "Учебные инструменты",
+        descTools: "Мощные инструменты для более быстрого и умного обучения. Скоро...",
+        titleSchool: "Бизнес-школа",
+        descSchool: "Профессиональные курсы для успеха в реальном мире. Скоро доступны.",
+        titleBlogs: "Лента блога",
+        descBlogs: "Последние статьи, советы и инсайты по изучению языка.",
+        titleProfile: "Профиль",
+        descProfile: "Ваше обучение, достижения и настройки.",
+        academyGrammar: "Академия Грамматика",
+        academyWriting: "Академия Письма",
+        academyReading: "Reading Академия",
+        hq: "Штаб-квартира",
+        btnEnter: "Войти в Академию",
+        btnVisit: "Посетить Штаб",
+        courseManagementTitle: "Управление и Лидерство",
+        courseManagementDesc: "Создавайте сильные команды, осваивайте стратегию и уверенно руководите в любой бизнес-среде.",
+        courseMarketingTitle: "Цифровой Маркетинг",
+        courseMarketingDesc: "Развивайте бренды с помощью контента, рекламы, SEO, соцсетей и стратегий на основе данных.",
+        courseEntrepreneurshipTitle: "Предпринимательство",
+        courseEntrepreneurshipDesc: "От идеи до запуска — пошагово создавайте, развивайте и масштабируйте свой бизнес.",
+        courseBtn: "Начать курс",
+        coins: "Золота",
+        diamonds: "Алмазы",
+        nftmenu: "Маркетплейс",
+        menuContacts: "Контакты",
+        menuHelpCentre: "Центр Помощи",
+        menuUserInfo: "Мои Данные",
+        menuChangeName: "Изменить Имя",
+        menuAvatars: "Каталог Аватаров",
+        menuLogOut: "Выйти",
+        levelNoEnglish: "Я не знаю английский",
+        levelBeginner: "Начинающий",
+        levelElementary: "Элементарный",
+        levelIntermediate: "Средний",
+        levelAdvanced: "Продвинутый",
+        toolSummageAITitle: "Summage AI",
+        toolSummageAIDesc: "Интеллектуальный ИИ-помощник для обучения и продуктивности.",
+        toolQuizzesTitle: "Онлайн Викторины",
+        toolQuizzesDesc: "Интерактивные викторины для проверки и улучшения знаний.",
+        toolVocabularyTitle: "Построитель словаря",
+        toolVocabularyDesc: "Расширьте свой словарный запас с ежедневными упражнениями.",
+        toolGrammarTitle: "Проверка грамматики",
+        toolGrammarDesc: "Мгновенные предложения по грамматике и стилю для вашего письма.",
+        levelHeaderTitle: "Добро пожаловать в Summage!",
+        levelHeaderDesc: "Пожалуйста, выберите ваш текущий уровень английского, чтобы мы могли персонализировать ваш путь.",
+        btnDone: "Готово", searchblog: "Поиск статей...",
+        blog1title:"Как эффективно учиться во время поста",
+        blog1desc: "Практические стратегии поддержания концентрации и продуктивности",
+        blog2title: "Трудности просвещения в развивающемся мире.",
+        blog2desc: "Инсайты для студентов Азии и за её пределами", levelProfile: "Уровень:",
+        hqWelcomeTitle: "Добро пожаловать в штаб-квартиру Summage! 🌟",
+        hqHelp:         "Центр помощи",
+        hqAbout:        "О нас",
+        hqPrivacy:      "Политика конфиденциальности",
+        hqTerms:        "Условия использования"
+      },
+      uz: {
+        navHome: "Bosh sahifa",
+        navTools: "Vositalar",
+        navSchool: "Biznes maktabi",
+        navBlogs: "Blog",
+        navProfile: "Profil",
+        titleTools: "O'quv vositalari",
+        descTools: "Tezroq va aqlli o'rganishga yordam beradigan kuchli vositalar. Tez orada...",
+        titleSchool: "Biznes maktabi",
+        descSchool: "Real hayotda muvaffaqiyat uchun mo'ljallangan professional kurslar. Tez orada mavjud.",
+        titleBlogs: "Blog lentasi",
+        descBlogs: "So'nggi maqolalar, maslahatlar va til o'rganish bo'yicha tushunchalar.",
+        titleProfile: "Profil",
+        descProfile: "Sizning o'quv yo'lingiz, yutuqlaringiz va sozlamalaringiz.",
+        academyGrammar: "Grammatika Akademiyasi",
+        academyWriting: "Writing Akademiyasi",
+        academyReading: "Reading Academiyasi",
+        hq: "Bosh ofis",
+        btnEnter: "Akademiyaga kirish",
+        btnVisit: "Bosh ofisga tashrif",
+        courseManagementTitle: "Menejment va Liderlik",
+        courseManagementDesc: "Kuchli jamoalar tuzing, strategiyani o‘zlashtiring va har qanday biznes muhitida ishonch bilan rahbarlik qiling.",
+        courseMarketingTitle: "Raqamli Marketing",
+        courseMarketingDesc: "Kontent, reklama, SEO, ijtimoiy tarmoqlar va ma’lumotlarga asoslangan strategiyalar bilan brendlarni rivojlantiring.",
+        courseEntrepreneurshipTitle: "Tadbirkorlik",
+        courseEntrepreneurshipDesc: "Ideyadan ishga tushirishgacha — o‘z biznesingizni bosqichma-bosqich yarating, rivojlantiring va kengaytiring.",
+        courseBtn: "Kursni boshlash",
+        coins: "Tangalar",
+        diamonds: "Olmoslar",
+        nftmenu: "Marketpleys",
+        menuContacts: "Aloqa",
+        menuHelpCentre: "Yordam Markazi",
+        menuUserInfo: "Mening Ma'lumotlarim",
+        menuChangeName: "Ismni O'zgartirish",
+        menuAvatars: "Avatarlar",
+        menuLogOut: "Chiqish",
+        levelNoEnglish: "Men ingliz tilini bilmayman",
+        levelBeginner: "Boshlang'ich",
+        levelElementary: "Elementar",
+        levelIntermediate: "O'rta",
+        levelAdvanced: "Yuqori",
+        toolSummageAITitle: "Summage AI",
+        toolSummageAIDesc: "O'rganish va samaradorlik uchun aqlli AI yordamchisi.",
+        toolQuizzesTitle: "Onlayn Testlar",
+        toolQuizzesDesc: "Bilimingizni sinash va yaxshilash uchun interaktiv testlar.",
+        toolVocabularyTitle: "Lug'at Quruvchi",
+        toolVocabularyDesc: "Kunlik mashqlar bilan so'z boyligingizni kengaytiring.",
+        toolGrammarTitle: "Grammatika Tekshiruvi",
+        toolGrammarDesc: "Yozishingiz uchun darhol grammatika va uslub takliflari.",
+        levelHeaderTitle: "Summage ga xush kelibsiz!",
+        levelHeaderDesc: "Yo'lingizni shaxsiylashtirish uchun hozirgi ingliz tili darajangizni tanlang.",
+        btnDone: "Tayyor", searchblog: "Maqolalarni qidirish...",
+        blog1title:"Ro‘za tutgan holda samarali o‘qish", levelProfile: "Daraja:",
+        blog1desc: "Diqqat va samaradorlikni saqlash uchun amaliy strategiyalar",
+        blog2title: "Rivojlanayotgan mamlakatlardagi ta'lim muammolari",
+        blog2desc: "Osiyo va undan tashqaridagi talabalar uchun insaytlar",
+        hqWelcomeTitle: "Summage Bosh ofisiga xush kelibsiz! 🌟",
+        hqHelp:         "Yordam markazi",
+        hqAbout:        "Biz haqimizda",
+        hqPrivacy:      "Maxfiylik siyosati",
+        hqTerms:        "Foydalanish shartlari"
+      }
     };
 
-    if (spot.dataset.academy === 'hq') {
-      const visitBtn = bubble?.querySelector('#hqModalTrigger');
-      if (visitBtn) {
-        visitBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          if (bubble) bubble.style.display = 'none';
-          document.getElementById('hqModalBackdrop').classList.remove('hidden');
+    const LANG_KEY = 'summage_preferred_lang';
+      let currentLang = localStorage.getItem(LANG_KEY) || 'en';
+
+      function updateLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem(LANG_KEY, lang);
+        document.querySelectorAll('[data-lang-key]').forEach(el => {
+          const key = el.dataset.langKey;
+          const text = translations[lang][key] || translations['en'][key] || key;
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = text;
+          } else {
+            el.textContent = text;
+          }
         });
       }
-    }
 
-    if (window.innerWidth > 768) {
-      spot.addEventListener('mouseenter', openBubble);
-    } else {
-      spot.addEventListener('click', e => {
+      // Language menu toggles
+      document.getElementById('mobileLangBtn')?.addEventListener('click', e => {
         e.stopPropagation();
-        openBubble();
+        document.getElementById('mobileLangMenu').classList.toggle('show');
       });
-    }
 
-    if (closeBtn) {
-      closeBtn.addEventListener('click', e => {
+      document.getElementById('desktopLangBtn')?.addEventListener('click', e => {
         e.stopPropagation();
-        bubble.style.display = 'none';
+        document.getElementById('desktopLangMenu').classList.toggle('show');
       });
-    }
-  });
 
-  auth.onAuthStateChanged(async (user) => {
-    const photoEl   = document.getElementById('profilePhoto');
-    const nameEl    = document.getElementById('profileName');
-    const levelEl   = document.getElementById('englishLevel');
-    const coinsEl   = document.getElementById('coins');
-    const diamEl    = document.getElementById('diamonds');
+      document.querySelectorAll('.flag').forEach(flag => {
+        flag.addEventListener('click', e => {
+          e.stopPropagation();
+          const lang = flag.dataset.lang;
+          updateLanguage(lang);
+          document.getElementById('mobileLangMenu')?.classList.remove('show');
+          document.getElementById('desktopLangMenu')?.classList.remove('show');
+        });
+      });
 
-    if (!user) {
-      nameEl.textContent  = "Guest";
-      levelEl.textContent = "—";
-      coinsEl.textContent = "0";
-      diamEl.textContent  = "0";
-      photoEl.src = "/assets/images/illustrations/illustration1.png";
-      return;
-    }
+      document.addEventListener('click', () => {
+        document.getElementById('mobileLangMenu')?.classList.remove('show');
+        document.getElementById('desktopLangMenu')?.classList.remove('show');
+      });
 
-    nameEl.textContent  = user.displayName || "User";
-    coinsEl.textContent = "0";
-    diamEl.textContent  = "0";
-    levelEl.textContent = "Beginner";
+      updateLanguage(currentLang);
 
-    try {
-      const userRef = db.collection('users').doc(user.uid);
-      const docSnap = await userRef.get();
+      // Page navigation
+      document.querySelectorAll('[data-page]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelectorAll('[data-page]').forEach(a => a.classList.remove('active'));
+          document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+          document.getElementById(this.dataset.page).classList.add('active');
+        });
+      });
 
-      if (docSnap.exists) {
-        const data = docSnap.data();
-        coinsEl.textContent = data.coins ?? 0;
-        diamEl.textContent  = data.diamonds ?? 0;
+      // Map drag + parallax
+      const mapContainer = document.getElementById('mapContainer');
+      const mapContent   = document.getElementById('mapContent');
 
-        const levelKey = (data.level || "beginner").toLowerCase();
-        const levelMap = {
-          "noenglish":   "levelNoEnglish",
-          "beginner":    "levelBeginner",
-          "elementary":  "levelElementary",
-          "intermediate":"levelIntermediate",
-          "advanced":    "levelAdvanced"
+      if (mapContainer && mapContent) {
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        function updateTransform() {
+          mapContent.style.transform = `translate(${currentX}px, ${currentY}px)`;
+          const layers = [
+            { el: document.querySelector('.cloud-back'),  factor: 0.15 },
+            { el: document.querySelector('.cloud-mid'),   factor: 0.35 },
+            { el: document.querySelector('.cloud-front'), factor: 0.70 }
+          ];
+          layers.forEach(layer => {
+            if (layer.el) layer.el.style.transform = `translate(${currentX * layer.factor}px, ${currentY * layer.factor}px)`;
+          });
+        }
+
+        updateTransform();
+
+        function startDrag(e) {
+          isDragging = true;
+          const pointer = e.touches ? e.touches[0] : e;
+          startX = pointer.clientX - currentX;
+          startY = pointer.clientY - currentY;
+          mapContainer.style.cursor = 'grabbing';
+          e.preventDefault();
+        }
+
+        function drag(e) {
+          if (!isDragging) return;
+          const pointer = e.touches ? e.touches[0] : e;
+          currentX = pointer.clientX - startX;
+          currentY = pointer.clientY - startY;
+          const maxOffset = 300;
+          currentX = Math.max(-maxOffset, Math.min(maxOffset, currentX));
+          currentY = Math.max(-maxOffset, Math.min(maxOffset, currentY));
+          updateTransform();
+        }
+
+        function stopDrag() {
+          isDragging = false;
+          mapContainer.style.cursor = 'grab';
+        }
+
+        mapContainer.addEventListener('mousedown', startDrag);
+        mapContainer.addEventListener('touchstart', startDrag, { passive: false });
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('touchmove', drag, { passive: false });
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchend', stopDrag);
+        document.addEventListener('touchcancel', stopDrag);
+        mapContainer.addEventListener('mouseleave', () => {
+          if (!isDragging) mapContainer.style.cursor = 'grab';
+        });
+      }
+
+      // ── FIXED: Island bubbles work on mobile ────────────────────────────────
+      document.querySelectorAll('.spot').forEach(spot => {
+        const bubble = spot.querySelector('.bubble');
+        if (!bubble) return;
+
+        const openBubble = () => {
+          document.querySelectorAll('.bubble').forEach(b => {
+            if (b !== bubble) b.style.display = 'none';
+          });
+          bubble.style.display = 'block';
         };
-        const transKey = levelMap[levelKey] || "levelBeginner";
-        levelEl.textContent = translations[currentLang][transKey] || "Beginner";
-        if (data.name) nameEl.textContent = data.name;
-        let avatarUrl = data.avatarUrl || user.photoURL;
-        if (!avatarUrl) {
+
+        const closeBubble = () => {
+          bubble.style.display = 'none';
+        };
+
+        if (window.innerWidth > 768) {
+          spot.addEventListener('mouseenter', openBubble);
+          spot.addEventListener('mouseleave', closeBubble);
+        } else {
+          spot.addEventListener('click', e => {
+            e.stopPropagation();
+            if (bubble.style.display === 'block') {
+              closeBubble();
+            } else {
+              openBubble();
+            }
+          });
+        }
+
+        const closeBtn = bubble.querySelector('.close-btn');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            closeBubble();
+          });
+        }
+      });
+
+      if (window.innerWidth <= 768) {
+        document.addEventListener('click', e => {
+          if (!e.target.closest('.spot') && !e.target.closest('.bubble')) {
+            document.querySelectorAll('.bubble').forEach(b => {
+              b.style.display = 'none';
+            });
+          }
+        });
+      }
+
+      // ── Profile & Firebase logic ───────────────────────────────────────────
+      auth.onAuthStateChanged(async (user) => {
+        const photoEl   = document.getElementById('profilePhoto');
+        const nameEl    = document.getElementById('profileName');
+        const levelEl   = document.getElementById('englishLevel');
+        const coinsEl   = document.getElementById('coins');
+        const diamEl    = document.getElementById('diamonds');
+
+        if (!user) {
+          nameEl.textContent  = "Guest";
+          levelEl.textContent = "—";
+          coinsEl.textContent = "0";
+          diamEl.textContent  = "0";
+          photoEl.src = "/assets/images/illustrations/illustration1.png";
+          return;
+        }
+
+        nameEl.textContent  = user.displayName || "User";
+        coinsEl.textContent = "0";
+        diamEl.textContent  = "0";
+        levelEl.textContent = "Beginner";
+
+        try {
+          const userRef = db.collection('users').doc(user.uid);
+          const docSnap = await userRef.get();
+
+          if (docSnap.exists) {
+            const data = docSnap.data();
+            coinsEl.textContent = data.coins ?? 0;
+            diamEl.textContent  = data.diamonds ?? 0;
+
+            const levelKey = (data.level || "beginner").toLowerCase();
+            const levelMap = {
+              "beginner":     "levelBeginner",
+              "intermediate": "levelIntermediate",
+              "advanced":     "levelAdvanced"
+            };
+            const transKey = levelMap[levelKey] || "levelBeginner";
+            levelEl.textContent = translations[currentLang][transKey] || "Beginner";
+
+            if (data.name) nameEl.textContent = data.name;
+            let avatarUrl = data.avatarUrl || user.photoURL;
+            if (!avatarUrl) {
+              const avatars = [
+                "/assets/images/profile/1.jpg",
+                "/assets/images/profile/2.jpg",
+                "/assets/images/profile/3.jpg",
+                "/assets/images/profile/4.jpg",
+                "/assets/images/profile/5.jpg",
+                "/assets/images/profile/6.jpg"
+              ];
+              avatarUrl = avatars[Math.floor(Math.random() * avatars.length)];
+              await userRef.set({ avatarUrl }, { merge: true });
+            }
+            photoEl.src = avatarUrl;
+          } else {
+            await userRef.set({
+              name: user.displayName || "User",
+              level: "beginner",
+              coins: 0,
+              diamonds: 0,
+              avatarUrl: user.photoURL || "/assets/images/profile/1.jpg",
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          }
+        } catch (err) {
+          console.error("Firestore profile error:", err);
+        }
+
+        photoEl.onerror = () => {
+          photoEl.src = "/assets/images/profile/1.jpg";
+        };
+      });
+
+      // Settings menu
+      const settingsBtn  = document.getElementById('settingsBtn');
+      const settingsMenu = document.getElementById('settingsMenu');
+
+      if (settingsBtn && settingsMenu) {
+        settingsBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          settingsMenu.classList.toggle('hidden');
+          document.body.classList.toggle('menu-open');
+        });
+
+        document.addEventListener('click', e => {
+          if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
+            settingsMenu.classList.add('hidden');
+            document.body.classList.remove('menu-open');
+          }
+        });
+
+        document.addEventListener('keydown', e => {
+          if (e.key === 'Escape') {
+            settingsMenu.classList.add('hidden');
+            document.body.classList.remove('menu-open');
+          }
+        });
+
+        document.getElementById('closeMenuBtn')?.addEventListener('click', () => {
+          settingsMenu.classList.add('hidden');
+          document.body.classList.remove('menu-open');
+        });
+      }
+
+      document.getElementById('contactsBtn')?.addEventListener('click', () => {
+        window.location.href = '/contacts/';
+      });
+
+      document.getElementById('helpBtn')?.addEventListener('click', () => {
+        window.location.href = '/help-centre/';
+      });
+
+      // ── FIXED: My Info modal (no top ×) ────────────────────────────────
+      document.getElementById('myInfoBtn')?.addEventListener('click', async () => {
+        const user = auth.currentUser;
+        if (!user) return alert("Not logged in.");
+        let info = `Email: ${user.email || "—"}\nJoined: ${user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : "—"}`;
+
+        try {
+          const doc = await db.collection('users').doc(user.uid).get();
+          if (doc.exists) {
+            const d = doc.data();
+            info += `\nName: ${d.name || "—"}\nLevel: ${d.level || "—"}\nCoins: ${d.coins ?? 0}\nDiamonds: ${d.diamonds ?? 0}`;
+          }
+        } catch (e) {}
+
+        showModal({
+          title: translations[currentLang].menuUserInfo || "My Information",
+          message: info.replace(/\n/g, "<br>"),
+          confirmText: "Close",
+          cancelText: null,
+          showCloseButton: false
+        });
+      });
+
+      // ── FIXED: Change Name (no top ×) ──────────────────────────────────
+      document.getElementById('changeNameBtn')?.addEventListener('click', async () => {
+        const user = auth.currentUser;
+        if (!user) return alert("Not logged in.");
+
+        showModal({
+          title: translations[currentLang].menuChangeName || "Change Display Name",
+          message: "Enter your new display name:",
+          input: true,
+          inputValue: user.displayName || "",
+          inputPlaceholder: "Your new name...",
+          confirmText: "Save",
+          cancelText: "Cancel",
+          showCloseButton: false,
+          onConfirm: async (newName) => {
+            if (!newName || !newName.trim()) return;
+            const trimmed = newName.trim();
+            try {
+              await user.updateProfile({ displayName: trimmed });
+              await db.collection('users').doc(user.uid).update({ name: trimmed });
+              document.getElementById('profileName').textContent = trimmed;
+              alert("Name updated!");
+            } catch (err) {
+              console.error(err);
+              alert("Failed to update name.");
+            }
+          }
+        });
+      });
+
+      // ── FIXED: Change Avatar from settings (no top ×) ──────────────────
+      document.getElementById('changeAvatarBtn')?.addEventListener('click', () => {
+        const user = auth.currentUser;
+        if (!user) return alert("Not logged in.");
+        openAvatarChooser(user);
+      });
+
+      // ── FIXED: Profile photo click also opens avatar chooser ───────────
+      const photoContainer = document.querySelector('.profile-photo-container');
+      if (photoContainer) {
+        photoContainer.addEventListener('click', () => {
+          const user = auth.currentUser;
+          if (!user) return alert("Not logged in.");
+          openAvatarChooser(user);
+        });
+      }
+
+      function openAvatarChooser(user) {
+        showModal({
+          title: translations[currentLang].menuAvatars || "Change Avatar",
+          message: "",
+          confirmText: null,
+          cancelText: translations[currentLang].btnClose || "Close",
+          showCloseButton: false
+        });
+
+        setTimeout(() => {
+          const modalBody = document.getElementById('modalBody');
+          modalBody.innerHTML = '';
+          const grid = document.createElement('div');
+          grid.style.cssText = 'display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:18px; padding:0 8px 20px;';
+
           const avatars = [
             "/assets/images/profile/1.jpg",
             "/assets/images/profile/2.jpg",
@@ -759,410 +924,282 @@
             "/assets/images/profile/5.jpg",
             "/assets/images/profile/6.jpg"
           ];
-          avatarUrl = avatars[Math.floor(Math.random() * avatars.length)];
-          await userRef.set({ avatarUrl }, { merge: true });
+
+          avatars.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.cssText = 'width:100px;height:100px;border-radius:50%;object-fit:cover;cursor:pointer;transition:all 0.22s; border:3px solid transparent;';
+            img.onmouseover = () => { img.style.borderColor = '#f24b0b'; img.style.transform = 'scale(1.08)'; };
+            img.onmouseout  = () => { img.style.borderColor = 'transparent'; img.style.transform = 'scale(1)'; };
+            img.onclick = async () => {
+              try {
+                await db.collection('users').doc(user.uid).update({ avatarUrl: src });
+                document.getElementById('profilePhoto').src = src;
+                closeModal();
+                alert(translations[currentLang].avatarUpdated || "Avatar updated!");
+              } catch (err) {
+                alert("Failed to save avatar.");
+              }
+            };
+            grid.appendChild(img);
+          });
+          modalBody.appendChild(grid);
+        }, 100);
+      }
+
+      document.getElementById('logoutBtn')?.addEventListener('click', () => {
+        auth.signOut().then(() => location.href = '/').catch(err => alert("Logout failed."));
+      });
+
+      // ── Modal system (with optional top close button) ─────────────────────
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+      function showModal(options) {
+        const { 
+          title, 
+          message, 
+          input, 
+          inputValue, 
+          confirmText = "OK", 
+          cancelText = "Cancel", 
+          onConfirm,
+          showCloseButton = true
+        } = options;
+
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalBody').innerHTML = message ? `<p>${message}</p>` : "";
+
+        if (input) {
+          const inp = document.createElement('input');
+          inp.type = "text";
+          inp.value = inputValue || "";
+          inp.placeholder = "Enter text...";
+          inp.id = "modalInput";
+          document.getElementById('modalBody').appendChild(inp);
         }
-        photoEl.src = avatarUrl;
-      } else {
-        await userRef.set({
-          name: user.displayName || "User",
-          level: "beginner",
-          coins: 0,
-          diamonds: 0,
-          avatarUrl: user.photoURL || "/assets/images/profile/1.jpg",
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      }
-    } catch (err) {
-      console.error("Firestore profile error:", err); // Fallback values already set above
-    }
-    photoEl.onerror = () => {
-      photoEl.src = "/assets/images/profile/1.jpg";
-    };
-  });
 
-  const settingsBtn  = document.getElementById('settingsBtn');
-  const settingsMenu = document.getElementById('settingsMenu');
+        const footer = document.getElementById('modalFooter');
+        footer.innerHTML = "";
 
-  if (settingsBtn && settingsMenu) {
-    settingsBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      settingsMenu.classList.toggle('hidden');
-      document.body.classList.toggle('menu-open');
-    });
-
-    document.addEventListener('click', e => {
-      if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
-        settingsMenu.classList.add('hidden');
-        document.body.classList.remove('menu-open');
-      }
-    });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        settingsMenu.classList.add('hidden');
-        document.body.classList.remove('menu-open');
-      }
-    });
-
-    document.getElementById('closeMenuBtn')?.addEventListener('click', () => {
-      settingsMenu.classList.add('hidden');
-      document.body.classList.remove('menu-open');
-    });
-  }
-
-  document.getElementById('contactsBtn')?.addEventListener('click', () => {
-    window.location.href = '/contacts/';
-  });
-
-  document.getElementById('helpBtn')?.addEventListener('click', () => {
-    window.location.href = '/help-centre/';
-  });
-
-  document.getElementById('myInfoBtn')?.addEventListener('click', async () => {
-    const user = auth.currentUser;
-    if (!user) return alert("Not logged in.");
-    let info = `Email: ${user.email || "—"}\nJoined: ${user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : "—"}`;
-
-    try {
-      const doc = await db.collection('users').doc(user.uid).get();
-      if (doc.exists) {
-        const d = doc.data();
-        info += `\nName: ${d.name || "—"}\nLevel: ${d.level || "—"}\nCoins: ${d.coins ?? 0}\nDiamonds: ${d.diamonds ?? 0}`;
-      }
-    } catch (e) {}
-
-    showModal({
-      title: "My Information",
-      message: info.replace(/\n/g, "<br>"),
-      confirmText: "Close",
-      type: "info"
-    });
-  });
-
-  document.getElementById('changeNameBtn')?.addEventListener('click', async () => {
-    const user = auth.currentUser;
-    if (!user) return alert("Not logged in.");
-
-    showModal({
-      title: "Change Display Name",
-      message: "Enter your new display name:",
-      input: true,
-      inputValue: user.displayName || "",
-      inputPlaceholder: "Your new name...",
-      confirmText: "Save",
-      cancelText: "Cancel",
-      onConfirm: async (newName) => {
-        if (!newName || !newName.trim()) return;
-        const trimmed = newName.trim();
-        try {
-          await user.updateProfile({ displayName: trimmed });
-          await db.collection('users').doc(user.uid).update({ name: trimmed });
-          document.getElementById('profileName').textContent = trimmed;
-          alert("Name updated!");
-        } catch (err) {
-          console.error(err);
-          alert("Failed to update name.");
+        if (cancelText) {
+          const btn = document.createElement('button');
+          btn.className = 'modal-btn-secondary';
+          btn.textContent = cancelText;
+          btn.onclick = closeModal;
+          footer.appendChild(btn);
         }
-      }
-    });
-  });
 
-  document.getElementById('changeAvatarBtn')?.addEventListener('click', () => {
-    const user = auth.currentUser;
-    if (!user) return alert("Not logged in.");
-    showModal({
-      title: "Choose Avatar",
-      message: "",
-      confirmText: null,
-      cancelText: "Close"
-    });
-
-    setTimeout(() => {
-      const modalBody = document.getElementById('modalBody');
-      modalBody.innerHTML = '';
-      const grid = document.createElement('div');
-      grid.style.cssText = 'display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:18px; padding:0 8px 20px;';
-
-      const avatars = [
-        "/assets/images/profile/1.jpg",
-            "/assets/images/profile/2.jpg",
-            "/assets/images/profile/3.jpg",
-            "/assets/images/profile/4.jpg",
-            "/assets/images/profile/5.jpg",
-            "/assets/images/profile/6.jpg"
-      ];
-
-      avatars.forEach(src => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.style.cssText = 'width:100px;height:100px;border-radius:50%;object-fit:cover;cursor:pointer;transition:all 0.22s; border:3px solid transparent;';
-        img.onmouseover = () => { img.style.borderColor = '#f24b0b'; img.style.transform = 'scale(1.08)'; };
-        img.onmouseout  = () => { img.style.borderColor = 'transparent'; img.style.transform = 'scale(1)'; };
-        img.onclick = async () => {
-          try {
-            await db.collection('users').doc(user.uid).update({ avatarUrl: src });
-            document.getElementById('profilePhoto').src = src;
+        if (confirmText) {
+          const btn = document.createElement('button');
+          btn.className = 'modal-btn-primary';
+          btn.textContent = confirmText;
+          btn.onclick = () => {
+            const val = input ? document.getElementById('modalInput')?.value?.trim() : null;
             closeModal();
-            alert("Avatar updated!");
-          } catch (err) {
-            alert("Failed to save avatar.");
-          }
-        };
-        grid.appendChild(img);
-      });
-      modalBody.appendChild(grid);
-    }, 100);
-  });
-
-  document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    auth.signOut().then(() => location.href = '/').catch(err => alert("Logout failed."));
-  });
-
-  const modalBackdrop = document.getElementById('modalBackdrop');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
-
-  function showModal(options) {
-    const { title, message, input, inputValue, confirmText = "OK", cancelText = "Cancel", onConfirm } = options;
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalBody').innerHTML = message ? `<p>${message}</p>` : "";
-
-    if (input) {
-      const inp = document.createElement('input');
-      inp.type = "text";
-      inp.value = inputValue || "";
-      inp.placeholder = "Enter text...";
-      inp.id = "modalInput";
-      document.getElementById('modalBody').appendChild(inp);
-    }
-
-    const footer = document.getElementById('modalFooter');
-    footer.innerHTML = "";
-
-    if (cancelText) {
-      const btn = document.createElement('button');
-      btn.textContent = cancelText;
-      btn.onclick = closeModal;
-      footer.appendChild(btn);
-    }
-
-    if (confirmText) {
-      const btn = document.createElement('button');
-      btn.textContent = confirmText;
-      btn.onclick = () => {
-        const val = input ? document.getElementById('modalInput')?.value?.trim() : null;
-        closeModal();
-        if (onConfirm) onConfirm(val);
-      };
-      footer.appendChild(btn);
-    }
-    modalBackdrop.classList.remove('hidden');
-  }
-
-  function closeModal() {
-    modalBackdrop.classList.add('hidden');
-  }
-
-  modalCloseBtn.addEventListener('click', closeModal);
-  modalBackdrop.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  const quotes = [
-    { text: "Education is not preparation for life; education is life itself.", author: "John Dewey" },
-    { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius"},
-    { text: "Seek knowledge from the cradle to the grave.", author: "Rumi"},
-    { text: "The nation's prosperity lies in knowledge.", author: "Abdurauf Fitrat"},
-    { text: "Try not to become a man of success, but rather try to become a man of value.", author: "Albert Einstein"},
-    { text: "Be like a lamp to light the way for others, not the mirror to show yourself.", author: "Rumi"},
-    { text: "The acquisition of knowledge is a lifelong journey, for the mind can never be fully satisfied.", author: "Ibn Sina"},
-    { text: "A virtuous mind seeks knowledge not for fame, but for the benefit of all.", author: "Al-Farabi"},
-    { text: "Don't be satisfied with what you know, rather seek what you do not yet understand.", author: "Rumi"},
-    { text: "To know the world, one must observe without prejudice.", author: "Al-Beruni"},
-    { text: "It does not befit the wise to spend life seeking fame or a name, for wisdom does not grow in vanity.", author: "Alisher Navoi"},
-    
-  ];
-
-  function loadRandomQuote() {
-    const idx = Math.floor(Math.random() * quotes.length);
-    document.getElementById('quoteText').textContent = quotes[idx].text;
-    document.getElementById('quoteAuthor').textContent = `— ${quotes[idx].author}`;
-  }
-
-  loadRandomQuote();
-
-  function initBlogSearch() {
-    const searchInput = document.getElementById('blogSearch');
-    const grid = document.getElementById('blogsGrid');
-    
-    if (!searchInput || !grid) return;
-
-    searchInput.addEventListener('input', function() {
-      const term = this.value.toLowerCase().trim();
-      const cards = grid.querySelectorAll('.blog-card');
-
-      cards.forEach(card => {
-        const title = card.dataset.title?.toLowerCase() || '';
-        const desc  = card.dataset.desc?.toLowerCase()  || '';
-        
-        if (title.includes(term) || desc.includes(term)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
+            if (onConfirm) onConfirm(val);
+          };
+          footer.appendChild(btn);
         }
-      });
-    });
-  }
 
-  document.addEventListener('DOMContentLoaded', initBlogSearch);
+        if (modalCloseBtn) {
+          modalCloseBtn.style.display = showCloseButton ? 'block' : 'none';
+        }
 
-  document.querySelectorAll('[data-page="blogs"]').forEach(link => {
-    link.addEventListener('click', () => {
-      setTimeout(initBlogSearch, 100); // small delay for DOM to settle
-    });
-  });
-
-  function showLevelPopup() {
-    document.getElementById('levelPopupBackdrop').classList.remove('hidden');
-    document.body.classList.add('menu-open'); // reuse your overlay style if you want
-  }
-
-  function hideLevelPopup() {
-    document.getElementById('levelPopupBackdrop').classList.add('hidden');
-    document.body.classList.remove('menu-open');
-  }
-
-  let selectedLevel = null;
-
-  document.querySelectorAll('.level-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedLevel = btn.dataset.level;
-      document.getElementById('saveLevelBtn').disabled = false;
-    });
-  });
-
-  document.getElementById('saveLevelBtn')?.addEventListener('click', async () => {
-    if (!selectedLevel) return;
-
-    const user = auth.currentUser;
-    if (!user) {
-      alert("Please log in first.");
-      return;
-    }
-
-    try {
-      await db.collection('users').doc(user.uid).update({
-        level: selectedLevel,
-        englishLevel: selectedLevel, // you can keep both field names if needed
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-
-      const levelEl = document.getElementById('englishLevel');
-      if (levelEl) {
-        const transKey = {
-          noenglish: 'levelNoEnglish',
-          beginner: 'levelBeginner',
-          elementary: 'levelElementary',
-          intermediate: 'levelIntermediate',
-          advanced: 'levelAdvanced'
-        }[selectedLevel] || 'levelBeginner';
-
-        levelEl.textContent = translations[currentLang][transKey] || selectedLevel;
+        modalBackdrop.classList.remove('hidden');
       }
 
-      hideLevelPopup();
-      console.log("Level saved! Let's start learning.");
-    } catch (err) {
-      console.error("Error saving level:", err);
-    }
-  });
+      function closeModal() {
+        modalBackdrop.classList.add('hidden');
+      }
 
-  auth.onAuthStateChanged(async (user) => {
-    if (!user) {
-      return;
-    }
+      modalCloseBtn?.addEventListener('click', closeModal);
+      modalBackdrop?.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    try {
-      const userRef = db.collection('users').doc(user.uid);
-      const doc = await userRef.get();
+      // ── Level popup (only 3 levels now) ───────────────────────────────────
+      function showLevelPopup() {
+        document.getElementById('levelPopupBackdrop').classList.remove('hidden');
+        document.body.classList.add('menu-open');
+      }
 
-      if (doc.exists) {
-        const data = doc.data();
-        if (!data.level && !data.englishLevel) {
-          setTimeout(showLevelPopup, 800); // small delay so page feels loaded
-        }
-      } else {
-        await userRef.set({
-          level: null,
-          coins: 0,
-          diamonds: 0,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      function hideLevelPopup() {
+        document.getElementById('levelPopupBackdrop').classList.add('hidden');
+        document.body.classList.remove('menu-open');
+      }
+
+      let selectedLevel = null;
+
+      document.querySelectorAll('.level-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedLevel = btn.dataset.level;
+          document.getElementById('saveLevelBtn').disabled = false;
         });
-        setTimeout(showLevelPopup, 800);
-      }
-    } catch (err) {
-      console.error("Level check error:", err);
-    }
-  });
+      });
 
-  // ── Lottie Splash Screen Logic ────────────────────────────────────────
-  const loader = document.getElementById('pageLoader');
-  const owl = document.getElementById('splashOwl');
+      document.getElementById('saveLevelBtn')?.addEventListener('click', async () => {
+        if (!selectedLevel) return;
 
-  const MIN_DURATION = 1500; // minimum show time in ms
-  let minTimePassed = false;
+        const user = auth.currentUser;
+        if (!user) {
+          alert("Please log in first.");
+          return;
+        }
 
-  setTimeout(() => {
-      if (owl) {
+        try {
+          await db.collection('users').doc(user.uid).update({
+            level: selectedLevel,
+            englishLevel: selectedLevel,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          const levelEl = document.getElementById('englishLevel');
+          if (levelEl) {
+            const levelMap = {
+              beginner:     'levelBeginner',
+              intermediate: 'levelIntermediate',
+              advanced:     'levelAdvanced'
+            };
+            const transKey = levelMap[selectedLevel] || 'levelBeginner';
+            levelEl.textContent = translations[currentLang][transKey] || selectedLevel;
+          }
+
+          hideLevelPopup();
+          console.log("Level saved!");
+        } catch (err) {
+          console.error("Error saving level:", err);
+        }
+      });
+
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) return;
+
+        try {
+          const userRef = db.collection('users').doc(user.uid);
+          const doc = await userRef.get();
+
+          if (doc.exists) {
+            const data = doc.data();
+            if (!data.level && !data.englishLevel) {
+              setTimeout(showLevelPopup, 800);
+            }
+          } else {
+            await userRef.set({
+              level: null,
+              coins: 0,
+              diamonds: 0,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            setTimeout(showLevelPopup, 800);
+          }
+        } catch (err) {
+          console.error("Level check error:", err);
+        }
+      });
+
+      // ── Lottie Splash ─────────────────────────────────────────────────────
+      const loader = document.getElementById('pageLoader');
+      const owl = document.getElementById('splashOwl');
+
+      const MIN_DURATION = 1500;
+      let minTimePassed = false;
+
+      setTimeout(() => {
+        if (owl) {
           owl.style.opacity = '1';
           owl.style.transform = 'scale(1) translateY(0)';
-      }
-  }, 400);
+        }
+      }, 400);
 
-  setTimeout(() => {
-      minTimePassed = true;
-      if (document.readyState === 'complete') hideLoader();
-  }, MIN_DURATION);
-
-  window.addEventListener('load', () => {
-      if (minTimePassed) {
-          hideLoader();
-      } else {
-          setTimeout(hideLoader, MIN_DURATION);
-      }
-  });
-
-  function hideLoader() {
-      if (!loader || loader.classList.contains('hidden')) return;
-      loader.classList.add('hidden');
       setTimeout(() => {
-          loader.remove(); // completely remove from DOM after fade
-      }, 1400);
-  }
+        minTimePassed = true;
+        if (document.readyState === 'complete') hideLoader();
+      }, MIN_DURATION);
 
-  // Safety fallback (max 7 seconds)
-  setTimeout(() => hideLoader(), 7000);
+      window.addEventListener('load', () => {
+        if (minTimePassed) {
+          hideLoader();
+        } else {
+          setTimeout(hideLoader, MIN_DURATION);
+        }
+      });
 
-  // HQ Modal Logic
-  const hqBackdrop = document.getElementById('hqModalBackdrop');
-  const hqCloseBtn = document.getElementById('hqCloseBtn');
+      function hideLoader() {
+        if (!loader || loader.classList.contains('hidden')) return;
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 1400);
+      }
 
-  if (hqCloseBtn && hqBackdrop) {
-    hqCloseBtn.addEventListener('click', () => hqBackdrop.classList.add('hidden'));
-  }
+      setTimeout(() => hideLoader(), 7000);
 
-  if (hqBackdrop) {
-    hqBackdrop.addEventListener('click', (e) => {
-      if (e.target === hqBackdrop) hqBackdrop.classList.add('hidden');
-    });
-  }
+      // ── HQ Modal close ────────────────────────────────────────────────────
+      const hqBackdrop = document.getElementById('hqModalBackdrop');
+      const hqCloseBtn = document.getElementById('hqCloseBtn');
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && hqBackdrop && !hqBackdrop.classList.contains('hidden')) {
-      hqBackdrop.classList.add('hidden');
-    }
-  });
-</script>
+      if (hqCloseBtn && hqBackdrop) {
+        hqCloseBtn.addEventListener('click', () => hqBackdrop.classList.add('hidden'));
+      }
+
+      if (hqBackdrop) {
+        hqBackdrop.addEventListener('click', (e) => {
+          if (e.target === hqBackdrop) hqBackdrop.classList.add('hidden');
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && hqBackdrop && !hqBackdrop.classList.contains('hidden')) {
+          hqBackdrop.classList.add('hidden');
+        }
+      });
+
+      // ── Random quote ──────────────────────────────────────────────────────
+      const quotes = [
+        { text: "Education is not preparation for life; education is life itself.", author: "John Dewey" },
+        { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius"},
+        { text: "Seek knowledge from the cradle to the grave.", author: "Rumi"},
+        { text: "The nation's prosperity lies in knowledge.", author: "Abdurauf Fitrat"},
+        { text: "Try not to become a man of success, but rather try to become a man of value.", author: "Albert Einstein"},
+        { text: "Be like a lamp to light the way for others, not the mirror to show yourself.", author: "Rumi"},
+        { text: "The acquisition of knowledge is a lifelong journey, for the mind can never be fully satisfied.", author: "Ibn Sina"},
+        { text: "A virtuous mind seeks knowledge not for fame, but for the benefit of all.", author: "Al-Farabi"},
+        { text: "Don't be satisfied with what you know, rather seek what you do not yet understand.", author: "Rumi"},
+        { text: "To know the world, one must observe without prejudice.", author: "Al-Beruni"},
+        { text: "It does not befit the wise to spend life seeking fame or a name, for wisdom does not grow in vanity.", author: "Alisher Navoi"},
+        
+      ];
+
+      function loadRandomQuote() {
+        const idx = Math.floor(Math.random() * quotes.length);
+        document.getElementById('quoteText').textContent = quotes[idx].text;
+        document.getElementById('quoteAuthor').textContent = `— ${quotes[idx].author}`;
+      }
+
+      loadRandomQuote();
+
+      // ── Blog search ───────────────────────────────────────────────────────
+      function initBlogSearch() {
+        const searchInput = document.getElementById('blogSearch');
+        const grid = document.getElementById('blogsGrid');
+        if (!searchInput || !grid) return;
+
+        searchInput.addEventListener('input', function() {
+          const term = this.value.toLowerCase().trim();
+          const cards = grid.querySelectorAll('.blog-card');
+
+          cards.forEach(card => {
+            const title = card.dataset.title?.toLowerCase() || '';
+            const desc  = card.dataset.desc?.toLowerCase()  || '';
+            card.style.display = (title.includes(term) || desc.includes(term)) ? '' : 'none';
+          });
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', initBlogSearch);
+      document.querySelectorAll('[data-page="blogs"]').forEach(link => {
+        link.addEventListener('click', () => setTimeout(initBlogSearch, 100));
+      });
+    </script>
 </body>
 </html>
