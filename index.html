@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summage Academy - Unlock Your Future with Free World-Class IELTS Prep</title>
+    <meta name="description" content="Summage Academy - 100% free world-class IELTS preparation and English learning platform. High-quality courses, practice tests, and expert strategies with no paywalls or subscriptions." />
+    <meta name="keywords" content="Summage Academy, free IELTS preparation, free IELTS courses, free English learning, IELTS Uzbekistan, free online IELTS, IELTS practice tests, education without barriers" />
+    <meta name="author" content="Summage Academy" />
+    <meta name="robots" content="index, follow" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+            height: 100vh;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: transparent;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: #333;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: #f24b0b;
+            background-color: rgba(242, 75, 11, 0.08);
+        }
+
+        .language-selector {
+            position: relative;
+        }
+
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+
+        .language-button img {
+            width: 26px;
+            height: 26px;
+        }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+
+        .language-flags.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .flag {
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .flag:hover {
+            background: #f24b0b10;
+        }
+
+        .flag img {
+            width: 28px;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        /* Hero */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;     /* Changed from "center" to "flex-start" */
+            justify-content: center;
+            padding: 10vh 5vw 0 5vw;     /* Added moderate top padding to push content up a bit */
+            gap: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 420px;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 32px;
+        }
+
+        .main-title {
+            font-size: clamp(3.2rem, 6vw, 4.8rem);
+            font-weight: 800;
+            line-height: 1.05;
+            color: #ff6523;
+        }
+
+        .slogan {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            color: #666;
+            font-weight: 500;
+            max-width: 480px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.8px;
+        }
+
+        .btn-primary {
+            background: #f24b0b;
+            color: white;
+            box-shadow: 0 8px 0 #c23a0a;
+        }
+
+        .btn-secondary {
+            background: #06a87c;
+            color: white;
+            box-shadow: 0 8px 0 #058f66;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 #c23a0a;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 12px 0 #058f66;
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .navbar {
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .hero {
+                flex-direction: column;
+                gap: 40px;
+                padding: 40px 20px;
+                align-items: center;     /* Ensures perfect centering on mobile */
+            }
+
+            .hero-image img {
+                max-width: 230px;
+            }
+
+            .hero-content {
+                align-items: center;
+                text-align: center;
+            }
+
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 360px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .main-title {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo-img {
+                width: 42px;
+                height: 42px;
+                border-radius: 12px;
+            }
+
+            .logo-text {
+                font-size: 22px;
+            }
+        }
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1); /* elegant, slow fade-out */
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Ultra-smooth entrance: fade + rise + scale */
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1); /* bouncy overshoot */
+            will-change: opacity, transform; /* performance boost */
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+            transition: none !important;
+            opacity: 1;
+            transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+        id="splashOwl"
+        src="/assets/Sandy Loading.json"
+        background="transparent" 
+        speed="0.9" 
+        style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+        loop 
+        autoplay>
+        </lottie-player>
+    </div>
+    <nav class="navbar">
+        <div class="logo-container" onclick="window.location.href='https://summage.org'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+
+        <div class="nav-links">
+            <a href="/about/">About Us</a>
+            <a href="/contacts/">Contacts</a>
+            <div class="language-selector">
+                <button class="language-button" id="lang-btn" aria-label="Select language">
+                    <img src="/assets/images/lang/globe.webp" alt="">
+                </button>
+                <div class="language-flags" id="lang-flags">
+                    <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                    <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                    <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-image-container">
+            <div class="hero-image">
+                <img src="/assets/images/hero1.png" alt="Happy learning illustration">
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="main-title" id="main-title">Summage Academy</h1>
+            <p class="slogan" id="slogan">Education without Barriers</p>
+            <div class="buttons">
+                <button class="btn btn-primary" id="start-learning">Start Learning</button>
+                <button class="btn btn-secondary" id="about-us">About Us</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const translations = {
+            en: {
+                about: "About Us",
+                contacts: "Contacts",
+                mainTitle: "Summage Academy",
+                slogan: "Education without Barriers",
+                startLearning: "Start Learning",
+                aboutUs: "About Us"
+            },
+            ru: {
+                about: "О нас",
+                contacts: "Контакты",
+                mainTitle: "Summage Academy",
+                slogan: "Там, где знания не знают преград",
+                startLearning: "Начать обучение",
+                aboutUs: "О нас"
+            },
+            uz: {
+                about: "Biz haqimizda",
+                contacts: "Kontaktlar",
+                mainTitle: "Summage Academy",
+                slogan: "Imkoniyatlarga Boy Ta'lim",
+                startLearning: "O'rganishni boshlash",
+                aboutUs: "Biz haqimizda"
+            }
+        };
+
+        const LANG_STORAGE_KEY = 'summage_preferred_lang';
+        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || 'en';
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem(LANG_STORAGE_KEY, lang);
+
+            // Safely update navbar links (they don't exist on mobile)
+            const aboutLink = document.querySelector('.nav-links a[href="/about/"]');
+            const contactsLink = document.querySelector('.nav-links a[href="/contacts/"]');
+
+            if (aboutLink) aboutLink.textContent = translations[lang].about;
+            if (contactsLink) contactsLink.textContent = translations[lang].contacts;
+
+            // These elements always exist
+            document.getElementById('main-title').textContent = translations[lang].mainTitle;
+            document.getElementById('slogan').textContent = translations[lang].slogan;
+            document.getElementById('start-learning').textContent = translations[lang].startLearning;
+            document.getElementById('about-us').textContent = translations[lang].aboutUs;
+        }
+
+        document.getElementById('lang-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('lang-flags').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(flag => {
+            flag.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const selectedLang = flag.dataset.lang;
+                updateLanguage(selectedLang);
+                document.getElementById('lang-flags').classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('lang-flags').classList.remove('show');
+        });
+
+        updateLanguage(currentLang);
+
+        document.getElementById('start-learning').addEventListener('click', () => {
+            window.location.href = '/learn/';
+        });
+
+        document.getElementById('about-us').addEventListener('click', () => {
+            window.location.href = '/about/';
+        });    
+
+        // Ultra-smooth tiny owl splash – no pop-in, gentle rise & fade
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500; // 1.5s – gives breathing room for smoothness
+        let minTimePassed = false;
+
+        // Staggered entrance: start after 400ms, full reveal in ~1s
+        setTimeout(() => {
+        if (owl) {
+            owl.style.opacity = '1';
+            owl.style.transform = 'scale(1) translateY(0)';
+        }
+        }, 400);
+
+        // Min time complete
+        setTimeout(() => {
+        minTimePassed = true;
+        if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        // Page ready
+        window.addEventListener('load', () => {
+        if (minTimePassed) {
+            hideLoader();
+        } else {
+            setTimeout(hideLoader, MIN_DURATION);
+        }
+        });
+
+        function hideLoader() {
+        if (loader.classList.contains('hidden')) return;
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 1400); // clean up
+        }
+
+        // Ultimate fallback
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>
