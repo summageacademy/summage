@@ -545,3 +545,18 @@ body.menu-open::before { content:''; position:fixed; inset:0; background:rgba(0,
   transform: translateY(-2px);
   box-shadow: 0 8px 0 #047857;
 }
+.bubble,
+.bubble * {
+  pointer-events: auto !important;
+  touch-action: manipulation;
+}
+.map-content {
+  transform-origin: center center;
+  will-change: transform;
+}
+.bubble-btn,
+.bubble-btn-hq {
+  position: relative;
+  z-index: 10;
+  touch-action: manipulation;
+}
