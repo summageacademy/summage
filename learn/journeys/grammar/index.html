@@ -501,8 +501,8 @@
     ];
 
     let currentUserLevel = "beginner";
+    let completedLessons = {};   // ← NEW: will hold { "1": true, "5": true, ... }
 
-    // ====================== TRANSLATIONS ======================
     const translations = {
         en: {
             back: "Back",
@@ -519,7 +519,8 @@
             startLesson: "Start Lesson",
             locked: "Locked",
             lessonLocked: "Lesson locked",
-            completePrevious: "Complete previous levels to unlock"
+            completePrevious: "Complete previous levels to unlock",
+            retake: "Retake"
         },
         ru: {
             back: "Назад",
@@ -536,7 +537,9 @@
             startLesson: "Начать урок",
             locked: "Заблокировано",
             lessonLocked: "Урок заблокирован",
-            completePrevious: "Завершите предыдущие уровни, чтобы разблокировать"
+            completePrevious: "Завершите предыдущие уровни, чтобы разблокировать",
+            retake: "Повторить"
+
         },
         uz: {
             back: "Orqaga",
@@ -553,7 +556,8 @@
             startLesson: "Darsni boshlash",
             locked: "Bloklangan",
             lessonLocked: "Dars bloklangan",
-            completePrevious: "Oldingi darajalarni tugatib, oching"
+            completePrevious: "Oldingi darajalarni tugatib, oching",
+            retake: "Qaytarish"
         }
     };
 
@@ -570,20 +574,28 @@
         renderAllLessons();
     }
 
-    // ====================== FIREBASE + LOADER ======================
+    // ====================== FIREBASE + PROGRESS READING ======================
     async function loadUserData() {
         const container = document.getElementById("lessons-container");
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 try {
+                    // 1. Read user level
                     const userSnap = await getDoc(doc(db, "users", user.uid));
                     if (userSnap.exists()) {
                         currentUserLevel = userSnap.data().level || "beginner";
                     }
+
+                    // 2. Read completed grammar lessons (exactly where lesson page saves them)
+                    const progressSnap = await getDoc(doc(db, "users", user.uid, "progress", "grammar"));
+                    completedLessons = progressSnap.exists() 
+                        ? (progressSnap.data().lessons || {}) 
+                        : {};
+
                     renderAllLessons();
                 } catch (e) {
-                    console.error(e);
+                    console.error("Firestore error:", e);
                     renderAllLessons();
                 }
             } else {
@@ -592,13 +604,15 @@
                         <p class="text-xl">${t('signIn')}</p>
                         <a href="/login" class="inline-block mt-6 bg-[#f24b0b] text-white font-bold py-4 px-12 rounded-3xl">${t('signInBtn')}</a>
                     </div>`;
-                setTimeout(hideLoader, 800); // hide loader for guests too
+                setTimeout(hideLoader, 800);
             }
         });
     }
 
     function getMaxUnlockedLessons() {
-        return currentUserLevel === "beginner" ? 9 : currentUserLevel === "intermediate" ? 18 : 27;
+        return currentUserLevel === "beginner" ? 9 
+             : currentUserLevel === "intermediate" ? 18 
+             : 27;
     }
 
     function renderAllLessons() {
@@ -645,29 +659,33 @@
         renderGroup("intermediate", 9, 18, max);
         renderGroup("advanced", 18, 27, max);
 
-        // Critical content is now rendered → safe to hide loader if min time passed
-        if (minTimePassed) {
-            hideLoader();
-        }
+        if (minTimePassed) hideLoader();
     }
 
     function renderGroup(group, start, end, max) {
         const grid = document.getElementById(group + "-grid");
         let html = "";
+
         for (let i = start; i < end; i++) {
             const l = allLessons[i];
             const unlocked = l.id <= max;
+            const isCompleted = !!completedLessons[l.id];
+
             html += `
                 <div class="lesson-card">
-                    <div class="lesson-header">
+                    <div class="lesson-header relative">
                         <div class="lesson-id">LESSON ${l.id}</div>
                         <div class="lesson-title">${l.title}</div>
                         <p class="lesson-desc">${l.desc}</p>
                     </div>
+                    
                     <div class="lesson-footer">
                         ${unlocked ? `
-                            <a href="/learn/grammar/lesson/?id=${l.id}" class="start-btn">
-                                ${t('startLesson')}
+                            <a href="/learn/journeys/grammar/lesson/?id=${l.id}" 
+                            class="${isCompleted 
+                                    ? 'w-full py-4 px-6 text-white font-bold uppercase tracking-wide rounded-full bg-[#06a87c] shadow-[0_4px_0_#058f66] hover:shadow-[0_6px_0_#058f66] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_2px_0_#058f66] transition-all duration-150 flex items-center justify-center gap-2' 
+                                    : 'start-btn'}">
+                                ${isCompleted ? t('retake') : t('startLesson')}
                             </a>
                         ` : `
                             <button onclick="showLockedToast()" class="locked-btn">
@@ -703,55 +721,28 @@
         window.location.assign('/learn/');
     }
 
-    // ────────────────────────────────────────────────
-    // SPLASH SCREEN / LOTTIE LOADER LOGIC
-    // ────────────────────────────────────────────────
+    // SPLASH SCREEN LOGIC (unchanged)
     const loader = document.getElementById('pageLoader');
     const owl = document.getElementById('splashOwl');
-
-    const MIN_DURATION = 1600; // minimum show time in ms
+    const MIN_DURATION = 1600;
     let minTimePassed = false;
 
-    // Fade in animation
-    setTimeout(() => {
-        if (owl) {
-            owl.style.opacity = '1';
-            owl.style.transform = 'scale(1) translateY(0)';
-        }
-    }, 400);
-
-    // Mark minimum time as passed
-    setTimeout(() => {
-        minTimePassed = true;
-        if (document.readyState === 'complete') {
-            hideLoader();
-        }
-    }, MIN_DURATION);
-
-    // Hide when page is fully loaded + content rendered
-    window.addEventListener('load', () => {
-        if (minTimePassed) {
-            hideLoader();
-        } else {
-            setTimeout(hideLoader, MIN_DURATION);
-        }
-    });
-
+    setTimeout(() => { if (owl) { owl.style.opacity = '1'; owl.style.transform = 'scale(1) translateY(0)'; } }, 400);
+    setTimeout(() => { minTimePassed = true; if (document.readyState === 'complete') hideLoader(); }, MIN_DURATION);
+    window.addEventListener('load', () => { if (minTimePassed) hideLoader(); else setTimeout(hideLoader, MIN_DURATION); });
     function hideLoader() {
         if (!loader || loader.classList.contains('hidden')) return;
         loader.classList.add('hidden');
-        setTimeout(() => loader.remove(), 1400); // clean up DOM after fade
+        setTimeout(() => loader.remove(), 1400);
     }
-
-    // Ultimate safety net
     setTimeout(() => hideLoader(), 8000);
 
     // ====================== EVENT LISTENERS ======================
     window.addEventListener('load', () => {
-        loadUserData();
+        loadUserData();   // ← now loads BOTH level + completed lessons
 
         // Language selector
-        document.getElementById('lang-btn').addEventListener('click', e => {
+        document.getElementById('lang-btn')?.addEventListener('click', e => {
             e.stopPropagation();
             document.getElementById('lang-flags').classList.toggle('show');
         });
@@ -768,7 +759,6 @@
             document.getElementById('lang-flags').classList.remove('show');
         });
 
-        // Back buttons
         document.getElementById('desktop-back-btn')?.addEventListener('click', goBack);
         document.getElementById('mobile-back-btn')?.addEventListener('click', goBack);
     });

@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Test - Summage Academy</title>
+    <meta name="description" content="English level, vocabulary, grammar and olympiad tests" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+    <style>
+    html, body { 
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+    }
+    html::-webkit-scrollbar, body::-webkit-scrollbar { 
+        display: none; 
+    }
+    * { 
+        -webkit-overflow-scrolling: touch; 
+        margin:0; 
+        padding:0; 
+        box-sizing:border-box; 
+    }
+
+    * { 
+        font-family: 'Poppins', system-ui, sans-serif; 
+    }
+    html[lang="ru"] * { 
+        font-family: 'Montserrat', system-ui, sans-serif; 
+    }
+
+    body {
+        background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+        min-height: 100vh;
+        color: #333;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 5vw;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .back-btn {
+        padding: 12px 28px;
+        background: #f1192e;
+        color: white;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-size: 15px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 0 #c40e20;
+        transition: all 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-width: 120px;
+    }
+    .back-btn:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 6px 0 #c40e20; 
+    }
+
+    .logo-container { 
+        display: flex; 
+        align-items: center; 
+        gap: 14px; 
+        cursor: pointer; 
+        transition: transform 0.3s ease; 
+    }
+    .logo-img { 
+        width: 50px; 
+        height: 50px; 
+        object-fit: contain; 
+        border-radius: 14px; 
+        box-shadow: 0 2px 8px rgba(242,75,11,0.15); 
+    }
+    .logo-text { 
+        font-size: 26px; 
+        font-weight: 800; 
+        color: #f24b0b; 
+        text-transform: uppercase; 
+        letter-spacing: 1.2px; 
+    }
+
+    .language-selector { 
+        position: relative; 
+    }
+    .language-button { 
+        background: none; 
+        border: none; 
+        padding: 10px; 
+        cursor: pointer; 
+        border-radius: 50%; 
+        transition: all 0.25s ease; 
+    }
+    .language-button:hover { 
+        background: rgba(242,75,11,0.1); 
+        transform: scale(1.12); 
+    }
+    .language-button img { 
+        width: 26px; 
+        height: 26px; 
+    }
+
+    .language-flags {
+        position: absolute; 
+        top: 140%; 
+        right: 0; 
+        background: white; 
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15); 
+        opacity: 0; 
+        transform: translateY(-10px);
+        transition: all 0.25s ease; 
+        pointer-events: none; 
+        min-width: 140px; 
+        padding: 8px 0;
+        overflow: hidden; 
+        z-index: 200;
+    }
+    .language-flags.show { 
+        opacity: 1; 
+        transform: translateY(0); 
+        pointer-events: all; 
+    }
+
+    .flag { 
+        padding: 13px 24px; 
+        display: flex; 
+        align-items: center; 
+        gap: 14px; 
+        cursor: pointer; 
+        white-space: nowrap; 
+        font-size: 15.5px; 
+        color: #333; 
+    }
+    .flag:hover { 
+        background: #f24b0b10; 
+    }
+    .flag img { 
+        width: 28px; 
+        height: 28px; 
+        border-radius: 6px; 
+        flex-shrink: 0; 
+    }
+
+    .content { 
+        padding: 16px 5vw 110px;
+        max-width: 860px; 
+        margin: 0 auto; 
+        width: 100%; 
+    }
+
+    .progress-bar {
+        height: 8px;
+        background: #f0e6d9;
+        border-radius: 9999px;
+        overflow: hidden;
+        margin: 20px 0;
+    }
+    .progress-fill {
+        height: 100%;
+        background: #f24b0b;
+        width: 0%;
+        transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .question-text {
+        font-size: 1.28rem;
+        font-weight: 600;
+        line-height: 1.42;
+        margin-bottom: 20px;
+        color: #222;
+        padding: 0 4px;
+    }
+
+    .option {
+        padding: 16px 20px;
+        margin: 10px 0;
+        background: white;
+        border: 3px solid #e5e7eb;
+        border-radius: 20px;
+        font-size: 1.03rem;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        min-height: 64px;
+    }
+    .option:hover { 
+        border-color: #f24b0b; 
+        transform: translateY(-2px); 
+    }
+    .option.selected {
+        border-color: #f24b0b;
+        background: #fffaf5;
+        box-shadow: 0 8px 20px rgba(242,75,11,0.15);
+    }
+    .option-letter {
+        width: 34px; 
+        height: 34px;
+        background: #f24b0b;
+        color: white;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 15px;
+        flex-shrink: 0;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 18px 24px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-size: 15px;
+        border-radius: 50px;
+        transition: all 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    .btn-prev {
+        background: #f1192e;
+        color: white;
+        box-shadow: 0 4px 0 #c40e20;
+    }
+    .btn-prev:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 6px 0 #c40e20; 
+    }
+    .btn-next {
+        background: #f24b0b;
+        color: white;
+        box-shadow: 0 4px 0 #c23a0a;
+    }
+    .btn-next:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 6px 0 #c23a0a; 
+    }
+    .btn-finish {
+        background: #10b981;
+        color: white;
+        box-shadow: 0 6px 0 #059669;
+    }
+    .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    .results {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .score-circle {
+        width: 190px;
+        height: 190px;
+        border-radius: 50%;
+        background: conic-gradient(#f24b0b var(--score), #f0e6d9 var(--score));
+        margin: 0 auto 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .score-circle-inner {
+        width: 148px;
+        height: 148px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: 800;
+        color: #222;
+    }
+
+    .reward-badge {
+        background: #fffaf5;
+        border: 3px solid #f24b0b;
+        padding: 18px 32px;
+        border-radius: 9999px;
+        font-size: 1.15rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    #quiz-nav{
+        position: fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(12px);
+        border-top:1px solid rgba(0,0,0,0.08);
+        padding:14px 16px;
+        z-index:9999;
+
+        display:none;
+    }
+
+    #quiz-nav.visible{
+        display:flex;
+        justify-content:center;
+    }
+
+    .quiz-nav-inner{
+        width:100%;
+        max-width:720px;
+        display:flex;
+        gap:12px;
+    }
+
+    .quiz-btn{
+        flex:1;
+        padding:18px;
+        border:none;
+        border-radius:50px;
+        font-weight:700;
+        cursor:pointer;
+    }
+
+    .quiz-btn-prev{
+        background:#06a87c;
+        box-shadow: 0 4px 0 #058f66;
+        color: white;
+        transition: all 0.25s ease;
+    }
+
+    .quiz-btn-next{
+        background:#f24b0b;
+        box-shadow: 0 4px 0 #c23a0a;
+        color:white;
+        transition: all 0.25s ease;
+    }
+
+    .quiz-btn-finish{
+        background:#903de9;
+        color:white;
+        box-shadow: 0 4px 0 #6221a8;
+        transition: all 0.25s ease;
+    }
+
+    .quiz-btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+    }
+
+    .quiz-btn-prev:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #058f66;
+    }
+
+    .quiz-btn-finish:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #6221a8;
+    }
+
+    .hidden{
+        display:none;
+    }
+
+    /* Make sure content has enough space at bottom on mobile */
+    @media (max-width: 900px) {
+        .content {
+            padding-bottom: 110px !important;   /* was 110px → make sure > bar height */
+        }
+    }
+
+    @media (max-width: 900px) {
+        .back-btn { display: none; }
+        .content { 
+            padding: 16px 16px 110px; 
+        }
+        .question-text { 
+            font-size: 1.22rem; 
+        }
+        .option { 
+            padding: 14px 18px; 
+            font-size: 1rem; 
+            margin: 8px 0; 
+        }
+        .btn { 
+            padding: 16px; 
+            font-size: 14.5px; 
+        }
+        .score-circle { 
+            width: 160px; 
+            height: 160px; 
+        }
+        .score-circle-inner { 
+            width: 120px; 
+            height: 120px; 
+            font-size: 2.4rem; 
+        }
+    }
+
+    .page-loader {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .page-loader.hidden { 
+        opacity: 0; 
+        visibility: hidden; 
+    }
+
+    .review-section {
+        margin: 40px auto 20px;
+        max-width: 720px;
+        padding: 0 16px;
+    }
+
+    .review-toggle {
+        background: #f0e6d942;
+        border: 2px solid #f24b0b;
+        border-radius: 16px;
+        padding: 16px 24px;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #812906;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .review-toggle:hover {
+        background: #f24c0b2f;
+        transform: translateY(-1px);
+    }
+
+    .review-toggle::after {
+        content: '▼';
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+    }
+
+    details[open] .review-toggle::after {
+        transform: rotate(180deg);
+    }
+
+    .review-content {
+        padding: 0 8px 16px;
+    }
+
+    .wrong-question {
+        margin: 24px 0;
+        padding: 20px;
+        background: white;
+        border: 2px solid #fee2e2;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .wrong-question-header {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #991b1b;
+        margin-bottom: 12px;
+    }
+
+    .user-answer {
+        margin: 12px 0;
+        padding: 12px 16px;
+        background: #fef2f2;
+        border: 2px solid #ef4444;
+        border-radius: 12px;
+        color: #991b1b;
+        font-weight: 500;
+    }
+
+    .correct-answer {
+        margin: 12px 0;
+        padding: 12px 16px;
+        background: #f0fdf4;
+        border: 2px solid #16a34a;
+        border-radius: 12px;
+        color: #166534;
+        font-weight: 500;
+    }
+
+    .correct-answer strong {
+        color: #15803d;
+    }
+
+    /* Modal enhancements */
+    #custom-modal.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    #custom-modal.show > div {
+        transform: scale(1);
+    }
+
+    #custom-modal button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 0 #c23a0a !important;
+    }
+
+    /* Optional: close on backdrop click */
+    #custom-modal {
+        cursor: pointer;
+    }
+
+    #custom-modal > div {
+        cursor: default;
+    }
+    </style>
+</head>
+<body>
+
+    <!-- Loader -->
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px;"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <nav class="navbar">
+        <button onclick="goBackToMenu()" class="back-btn"><span data-key="back">Back</span></button>
+        <div class="logo-container" onclick="window.location.href='/'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+        <div class="flex items-center gap-6 md:gap-10">
+
+            <!-- Language selector – visible only on desktop -->
+            <div class="language-selector hidden md:block">
+                <button id="lang-btn" class="language-button" aria-label="Select language">
+                    <img src="/assets/images/lang/globe.webp" alt="">
+                </button>
+                <div id="lang-flags" class="language-flags">
+                    <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                    <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                    <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+                </div>
+            </div>
+
+            <!-- Back arrow – visible only on mobile -->
+            <a href="/learn/journeys/test-centre/" class="md:hidden">
+                <img src="/assets/images/menu-icons/arrow.webp" alt="Back" class="w-9 h-9 object-contain">
+            </a>
+
+        </div>
+    </nav>
+
+    <main class="content" id="main-content">
+        <!-- Dynamic content inserted here -->
+    </main>
+
+    <div id="quiz-nav">
+        <div class="quiz-nav-inner">
+
+            <button id="quiz-prev" class="quiz-btn quiz-btn-prev">
+                Previous
+            </button>
+
+            <button id="quiz-next" class="quiz-btn quiz-btn-next">
+                Next
+            </button>
+
+            <button id="quiz-finish" class="quiz-btn quiz-btn-finish hidden">
+                Finish
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Custom Modal / Pop-up -->
+    <div id="custom-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-[90%] p-8 transform scale-95 transition-all duration-300">
+            <div class="text-center">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-[#f24b0b]/10 flex items-center justify-center">
+                    <i class="fa-solid fa-circle-exclamation text-[#f24b0b] text-5xl"></i>
+                </div>
+                <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-4">Attention</h3>
+                <p id="modal-message" class="text-gray-600 mb-8 leading-relaxed text-lg"></p>
+                <button id="modal-close-btn" class="btn btn-next px-12 py-4 text-lg">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js';
+import { getFirestore, doc, getDoc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+    authDomain: "summage-backend.firebaseapp.com",
+    projectId: "summage-backend",
+    storageBucket: "summage-backend.firebasestorage.app",
+    messagingSenderId: "128191434358",
+    appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const translations = {
+    en: {
+        back: "Back",
+        next: "Next",
+        prev: "Previous",
+        finish: "Finish Test",
+        question: "Question",
+        of: "of",
+        selectOption: "Select an option to continue",
+        correct: "Correct answers",
+        congratulations: "Congratulations!",
+        goodJob: "Great job!",
+        keepGoing: "You can do better next time!",
+        alreadyTaken: "Test already completed – no extra rewards this time",
+        retake: "Retake",
+        backToMenu: "Back",
+        testNotFound: "Test not found"
+    },
+    ru: {
+        back: "Назад",
+        next: "Далее",
+        prev: "Назад",
+        finish: "Завершить тест",
+        question: "Вопрос",
+        of: "из",
+        selectOption: "Выберите вариант",
+        correct: "Правильных ответов",
+        congratulations: "Поздравляем!",
+        goodJob: "Отличная работа!",
+        keepGoing: "В следующий раз будет лучше!",
+        alreadyTaken: "Тест уже пройден – дополнительных наград нет",
+        retake: "Повторить",
+        backToMenu: "Вернуться",
+        testNotFound: "Тест не найден"
+    },
+    uz: {
+        back: "Orqaga",
+        next: "Keyingi",
+        prev: "Oldingi",
+        finish: "Testni tugatish",
+        question: "Savol",
+        of: "dan",
+        selectOption: "Variantni tanlang",
+        correct: "To'g'ri javoblar",
+        congratulations: "Tabriklaymiz!",
+        goodJob: "Ajoyib ish!",
+        keepGoing: "Keyingi safar yaxshiroq bo'ladi!",
+        alreadyTaken: "Test allaqachon topshirilgan – qo'shimcha mukofot yo'q",
+        retake: "Qayta",
+        backToMenu: "Ortga",
+        testNotFound: "Test topilmadi"
+    }
+};
+
+// ── Custom modal ────────────────────────────────────────────────────────
+function showModal(message, title = "Attention") {
+    const modal = document.getElementById('custom-modal');
+    const titleEl = document.getElementById('modal-title');
+    const msgEl = document.getElementById('modal-message');
+    const closeBtn = document.getElementById('modal-close-btn');
+
+    titleEl.textContent = title;
+    msgEl.textContent = message;
+
+    modal.classList.add('show');
+
+    // One-time close handlers
+    const closeModal = () => {
+        modal.classList.remove('show');
+        closeBtn.removeEventListener('click', closeModal);
+        modal.removeEventListener('click', onBackdropClick);
+    };
+
+    const onBackdropClick = (e) => {
+        if (e.target === modal) closeModal();
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', onBackdropClick);
+}
+
+// Helper for common cases
+function showError(message) {
+    showModal(message, "Oops!");
+}
+
+function showInfo(message) {
+    showModal(message, "Information");
+}
+
+let currentLang = localStorage.getItem('summage_preferred_lang') || 'en';
+let userData = { completedTests: {}, diamonds: 0, coins: 0 };
+let currentUser = null;
+let testId = null;
+let selectedQuestions = [];
+let userAnswers = [];
+let currentQuestionIndex = 0;
+let isFinished = false;
+let currentView = 'intro';
+let lastCorrectCount = 0;
+let lastPercentage = 0;
+
+function t(key) {
+    return translations[currentLang]?.[key] || translations.en[key] || key;
+}
+
+
+// ====================== FULL TEST DATA (30 questions each) ======================
+const allTests = {
+    "level_a1-a2": {
+        title: "Beginner / Elementary",
+        questions: [
+            {q: "Hello! ___ you today?", o: ["How are", "How is", "What are", "Where is"], c: 0},
+            {q: "My sister ___ a new phone.", o: ["have", "has", "is have", "does has"], c: 1},
+            {q: "We ___ football right now.", o: ["play", "plays", "are playing", "is playing"], c: 2},
+            {q: "This is ___ old car.", o: ["a", "an", "the", "– (no article)"], c: 1},
+            {q: "She ___ to school by bus every day.", o: ["go", "goes", "going", "is go"], c: 1},
+            {q: "The cat is ___ the table.", o: ["in", "on", "at", "under"], c: 3},
+            {q: "___ name is Max. What's yours?", o: ["I", "My", "Mine", "Me"], c: 1},
+            {q: "___ you speak English?", o: ["Do", "Does", "Are", "Can"], c: 0},
+            {q: "He ___ swim very well.", o: ["can", "cans", "is can", "does can"], c: 0},
+            {q: "Yesterday I ___ to the cinema.", o: ["go", "went", "goes", "going"], c: 1},
+            {q: "Tomorrow she ___ visit her grandmother.", o: ["will", "wills", "is will", "going will"], c: 0},
+            {q: "There is ___ apple on the table.", o: ["a", "an", "the", "some"], c: 1},
+            {q: "They ___ TV at the moment.", o: ["watch", "watches", "are watching", "is watching"], c: 2},
+            {q: "What color ___ your bag?", o: ["is", "are", "am", "be"], c: 0},
+            {q: "I ___ like spicy food.", o: ["don't", "doesn't", "not", "isn't"], c: 0},
+            {q: "The book is ___ my desk.", o: ["in", "on", "at", "under"], c: 1},
+            {q: "___ you play tennis?", o: ["Can", "Do", "Are", "Does"], c: 0},
+            {q: "This is ___ best friend.", o: ["my", "mine", "me", "I"], c: 0},
+            {q: "We ___ happy yesterday.", o: ["was", "were", "are", "is"], c: 1},
+            {q: "Next week I ___ buy a new bike.", o: ["will", "am", "going", "want"], c: 0},
+            {q: "She lives in ___ Paris.", o: ["a", "an", "the", "– (no article)"], c: 3},
+            {q: "Look! The dog ___ now.", o: ["run", "runs", "is running", "are running"], c: 2},
+            {q: "He ___ two sisters.", o: ["have", "has", "is have", "does has"], c: 1},
+            {q: "I can't find my keys. They ___ in my bag.", o: ["is", "are", "am", "be"], c: 1},
+            {q: "___ sun is very hot today.", o: ["A", "An", "The", "– (no article)"], c: 2},
+            {q: "Last weekend they ___ to the park.", o: ["go", "went", "goes", "going"], c: 1},
+            {q: "___ she like chocolate?", o: ["Do", "Does", "Is", "Are"], c: 1},
+            {q: "The children ___ play outside because it's raining.", o: ["can't", "can", "don't can", "doesn't can"], c: 0},
+            {q: "My house is ___ the school.", o: ["near", "on", "in", "at"], c: 0},
+            {q: "What ___ you do last summer?", o: ["do", "did", "does", "doing"], c: 1}
+        ]
+    },
+    "level_b1": {
+        title: "Intermediate",
+        questions: [
+            {q: "She ___ in this company ___ five years.", o: ["works / for", "has worked / since", "is working / for", "worked / since"], c: 1},
+            {q: "While I ___ TV, the phone rang.", o: ["watched", "was watching", "have watched", "had watched"], c: 1},
+            {q: "By the time we arrived, the movie ___ .", o: ["started", "has started", "had started", "was starting"], c: 2},
+            {q: "Don't call me at 8 pm – I ___ dinner with friends.", o: ["will have", "will be having", "am having", "have"], c: 1},
+            {q: "You ___ take an umbrella; it might rain later.", o: ["should", "must", "can", "have to"], c: 0},
+            {q: "This phone is ___ than my old one, but not the ___ .", o: ["more expensive / most expensive", "expensiver / most expensive", "expensive / expensivest", "more expensive / expensivest"], c: 0},
+            {q: "Millions of cars ___ every year in this factory.", o: ["produce", "are produced", "produced", "have produced"], c: 1},
+            {q: "If I ___ more money, I would travel more.", o: ["have", "had", "will have", "would have"], c: 1},
+            {q: "He said that he ___ to the meeting the day before.", o: ["can't come", "couldn't come", "can't came", "couldn't came"], c: 1},
+            {q: "I ___ three emails since breakfast.", o: ["wrote", "have written", "was writing", "had written"], c: 1},
+            {q: "The room ___ when we entered; someone ___ .", o: ["was cleaned / had cleaned it", "had been cleaned / cleaned it", "was cleaned / was cleaning it", "cleaned / had cleaned it"], c: 1},
+            {q: "You ___ be tired after such a long flight.", o: ["can", "must", "should", "may"], c: 1},
+            {q: "This is the ___ film I've ever seen.", o: ["more boring", "most boring", "boringest", "borest"], c: 1},
+            {q: "The homework ___ by tomorrow morning.", o: ["must finish", "must be finished", "must finished", "must to be finished"], c: 1},
+            {q: "If it ___ tomorrow, we will cancel the picnic.", o: ["will rain", "rains", "rained", "would rain"], c: 1},
+            {q: "She asked me what time ___ .", o: ["the train leaves", "does the train leave", "the train left", "did the train leave"], c: 0},
+            {q: "I ___ for two hours when the power went out.", o: ["studied", "was studying", "have been studying", "had been studying"], c: 3},
+            {q: "People say that electric cars ___ more popular soon.", o: ["become", "are becoming", "will become", "are become"], c: 2},
+            {q: "You ___ smoke here – it's strictly forbidden.", o: ["don't have to", "mustn't", "shouldn't", "might not"], c: 1},
+            {q: "The book ___ by a famous author in 2020.", o: ["wrote", "was written", "has written", "had written"], c: 1},
+            {q: "If I ___ you, I wouldn't eat so late.", o: ["am", "was", "were", "would be"], c: 2},
+            {q: "He told us he ___ the project the previous week.", o: ["finishes", "finished", "had finished", "has finished"], c: 2},
+            {q: "This exercise is ___ difficult than the last one.", o: ["more", "most", "much more", "far more"], c: 0},
+            {q: "At this time tomorrow, we ___ on the beach.", o: ["will lie", "will be lying", "are lying", "lie"], c: 1},
+            {q: "The letter ___ to the wrong address.", o: ["sent", "was sent", "has sent", "had sent"], c: 1},
+            {q: "She ___ French for six months, but she still can't speak well.", o: ["studies", "is studying", "has been studying", "studied"], c: 2},
+            {q: "The teacher warned us not ___ late again.", o: ["to be", "be", "being", "been"], c: 0},
+            {q: "There ___ much traffic yesterday because of the accident.", o: ["wasn't", "weren't", "hasn't been", "hadn't been"], c: 0},
+            {q: "He might ___ the news already.", o: ["hear", "heard", "have heard", "has heard"], c: 2},
+            {q: "The sooner we leave, ___ we arrive.", o: ["earlier", "the earlier", "the earliest", "more early"], c: 1}
+        ]
+    },
+    "level_b2-c1": {
+        title: "Upper-Intermediate / Advanced",
+        questions: [
+            {q: "Hardly ___ the door when the alarm went off.", o: ["I had closed", "had I closed", "I closed", "did I close"], c: 1},
+            {q: "If we ___ the meeting earlier, we wouldn't be stuck in traffic now.", o: ["had left", "left", "would have left", "have left"], c: 0},
+            {q: "The CEO insisted that the report ___ on time.", o: ["is submitted", "be submitted", "was submitted", "to be submitted"], c: 1},
+            {q: "She had been working on the project ___ for three weeks when the deadline changed.", o: ["non-stop", "continuously", "without stopping", "all along"], c: 0},
+            {q: "Never before ___ such an innovative solution to climate change.", o: ["we had seen", "had we seen", "we saw", "did we see"], c: 1},
+            {q: "You should have the documents ___ by a professional translator.", o: ["to check", "checking", "checked", "check"], c: 2},
+            {q: "The film was so moving that the audience ___ into tears.", o: ["had broken", "broke", "was breaking", "had been breaking"], c: 1},
+            {q: "Were it not for his support, we ___ the contract by now.", o: ["wouldn't have won", "hadn't won", "won't have won", "didn't win"], c: 0},
+            {q: "The reason ___ she left the company remains unclear.", o: ["why", "that", "which", "for which"], c: 3},
+            {q: "It is high time we ___ looking for a more sustainable supplier.", o: ["stop", "stopped", "had stopped", "will stop"], c: 1},
+            {q: "Little ___ how much the new AI system would transform our industry.", o: ["did we realise", "we realised", "had we realised", "we had realised"], c: 0},
+            {q: "If she ___ harder last year, she would be managing the team today.", o: ["had worked", "worked", "would work", "has worked"], c: 0},
+            {q: "The manager had the staff ___ overtime to meet the urgent deadline.", o: ["to work", "working", "work", "worked"], c: 2},
+            {q: "No sooner ___ the presentation than the investors started asking difficult questions.", o: ["had we finished", "we had finished", "we finished", "did we finish"], c: 0},
+            {q: "She speaks about the economy as if she ___ a Nobel Prize winner.", o: ["is", "was", "were", "had been"], c: 2},
+            {q: "I strongly recommend ___ the proposal before the board meeting.", o: ["to review", "reviewing", "review", "reviewed"], c: 1},
+            {q: "By the time the rescue team arrived, the climbers ___ in the storm for over twelve hours.", o: ["had waited", "waited", "had been waiting", "were waiting"], c: 2},
+            {q: "Only when the results ___ will we know if the experiment was successful.", o: ["are published", "will be published", "were published", "have been published"], c: 1},
+            {q: "The new policy is aimed at those ___ incomes are below the national average.", o: ["who", "whose", "which", "whom"], c: 1},
+            {q: "She would rather ___ the negotiation herself than delegate it.", o: ["to handle", "handle", "handling", "handled"], c: 1},
+            {q: "Had the government acted sooner, the environmental damage ___ so severe.", o: ["wouldn't be", "wouldn't have been", "hadn't been", "isn't"], c: 1},
+            {q: "The committee suggested that the budget ___ immediately.", o: ["is increased", "be increased", "was increased", "to be increased"], c: 1},
+            {q: "We have been putting ___ the decision for months, but now we must act.", o: ["up with", "off", "down", "out"], c: 1},
+            {q: "This is the most challenging project ___ we have ever undertaken.", o: ["which", "that", "what", "where"], c: 1},
+            {q: "If I ___ you, I would have accepted the offer last week.", o: ["am", "was", "were", "had been"], c: 2},
+            {q: "The lawyer had the witness ___ the statement twice before the trial.", o: ["to read", "read", "reading", "reads"], c: 1},
+            {q: "Scarcely ___ the office when the power cut occurred.", o: ["I had entered", "had I entered", "I entered", "did I enter"], c: 1},
+            {q: "It is essential that every employee ___ familiar with the new safety regulations.", o: ["is", "be", "was", "were"], c: 1},
+            {q: "Not only ___ the presentation, but she also answered every question perfectly.", o: ["she delivered", "did she deliver", "had she delivered", "she had delivered"], c: 1},
+            {q: "The team had been discussing the merger ___ when the CEO suddenly changed his mind.", o: ["for hours", "since hours", "during hours", "in hours"], c: 0}
+        ]
+    },
+    "vocab_1": {
+        title: "Everyday Words",
+        questions: [
+            {q: "The opposite of 'happy' is", o: ["glad", "sad", "pleased", "cheerful"], c: 1},
+            {q: "You usually buy bread, milk and vegetables at a", o: ["restaurant", "café", "supermarket", "bakery"], c: 2},
+            {q: "When it's very cold outside, you wear a warm ___ on your head.", o: ["cap", "hat", "hood", "helmet"], c: 1},
+            {q: "To go from your house to school without a vehicle, you usually", o: ["run", "walk", "ride", "drive"], c: 1},
+            {q: "Most plants in your garden are ___ in summer.", o: ["blue", "brown", "green", "grey"], c: 2},
+            {q: "Many people drink ___ or tea to wake up in the morning.", o: ["soup", "coffee", "water", "juice"], c: 1},
+            {q: "When you feel ill, you normally visit a doctor at the", o: ["clinic", "school", "market", "library"], c: 0},
+            {q: "The opposite of 'expensive' is usually", o: ["cheap", "big", "high", "costly"], c: 0},
+            {q: "You usually bake a cake or roast meat in the", o: ["microwave", "fridge", "oven", "toaster"], c: 2},
+            {q: "A person whose job is to help students learn is called a", o: ["pupil", "professor", "teacher", "classmate"], c: 2},
+            {q: "At night most people sleep in a comfortable", o: ["sofa", "bed", "armchair", "bench"], c: 1},
+            {q: "In winter the weather is often very", o: ["hot", "warm", "cold", "cool"], c: 2},
+            {q: "People often read a ___ in the morning with breakfast.", o: ["novel", "magazine", "newspaper", "comic"], c: 2},
+            {q: "The most common private vehicle with four wheels for a family is a", o: ["motorbike", "car", "truck", "van"], c: 1},
+            {q: "You normally put ___ on your feet before wearing shoes.", o: ["gloves", "socks", "scarf", "belt"], c: 1},
+            {q: "When you meet someone for the first time, you usually ___ them.", o: ["greet", "thank", "invite", "introduce"], c: 0},
+            {q: "The main meal you eat in the middle of the day is called", o: ["breakfast", "supper", "lunch", "dinner"], c: 2},
+            {q: "The opposite of 'quick' is", o: ["fast", "slow", "speedy", "rapid"], c: 1},
+            {q: "To watch the latest films on a big screen, people go to the", o: ["theater", "cinema", "museum", "gallery"], c: 1},
+            {q: "When dark clouds come, we say it's going to", o: ["snow", "rain", "shine", "blow"], c: 1},
+            {q: "A person who comes from Italy is", o: ["Italian", "France", "Spanish", "Russian"], c: 0},
+            {q: "To cut paper or cloth neatly, you usually use", o: ["a knife", "scissors", "a fork", "a spoon"], c: 1},
+            {q: "The opposite of an 'old' phone is a", o: ["used", "new", "broken", "modern"], c: 1},
+            {q: "In the car or at home, many people like to listen to", o: ["news", "music", "stories", "lessons"], c: 1},
+            {q: "When you travel by plane, you go to an", o: ["airport", "station", "port", "bus stop"], c: 0},
+            {q: "To take a photo of your friends, you need a", o: ["radio", "camera", "television", "computer"], c: 1},
+            {q: "A person who doesn't have much money is called", o: ["rich", "poor", "famous", "lucky"], c: 1},
+            {q: "Every morning after breakfast, children usually brush their", o: ["hair", "teeth", "shoes", "clothes"], c: 1},
+            {q: "A very large building with many different shops inside is called a", o: ["market", "mall", "store", "shop"], c: 1},
+            {q: "To travel across a river or the sea, you can go by", o: ["train", "boat", "bike", "bus"], c: 1}
+        ]
+    },
+    "vocab_6": {
+        title: "Advanced Vocabulary",
+        questions: [
+            {q: "To make a bad situation better is to", o: ["ignore", "worsen", "repeat", "ameliorate"], c: 3},
+            {q: "A scientist who studies stars and planets is an", o: ["chemist", "biologist", "astronomer", "astrologer"], c: 2},
+            {q: "Extremely beautiful or very attractive is", o: ["ordinary", "plain", "average", "gorgeous"], c: 3},
+            {q: "To speak very softly or quietly is to", o: ["shout", "scream", "whisper", "yell"], c: 2},
+            {q: "A strong feeling of dislike is", o: ["liking", "love", "interest", "aversion"], c: 3},
+            {q: "To see or know something will happen in the future is to", o: ["forget", "ignore", "remember", "foresee"], c: 3},
+            {q: "A person who eats no animal products at all is a", o: ["carnivore", "vegetarian", "vegan", "omnivore"], c: 2},
+            {q: "To explain something clearly so it is easy to understand is to", o: ["confuse", "mix up", "elucidate", "hide"], c: 2},
+            {q: "Completely tired with no energy left is", o: ["exhausted", "refreshed", "energetic", "lively"], c: 0},
+            {q: "A sudden good idea or creative thought is an", o: ["goal", "wish", "inspiration", "sweat"], c: 2},
+            {q: "To completely agree with someone is to", o: ["argue", "disagree", "doubt", "concur"], c: 3},
+            {q: "Very small and not important is", o: ["serious", "important", "large", "negligible"], c: 3},
+            {q: "To develop and change slowly over a long time is to", o: ["go backwards", "stay the same", "evolve", "stop"], c: 2},
+            {q: "A person who travels from place to place without a permanent home is a", o: ["citizen", "neighbor", "settler", "nomad"], c: 3},
+            {q: "Extremely happy and full of joy is", o: ["ecstatic", "sad", "bored", "angry"], c: 0},
+            {q: "To decide not to do a planned event is to", o: ["call up", "call off", "call on", "call for"], c: 1},
+            {q: "A very strong wish or longing for something is", o: ["dislike", "anger", "fear", "yearning"], c: 3},
+            {q: "To make a problem or situation much worse is to", o: ["improve", "calm", "exacerbate", "fix"], c: 2},
+            {q: "Done in secret and hidden from others is", o: ["clear", "open", "public", "clandestine"], c: 3},
+            {q: "Very careful and paying attention to every small detail is to be", o: ["meticulous", "careless", "lazy", "quick"], c: 0},
+            {q: "Very old, from a long time ago in history is", o: ["ancient", "new", "recent", "modern"], c: 0},
+            {q: "To fully understand the meaning of something is to", o: ["comprehend", "ignore", "forget", "misunderstand"], c: 0},
+            {q: "Very angry and full of rage is", o: ["calm", "peaceful", "happy", "furious"], c: 3},
+            {q: "A person who writes novels, stories or books is an", o: ["teacher", "printer", "author", "reader"], c: 2},
+            {q: "To make a guess or form an opinion without full proof is to", o: ["prove", "speculate", "know", "confirm"], c: 1},
+            {q: "Much too expensive or costing far too much is", o: ["cheap", "normal", "exorbitant", "reasonable"], c: 2},
+            {q: "To politely say no to an offer or invitation is to", o: ["welcome", "agree", "accept", "decline"], c: 3},
+            {q: "So loud that it hurts your ears is", o: ["quiet", "gentle", "deafening", "soft"], c: 2},
+            {q: "To get better and become healthy again after being sick is to", o: ["weaken", "get worse", "recover", "stay ill"], c: 2},
+            {q: "A person who loves reading books and collecting them is a", o: ["bibliophile", "book hater", "writer", "seller"], c: 0}
+        ]
+    },
+    "grammar_3": {
+        title: "Complex Sentences",
+        questions: [
+            {q: "By the time we arrive, the film ___ .", o: ["starts", "will start", "would have started", "will have started"], c: 3},
+            {q: "She asked me ___ the previous evening.", o: ["what did I do", "what I did", "what I had done", "what had I done"], c: 2},
+            {q: "The room ___ since last week.", o: ["hadn't cleaned", "hasn't been cleaned", "wasn't cleaned", "didn't clean"], c: 1},
+            {q: "If he ___ harder last year, he ___ the exam now.", o: ["had studied / wouldn't fail", "would study / didn't fail", "studied / won't fail", "had studied / wouldn't be failing"], c: 3},
+            {q: "This is the village ___ my grandparents were born.", o: ["in that", "where", "which", "that"], c: 1},
+            {q: "He is said ___ a fortune in real estate.", o: ["to make", "to have made", "having made", "that he made"], c: 1},
+            {q: "She told the children ___ .", o: ["to not touch anything", "not touching anything", "not to touch anything", "don't touch anything"], c: 2},
+            {q: "Only after the bell ___ the students leave the classroom.", o: ["rings", "had rung", "would ring", "rang"], c: 1},
+            {q: "The painting, ___ is worth millions, was stolen last night.", o: ["that", "which", "what", "who"], c: 1},
+            {q: "He insisted that the work ___ by Friday at the latest.", o: ["must finish", "be finished", "will be finished", "is finished"], c: 1},
+            {q: "If only I ___ to his advice earlier!", o: ["listened", "had listened", "would listen", "listen"], c: 1},
+            {q: "She wondered ___ to the conference the following week.", o: ["if he would have come", "whether he would come", "whether he comes", "if he will come"], c: 1},
+            {q: "The book ___ you lent me was extremely interesting.", o: ["whose", "whom", "which", "who"], c: 2},
+            {q: "They suggested that the meeting ___ until next month.", o: ["postponed", "be postponed", "is postponed", "will be postponed"], c: 1},
+            {q: "Never before ___ such a difficult decision.", o: ["had I to make", "have I had to make", "I have had to make", "I had to make"], c: 1},
+            {q: "He denied ___ the money from the safe.", o: ["to have stolen", "having stolen", "to steal", "steal"], c: 1},
+            {q: "The house needs ___ before winter arrives.", o: ["to be repainted", "repainting", "repaint", "being repainted"], c: 1},
+            {q: "What surprised me was ___ everyone already knew the news.", o: ["how", "whether", "that", "which"], c: 2},
+            {q: "Had I known about the delay, I ___ earlier.", o: ["would leave", "left", "would have left", "will have left"], c: 2},
+            {q: "The manager objected to ___ so much time on small details.", o: ["we spending", "us spending", "our spending", "we spend"], c: 2},
+            {q: "It was not so much his talent ___ his hard work that impressed me.", o: ["than", "as", "rather", "but"], c: 1},
+            {q: "The CEO is believed ___ the company next year.", o: ["that he will resign", "to resign", "to be resigning", "resigning"], c: 1},
+            {q: "No sooner ___ the news than the room fell silent.", o: ["I had heard", "did I hear", "had I heard", "I heard"], c: 2},
+            {q: "She can't remember ___ the document before sending it.", o: ["sign", "to sign", "having signed", "signing"], c: 3},
+            {q: "Were it not for your help, we ___ in big trouble now.", o: ["are", "would have been", "would be", "will be"], c: 2},
+            {q: "The article ___ you were looking for is on page 45.", o: ["that", "which", "what", "whom"], c: 1},
+            {q: "He recommended that she ___ a specialist immediately.", o: ["consulted", "consults", "consult", "would consult"], c: 2},
+            {q: "All ___ glitters is not gold.", o: ["who", "what", "which", "that"], c: 3},
+            {q: "By next summer, the bridge ___ for ten years.", o: ["will be repairing", "will have repaired", "will repair", "will have been repaired"], c: 3},
+            {q: "The reason ___ he left so suddenly remains a mystery.", o: ["why", "which", "for which", "that"], c: 0}
+        ]
+    }
+};
+
+
+function getTestData(id) {
+    return allTests[id] || null;
+}
+
+async function loadUser() {
+    return new Promise(resolve => {
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
+            if (user) {
+                const snap = await getDoc(doc(db, "users", user.uid));
+                if (snap.exists()) userData = snap.data();
+            }
+            resolve();
+        });
+    });
+}
+
+function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function renderIntro() {
+    currentView = 'intro';
+    const test = getTestData(testId);
+    if (!test) {
+        document.getElementById('main-content').innerHTML = `<div class="text-center py-20"><h2 class="text-3xl font-bold text-red-600">${t('testNotFound')}</h2><button onclick="goBackToMenu()" class="btn btn-next mt-8">Back to Menu</button></div>`;
+        updateBottomBar();
+        return;
+    }
+    document.getElementById('main-content').innerHTML = `
+        <div class="text-center mt-8">
+            <div class="text-[88px] font-black text-[#f24b0b] leading-none mb-6">20</div>
+            <p class="text-3xl font-semibold mb-4">Random questions</p>
+            <div class="text-4xl font-black text-[#222] mb-8">${test.title}</div>
+            <button onclick="startTest()" class="btn btn-next text-2xl py-6 px-14 mx-auto">
+                <i class="fa-solid fa-play mr-3"></i> Start
+            </button>
+        </div>`;
+    updateBottomBar();
+}
+
+function renderQuiz() {
+    currentView = 'quiz';
+    const q = selectedQuestions[currentQuestionIndex];
+    const progress = ((currentQuestionIndex + 1) / 20) * 100;
+
+    let optionsHTML = '';
+    q.o.forEach((option, i) => {
+        const selected = userAnswers[currentQuestionIndex] === i ? 'selected' : '';
+        optionsHTML += `
+            <div class="option ${selected}" onclick="selectOption(${i})">
+                <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                <span>${option}</span>
+            </div>`;
+    });
+
+    document.getElementById('main-content').innerHTML = `
+        <div style="padding:24px 16px; background: linear-gradient(135deg, #f24b0b, #f1192e); color: white; border-radius: 20px; margin-bottom: 20px;">
+            <div class="flex justify-between items-center text-sm">
+                <div>
+                    <span>${t('question')}</span>
+                    <span class="text-4xl font-black ml-2">${currentQuestionIndex + 1}</span>
+                    <span class="opacity-75"> ${t('of')} 20</span>
+                </div>
+            </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+        <div class="question-text">${q.q}</div>
+        ${optionsHTML}`;
+
+    // Give browser time to layout → then show bar
+    requestAnimationFrame(() => {
+        updateBottomBar();
+    });
+
+    updateQuizNav();
+}
+
+function renderResults(correctCount, percentage) {
+    currentView = 'results';
+    lastCorrectCount = correctCount;
+    lastPercentage = percentage;
+
+    document.getElementById("quiz-nav").classList.remove("visible");
+
+    const hasTakenBefore = !!userData.completedTests?.[testId];
+
+    // Reward logic (unchanged)
+    let diamondsAdd = 0;
+    let coinsAdd = 0;
+    let rewardText = "";
+
+    if (!hasTakenBefore) {
+        if (correctCount > 17) {
+            diamondsAdd = 1;
+            coinsAdd = 100;
+            rewardText = `+1 diamond & +100 coins`;
+        } else if (correctCount > 14) {
+            coinsAdd = 90;
+            rewardText = `+90 coins`;
+        } else {
+            coinsAdd = 40;
+            rewardText = `+40 coins`;
+        }
+    }
+
+    // Message logic (unchanged)
+    let message = "";
+    if (hasTakenBefore) {
+        message = correctCount > 17 
+            ? t('congratulations')
+            : (correctCount > 14 ? t('goodJob') : t('keepGoing'));
+    }
+
+    const rewardHTML = rewardText 
+        ? `<div class="reward-badge"><i class="fa-solid fa-gem"></i> ${rewardText}</div>`
+        : '';
+
+    // ── NEW: Prepare wrong answers review ────────────────────────────────
+    let wrongAnswersHTML = '';
+
+    if (correctCount < 20) {
+        wrongAnswersHTML = `
+        <div class="review-section">
+            <details>
+                <summary class="review-toggle">
+                    Review mistakes (${20 - correctCount})
+                </summary>
+                <div class="review-content">
+        `;
+
+        selectedQuestions.forEach((q, index) => {
+            const userChoice = userAnswers[index];
+            if (userChoice !== q.c) {   // only wrong ones
+                const userSelectedText = q.o[userChoice] ?? '— not answered —';
+                const correctText      = q.o[q.c];
+
+                wrongAnswersHTML += `
+                    <div class="wrong-question">
+                        <div class="wrong-question-header">
+                            Question ${index + 1}
+                        </div>
+                        <div style="margin-bottom: 1rem; font-weight: 500;">
+                            ${q.q}
+                        </div>
+                        <div class="user-answer">
+                            Your answer: ${userSelectedText}
+                        </div>
+                        <div class="correct-answer">
+                            Correct answer: <strong>${correctText}</strong>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+
+        wrongAnswersHTML += `
+                </div>
+            </details>
+        </div>`;
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
+    document.getElementById('main-content').innerHTML = `
+        <div class="results">
+            <div class="score-circle" style="--score: ${percentage}%">
+                <div class="score-circle-inner">${correctCount}<span class="text-3xl text-gray-400">/20</span></div>
+            </div>
+            <div class="text-3xl font-black text-[#f24b0b]">${percentage}%</div>
+            ${message ? `<h2 class="text-3xl font-bold mt-6 mb-8">${message}</h2>` : '<div class="h-12"></div>'}
+            ${rewardHTML}
+            <div class="flex gap-6 justify-center mt-16 mb-8">
+                <button onclick="restartTest()" class="btn btn-next">${t('retake')}</button>
+                <button onclick="goBackToMenu()" class="btn btn-prev">${t('backToMenu')}</button>
+            </div>
+
+            <!-- Wrong answers review section -->
+            ${wrongAnswersHTML}
+        </div>`;
+
+    updateBottomBar();
+}
+
+function updateBottomBar() {
+    const bar = document.getElementById('quiz-bottom-bar');
+    if (!bar) return;
+
+    const shouldShow = currentView === 'quiz';
+    bar.classList.toggle('visible', shouldShow);
+
+    if (!shouldShow) return;
+
+    const prevBtn = document.getElementById('bottom-prev');
+    const nextBtn = document.getElementById('bottom-next');
+    const finishBtn = document.getElementById('bottom-finish');
+
+    const isFirst = currentQuestionIndex === 0;
+    prevBtn.disabled = isFirst;
+
+    const isLast = currentQuestionIndex >= 19;
+    nextBtn.classList.toggle('hidden', isLast);
+    finishBtn.classList.toggle('hidden', !isLast);
+}
+
+function updateQuizNav(){
+
+    const prev = document.getElementById("quiz-prev");
+    const next = document.getElementById("quiz-next");
+    const finish = document.getElementById("quiz-finish");
+
+    prev.disabled = currentQuestionIndex === 0;
+
+    if(currentQuestionIndex === 19){
+        next.classList.add("hidden");
+        finish.classList.remove("hidden");
+    }else{
+        next.classList.remove("hidden");
+        finish.classList.add("hidden");
+    }
+
+}
+
+function selectOption(index) {
+    userAnswers[currentQuestionIndex] = index;
+    renderQuiz();
+}
+
+function startTest() {
+    const test = getTestData(testId);
+    if (!test) return;
+
+    selectedQuestions = shuffle([...test.questions]).slice(0, 20);
+    userAnswers = new Array(20).fill(null);
+    currentQuestionIndex = 0;
+    currentView = "quiz";
+
+    document.getElementById("quiz-nav").classList.add("visible");
+
+    renderQuiz();
+}
+
+function nextQuestion() {
+    if (userAnswers[currentQuestionIndex] === null) {
+        // alert(t('selectOption'));
+        showModal(t('selectOption'), "Please select");
+        return;
+    }
+    if (currentQuestionIndex < 19) {
+        currentQuestionIndex++;
+        renderQuiz();
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuiz();
+    }
+}
+
+async function finishTest() {
+    if (userAnswers.includes(null)) {
+        showModal("Please answer all questions before finishing!", "Incomplete Test");
+        return;
+    }
+
+    const correctCount = userAnswers.reduce((acc, ans, i) => 
+        ans === selectedQuestions[i].c ? acc + 1 : acc, 0);
+
+    const percentage = Math.round((correctCount / 20) * 100);
+
+    const isLevelTest = ["level_a1-a2", "level_b1", "level_b2-c1"].includes(testId);
+    const alreadyPassed = isLevelTest && userData.completedTests?.[testId] >= 18;
+
+    if (alreadyPassed) {
+        showModal(
+            "You have already successfully passed this level test!\nNo need to retake it :)",
+            "Already Passed"
+        );
+        renderResults(userData.completedTests[testId], 
+                      Math.round((userData.completedTests[testId] / 20) * 100));
+        return;
+    }
+
+    const shouldSaveAndReward = 
+        !alreadyPassed &&   // already checked above, but kept for clarity
+        (
+            testId.startsWith("vocab_") || 
+            testId.startsWith("grammar_") ||
+            (isLevelTest && correctCount >= 18)
+        );
+
+    let diamondsAdd = 0;
+    let coinsAdd = 0;
+
+    if (shouldSaveAndReward) {
+        if (correctCount > 17) {
+            diamondsAdd = 1;
+            coinsAdd = 100;
+        } else if (correctCount > 14) {
+            coinsAdd = 90;
+        } else {
+            coinsAdd = 40;
+        }
+    }
+
+    // ── Update Firestore only if passed (for level tests) ───────────
+    if (shouldSaveAndReward && currentUser) {
+        const userRef = doc(db, "users", currentUser.uid);
+        const updateData = {
+            [`completedTests.${testId}`]: correctCount
+        };
+
+        if (diamondsAdd) updateData.diamonds = increment(diamondsAdd);
+        if (coinsAdd)    updateData.coins    = increment(coinsAdd);
+
+        try {
+            await updateDoc(userRef, updateData);
+            // Optional: refresh local userData
+            userData.completedTests = userData.completedTests || {};
+            userData.completedTests[testId] = correctCount;
+            if (diamondsAdd) userData.diamonds = (userData.diamonds || 0) + diamondsAdd;
+            if (coinsAdd)    userData.coins    = (userData.coins    || 0) + coinsAdd;
+        } catch (err) {
+            console.error("Failed to save test result", err);
+        }
+    }
+
+    // Always show results (even on fail / no save)
+    renderResults(correctCount, percentage);
+}
+
+function restartTest() {
+    startTest();
+}
+
+function goBackToMenu() {
+    window.location.href = '/learn/journeys/test-centre/';
+}
+
+window.selectOption = selectOption;
+window.startTest = startTest;
+window.nextQuestion = nextQuestion;
+window.prevQuestion = prevQuestion;
+window.finishTest = finishTest;
+window.restartTest = restartTest;
+window.goBackToMenu = goBackToMenu;
+
+function reRenderCurrentScreen() {
+    if (currentView === 'intro') renderIntro();
+    else if (currentView === 'quiz') renderQuiz();
+    else if (currentView === 'results') renderResults(lastCorrectCount, lastPercentage);
+}
+
+window.addEventListener('load', async () => {
+    await loadUser();
+
+    const params = new URLSearchParams(window.location.search);
+    testId = params.get('id');
+
+    if (!testId || !getTestData(testId)) {
+        document.getElementById('main-content').innerHTML = `<div class="text-center py-20 text-3xl font-bold">Test not found</div>`;
+        hideLoader();
+        return;
+    }
+
+    renderIntro();
+    document.getElementById("quiz-prev").onclick = prevQuestion;
+    document.getElementById("quiz-next").onclick = nextQuestion;
+    document.getElementById("quiz-finish").onclick = finishTest;
+
+    document.getElementById('lang-btn')?.addEventListener('click', e => {
+        e.stopPropagation();
+        document.getElementById('lang-flags')?.classList.toggle('show');
+    });
+
+    document.querySelectorAll('.flag').forEach(el => {
+        el.addEventListener('click', e => {
+            e.stopPropagation();
+            currentLang = el.dataset.lang;
+            localStorage.setItem('summage_preferred_lang', currentLang);
+            document.documentElement.lang = currentLang;
+            reRenderCurrentScreen();
+            document.getElementById('lang-flags')?.classList.remove('show');
+        });
+    });
+
+    document.addEventListener('click', () => {
+        document.getElementById('lang-flags')?.classList.remove('show');
+    });
+
+    document.getElementById('bottom-prev')?.addEventListener('click', prevQuestion);
+    document.getElementById('bottom-next')?.addEventListener('click', nextQuestion);
+    document.getElementById('bottom-finish')?.addEventListener('click', finishTest);
+
+    function hideLoader() {
+        const loader = document.getElementById('pageLoader');
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 1200);
+    }
+    setTimeout(hideLoader, 600);
+});
+    </script>
+</body>
+</html>

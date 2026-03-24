@@ -1037,17 +1037,51 @@
 
     async function loadQuizzes() {
       try {
-        const snapshot = await getDocs(collection(db, "quiz"));
-        quizzes = snapshot.docs.map(d => ({
-          id: d.id,
-          question: d.data().question || "No question",
-          options: d.data().options || []
-        })).filter(q => q.question && q.options.length > 1);
+        console.log("[Quiz] Starting to fetch from collection: quiz");
+        const colRef = collection(db, "quiz");
+        const snapshot = await getDocs(colRef);
+        
+        console.log("[Quiz] Documents found:", snapshot.size);
+        console.log("[Quiz] Empty?", snapshot.empty);
 
-        if (quizzes.length === 0) return showError(translations[currentLang].noQuizzes);
+        const rawDocs = snapshot.docs.map(doc => ({
+          id: doc.id,
+          data: doc.data()
+        }));
+        console.table(rawDocs);   // ← very helpful in console
+
+        quizzes = snapshot.docs.map(d => {
+          const data = d.data();
+          return {
+            id: d.id,
+            question: data.question || null,
+            options: Array.isArray(data.options) ? data.options : []
+          };
+        }).filter(q => {
+          const valid = !!q.question && q.options.length >= 2;
+          if (!valid) {
+            console.warn("[Quiz] Filtered out:", q.id, {question: q.question, optionsCount: q.options.length});
+          }
+          return valid;
+        });
+
+        console.log("[Quiz] After filtering – valid quizzes:", quizzes.length);
+        console.log("[Quiz] First quiz example:", quizzes[0] || "none");
+
+        if (quizzes.length === 0) {
+          if (snapshot.empty) {
+            return showError("No quiz documents exist in the 'quiz' collection.");
+          } else {
+            return showError("Found documents, but none have valid question + ≥2 options.");
+          }
+        }
+
         loadNextQuiz();
       } catch (err) {
-        showError(translations[currentLang].errorLoading + err.message);
+        console.error("[Quiz] Firestore error:", err);
+        console.error("→ Code:", err.code);
+        console.error("→ Message:", err.message);
+        showError("Could not load quizzes: " + err.message + " (code: " + (err.code || "unknown") + ")");
       }
     }
 

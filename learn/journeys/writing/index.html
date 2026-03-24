@@ -1,536 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Quick Trainer • Summage</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Summage – IELTS Writing Synonyms</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
 
     <style>
-    html, body {
-        height: 100vh;
-        margin: 0;
-        overflow: hidden;
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
-    }
-    body { display: flex; flex-direction: column; }
-
-    /* Navbar */
-    .navbar {
-        padding: 16px 5vw;
-        background: rgba(255,255,255,0.92);
-        backdrop-filter: blur(12px);
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        flex-shrink: 0;
-        z-index: 100;
-    }
-    .logo-container { display: flex; align-items: center; gap: 12px; }
-    .logo-img { width: 48px; height: 48px; border-radius: 12px; }
-    .logo-text { font-size: 24px; font-weight: 700; color: #f24b0b; }
-
-    /* Main layout */
-    .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-
-    .hero-section {
-        flex: 1 1 auto;
-        height: calc(100vh - 45vh - 80px);
-        padding: 20px 5vw 12px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .task-title {
-        font-size: clamp(1.4rem, 5.2vw, 1.9rem);
-        font-weight: 700;
-        margin-bottom: 12px;
-        line-height: 1.25;
-        color: #111;
-    }
-    .task-content {
-        font-size: clamp(1rem, 4vw, 1.25rem);
-        line-height: 1.55;
-        color: #222;
-        max-width: 90%;
-    }
-    .task-content p {
-        margin: 8px 0 12px;
-        font-weight: 500;
-        color: #555;
-        font-size: clamp(0.95rem, 3.6vw, 1.1rem);
-    }
-    .task-content > div {
-        color: #e67e22;
-        line-height: 1.5;
-        font-size: clamp(1.02rem, 4.1vw, 1.22rem);
-        padding: 10px 16px;
-        background: #fffaf5;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(230,126,34,0.08);
-    }
-
-    /* Bottom container – 45vh, no scroll, responsive spacing */
-    .bottom-input-panel {
-        height: 45vh;
-        max-height: 45vh;
-        min-height: 260px;
-        background: rgba(255,255,255,0.98);
-        backdrop-filter: blur(16px);
-        border-top: 1px solid rgba(242,75,11,0.22);
-        box-shadow: 0 -10px 32px rgba(0,0,0,0.14);
-        padding: 12px 5vw 14px;
-        z-index: 200;
-        border-radius: 22px 22px 0 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between; /* ← key: spreads content vertically */
-        overflow: hidden;
-    }
-
-    /* Wrapper to help center and control vertical spacing */
-    .input-wrapper {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* centers items vertically when space is available */
-        gap: 10px;
-        align-items: center;     /* horizontal center */
-    }
-
-    /* Mobile: very compact */
-    @media (max-width: 768px) {
-        .bottom-input-panel {
-            padding: 8px 5vw 10px;
-            gap: 6px;
+        /* Hide scrollbar */
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            overflow-x: hidden;
         }
-        .input-wrapper { gap: 8px; }
-        .bottom-input-panel textarea {
-            min-height: 7vh !important;
-            max-height: 11vh !important;
-            padding: 10px 12px;
-            font-size: 0.96rem;
-            width: 80%;              /* ← 80% width */
-            margin: 0 auto;
+        html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
+            display: none;
         }
-        .bottom-input-panel .options-grid {
-            gap: 8px;
-            margin-bottom: 6px;
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Poppins', system-ui, sans-serif;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            color: #222;
+        }
+
+        html[lang="ru"] * { font-family: 'Poppins', system-ui, sans-serif; }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 5vw;
+            background: rgba(255,255,255,0.78);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            min-width: 120px;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c40e20; }
+
+        .logo-container {
+            display: flex; align-items: center; gap: 14px;
+            cursor: pointer; transition: transform 0.3s ease;
+        }
+        .logo-container:hover { transform: scale(1.04); }
+        .logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 14px; box-shadow: 0 2px 8px rgba(242,75,11,0.15); }
+        .logo-text { font-size: 26px; font-weight: 800; color: #f24b0b; text-transform: uppercase; letter-spacing: 1.2px; }
+
+        .language-selector { position: relative; }
+        .language-button { background: none; border: none; padding: 10px; cursor: pointer; border-radius: 50%; transition: all 0.25s ease; }
+        .language-button:hover { background: rgba(242,75,11,0.1); transform: scale(1.12); }
+        .language-button img { width: 26px; height: 26px; }
+        .language-flags {
+            position: absolute; top: 140%; right: 0; background: white; border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); opacity: 0; transform: translateY(-10px);
+            transition: all 0.25s ease; pointer-events: none; min-width: 140px; padding: 8px 0; z-index: 200;
+        }
+        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .flag { padding: 13px 24px; display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 15.5px; color: #333; }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; height: 28px; border-radius: 6px; }
+
+        /* Hero – positioned between navbar and center better spacing on desktop, still comfortable on mobile */
+        .hero {
+            padding-top: 125px;           /* good desktop feeling — adjust between 110–150 */
+            min-height: 60vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+
+        @media (max-width: 1023px) {
+            .hero {
+                padding-top: 100px;       /* safer on tablets & smaller laptops */
+            }
+        }
+        .hero-content {
+            max-width: 860px;
             width: 100%;
-            max-width: 360px;
+            text-align: center;
         }
-        .bottom-input-panel .option-card {
-            padding: 10px 12px;
-            min-height: 42px;
-            font-size: 0.94rem;
+        .hero-text {
+            font-size: clamp(1.55rem, 5vw, 3.1rem);
+            font-weight: 700;
+            line-height: 1.38;
+            color: #222;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .bottom-input-panel .btn {
-            padding: 10px 20px;
-            min-height: 46px;
-            font-size: 0.98rem;
+        .hero-text.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .bottom-input-panel .actions {
-            margin-top: 6px;
-            gap: 8px;
+        .hero-text strong { color: #f24b0b; font-weight: 800; }
+
+        /* Bottom Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding: 24px 5vw 30px;
+            z-index: 999;
         }
-    }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .option {
+            border: 3px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 18px 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            text-align: center;
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .option:hover { border-color: #f24b0b; transform: translateY(-3px); }
+        .option.selected {
+            border-color: #f24b0b;
+            background: #fffaf5;
+        }
+        .option.correct {
+            border-color: #10b981;
+            color: #10b981;
+            background: #f0fdf4;
+        }
+        .option.wrong {
+            border-color: #ef4444;
+            color: #ef4444;
+            background: #fef2f2;
+        }
 
-    /* General input styles */
-    .bottom-input-panel textarea {
-        font-size: clamp(0.98rem, 3.6vw, 1.1rem);
-        padding: 12px 14px;
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        background: #fff;
-        min-height: 9vh;
-        max-height: 13vh;
-        resize: vertical;
-        line-height: 1.45;
-        width: 80%;                  /* ← 80% width on all screens */
-        margin: 0 auto;              /* centered */
-        display: block;
-    }
-    .bottom-input-panel textarea:focus {
-        border-color: #f24b0b;
-        box-shadow: 0 0 0 3px rgba(242,75,11,0.15);
-    }
+        .check-btn {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            display: block;
+            padding: 18px 24px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 15.5px;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 0 #c23a0a;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .check-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c23a0a; }
+        .check-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 3px 0 #c23a0a;
+        }
 
-    .bottom-input-panel .options-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-bottom: 8px;
-        width: 100%;
-        max-width: 420px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .bottom-input-panel .option-card {
-        padding: 12px 14px;
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        background: #fff;
-        font-size: clamp(0.96rem, 3.5vw, 1.08rem);
-        cursor: pointer;
-        transition: all 0.18s;
-        text-align: center;
-        min-height: 46px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1.35;
-    }
-    .bottom-input-panel .option-card:hover { transform: translateY(-2px); }
-    .bottom-input-panel .option-card.selected {
-        border-color: #f24b0b;
-        background: rgba(242,75,11,0.1);
-        box-shadow: 0 0 0 3px rgba(242,75,11,0.15);
-    }
-
-    /* Buttons with 3D effect */
-    .bottom-input-panel .btn {
-        padding: 12px 24px;
-        font-weight: 600;
-        font-size: clamp(1rem, 3.8vw, 1.18rem);
-        border-radius: 50px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.22s;
-        min-height: 48px;
-        box-shadow: 0 4px 0 #c23a0a;
-        width: 100%;
-        max-width: 320px;
-        margin: 0 auto;
-        display: block;
-    }
-    .bottom-input-panel .btn-primary {
-        background: #f24b0b;
-        color: white;
-        box-shadow: 0 4px 0 #c23a0a;
-    }
-    .bottom-input-panel .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 7px 0 #c23a0a;
-    }
-    .bottom-input-panel .btn-secondary {
-        background: #f0f0f0;
-        color: #555;
-        box-shadow: 0 4px 0 #b8b8b8;
-    }
-    .bottom-input-panel .btn-secondary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 7px 0 #b8b8b8;
-        background: #e5e5e5;
-    }
-
-    .bottom-input-panel .actions {
-        margin-top: 8px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-    }
-    .mobile-row {
-        display: flex;
-        gap: 8px;
-        width: 100%;
-        max-width: 360px;
-        margin: 0 auto;
-    }
-    .mobile-row .btn { flex: 1; }
-
-    @media (min-width: 769px) {
-        .mobile-row .btn { max-width: 140px; flex: none; }
-    }
-
-    /* Result popup */
-    #result-popup {
-        position: fixed;
-        bottom: 140px;
-        left: 5vw;
-        right: 5vw;
-        background: white;
-        border-radius: 16px;
-        padding: 16px 22px;
-        box-shadow: 0 12px 40px rgba(0,0,0,0.22);
-        z-index: 300;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.4s ease;
-        pointer-events: none;
-        max-width: 520px;
-        margin: 0 auto;
-    }
-    #result-popup.show {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-    }
-    #result-popup.success { border-left: 6px solid #06a87c; }
-    #result-popup.error   { border-left: 6px solid #e74c3c; }
-</style>
+        @media (max-width: 767px) {
+            .back-btn { display: none; }
+            .navbar { padding: 14px 5vw; }
+            .hero { padding-top: 90px; min-height: 55vh; }
+            .option { padding: 16px 12px; font-size: 1rem; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Loader -->
-    <div id="pageLoader" style="position:fixed;inset:0;background:#fffaf5;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.8s;">
-        <lottie-player src="/assets/Sandy Loading.json" background="transparent" speed="0.9" style="width:120px;height:120px" loop autoplay></lottie-player>
-    </div>
-
-    <!-- Navbar -->
     <nav class="navbar">
-        <div class="logo-container" onclick="window.location.href='https://summage.org'">
-            <img class="logo-img" src="/assets/logo.webp" alt="Summage">
+        <button onclick="history.back()" class="back-btn">
+            <span>Back</span>
+        </button>
+
+        <div class="logo-container" onclick="window.location.href='/'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
             <div class="logo-text">Summage</div>
+        </div>
+
+        <div class="flex items-center gap-6 md:gap-10">
+            <div class="language-selector hidden md:block">
+                <button id="lang-btn" class="language-button" aria-label="Select language">
+                    <img src="/assets/images/lang/globe.webp" alt="Globe">
+                </button>
+                <div id="lang-flags" class="language-flags">
+                    <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                    <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                    <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+                </div>
+            </div>
+
+            <a href="/learn/" class="md:hidden">
+                <img src="/assets/images/menu-icons/arrow.webp" alt="Back" class="w-9 h-9 object-contain">
+            </a>
         </div>
     </nav>
 
-    <div class="main-content">
-        <div class="hero-section">
-            <h2 class="task-title" id="task-title"></h2>
-            <div class="task-content" id="task-content"></div>
+    <section class="hero">
+        <div class="hero-content">
+            <div id="prompt-text" class="hero-text"></div>
         </div>
+    </section>
 
-        <!-- Bottom panel – everything fits, no scroll -->
-        <div class="bottom-input-panel">
-            <div id="input-area"></div>
-            <div class="actions" id="actions-container"></div>
-        </div>
-
-        <div id="result-popup">
-            <div id="result-content"></div>
-        </div>
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+        <div id="options-grid" class="options-grid"></div>
+        <button id="check-btn" class="check-btn">CHECK ANSWER</button>
     </div>
 
     <script>
-        // Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
-            authDomain: "summage-backend.firebaseapp.com",
-            projectId: "summage-backend",
-            storageBucket: "summage-backend.firebasestorage.app",
-            messagingSenderId: "128191434358",
-            appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        let currentUserUID = null;
-        let aiUsedToday = 0;
-
-        async function initFirebase() {
-            try {
-                const cred = await auth.signInAnonymously();
-                currentUserUID = cred.user.uid;
-                await loadTodayAICount();
-            } catch (e) { console.error(e); }
-        }
-
-        async function loadTodayAICount() {
-            if (!currentUserUID) return;
-            const today = new Date().toISOString().split('T')[0];
-            const doc = await db.collection("users").doc(currentUserUID).collection("dailyUsage").doc(today).get();
-            aiUsedToday = doc.exists ? (doc.data().count || 0) : 0;
-        }
-
-        async function incrementAIUsage() {
-            if (!currentUserUID) return;
-            const today = new Date().toISOString().split('T')[0];
-            aiUsedToday++;
-            await db.collection("users").doc(currentUserUID).collection("dailyUsage").doc(today)
-                .set({ count: aiUsedToday, updated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
-        }
-
-        // Tasks – ONLY Paraphrasing + Synonym (no Arrange Words)
-        const taskBank = {
-            paraphrasing: [
-                "Many people believe that social media negatively affects young people's mental health.",
-                "Governments should prioritize public transport over new road construction.",
-                "Technology makes life more convenient but also more complex."
-            ],
-            synonym: [
-                { sentence: "The government must **tackle** climate change now.", correct: "address", options: ["address", "ignore", "postpone", "create"] },
-                { sentence: "Exercise can **enhance** both body and mind.", correct: "improve", options: ["improve", "reduce", "destroy", "avoid"] },
-                { sentence: "Students often **struggle** with time management.", correct: "have difficulty", options: ["have difficulty", "enjoy", "master", "ignore"] }
-            ]
-        };
-
-        let currentTask = null;
-        let selectedOption = null;
-        let taskHistory = [];
-
-        async function generateRandomTask() {
-            await loadTodayAICount();
-            const canUseAI = aiUsedToday < 2;
-            const types = canUseAI ? ['paraphrasing', 'synonym'] : ['synonym'];
-            const type = types[Math.floor(Math.random() * types.length)];
-
-            let task = { fullType: type };
-
-            if (type === 'paraphrasing') {
-                task.title = "Paraphrase";
-                task.content = taskBank.paraphrasing[Math.floor(Math.random() * taskBank.paraphrasing.length)];
-                task.instruction = "Rewrite in your own words (same meaning).";
-            } else {
-                task.title = "Choose synonym";
-                const item = taskBank.synonym[Math.floor(Math.random() * taskBank.synonym.length)];
-                task.content = item.sentence;
-                task.correct = item.correct;
-                task.options = [...item.options].sort(() => Math.random() - 0.5);
-                task.instruction = "Select best replacement.";
+        // Translations object
+        const translations = {
+            en: {
+                back: "Back",
+                check: "CHECK ANSWER",
+                loading: "LOADING..."
+            },
+            ru: {
+                back: "Назад",
+                check: "ПРОВЕРИТЬ",
+                loading: "ЗАГРУЗКА..."
+            },
+            uz: {
+                back: "Orqaga",
+                check: "TEKSHIRISH",
+                loading: "YUKLANMOQDA..."
             }
-            return task;
-        }
-
-        async function renderTask() {
-            currentTask = await generateRandomTask();
-            taskHistory.push({ ...currentTask });
-
-            document.getElementById('task-title').textContent = currentTask.title;
-            document.getElementById('task-content').innerHTML = `
-                <p>${currentTask.instruction}</p>
-                <div>${currentTask.content}</div>
-            `;
-
-            const area = document.getElementById('input-area');
-            area.innerHTML = '';
-
-            if (currentTask.fullType === 'synonym') renderSynonym(area);
-            else renderParaphrase(area);
-
-            renderButtons();
-            document.getElementById('result-popup').classList.remove('show');
-        }
-
-        function renderParaphrase(container) {
-            container.innerHTML = `
-                <div class="input-wrapper">
-                    <textarea id="user-input" rows="3" placeholder="Your paraphrase..."></textarea>
-                </div>
-            `;
-        }
-
-        function renderSynonym(container) {
-            let html = '<div class="input-wrapper"><div class="options-grid">';
-            currentTask.options.forEach(opt => {
-                html += `<div class="option-card" onclick="selectSynonym(this,'${opt}')">${opt}</div>`;
-            });
-            html += '</div></div>';
-            container.innerHTML = html;
-        }
-        window.selectSynonym = (el, val) => {
-            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-            el.classList.add('selected');
-            selectedOption = val;
         };
 
-        function renderButtons() {
-            document.getElementById('actions-container').innerHTML = `
-                <button class="btn btn-primary" onclick="submitAnswer()">Check Answer</button>
-                <div class="mobile-row">
-                    <button class="btn btn-secondary" onclick="goBack()">Back</button>
-                    <button class="btn btn-secondary" onclick="renderTask()">Skip</button>
-                </div>
-            `;
-        }
+        // Current language – load from localStorage or default to English
+        let currentLang = localStorage.getItem('summage_lang') || 'en';
+        document.documentElement.lang = currentLang;
 
-        async function submitAnswer() {
-            let answer = '';
+        // Tasks data
+        const tasks = [
+            {
+                html: "One major <strong>advantage</strong> of studying abroad is cultural exposure.",
+                options: ["benefit", "drawback", "problem", "challenge"],
+                correct: 0
+            },
+            {
+                html: "Climate change has a huge <strong>impact</strong> on global food production.",
+                options: ["effect", "cause", "solution", "benefit"],
+                correct: 0
+            },
+            {
+                html: "Education is <strong>crucial</strong> for long-term economic growth.",
+                options: ["essential", "optional", "minor", "irrelevant"],
+                correct: 0
+            },
+            {
+                html: "The government wants to <strong>increase</strong> investment in green technology.",
+                options: ["rise", "decrease", "reduce", "lower"],
+                correct: 0
+            },
+            {
+                html: "Finding a permanent <strong>solution</strong> to traffic jams is difficult.",
+                options: ["approach", "problem", "cause", "question"],
+                correct: 0
+            },
+            {
+                html: "Many countries now use <strong>renewable</strong> energy sources.",
+                options: ["sustainable", "fossil", "nuclear", "traditional"],
+                correct: 0
+            },
+            {
+                html: "Social media has a strong <strong>influence</strong> on young people's behaviour.",
+                options: ["effect", "control", "freedom", "isolation"],
+                correct: 0
+            },
+            {
+                html: "Teamwork is <strong>essential</strong> in modern workplaces.",
+                options: ["vital", "unnecessary", "rare", "optional"],
+                correct: 0
+            },
+            {
+                html: "Globalization has both positive and negative <strong>consequences</strong>.",
+                options: ["results", "causes", "solutions", "origins"],
+                correct: 0
+            },
+            {
+                html: "Governments should protect the <strong>environment</strong> more strictly.",
+                options: ["nature", "economy", "technology", "society"],
+                correct: 0
+            }
+        ];
 
-            if (currentTask.fullType === 'synonym') {
-                if (!selectedOption) return alert("Select one");
-                answer = selectedOption;
-            } else {
-                answer = document.getElementById('user-input')?.value.trim() || '';
-                if (!answer) return alert("Write something");
+        let currentIndex = 0;
+        let selectedIndex = null;
+        let isChecking = false;
+
+        const promptEl = document.getElementById('prompt-text');
+        const gridEl = document.getElementById('options-grid');
+        const checkBtn = document.getElementById('check-btn');
+
+        // ────────────────────────────────────────────────────────────────
+        // Update all translatable UI elements
+        // ────────────────────────────────────────────────────────────────
+        function updateButtonTexts() {
+            const t = translations[currentLang] || translations.en;
+
+            // Back button (desktop version)
+            const backBtn = document.querySelector('.back-btn');
+            if (backBtn) {
+                backBtn.innerHTML = `<span>${t.back}</span>`;
             }
 
-            if (currentTask.fullType === 'paraphrasing') await incrementAIUsage();
-
-            const result = currentTask.fullType === 'paraphrasing' ? await checkAI(answer) : checkSimple(answer);
-            showResult(result);
-        }
-
-        function checkSimple(answer) {
-            const isCorrect = answer === currentTask.correct;
-            const feedback = isCorrect ? "Correct!" : `Correct: ${currentTask.correct}`;
-            return { isCorrect, feedback };
-        }
-
-        async function checkAI(answer) {
-            const prompt = `IELTS examiner. Paraphrase check.\nOriginal: "${currentTask.content}"\nAnswer: "${answer}"\nReturn JSON only: {"isCorrect":boolean,"feedback":"short"}`;
-            try {
-                const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                    method: "POST",
-                    headers: { "Authorization": "Bearer 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", "Content-Type": "application/json" },
-                    body: JSON.stringify({ model: "llama-3.1-8b-instant", messages: [{role:"user", content: prompt}], temperature: 0.35 })
-                });
-                const data = await res.json();
-                const text = data.choices[0].message.content.trim();
-                return JSON.parse(text.match(/\{[\s\S]*\}/)[0]);
-            } catch {
-                return { isCorrect: false, feedback: "Try again." };
+            // Check button – only update if not in loading/disabled state
+            if (checkBtn && !checkBtn.disabled) {
+                checkBtn.textContent = t.check;
             }
         }
 
-        function showResult({ isCorrect, feedback }) {
-            const popup = document.getElementById('result-popup');
-            const content = document.getElementById('result-content');
-            content.innerHTML = `
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <i class="fa-solid ${isCorrect ? 'fa-circle-check' : 'fa-circle-xmark'}" style="font-size:1.9rem;color:${isCorrect?'#06a87c':'#e74c3c'}"></i>
-                    <strong style="font-size:1.05rem;color:${isCorrect?'#06a87c':'#e74c3c'}">${isCorrect ? 'Great!' : 'Almost'}</strong>
-                </div>
-                <p style="margin-top:8px;font-size:0.93rem;line-height:1.4">${feedback}</p>
-            `;
-            popup.className = `show ${isCorrect ? 'success' : 'error'}`;
+        // ────────────────────────────────────────────────────────────────
+        // Load a new synonym task
+        // ────────────────────────────────────────────────────────────────
+        function loadNewTask() {
+            isChecking = false;
+            selectedIndex = null;
+            checkBtn.disabled = false;
 
+            const t = translations[currentLang] || translations.en;
+            checkBtn.textContent = t.check;
+
+            // Pick a different random task
+            let newIndex = currentIndex;
+            while (newIndex === currentIndex) {
+                newIndex = Math.floor(Math.random() * tasks.length);
+            }
+            currentIndex = newIndex;
+            const task = tasks[currentIndex];
+
+            // Fade out → update → fade in
+            promptEl.classList.remove('visible');
             setTimeout(() => {
-                popup.classList.remove('show');
-                setTimeout(renderTask, 400);
+                promptEl.innerHTML = task.html;
+                promptEl.classList.add('visible');
+            }, 400);
+
+            // Clear and render options
+            gridEl.innerHTML = '';
+            task.options.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.textContent = opt;
+                div.dataset.index = i;
+                div.onclick = () => selectOption(i);
+                gridEl.appendChild(div);
+            });
+        }
+
+        // ────────────────────────────────────────────────────────────────
+        // Handle option selection
+        // ────────────────────────────────────────────────────────────────
+        function selectOption(index) {
+            if (isChecking) return;
+            selectedIndex = index;
+
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+                if (parseInt(opt.dataset.index) === index) {
+                    opt.classList.add('selected');
+                }
+            });
+        }
+
+        // ────────────────────────────────────────────────────────────────
+        // Check answer and show feedback
+        // ────────────────────────────────────────────────────────────────
+        function checkAnswer() {
+            if (isChecking || selectedIndex === null) return;
+
+            isChecking = true;
+            checkBtn.disabled = true;
+
+            const t = translations[currentLang] || translations.en;
+            checkBtn.textContent = t.loading;
+
+            const task = tasks[currentIndex];
+            const isCorrect = selectedIndex === task.correct;
+
+            document.querySelectorAll('.option').forEach(opt => {
+                const idx = parseInt(opt.dataset.index);
+                opt.classList.remove('selected');
+
+                if (idx === task.correct) {
+                    opt.classList.add('correct');
+                }
+                if (idx === selectedIndex && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+            });
+
+            // Auto advance after delay
+            setTimeout(() => {
+                loadNewTask();
             }, 3000);
         }
 
-        function goBack() {
-            if (taskHistory.length > 1) {
-                taskHistory.pop();
-                currentTask = taskHistory[taskHistory.length - 1];
-                document.getElementById('task-title').textContent = currentTask.title;
-                document.getElementById('task-content').innerHTML = `
-                    <p>${currentTask.instruction}</p>
-                    <div>${currentTask.content}</div>
-                `;
-                const area = document.getElementById('input-area');
-                area.innerHTML = '';
-                if (currentTask.fullType === 'synonym') renderSynonym(area);
-                else renderParaphrase(area);
-            }
+        // ────────────────────────────────────────────────────────────────
+        // Language selector logic
+        // ────────────────────────────────────────────────────────────────
+        const langBtn = document.getElementById('lang-btn');
+        const langFlags = document.getElementById('lang-flags');
+
+        if (langBtn && langFlags) {
+            langBtn.addEventListener('click', e => {
+                e.stopPropagation();
+                langFlags.classList.toggle('show');
+            });
+
+            document.addEventListener('click', () => {
+                langFlags.classList.remove('show');
+            });
+
+            document.querySelectorAll('.flag').forEach(flag => {
+                flag.addEventListener('click', e => {
+                    e.stopPropagation();
+                    const lang = flag.dataset.lang;
+                    currentLang = lang;
+                    localStorage.setItem('summage_lang', lang);
+                    document.documentElement.lang = lang;
+
+                    // Update visible texts
+                    updateButtonTexts();
+
+                    langFlags.classList.remove('show');
+                });
+            });
         }
 
-        async function start() {
-            await initFirebase();
-            await renderTask();
-            setTimeout(() => {
-                document.getElementById('pageLoader').style.opacity = '0';
-                setTimeout(() => document.getElementById('pageLoader').style.display = 'none', 700);
-            }, 600);
-        }
+        // ────────────────────────────────────────────────────────────────
+        // Event listeners & initial setup
+        // ────────────────────────────────────────────────────────────────
+        checkBtn.addEventListener('click', checkAnswer);
 
-        window.onload = start;
+        // First load
+        loadNewTask();
+        updateButtonTexts();  // Apply correct language from the very beginning
     </script>
 </body>
 </html>

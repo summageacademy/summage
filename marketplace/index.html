@@ -12,6 +12,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
     <style>
         /* Hide scrollbar completely */
         html, body {
@@ -24,11 +30,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
         }
 
         html[lang="ru"] * {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
         }
 
         body {
@@ -38,22 +44,25 @@
             flex-direction: column;
         }
 
+        /* ────────────────────────────────────────────────
+        Navbar
+        ───────────────────────────────────────────────── */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 5vw;
-            background: rgba(255, 255, 255, 0.7);
+            padding: 20px 5vw;
+            background: rgba(255, 255, 255, 0.78);
             backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
         }
 
         .back-btn {
             padding: 12px 28px;
-            background: #f24b0b;
+            background: #f1192e;
             color: white;
             font-weight: 700;
             text-transform: uppercase;
@@ -62,43 +71,43 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 0 #c23a0a;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.24s ease;
             min-width: 120px;
         }
 
         .back-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 0 #c23a0a;
+            box-shadow: 0 6px 0 #c40e20;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             cursor: pointer;
-            transition: transform 0.3s ease;
         }
 
-
         .logo-img {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             object-fit: contain;
-            border-radius: 14px;
-            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(242,75,11,0.18);
         }
 
         .logo-text {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
             color: #f24b0b;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 1.1px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
         .language-selector { position: relative; }
@@ -108,11 +117,11 @@
             padding: 10px;
             cursor: pointer;
             border-radius: 50%;
-            transition: all 0.25s ease;
+            transition: all 0.24s ease;
         }
         .language-button:hover {
-            background-color: rgba(242, 75, 11, 0.1);
-            transform: scale(1.12);
+            background: rgba(242,75,11,0.08);
+            transform: scale(1.1);
         }
         .language-button img { width: 26px; height: 26px; }
 
@@ -122,153 +131,261 @@
             right: 0;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.14);
             opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.25s ease;
+            transform: translateY(-8px);
+            transition: all 0.24s ease;
             pointer-events: none;
         }
-        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .language-flags.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
         .flag {
-            padding: 12px 18px;
+            padding: 10px 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             cursor: pointer;
         }
-        .flag:hover { background: #f24b0b10; }
-        .flag img { width: 28px; border-radius: 6px; }
+        .flag:hover { background: rgba(242,75,11,0.08); }
+        .flag img { width: 26px; border-radius: 6px; }
 
+        /* ────────────────────────────────────────────────
+        Main content
+        ───────────────────────────────────────────────── */
         .marketplace-container {
             flex: 1;
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 80px 5vw 120px;
+            padding: 70px 5vw 100px;
             width: 100%;
-            text-align: center;
         }
 
         .marketplace-title {
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 800;
             color: #06a87c;
-            margin-bottom: 24px;
+            margin-bottom: 12px;
+            text-align: center;
         }
 
         .marketplace-subtitle {
-            font-size: 1.25rem;
-            line-height: 1.7;
+            font-size: 1.2rem;
+            line-height: 1.6;
             color: #555;
-            margin-bottom: 16px;
+            margin-bottom: 48px;
+            text-align: center;
         }
 
-        .empty-state {
-            margin: 80px auto;
-            max-width: 480px;
+        .marketplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
         }
 
-        .empty-icon {
-            font-size: 6rem;
-            margin-bottom: 24px;
-            opacity: 0.4;
+        .item-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 32px rgba(0,0,0,0.08);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            display: flex;
+            flex-direction: column;
         }
 
-        .empty-message {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 16px;
+        .item-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 44px rgba(0,0,0,0.11);
         }
 
-        .empty-text {
-            font-size: 1.15rem;
-            line-height: 1.7;
-            color: #666;
-            margin-bottom: 32px;
+        .photo-container {
+            height: 220px;
+            background: var(--item-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .cta-btn {
-            padding: 14px 36px;
-            background: #f24b0b;
-            color: white;
+        .book-img {
+            width: 64%;
+            height: auto;
+            border: 7px solid #06a87c;
+            border-radius: 16px;
+            box-shadow: 0 20px 32px rgba(0,0,0,0.22);
+            z-index: 2;
+        }
+
+        .book-shadow {
+            position: absolute;
+            bottom: 16%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 56%;
+            height: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 50%;
+            filter: blur(10px);
+            z-index: 1;
+        }
+
+        .card-content {
+            padding: 16px 18px 20px;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-title {
+            font-size: 1.12rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-size: 15px;
+            color: #222;
+            margin-bottom: 10px;
+            line-height: 1.32;
+        }
+
+        .price-tag {
+            font-size: 1.32rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .price-tag.green { color: #06a87c; }
+        .price-tag.red   { color: #e63939; }
+
+        .action-btn {
+            width: 100%;
+            padding: 14px;
             border: none;
             border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #c23a0a;
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #c23a0a;
-        }
-
-        footer {
-            background: #1a1a1a;
-            color: #ccc;
-            padding: 80px 5vw 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
             font-size: 14px;
+            cursor: pointer;
+            transition: all 0.24s ease;
             margin-top: auto;
         }
 
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
+        .action-btn.sold {
+            background: #ddd;
+            color: #777;
+            box-shadow: 0 4px 0 #aaa;
+            cursor: not-allowed;
         }
 
-        .footer-column h3 {
+        .action-btn.add {
+            background: #06a87c;
             color: white;
-            font-size: 16px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            box-shadow: 0 4px 0 #048f68;
         }
 
-        .footer-column ul { list-style: none; }
-        .footer-column a {
-            color: #ccc;
-            text-decoration: none;
-            line-height: 2;
-            display: block;
-            transition: color 0.3s;
-        }
-        .footer-column a:hover { color: #f24b0b; }
-
-        .footer-bottom {
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 1px solid #333;
-            text-align: center;
-            color: #888;
+        .action-btn.add:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 0 #048f68;
         }
 
+        .action-btn.not {
+            background: #e63939;
+            color: white;
+            box-shadow: 0 4px 0 #c22a2a;
+            cursor: not-allowed;
+        }
+
+        /* Currency icons */
+        .currency-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
+        /* ────────────────────────────────────────────────
+        Floating Action Button (only cart now)
+        ───────────────────────────────────────────────── */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 72px;
+            height: 72px;
+            background: #06a87c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 32px rgba(6,168,124,0.36);
+            cursor: pointer;
+            z-index: 900;
+            transition: all 0.28s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.13);
+            box-shadow: 0 14px 40px rgba(6,168,124,0.44);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 900px) {
+            .navbar { padding: 16px 5vw; }
+            .back-btn { display: none; }
+            .marketplace-container { padding: 50px 12px 100px; }
+            .marketplace-title { font-size: 2.3rem; }
+            .marketplace-subtitle { font-size: 1.1rem; }
+
+            .marketplace-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .photo-container { height: 150px; }
+            .book-img {
+                width: 62%;
+                border-width: 5px;
+                border-radius: 14px;
+            }
+            .book-shadow { bottom: 14%; width: 54%; height: 18px; }
+
+            .card-content { padding: 14px 14px 18px; }
+            .item-title { font-size: 1rem; line-height: 1.3; }
+            .price-tag { font-size: 1.1rem; }
+            .action-btn { padding: 12px; font-size: 13px; }
+
+            .fab {display: none;}
+
+            footer { display: none; }
+        }
+
+        .remove-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Mobile bottom bar */
         .mobile-footer-bar {
             display: none;
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255,255,255,0.94);
             backdrop-filter: blur(12px);
             padding: 12px 5vw;
-            border-top: 1px solid rgba(0,0,0,0.08);
+            border-top: 1px solid rgba(0,0,0,0.07);
             z-index: 100;
+            gap: 12px;
         }
 
         .mobile-back-btn {
-            width: 100%;
-            max-width: 90vw;
-            margin: 0 auto;
+            flex: 3;
             padding: 14px;
             background: #f24b0b;
             color: white;
@@ -280,36 +397,173 @@
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 4px 0 #c23a0a;
-            transition: all 0.25s ease;
         }
 
-        .mobile-back-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #c23a0a;
+        .mobile-cart-btn {
+            flex: 1;
+            background: #06a87c;
+            color: white;
+            border-radius: 50px;
+            border: none;
+            font-size: 24px;
+            box-shadow: 0 4px 0 #048f68;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         @media (max-width: 900px) {
-            .navbar { padding: 20px; }
-            .back-btn { display: none; }
-            .marketplace-container { padding: 60px 20px 100px; }
-            .marketplace-title { font-size: 2.4rem; }
-            footer { display: none; }
-            .mobile-footer-bar { display: block; }
-            .empty-icon { font-size: 5rem; }
+            .mobile-footer-bar { display: flex; }
         }
 
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.64);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .modal.show { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 520px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: 0 28px 72px rgba(0,0,0,0.24);
+        }
+
+        .modal-header {
+            padding: 22px 26px 14px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title { font-size: 1.38rem; font-weight: 700; }
+
+        .modal-close {
+            font-size: 30px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .modal-body { padding: 24px 26px; }
+
+        .modal-footer {
+            padding: 18px 26px;
+            border-top: 1px solid #eee;
+        }
+
+        .cart-item, .liked-item {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .cart-item:last-child { border-bottom: none; }
+
+        .mini-book {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 3px solid #06a87c;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+        }
+
+        /* Notification */
+        #notification {
+            position: fixed;
+            top: 22%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            border-radius: 18px;
+            padding: 18px 22px;
+            box-shadow: 0 18px 56px rgba(0,0,0,0.24);
+            display: none;
+            align-items: center;
+            gap: 14px;
+            z-index: 99999;
+            animation: slideUp 0.36s ease;
+        }
+
+        #notification.show { display: flex; }
+
+        @keyframes slideUp {
+            from { transform: translate(-50%, -70%); opacity: 0; }
+            to   { transform: translate(-50%, -50%); opacity: 1; }
+        }
+
+        .notif-text { flex: 1; font-weight: 600; }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 70px 5vw 40px;
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 15px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+        }
+
+        .footer-column ul { list-style: none; }
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 2.1;
+            display: block;
+            transition: color 0.24s;
+            font-weight: bold;
+        }
+        .footer-column a:hover { color: #f24b0b; }
+
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 36px;
+            border-top: 1px solid #333;
+            text-align: center;
+            color: #888;
+        }
+
+        /* Loader */
         .page-loader {
             position: fixed;
             inset: 0;
-            width: 100%;
-            height: 100%;
             background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             opacity: 1;
-            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 1.2s cubic-bezier(0.4,0,0.2,1);
         }
 
         .page-loader.hidden {
@@ -317,17 +571,12 @@
             visibility: hidden;
         }
 
-        #splashOwl {
-            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: opacity, transform;
+        /* Icons color filters */
+        .icon-white {
+            filter: brightness(0) invert(1);
         }
-
-        @media (prefers-reduced-motion: reduce) {
-            #splashOwl, .page-loader, .page-loader.hidden {
-                transition: none !important;
-                opacity: 1;
-                transform: none;
-            }
+        .icon-red {
+            filter: brightness(0) saturate(100%) invert(26%) sepia(94%) saturate(7494%) hue-rotate(358deg) brightness(92%) contrast(113%);
         }
     </style>
 </head>
@@ -353,27 +602,83 @@
             <div class="logo-text">Marketplace</div>
         </div>
 
-        <div class="language-selector">
-            <button class="language-button" id="lang-btn" aria-label="Select language">
-                <img src="/assets/images/lang/globe.webp" alt="">
-            </button>
-            <div class="language-flags" id="lang-flags">
-                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
-                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
-                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+        <div class="nav-actions">
+            <div class="language-selector">
+                <button class="language-button" id="lang-btn" aria-label="Select language">
+                    <img src="/assets/images/lang/globe.webp" alt="">
+                </button>
+                <div class="language-flags" id="lang-flags">
+                    <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                    <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                    <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
+                </div>
             </div>
         </div>
     </nav>
 
     <div class="marketplace-container">
-        <div class="empty-state">
-            <div class="empty-icon">🛒</div>
-            <div class="empty-message" data-key="emptyMessage">Nothing in the marketplace yet...</div>
-            <p class="empty-text" data-key="emptyText">We're preparing the first items for you. Keep learning, earn coins & diamonds and come back soon!</p>
-            <button class="cta-btn" onclick="window.location.href='/learn/'">
-                <span data-key="continueLearning">Continue Learning</span>
-            </button>
+        <h1 class="marketplace-title" data-key="marketplaceTitle">Marketplace</h1>
+        <p class="marketplace-subtitle" data-key="marketplaceSubtitle">Powerful study tools, boosts & certificates</p>
+        
+        <div id="marketplace-grid" class="marketplace-grid"></div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal cart-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="cart-title">Your Cart</div>
+                <span class="modal-close" onclick="closeCartModal()">×</span>
+            </div>
+            <div class="modal-body" id="cart-body">
+                <!-- JS injected -->
+            </div>
+            <div class="modal-footer">
+                <button onclick="openOrderModal()" id="order-btn" class="action-btn add" style="width:100%;">Order Now</button>
+            </div>
         </div>
+    </div>
+
+    <!-- Order Form Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="order-title">Complete Your Order</div>
+                <span class="modal-close" onclick="closeOrderModal()">×</span>
+            </div>
+            <div class="modal-body">
+                <label style="display:block;margin-bottom:8px;font-weight:600;">Telegram Username</label>
+                <input type="text" id="telegram-input" placeholder="@yourusername" 
+                       style="width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:20px;font-size:1rem;">
+
+                <label style="display:block;margin-bottom:8px;font-weight:600;">Phone Number</label>
+                <input type="tel" id="phone-input" placeholder="+998 90 123 45 67" 
+                       style="width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:20px;font-size:1rem;">
+            </div>
+            <div class="modal-footer">
+                <button onclick="submitOrder()" id="done-btn" class="action-btn add" style="width:100%;" disabled>Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content" style="max-width:420px;text-align:center;">
+            <div class="modal-body" style="padding:48px 32px 32px;">
+                <img id="success-icon" src="/assets/icons/check.webp" class="success-icon" alt="Success">
+                <h2 id="success-title" style="font-size:1.6rem;margin-bottom:12px;">Order Placed!</h2>
+                <p id="success-text" style="color:#555;line-height:1.6;">Admins will verify your order soon and write to you through telegram or call if needed.</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeSuccessModal()" class="action-btn add" style="width:100%;">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification">
+        <div id="notif-icon"></div>
+        <div id="notif-text" class="notif-text"></div>
     </div>
 
     <footer>
@@ -407,126 +712,438 @@
         </div>
     </footer>
 
+    <!-- Mobile Bottom Bar -->
     <div class="mobile-footer-bar">
         <button class="mobile-back-btn" id="mobile-back-btn">Back</button>
+        <button class="mobile-cart-btn" id="mobile-cart-btn" onclick="openCartModal()"><img src="/assets/images/menu-icons/grocery-store.webp" alt="Cart" class="icon-white" style="width:32px;height:32px;"></button>
     </div>
 
+    <button onclick="openCartModal()" class="fab cart" id="pc-cart-fab">
+        <img src="/assets/images/menu-icons/grocery-store.webp" alt="Cart" class="icon-white" style="width:32px;height:32px;">
+    </button>
+
     <script>
-        const LANG_STORAGE_KEY = 'summage_preferred_lang';
-        let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || 'en';
+        // ==================== FIREBASE CONFIG ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+            authDomain: "summage-backend.firebaseapp.com",
+            projectId: "summage-backend",
+            storageBucket: "summage-backend.firebasestorage.app",
+            messagingSenderId: "128191434358",
+            appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // ==================== DATA ====================
+        let currentLang = localStorage.getItem('summage_preferred_lang') || 'en';
+        let uid = null;
+        let userCoins = 0;
+        let userDiamonds = 0;
+        let userLikes = [];
+        let userCart = [];
+
+        const TEMP_SOLD_OUT = true;
+
+        const items = [
+            {
+                id: "item1",
+                title: "\"The Mountain is You\" by Brianna Wiest",
+                price: 100000,
+                currency: "coins",
+                image: "/assets/images/market/mountain-is-you.webp",
+                gradient: "linear-gradient(135deg, #06a87c, #00d4aa)"
+            },
+            {
+                id: "item2",
+                title: "\"The Alchemist\", book by Paulo Coelho",
+                price: 120000,
+                currency: "coins",
+                image: "/assets/images/market/the-alchemist.webp",
+                gradient: "linear-gradient(135deg, #f24b0b, #ff8a4d)"
+            },
+            {
+                id: "item3",
+                title: "\"Atomic Habits\", book by James Clear",
+                price: 1000,
+                currency: "diamonds",
+                image: "/assets/images/market/atomic-habits.webp",
+                gradient: "linear-gradient(135deg, #6b48ff, #a78bff)"
+            },
+            {
+                id: "item4",
+                title: "\"The Psychology of Money\", Morgan Housel",
+                price: 110000,
+                currency: "coins",
+                image: "/assets/images/market/psychology-of-money.webp",
+                gradient: "linear-gradient(135deg, #ff6b6b, #ff9e9e)"
+            }
+        ];
 
         const translations = {
             en: {
                 back: "Back",
                 marketplaceTitle: "Marketplace",
-                marketplaceSubtitle: "Coming soon — powerful study tools, avatars, boosts and certificates",
-                emptyMessage: "Nothing in the marketplace yet...",
-                emptyText: "We're preparing the first items for you. Keep learning, earn coins & diamonds and come back soon!",
-                continueLearning: "Continue Learning"
+                marketplaceSubtitle: "Powerful study tools, boosts & certificates",
+                continueLearning: "Continue Learning",
+                soldOut: "Sold Out",
+                addToCart: "Add to Cart",
+                notEnough: "NOT ENOUGH",
+                likedTitle: "Your Liked Items",
+                cartTitle: "Your Cart",
+                orderTitle: "Complete Your Order",
+                done: "Done",
+                successTitle: "Order Placed!",
+                successText: "Admins will verify your order soon and write to you through telegram or call if needed.",
+                ok: "OK",
+                emptyLiked: "No liked items yet",
+                emptyCart: "Your cart is empty",
+                addedSuccess: "Added to cart!",
+                alreadyInCart: "Already in cart",
+                orderSuccess: "Order placed successfully!",
+                error: "Something went wrong"
             },
             ru: {
                 back: "Назад",
                 marketplaceTitle: "Маркетплейс",
-                marketplaceSubtitle: "Скоро появится — мощные учебные инструменты, аватары, бусты и сертификаты",
-                emptyMessage: "В маркетплейсе пока ничего нет...",
-                emptyText: "Мы готовим для вас первые товары. Продолжайте учиться, зарабатывайте монеты и алмазы и возвращайтесь скоро!",
-                continueLearning: "Продолжить обучение"
+                marketplaceSubtitle: "Мощные учебные инструменты, бусты и сертификаты",
+                continueLearning: "Продолжить обучение",
+                soldOut: "Продано",
+                addToCart: "В корзину",
+                notEnough: "НЕДОСТАТОЧНО",
+                likedTitle: "Понравившиеся товары",
+                cartTitle: "Ваша корзина",
+                orderTitle: "Завершить заказ",
+                done: "Готово",
+                successTitle: "Заказ оформлен!",
+                successText: "Администраторы проверят ваш заказ и свяжутся с вами через Telegram или по телефону.",
+                ok: "ОК",
+                emptyLiked: "Пока нет понравившихся товаров",
+                emptyCart: "Корзина пуста",
+                addedSuccess: "Добавлено в корзину!",
+                alreadyInCart: "Уже в корзине",
+                orderSuccess: "Заказ успешно оформлен!",
+                error: "Что-то пошло не так"
             },
             uz: {
                 back: "Orqaga",
                 marketplaceTitle: "Marketpleys",
-                marketplaceSubtitle: "Tez orada — kuchli o‘quv vositalari, avatarlar, boostlar va sertifikatlar",
-                emptyMessage: "Marketpleysda hali hech narsa yo‘q...",
-                emptyText: "Biz siz uchun birinchi tovarlarni tayyorlayapmiz. O‘qishni davom ettiring, tanga va olmoslar ishlab toping va tez orada qaytib keling!",
-                continueLearning: "O‘qishni davom ettirish"
+                marketplaceSubtitle: "Kuchli o‘quv vositalari, boostlar va sertifikatlar",
+                continueLearning: "O‘qishni davom ettirish",
+                soldOut: "Sotildi",
+                addToCart: "Savatchaga qo‘shish",
+                notEnough: "YETARLI EMAS",
+                likedTitle: "Yoqtirgan narsalar",
+                cartTitle: "Savatingiz",
+                orderTitle: "Buyurtmani yakunlash",
+                done: "Tayyor",
+                successTitle: "Buyurtma qabul qilindi!",
+                successText: "Adminlar buyurtmangizni tez orada tekshirib, Telegram orqali yoki telefon orqali bog‘lanadi.",
+                ok: "OK",
+                emptyLiked: "Hali yoqtirgan narsa yo‘q",
+                emptyCart: "Savatingiz bo‘sh",
+                addedSuccess: "Savatchaga qo‘shildi!",
+                alreadyInCart: "Allaqaqon savatchada",
+                orderSuccess: "Buyurtma muvaffaqiyatli joylandi!",
+                error: "Xatolik yuz berdi"
             }
         };
 
+        function t(key) {
+            return translations[currentLang][key] || key;
+        }
+
+        // ==================== CURRENCY ICONS (webp) ====================
+        function getCurrencyIconHTML(currency) {
+            const iconSrc = currency === "coins" 
+                ? "/assets/images/menu-icons/dollar.webp" 
+                : "/assets/images/menu-icons/diamond.webp";
+            return `<img src="${iconSrc}" class="currency-icon" alt="${currency}">`;
+        }
+
+        function isAffordable(item) {
+            if (item.currency === "coins") return userCoins >= item.price;
+            return userDiamonds >= item.price;
+        }
+
+        function showNotification(message, isSuccess = true) {
+            const notif = document.getElementById('notification');
+            const iconDiv = document.getElementById('notif-icon');
+            iconDiv.innerHTML = isSuccess 
+                ? `<img src="/assets/icons/check.webp" class="notif-icon-img" alt="success">` 
+                : `<img src="/assets/icons/warning.webp" class="notif-icon-img" alt="error">`;
+            document.getElementById('notif-text').textContent = message;
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 2800);
+        }
+
+        // ==================== RENDER CARDS ====================
+        function renderMarketplace() {
+            const grid = document.getElementById('marketplace-grid');
+            grid.innerHTML = '';
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.style.setProperty('--item-gradient', item.gradient);
+
+                const affordable = !TEMP_SOLD_OUT && isAffordable(item);
+                let btnClass = TEMP_SOLD_OUT ? 'sold' : (affordable ? 'add' : 'not');
+                let btnText  = TEMP_SOLD_OUT ? t('soldOut') : (affordable ? t('addToCart') : t('notEnough'));
+
+                card.innerHTML = `
+                    <div class="photo-container">
+                        <img src="${item.image}" alt="${item.title}" class="book-img">
+                        <div class="book-shadow"></div>
+                    </div>
+                    <div class="card-content">
+                        <div class="item-title">${item.title}</div>
+                        <div class="price-tag ${affordable ? 'green' : 'red'}">
+                            <span>${item.price}</span>
+                            ${getCurrencyIconHTML(item.currency)}
+                        </div>
+                        <button class="action-btn ${btnClass}">${btnText}</button>
+                    </div>
+                `;
+
+                const actionBtn = card.querySelector('.action-btn');
+                if (!TEMP_SOLD_OUT && affordable) {
+                    actionBtn.onclick = () => addToCart(item.id);
+                }
+
+                grid.appendChild(card);
+            });
+        }
+
+        // ==================== USER DATA ====================
+        let userUnsubscribe = null;
+
+        function loadUserData() {
+            if (userUnsubscribe) userUnsubscribe();
+            const userRef = db.collection('users').doc(uid);
+            userUnsubscribe = userRef.onSnapshot(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    userCoins = data.coins   || 0;
+                    userDiamonds = data.diamonds || 0;
+                    userCart = data.cart    || [];
+                    renderMarketplace();
+                } else {
+                    userRef.set({
+                        coins: 500,
+                        diamonds: 30,
+                        cart: []
+                    });
+                }
+            });
+        }
+
+        function toggleLike(itemId) {
+            if (!uid) return;
+            const userRef = db.collection('users').doc(uid);
+            let newLikes = [...userLikes];
+            if (newLikes.includes(itemId)) {
+                newLikes = newLikes.filter(id => id !== itemId);
+            } else {
+                newLikes.push(itemId);
+            }
+            userRef.update({ likes: newLikes }).catch(() => {});
+        }
+
+        function addToCart(itemId) {
+            if (!uid || userCart.includes(itemId)) {
+                showNotification(t('alreadyInCart'), false);
+                return;
+            }
+            const userRef = db.collection('users').doc(uid);
+            const newCart = [...userCart, itemId];
+            userRef.update({ cart: newCart }).then(() => {
+                showNotification(t('addedSuccess'));
+            }).catch(() => showNotification(t('error'), false));
+        }
+
+        function openCartModal() {
+            const modal = document.getElementById('cart-modal');
+            const body = document.getElementById('cart-body');
+            body.innerHTML = '';
+            document.getElementById('cart-title').textContent = t('cartTitle');
+
+            if (userCart.length === 0) {
+                body.innerHTML = `<p style="text-align:center;padding:60px 20px;color:#999;">${t('emptyCart')}</p>`;
+                document.getElementById('order-btn').style.display = 'none';
+            } else {
+                userCart.forEach(id => {
+                    const item = items.find(i => i.id === id);
+                    if (!item) return;
+                    const div = document.createElement('div');
+                    div.className = 'cart-item';
+                    div.innerHTML = `
+                        <img src="${item.image}" class="mini-book">
+                        <div style="flex:1;">
+                            <h4>${item.title}</h4>
+                            <p>${item.price} ${getCurrencyIconHTML(item.currency)}</p>
+                        </div>
+                        <button onclick="removeFromCart('${id}');event.stopImmediatePropagation()" 
+                                style="font-size:26px;background:none;border:none;color:#e63939;cursor:pointer;">
+                            <img src="/assets/images/menu-icons/trash-can.webp" class="remove-icon" alt="remove">
+                        </button>
+                    `;
+                    body.appendChild(div);
+                });
+                document.getElementById('order-btn').style.display = 'block';
+            }
+            modal.classList.add('show');
+        }
+
+        function removeFromCart(itemId) {
+            if (!uid) return;
+            const newCart = userCart.filter(id => id !== itemId);
+            db.collection('users').doc(uid).update({ cart: newCart }).then(openCartModal);
+        }
+
+        function closeCartModal() {
+            document.getElementById('cart-modal').classList.remove('show');
+        }
+
+        function openOrderModal() {
+            closeCartModal();
+            const modal = document.getElementById('order-modal');
+            document.getElementById('telegram-input').value = '';
+            document.getElementById('phone-input').value = '';
+            document.getElementById('done-btn').disabled = true;
+            document.getElementById('order-title').textContent = t('orderTitle');
+            modal.classList.add('show');
+
+            const check = () => {
+                const tel = document.getElementById('telegram-input').value.trim();
+                const phone = document.getElementById('phone-input').value.trim();
+                document.getElementById('done-btn').disabled = !(tel && phone);
+            };
+            document.getElementById('telegram-input').oninput = check;
+            document.getElementById('phone-input').oninput = check;
+        }
+
+        function closeOrderModal() {
+            document.getElementById('order-modal').classList.remove('show');
+        }
+
+        function submitOrder() {
+            if (!uid) return;
+            const telegram = document.getElementById('telegram-input').value.trim();
+            const phone = document.getElementById('phone-input').value.trim();
+            if (!telegram || !phone) return;
+
+            const orderData = {
+                userId: uid,
+                telegram: telegram,
+                phone: phone,
+                items: userCart.map(id => {
+                    const item = items.find(i => i.id === id);
+                    return { id: id, title: item.title, price: item.price, currency: item.currency };
+                }),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                status: 'pending'
+            };
+
+            db.collection('orders').add(orderData).then(() => {
+                db.collection('users').doc(uid).update({ cart: [] }).then(() => {
+                    closeOrderModal();
+                    showSuccessModal();
+                });
+            }).catch(() => showNotification(t('error'), false));
+        }
+
+        function showSuccessModal() {
+            document.getElementById('success-title').textContent = t('successTitle');
+            document.getElementById('success-text').textContent = t('successText');
+            document.getElementById('success-modal').classList.add('show');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.remove('show');
+            showNotification(t('orderSuccess'));
+        }
+
+        // ==================== LANGUAGE ====================
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('summage_preferred_lang', lang);
+            document.documentElement.lang = lang;
+            document.getElementById('desktop-back-btn').textContent = t('back');
+            document.getElementById('mobile-back-btn').textContent = t('back');
+            renderMarketplace();
+        }
+
+        // ==================== BACK BUTTONS ====================
         function goBack() {
             const before = window.location.href;
             history.back();
             setTimeout(() => {
-                if (window.location.href === before) {
-                    window.location.assign('/learn/');
-                }
+                if (window.location.href === before) window.location.assign('/learn/');
             }, 50);
         }
 
-        function updateLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem(LANG_STORAGE_KEY, lang);
-            document.documentElement.lang = lang;
-
-            document.getElementById('desktop-back-btn').textContent = translations[lang].back;
-            const mobileBtn = document.getElementById('mobile-back-btn');
-            if (mobileBtn) mobileBtn.textContent = translations[lang].back;
-
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
+        // ==================== INIT ====================
+        async function initializeApp() {
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    uid = user.uid;
+                    loadUserData();
+                } else {
+                    const cred = await auth.signInAnonymously();
+                    uid = cred.user.uid;
+                    loadUserData();
                 }
             });
-        }
 
-        document.getElementById('desktop-back-btn').addEventListener('click', goBack);
-        document.getElementById('mobile-back-btn').addEventListener('click', goBack);
+            document.getElementById('desktop-back-btn').addEventListener('click', goBack);
+            document.getElementById('mobile-back-btn').addEventListener('click', goBack);
 
-        document.getElementById('lang-btn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            document.getElementById('lang-flags').classList.toggle('show');
-        });
-
-        document.querySelectorAll('.flag').forEach(flag => {
-            flag.addEventListener('click', (e) => {
+            document.getElementById('lang-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
-                updateLanguage(flag.dataset.lang);
+                document.getElementById('lang-flags').classList.toggle('show');
+            });
+
+            document.querySelectorAll('.flag').forEach(flag => {
+                flag.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    updateLanguage(flag.dataset.lang);
+                    document.getElementById('lang-flags').classList.remove('show');
+                });
+            });
+
+            document.addEventListener('click', () => {
                 document.getElementById('lang-flags').classList.remove('show');
             });
-        });
 
-        document.addEventListener('click', () => {
-            document.getElementById('lang-flags').classList.remove('show');
-        });
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            updateLanguage(currentLang);
 
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+            // Splash loader
+            const loader = document.getElementById('pageLoader');
+            const owl = document.getElementById('splashOwl');
+            const MIN_DURATION = 1200;
 
-        updateLanguage(currentLang);
+            setTimeout(() => {
+                if (owl) {
+                    owl.style.opacity = '1';
+                    owl.style.transform = 'scale(1) translateY(0)';
+                }
+            }, 300);
 
-        // Splash screen (same as your terms page)
-        const loader = document.getElementById('pageLoader');
-        const owl = document.getElementById('splashOwl');
+            setTimeout(() => {
+                if (document.readyState === 'complete') {
+                    loader.classList.add('hidden');
+                    setTimeout(() => loader.remove(), 1400);
+                }
+            }, MIN_DURATION);
 
-        const MIN_DURATION = 1500;
-        let minTimePassed = false;
-
-        setTimeout(() => {
-            if (owl) {
-                owl.style.opacity = '1';
-                owl.style.transform = 'scale(1) translateY(0)';
-            }
-        }, 400);
-
-        setTimeout(() => {
-            minTimePassed = true;
-            if (document.readyState === 'complete') hideLoader();
-        }, MIN_DURATION);
-
-        window.addEventListener('load', () => {
-            if (minTimePassed) {
-                hideLoader();
-            } else {
-                setTimeout(hideLoader, MIN_DURATION);
-            }
-        });
-
-        function hideLoader() {
-            if (loader.classList.contains('hidden')) return;
-            loader.classList.add('hidden');
-            setTimeout(() => loader.remove(), 1400);
+            window.addEventListener('load', () => loader.classList.add('hidden'));
         }
 
-        setTimeout(() => hideLoader(), 7000);
+        initializeApp();
     </script>
 </body>
 </html>

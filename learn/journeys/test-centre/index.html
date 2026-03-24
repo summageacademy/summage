@@ -337,7 +337,7 @@
                 <div class="test-footer">
                     ${userData.completedTests?.['level_a1-a2']
                         ? `<button class="locked-btn taken" disabled><i class="fa-solid fa-check"></i> ${t('taken')}</button>`
-                        : `<a href="level-test-a1-a2.html" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
+                        : `<a href="/learn/journeys/test-centre/test/?id=level_a1-a2" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
                 </div>
             </div>
         `;
@@ -353,7 +353,7 @@
                     <div class="test-footer">
                         ${userData.completedTests?.['level_b1']
                             ? `<button class="locked-btn taken" disabled><i class="fa-solid fa-check"></i> ${t('taken')}</button>`
-                            : `<a href="level-test-b1.html" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
+                            : `<a href="/learn/journeys/test-centre/test/?id=level_b1" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
                     </div>
                 </div>
             `;
@@ -370,7 +370,7 @@
                     <div class="test-footer">
                         ${userData.completedTests?.['level_b2-c1']
                             ? `<button class="locked-btn taken" disabled><i class="fa-solid fa-check"></i> ${t('taken')}</button>`
-                            : `<a href="level-test-b2-c1.html" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
+                            : `<a href="/learn/journeys/test-centre/test/?id=level_b2-c1" class="start-btn"><i class="fa-solid fa-play"></i> ${t('startTest')}</a>`}
                     </div>
                 </div>
             `;
@@ -407,7 +407,7 @@
                                 <p class="test-desc">Basic vocabulary for daily life</p>
                             </div>
                             <div class="test-footer">
-                                <a href="vocab-test-1.html" class="start-btn">${t('startTest')}</a>
+                                <a href="/learn/journeys/test-centre/test/?id=vocab_1" class="start-btn">${t('startTest')}</a>
                             </div>
                         </div>
                         <!-- ... (other vocab cards remain the same) ... -->
@@ -418,7 +418,7 @@
                                 <p class="test-desc">Challenging & rare words</p>
                             </div>
                             <div class="test-footer">
-                                <a href="vocab-test-6.html" class="start-btn">${t('startTest')}</a>
+                                <a href="/learn/journeys/test-centre/test/?id=vocab_6" class="start-btn">${t('startTest')}</a>
                             </div>
                         </div>
                     </div>
@@ -441,7 +441,7 @@
                                 <p class="test-desc">Clauses, passives, reported speech</p>
                             </div>
                             <div class="test-footer">
-                                <a href="grammar-test-3.html" class="start-btn">${t('startTest')}</a>
+                                <a href="/learn/journeys/test-centre/test/?id=grammar_3" class="start-btn">${t('startTest')}</a>
                             </div>
                         </div>
                     </div>
@@ -496,8 +496,7 @@
     }
 
     function goBack() {
-        if (history.length > 1) history.back();
-        else window.location.href = '/learn/';
+        window.location.href = '/learn/';
     }
 
     // ────────────────────────────────────────────────
