@@ -11,6 +11,15 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-LZP4KSPR1V');
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -51,6 +60,10 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
         }
 
         body {
@@ -316,13 +329,13 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 8px 0 #c23a0a;
+            box-shadow: 0 4px 0 #c23a0a;
             transition: all 0.3s ease;
         }
 
         .submit-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 0 #c23a0a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
         }
 
         .form-response {
