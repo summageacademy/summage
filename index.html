@@ -86,7 +86,7 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 32px;
         }
 
         .nav-links a {
@@ -368,6 +368,7 @@
         <div class="nav-links">
             <a href="/about/">About Us</a>
             <a href="/contacts/">Contacts</a>
+            <a href="/privacy/">Privacy</a>
             <div class="language-selector">
                 <button class="language-button" id="lang-btn" aria-label="Select language">
                     <img src="/assets/images/lang/globe.webp" alt="">
@@ -403,6 +404,7 @@
             en: {
                 about: "About Us",
                 contacts: "Contacts",
+                privacy: "Privacy Policy",
                 mainTitle: "Summage Academy",
                 slogan: "Education without Barriers",
                 startLearning: "Start Learning",
@@ -411,6 +413,7 @@
             ru: {
                 about: "О нас",
                 contacts: "Контакты",
+                privacy: "Приватность",
                 mainTitle: "Summage Academy",
                 slogan: "Там, где знания не знают преград",
                 startLearning: "Начать обучение",
@@ -419,6 +422,7 @@
             uz: {
                 about: "Biz haqimizda",
                 contacts: "Kontaktlar",
+                privacy: "Maxfiylik",
                 mainTitle: "Summage Academy",
                 slogan: "Imkoniyatlarga Boy Ta'lim",
                 startLearning: "O'rganishni boshlash",
@@ -433,12 +437,14 @@
             currentLang = lang;
             localStorage.setItem(LANG_STORAGE_KEY, lang);
 
-            // Safely update navbar links (they don't exist on mobile)
+            // Update navbar links
             const aboutLink = document.querySelector('.nav-links a[href="/about/"]');
             const contactsLink = document.querySelector('.nav-links a[href="/contacts/"]');
+            const privacyLink = document.querySelector('.nav-links a[href="/privacy/"]');
 
             if (aboutLink) aboutLink.textContent = translations[lang].about;
             if (contactsLink) contactsLink.textContent = translations[lang].contacts;
+            if (privacyLink) privacyLink.textContent = translations[lang].privacy;
 
             // These elements always exist
             document.getElementById('main-title').textContent = translations[lang].mainTitle;
