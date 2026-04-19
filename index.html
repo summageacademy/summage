@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;subset=cyrillic,cyrillic-ext&amp;display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
@@ -29,30 +29,112 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             -webkit-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             outline: none;
         }
 
+        :lang(ru) {
+            font-weight: 800 !important;   /* Makes it noticeably bolder */
+        }
+
+        h1, h2, .main-title, .section-text h2 {
+            font-weight: 700;           /* Stronger for headings */
+        }
+
         body {
-            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
             height: 100vh;
             background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
             display: flex;
             flex-direction: column;
         }
 
-        /* Navbar */
+        html {
+            scrollbar-width: none; /* Firefox */
+        }
+
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 24px 5vw;
             background: transparent;
-            position: relative;
-            z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Desktop + Mobile: Background appears when scrolled */
+        .navbar.scrolled {
+            background: rgba(255, 250, 245, 0.98);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+
+        @media (max-width: 900px) {
+            .navbar {
+                justify-content: center;
+                padding: 20px 5vw;
+                backdrop-filter: blur(12px);
+                transition: background 0.4s ease, box-shadow 0.4s ease;
+            }
+
+            .navbar.scrolled {
+                background: rgba(255, 250, 245, 0.98);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                padding: 20px 5vw;
+                justify-content: space-between;
+            }
+
+            .logo-container {
+                transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .navbar.scrolled .logo-container {
+                transform: translateX(-8px);
+            }
+
+            .nav-links a {
+                display: none !important;
+            }
+
+            .language-selector {
+                opacity: 0;
+                transform: translateX(30px);
+                pointer-events: none;
+            }
+
+            .navbar.scrolled .language-selector {
+                opacity: 1;
+                transform: translateX(0);
+                pointer-events: all;
+            }
+
+            .language-button img {
+                width: 28px;
+                height: 28px;
+            }
         }
 
         .logo-container {
@@ -171,18 +253,37 @@
             border-radius: 6px;
         }
 
-        /* Hero */
         .hero {
             flex: 1;
+            min-height: 100vh;
             display: flex;
-            align-items: flex-start;     /* Changed from "center" to "flex-start" */
+            align-items: center;
             justify-content: center;
-            padding: 10vh 5vw 0 5vw;     /* Added moderate top padding to push content up a bit */
+            padding: 90px 5vw 0;        /* ← This pushes content down under the fixed navbar */
             gap: 80px;
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
         }
 
+        @media (max-width: 900px) {
+            .hero {
+                min-height: 100vh;
+                padding: 90px 20px 0;   /* ← Same top padding on mobile */
+                flex-direction: column;
+                gap: 40px;
+                align-items: center;
+            }
+            
+            .hero-image img {
+                max-width: 300px;
+            }
+            
+            .hero-content {
+                align-items: center;
+                text-align: center;
+            }
+        }
         .hero-image-container {
             flex: 1;
             display: flex;
@@ -260,17 +361,6 @@
 
         /* Mobile */
         @media (max-width: 900px) {
-            .navbar {
-                justify-content: center;
-                padding: 20px;
-            }
-
-            .hero {
-                flex-direction: column;
-                gap: 40px;
-                padding: 40px 20px;
-                align-items: center;     /* Ensures perfect centering on mobile */
-            }
 
             .hero-image img {
                 max-width: 230px;
@@ -293,10 +383,6 @@
             }
 
             .main-title {
-                display: none;
-            }
-
-            .nav-links {
                 display: none;
             }
 
@@ -329,13 +415,11 @@
             visibility: hidden;
         }
 
-        /* Ultra-smooth entrance: fade + rise + scale */
         #splashOwl {
             transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1); /* bouncy overshoot */
             will-change: opacity, transform; /* performance boost */
         }
 
-        /* Accessibility */
         @media (prefers-reduced-motion: reduce) {
             #splashOwl,
             .page-loader,
@@ -345,9 +429,203 @@
             transform: none;
             }
         }
+
+        .feature-section {
+            padding: 120px 5vw;
+            background: #f8f9fa;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-section:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .section-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            width: 100%;
+        }
+
+        .section-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .section-image img {
+            max-width: 420px;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .section-text {
+            flex: 1;
+            max-width: 520px;
+        }
+
+        .section-text h2 {
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 800;
+            color: #ff6523;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .section-text p {
+            font-size: 1.25rem;
+            color: #555;
+            line-height: 1.7;
+            font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+            .feature-section {
+                padding: 80px 20px;
+                min-height: auto;
+            }
+            
+            .section-content {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+            
+            .section-text {
+                max-width: 100%;
+            }
+            
+            .section-image img {
+                max-width: 280px;
+            }
+        }
+        .navbar {
+            transition: background 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
+        }
+
+        .questions-buttons {
+            margin-top: 32px;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        @media (max-width: 900px) {
+            .questions-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 360px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .questions-buttons .btn {
+                width: 100%;
+            }
+        }
+
+        /* Footer Styles - Mobile Friendly */
+        .footer {
+            background: #1a1a1a;
+            color: #ddd;
+            padding: 60px 5vw 30px;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .footer-logo {
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            text-align: center;
+        }
+
+        .footer-column h4 {
+            color: #f24b0b;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #bbb;
+            text-decoration: none;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: #f24b0b;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            font-size: 0.95rem;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .footer-bottom p {
+            margin: 6px 0;
+        }
+
+        /* Mobile Footer */
+        @media (max-width: 900px) {
+            .footer {
+                padding: 50px 20px 30px;
+            }
+            
+            .footer-links {
+                gap: 50px;
+            }
+            
+            .footer-column {
+                min-width: 140px;
+            }
+            
+            .logo-img {
+                width: 42px;
+                height: 42px;
+            }
+            
+            .logo-text {
+                font-size: 22px;
+            }
+        }
+
+        footer {
+            margin-top: auto;
+        }
     </style>
 </head>
-<body>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
     <div id="pageLoader" class="page-loader">
         <lottie-player 
         id="splashOwl"
@@ -361,7 +639,7 @@
     </div>
     <nav class="navbar">
         <div class="logo-container" onclick="window.location.href='https://summage.org'">
-            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Academy Logo">
             <div class="logo-text">Summage</div>
         </div>
 
@@ -371,7 +649,7 @@
             <a href="/privacy/">Privacy</a>
             <div class="language-selector">
                 <button class="language-button" id="lang-btn" aria-label="Select language">
-                    <img src="/assets/images/lang/globe.webp" alt="">
+                    <img src="/assets/images/lang/globe.webp">
                 </button>
                 <div class="language-flags" id="lang-flags">
                     <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
@@ -385,7 +663,7 @@
     <section class="hero">
         <div class="hero-image-container">
             <div class="hero-image">
-                <img src="/assets/images/hero1.png" alt="Happy learning illustration">
+                <img src="assets/images/illustrations/summage.webp" alt="Summage Academy, English Learning Web Platform">
             </div>
         </div>
 
@@ -399,25 +677,122 @@
         </div>
     </section>
 
+    <section class="feature-section">
+        <div class="section-content">
+            <div class="section-image">
+                <img src="/assets/images/illustrations/mission.webp" alt="Summage Academy Mascot Redy">
+            </div>
+            <div class="section-text">
+                <h2 id="world-class">WORLD-CLASS EDUCATION</h2>
+                <p id="world-class-desc">Summage Academy delivers quality education globally, all the way from the West to the East of the world</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section">
+        <div class="section-content">
+            <div class="section-image">
+                <img src="/assets/images/illustrations/issue.webp" alt="Summage Academy Mascot Redy">
+            </div>
+            <div class="section-text">
+                <h2 id="free-of-charge">FREE OF CHARGE</h2>
+                <p id="free-of-charge-desc">Summage Academy provides high quality education completely free!</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section" style="background: #f8f9fa;">
+        <div class="section-content">
+            <div class="section-image">
+                <img src="/assets/images/illustrations/redy_trustworthy.webp" 
+                    alt="Still got questions? - Summage Academy">
+            </div>
+            <div class="section-text">
+                <h2 id="still-questions">Still got questions?</h2>
+                <p id="questions-desc">Our team is here to help you. Feel free to reach out anytime.</p>
+                
+                <div class="buttons questions-buttons">
+                    <button class="btn btn-primary" id="contact-btn" onclick="window.location.href='/contacts/'">
+                        Contact Us
+                    </button>
+                    <button class="btn btn-secondary" id="help-btn" onclick="window.location.href='/help-centre/'">
+                        Help Centre
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo-container">
+                    <img class="logo-img" src="/assets/logo.webp" alt="Summage Academy Logo">
+                    <div class="logo-text">Summage</div>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <a href="/about/">About Us</a>
+                    <a href="/contacts/">Contacts</a>
+                    <a href="/help-centre/">Help Centre</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <a href="/privacy/">Privacy Policy</a>
+                    <a href="/terms/">Terms of Service</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Platform</h4>
+                    <a href="/learn/">Start Learning</a>
+                    <a href="/practice-tests/">Practice Tests</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> Summage Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
         const translations = {
             en: {
                 about: "About Us",
                 contacts: "Contacts",
-                privacy: "Privacy Policy",
+                privacy: "Privacy",
                 mainTitle: "Summage Academy",
                 slogan: "Education without Barriers",
                 startLearning: "Start Learning",
-                aboutUs: "About Us"
+                aboutUs: "About Us",
+                worldClass: "WORLD-CLASS EDUCATION",
+                worldClassDesc: "Summage Academy delivers quality education globally, all the way from the West to the East of the world",
+                freeOfCharge: "FREE OF CHARGE",
+                freeOfChargeDesc: "Summage Academy provides high quality education completely free!",
+                stillQuestions: "Still got questions?",
+                questionsDesc: "Our team is here to help you. Feel free to reach out anytime.",
+                contactUs: "Contact Us",
+                helpCentre: "Help Centre"
             },
             ru: {
                 about: "О нас",
                 contacts: "Контакты",
-                privacy: "Приватность",
+                privacy: "Данные",
                 mainTitle: "Summage Academy",
                 slogan: "Там, где знания не знают преград",
                 startLearning: "Начать обучение",
-                aboutUs: "О нас"
+                aboutUs: "О нас",
+                worldClass: "ОБРАЗОВАНИЕ МИРОВОГО УРОВНЯ",
+                worldClassDesc: "Summage Academy предоставляет качественное образование по всему миру — от Запада до Востока",
+                freeOfCharge: "БЕСПЛАТНО",
+                freeOfChargeDesc: "Summage Academy предлагает высококачественное образование полностью бесплатно!",
+                stillQuestions: "Остались вопросы?",
+                questionsDesc: "Наша команда всегда готова помочь. Свяжитесь с нами в любое время.",
+                contactUs: "Связаться с нами",
+                helpCentre: "Центр помощи"
             },
             uz: {
                 about: "Biz haqimizda",
@@ -426,7 +801,15 @@
                 mainTitle: "Summage Academy",
                 slogan: "Imkoniyatlarga Boy Ta'lim",
                 startLearning: "O'rganishni boshlash",
-                aboutUs: "Biz haqimizda"
+                aboutUs: "Biz haqimizda",
+                worldClass: "DUNYO DARAJASIDAGI TA'LIM",
+                worldClassDesc: "Summage Academy butun dunyo bo'ylab sifatli ta'lim beradi",
+                freeOfCharge: "BEPUL TA`LIM",
+                freeOfChargeDesc: "Summage Academy yuqori sifatli ta'limni to'liq bepul taqdim etadi!",
+                stillQuestions: "Savollaringiz bormi?",
+                questionsDesc: "Bizning jamoa sizga yordam berishga tayyor. Istalgan vaqtda murojaat qiling.",
+                contactUs: "Biz bilan bog'lanish",
+                helpCentre: "Yordam markazi"
             }
         };
 
@@ -437,7 +820,6 @@
             currentLang = lang;
             localStorage.setItem(LANG_STORAGE_KEY, lang);
 
-            // Update navbar links
             const aboutLink = document.querySelector('.nav-links a[href="/about/"]');
             const contactsLink = document.querySelector('.nav-links a[href="/contacts/"]');
             const privacyLink = document.querySelector('.nav-links a[href="/privacy/"]');
@@ -446,11 +828,18 @@
             if (contactsLink) contactsLink.textContent = translations[lang].contacts;
             if (privacyLink) privacyLink.textContent = translations[lang].privacy;
 
-            // These elements always exist
             document.getElementById('main-title').textContent = translations[lang].mainTitle;
             document.getElementById('slogan').textContent = translations[lang].slogan;
             document.getElementById('start-learning').textContent = translations[lang].startLearning;
             document.getElementById('about-us').textContent = translations[lang].aboutUs;
+            document.getElementById('world-class').textContent = translations[lang].worldClass;
+            document.getElementById('world-class-desc').textContent = translations[lang].worldClassDesc;
+            document.getElementById('free-of-charge').textContent = translations[lang].freeOfCharge;
+            document.getElementById('free-of-charge-desc').textContent = translations[lang].freeOfChargeDesc;
+            document.getElementById('still-questions').textContent = translations[lang].stillQuestions;
+            document.getElementById('questions-desc').textContent = translations[lang].questionsDesc;
+            document.getElementById('contact-btn').textContent = translations[lang].contactUs;
+            document.getElementById('help-btn').textContent = translations[lang].helpCentre;
         }
 
         document.getElementById('lang-btn').addEventListener('click', (e) => {
@@ -481,14 +870,12 @@
             window.location.href = '/about/';
         });    
 
-        // Ultra-smooth tiny owl splash – no pop-in, gentle rise & fade
         const loader = document.getElementById('pageLoader');
         const owl = document.getElementById('splashOwl');
 
-        const MIN_DURATION = 1500; // 1.5s – gives breathing room for smoothness
+        const MIN_DURATION = 1500;
         let minTimePassed = false;
 
-        // Staggered entrance: start after 400ms, full reveal in ~1s
         setTimeout(() => {
         if (owl) {
             owl.style.opacity = '1';
@@ -496,13 +883,11 @@
         }
         }, 400);
 
-        // Min time complete
         setTimeout(() => {
         minTimePassed = true;
         if (document.readyState === 'complete') hideLoader();
         }, MIN_DURATION);
 
-        // Page ready
         window.addEventListener('load', () => {
         if (minTimePassed) {
             hideLoader();
@@ -514,11 +899,29 @@
         function hideLoader() {
         if (loader.classList.contains('hidden')) return;
         loader.classList.add('hidden');
-        setTimeout(() => loader.remove(), 1400); // clean up
+        setTimeout(() => loader.remove(), 1400);
         }
 
-        // Ultimate fallback
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
         setTimeout(() => hideLoader(), 7000);
+    </script>
+    <script>
+        const navbar = document.querySelector('.navbar');
+
+        function handleScroll() {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        
+        // Run once on load
+        handleScroll();
     </script>
 </body>
 </html>
