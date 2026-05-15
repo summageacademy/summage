@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
     <style>
         /* ──────────────────────────────────────────────── */
         /* Hide scrollbar completely - cross-browser        */
@@ -59,11 +59,19 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
+            font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             outline: none;
+        }
+
+        /* Logo text always uses Poppins - regardless of language */
+        .logo-text {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 800;
+            letter-spacing: 1.2px;
         }
 
         body {
@@ -281,8 +289,9 @@
         }
 
         .social-links a:hover {
-            background: #07c088;
-            transform: translateY(-3px);
+            background: #03b781;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #037c5c;
         }
 
         .contact-form {
@@ -639,7 +648,7 @@
                 <h3>Resources</h3>
                 <ul>
                     <li><a href="/learn/">Start Learning</a></li>
-                    <li><a href="#">Blog</a></li>
+                    <li><a href="/learn/blogs/">Blog</a></li>
                     <li><a href="/help-centre/">Help Center</a></li>
                 </ul>
             </div>

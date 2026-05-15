@@ -13,7 +13,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;subset=cyrillic,cyrillic-ext&amp;display=swap" rel="stylesheet">
+    <!-- Best option: Noto Sans (recommended) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
@@ -29,15 +30,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             outline: none;
         }
 
-        :lang(ru) {
-            font-weight: 800 !important;   /* Makes it noticeably bolder */
+        .logo-text {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 800;
+            letter-spacing: 1.2px;
         }
 
         h1, h2, .main-title, .section-text h2 {
@@ -311,6 +314,7 @@
             font-weight: 800;
             line-height: 1.05;
             color: #ff6523;
+            font-family: 'Poppins', sans-serif !important;
         }
 
         .slogan {
@@ -701,6 +705,23 @@
         </div>
     </section>
 
+    <section class="feature-section">
+        <div class="section-content">
+            <div class="section-image">
+                <img src="/assets/images/illustrations/reading-redy.webp" alt="Summage Academy Mascot Redy">
+            </div>
+            <div class="section-text">
+                <h2 id="articles-title">USEFUL ARTICLES</h2>
+                <p id="articles-desc">Explore Summage Academy's Blog Articles and Get to Know New Knowledge You Needed.</p>
+                <div class="buttons questions-buttons">
+                    <button class="btn btn-primary" id="articles-btn" onclick="window.location.href='/learn/blogs/'">
+                        EXPLORE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="feature-section" style="background: #f8f9fa;">
         <div class="section-content">
             <div class="section-image">
@@ -748,7 +769,8 @@
                 <div class="footer-column">
                     <h4>Platform</h4>
                     <a href="/learn/">Start Learning</a>
-                    <a href="/practice-tests/">Practice Tests</a>
+                    <a href="/learn/blogs/">Blog</a>
+                    <a href="/learn/practice-tests/">Practice Tests</a>
                 </div>
             </div>
 
@@ -775,7 +797,10 @@
                 stillQuestions: "Still got questions?",
                 questionsDesc: "Our team is here to help you. Feel free to reach out anytime.",
                 contactUs: "Contact Us",
-                helpCentre: "Help Centre"
+                helpCentre: "Help Centre",
+                articlesTitle: "USEFUL ARTICLES",
+                articlesDesc: "Explore Summage Academy's Blog Articles and Obtain Beneficial Knowledge You Need.",
+                articlesBtn: "Explore"
             },
             ru: {
                 about: "О нас",
@@ -792,7 +817,10 @@
                 stillQuestions: "Остались вопросы?",
                 questionsDesc: "Наша команда всегда готова помочь. Свяжитесь с нами в любое время.",
                 contactUs: "Связаться с нами",
-                helpCentre: "Центр помощи"
+                helpCentre: "Центр помощи",
+                articlesTitle: "ПОЛЕЗНЫЕ ПОСТЫ",
+                articlesDesc: "Читайте наши посты и получайте полезные знания",
+                articlesBtn: "Наш Блог"
             },
             uz: {
                 about: "Biz haqimizda",
@@ -809,7 +837,10 @@
                 stillQuestions: "Savollaringiz bormi?",
                 questionsDesc: "Bizning jamoa sizga yordam berishga tayyor. Istalgan vaqtda murojaat qiling.",
                 contactUs: "Biz bilan bog'lanish",
-                helpCentre: "Yordam markazi"
+                helpCentre: "Yordam markazi",
+                articlesTitle: "FOYDALI BLOG",
+                articlesDesc: "Summage Academy tomonidan yozilgan foydali bloglarni o'qing va foydali bilimlarga ega bo'ling!",
+                articlesBtn: "MAQOLALAR"
             }
         };
 
@@ -840,6 +871,9 @@
             document.getElementById('questions-desc').textContent = translations[lang].questionsDesc;
             document.getElementById('contact-btn').textContent = translations[lang].contactUs;
             document.getElementById('help-btn').textContent = translations[lang].helpCentre;
+            document.getElementById('articles-title').textContent = translations[lang].articlesTitle;
+            document.getElementById('articles-desc').textContent = translations[lang].articlesDesc;
+            document.getElementById('articles-btn').textContent = translations[lang].articlesBtn;
         }
 
         document.getElementById('lang-btn').addEventListener('click', (e) => {

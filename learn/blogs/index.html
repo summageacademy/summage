@@ -1,48 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirecting...</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #ffffff;
-      color: #ddd;
-      font-family: system-ui, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+<title>Summage Blogs - Explore Useful Articles and Find Answers to Your Questions</title>
 
-    lottie-player {
-      width:  140px;
-      height: 140px;
-      margin-bottom: 1.5rem;
-    }
-  </style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/learn/blogs/blog.css">
+
+<style>
+
+.blog-title {
+    margin-bottom: 10px;
+}
+
+.blog-subtitle {
+    margin-bottom: 30px; /* was 50 */
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 40px 0 15px; /* tighter */
+    color: #06a87c;
+}
+
+.search-container {
+    max-width: 700px;
+    margin: 25px auto 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.search-box {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 50px;
+    border: none;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.search-btn {
+    background: #06a87c;
+    border: none;
+    color: white;
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.keyword-bar {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 900px) {
+  .keyword {
+      margin: 5px;
+      padding: 8px 14px;
+      font-size: 13px;
+  }
+}
+
+.keyword {
+    display: inline-block;
+    margin: 6px;
+    padding: 10px 18px;
+    background: #fff;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    transition: 0.25s;
+}
+
+.keyword:hover {
+    background: #06a87c;
+    color: white;
+}
+
+/* SECTION TITLE */
+.section-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 60px 0 20px;
+    color: #06a87c;
+}
+
+/* HIDE */
+.hidden {
+    display: none;
+}
+
+.blog-container {
+    flex: 1;
+    max-width: 1200px; /* wider */
+    margin: 0 auto;
+    padding: 50px 5vw 80px; /* reduced vertical gaps */
+    width: 100%;
+}
+</style>
+
 </head>
 <body>
 
-  <lottie-player 
-    src="/assets/Sandy Loading.json"
-    background="transparent"
-    speed="1"
-    loop
-    autoplay
-  ></lottie-player>
+<!-- NAV -->
+<nav class="navbar">
+    <div class="logo-container" onclick="window.location.href='/'">
+        <img class="logo-img" src="/assets/logo.webp">
+        <div class="logo-text">Summage</div>
+    </div>
+    <button class="back-btn" onclick="history.back()">Back</button>
+</nav>
 
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<div class="blog-container">
 
-  <script>
-    setTimeout(() => {
-      window.location.replace("/learn/");
-    }, 1200);
-  </script>
+    <h1 class="blog-title">Summage Blog</h1>
+    <div class="blog-subtitle">Explore Learning Strategies & Guides</div>
+
+    <!-- SEARCH -->
+    <div class="search-container">
+        <input id="searchInput" class="search-box" placeholder="Search articles...">
+        <button class="search-btn" id="searchBtn">
+          <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+            <path d="M21 21l-4.3-4.3m1.3-5.7a7 7 0 11-14 0 7 7 0 0114 0z"
+            stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </button>
+    </div>
+
+    <!-- KEYWORDS -->
+    <div class="keyword-bar">
+        <span class="keyword">Speaking</span>
+        <span class="keyword">Listening</span>
+        <span class="keyword">IELTS</span>
+        <span class="keyword">Vocabulary</span>
+        <span class="keyword">Grammar</span>
+    </div>
+
+    <!-- RECOMMENDED -->
+    <div id="recommendedSection">
+        <div class="section-title">Recommended Articles</div>
+        <div class="related-grid" id="recommendedGrid"></div>
+    </div>
+
+    <!-- SEARCH RESULTS -->
+    <div id="searchSection" class="hidden">
+        <div class="section-title">Search Results</div>
+        <div class="related-grid" id="searchGrid"></div>
+    </div>
+
+    <!-- LISTENING -->
+    <div id="listeningSection">
+        <div class="section-title">Listening Related Articles</div>
+        <div class="related-grid" id="listeningGrid"></div>
+    </div>
+
+    <!-- OTHER -->
+    <div id="otherSection">
+        <div class="section-title">Other Useful Content</div>
+        <div class="related-grid" id="otherGrid"></div>
+    </div>
+
+</div>
+
+<footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Summage Academy</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/contacts/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="/authentication/">Start Learning</a></li>
+                    <li><a href="/learn/blogs/">Blog</a></li>
+                    <li><a href="/help-centre/">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/privacy/">Privacy Policy</a></li>
+                    <li><a href="/terms/">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © <span id="current-year"></span> Summage Academy. Education without barriers.
+        </div>
+    </footer>
+
+<script>
+// ================= DATA =================
+const articles = [
+    {
+        title: "How to Improve IELTS Speaking Score",
+        image: "/assets/images/blog-assets/redy-in-speaking-exam-summage-academy.png",
+        link: "/learn/blogs/how-to-improve-ielts-speaking-band-score/",
+        tags: ["speaking", "ielts"]
+    },
+    {
+        title: "Best YouTube Channels for Improving Listening",
+        image: "/assets/images/blog-assets/youtuber-redy-summage-academy.jpg",
+        link: "/learn/blogs/best-youtube-channels-for-imroving-english/",
+        tags: ["listening", "ielts"]
+    },
+    {
+        title: "How to Start Thinking in English and Stop Translating in Your Head",
+        image: "/assets/images/blog-assets/redy-confused-summage-academy.jpg",
+        link: "/learn/blogs/how-to-start-thinking-in-english/",
+        tags: ["speaking", "mindset", "listening"]
+    },
+    {
+        title: "Best European Countries for International Students",
+        image: "/assets/images/blog-assets/reading-in-nature-summage-academy.png",
+        link: "/learn/blogs/best-european-countries-for-international-students/",
+        tags: ["university", "collage"]
+    },
+    {
+        title: "Best Listening Strategies in 2026",
+        image: "/assets/images/blog-assets/watching-content-summage-academy.png",
+        link: "/learn/blogs/listening-practice-strategies/",
+        tags: ["listening", "ielts"]
+    },
+    {
+        title: "Common English Grammar Mistakes Learners Make and How to Fix Them",
+        image: "/assets/images/blog-assets/made-grammar-mistake.png",
+        link: "/learn/blogs/common-english-grammar-mistakes-students-do/",
+        tags: ["grammar", "speaking"]
+    },
+    {
+        title: "40 Daily Useful Phrases for New English Students",
+        image: "/assets/images/blog-assets/talking-summage-academy.png",
+        link: "/learn/blogs/40-useful-phrases-for-beginners/",
+        tags: ["vocabulary", "speaking"]
+    }
+];
+
+// ================= RENDER =================
+function createCard(article) {
+    return `
+    <a href="${article.link}" class="related-card">
+        <img src="${article.image}">
+        <div class="related-content">
+            <h3>${article.title}</h3>
+        </div>
+    </a>`;
+}
+
+function render(grid, items) {
+    grid.innerHTML = items.slice(0,3).map(createCard).join("");
+}
+
+// ================= INIT =================
+const recommendedGrid = document.getElementById("recommendedGrid");
+const listeningGrid = document.getElementById("listeningGrid");
+const otherGrid = document.getElementById("otherGrid");
+
+render(recommendedGrid, articles);
+render(listeningGrid, articles.filter(a => a.tags.includes("listening")));
+render(otherGrid, articles.filter(a => !a.tags.includes("listening")));
+
+// ================= SEARCH =================
+const input = document.getElementById("searchInput");
+const btn = document.getElementById("searchBtn");
+
+function performSearch() {
+    const value = input.value.toLowerCase().trim();
+
+    if (!value) return;
+
+    const results = articles.filter(a =>
+        a.title.toLowerCase().includes(value) ||
+        a.tags.join(" ").includes(value)
+    );
+
+    document.getElementById("recommendedSection").classList.add("hidden");
+    document.getElementById("listeningSection").classList.add("hidden");
+    document.getElementById("otherSection").classList.add("hidden");
+
+    document.getElementById("searchSection").classList.remove("hidden");
+
+    render(document.getElementById("searchGrid"), results);
+}
+
+btn.addEventListener("click", performSearch);
+
+// LIVE SEARCH (real-time)
+input.addEventListener("input", () => {
+    const value = input.value.toLowerCase().trim();
+
+    // If empty → restore default sections
+    if (!value) {
+        document.getElementById("searchSection").classList.add("hidden");
+
+        document.getElementById("recommendedSection").classList.remove("hidden");
+        document.getElementById("listeningSection").classList.remove("hidden");
+        document.getElementById("otherSection").classList.remove("hidden");
+
+        return;
+    }
+
+    const results = articles.filter(a =>
+        a.title.toLowerCase().includes(value) ||
+        a.tags.join(" ").includes(value)
+    );
+
+    document.getElementById("recommendedSection").classList.add("hidden");
+    document.getElementById("listeningSection").classList.add("hidden");
+    document.getElementById("otherSection").classList.add("hidden");
+
+    document.getElementById("searchSection").classList.remove("hidden");
+
+    render(document.getElementById("searchGrid"), results);
+});
+
+// ================= KEYWORDS =================
+document.querySelectorAll(".keyword").forEach(k => {
+    k.addEventListener("click", () => {
+        input.value = k.textContent;
+        performSearch();
+    });
+});
+
+// ================= YEAR =================
+document.getElementById("current-year").textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>

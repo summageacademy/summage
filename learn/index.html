@@ -19,17 +19,16 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="/assets/css/learn.css">
+  <link rel="stylesheet" href="/learn/learn.css">
+
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <!-- Page Loader / Splash screen with Lottie owl -->
   <div id="pageLoader" class="page-loader">
       <lottie-player 
           id="splashOwl"
@@ -213,29 +212,88 @@
         <i class="fas fa-search" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #9ca3af; font-size: 1.1rem;"></i>
       </div>
 
-      <div class="blogs-grid" id="blogsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 16px;">
-        
-        <div class="blog-card" 
-            onclick="window.location.href='/learn/blogs/studying-while-fasting/'"
-            data-title="Top 10 Tips for Building English Vocabulary Fast"
-            data-desc="Practical strategies used by thousands of learners to remember words longer and use them naturally.">
-          <div class="blog-title"><span data-lang-key="blog1title">How to study effectively while fasting?</span></div>
-          <div class="blog-desc"><span data-lang-key="blog1desc">Practical strategies used by thousands of learners while fasting.</span></div>
-          <div class="blog-meta">
-            <span>Feb 19, 2026</span>
-          </div>
+      <div class="blogs-grid">
+
+        <!-- CARD 1 -->
+        <div class="blog-card"
+            onclick="window.location.href='/learn/blogs/best-european-countries-for-international-students/'">
+
+          <img src="/assets/images/blog-assets/reading-in-nature-summage-academy.png"
+              class="blog-image"
+              alt="Speaking Tips">
+
+          <h3 class="blog-title">
+            Best European Countries for International Students
+          </h3>
+
+          <p class="blog-desc">
+            Small daily habits that can make your speaking more natural and confident.
+          </p>
+
         </div>
 
-        <div class="blog-card" 
-            onclick="window.location.href='/learn/blogs/educational-challanges-in-developing-countries/'"
-            data-title="Top 10 Tips for Building English Vocabulary Fast"
-            data-desc="Practical strategies used by thousands of learners to remember words longer and use them naturally.">
-          <div class="blog-title" data-lang-key="blog2title">Educational Challanges in Developing Countries</div>
-          <div class="blog-desc"><span data-lang-key="blog2desc">Practical strategies used by thousands of learners while fasting.</span></div>
-          <div class="blog-meta">
-            <span>Feb 19, 2026</span>
-          </div>
-        </div> <!-- Add more cards here following the same pattern -->
+        <!-- CARD 2 -->
+        <div class="blog-card"
+            onclick="window.location.href='/learn/blogs/common-english-grammar-mistakes-students-do/'">
+
+          <img src="/assets/images/blog-assets/made-grammar-mistake.png"
+              class="blog-image"
+              alt="Grammar Mistakes">
+
+          <h3 class="blog-title">
+            Common English Grammar Mistakes Learners Make and How to Fix Them
+          </h3>
+
+          <p class="blog-desc">
+            Learn the mistakes most learners repeat and how to avoid them easily.
+          </p>
+
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="blog-card"
+            onclick="window.location.href='/learn/blogs/how-to-improve-ielts-speaking-band-score/'">
+
+          <img src="/assets/images/blog-assets/redy-in-speaking-exam-summage-academy.png"
+              class="blog-image"
+              alt="Vocabulary">
+
+          <h3 class="blog-title">
+            How to Improve IELTS Speaking Score
+          </h3>
+
+          <p class="blog-desc">
+            Small daily habits that can make your speaking more natural and confident.
+          </p>
+
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="blog-card"
+            onclick="window.location.href='Best YouTube Channels for Improving Listening/learn/blogs/best-youtube-channels-for-imroving-english/'">
+
+          <img src="/assets/images/blog-assets/youtuber-redy-summage-academy.jpg"
+              class="blog-image"
+              alt="IELTS Writing">
+
+          <h3 class="blog-title">
+            Best YouTube Channels for Improving Listening
+          </h3>
+
+          <p class="blog-desc">
+            List of Best YouTube Channels to Improve English Listening.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- READ MORE BUTTON -->
+      <div class="blogs-readmore-wrap">
+        <button class="blogs-readmore-btn"
+                onclick="window.location.href='/learn/blogs/'">
+          Read More
+        </button>
       </div>
     </div>
 
@@ -349,6 +407,13 @@
     </div>
   </div>
 
+  <!-- Custom Notification Toast -->
+  <div id="customToast" class="custom-toast hidden">
+    <div class="toast-content">
+        <img id="toastIcon" class="toast-icon" src="" alt="">
+        <div id="toastMessage" class="toast-message"></div>
+    </div>
+  </div>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
@@ -854,7 +919,7 @@
 
     document.getElementById('myInfoBtn')?.addEventListener('click', async () => {
       const user = auth.currentUser;
-      if (!user) return alert("Not logged in.");
+      if (!user) return showToast("Please log in first.", "error");;
       let info = `Email: ${user.email || "—"}\nJoined: ${user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : "—"}`;
       try {
         const doc = await db.collection('users').doc(user.uid).get();
@@ -868,7 +933,7 @@
 
     document.getElementById('changeNameBtn')?.addEventListener('click', async () => {
       const user = auth.currentUser;
-      if (!user) return alert("Not logged in.");
+      if (!user) return showToast("Please log in first.", "error");;
       showModal({
         title: translations[currentLang].menuChangeName || "Change Display Name",
         message: "Enter your new display name:",
@@ -884,9 +949,9 @@
             await user.updateProfile({ displayName: trimmed });
             await db.collection('users').doc(user.uid).update({ name: trimmed });
             document.getElementById('profileName').textContent = trimmed;
-            alert("Name updated!");
+            showToast("Name updated!", "success");
           } catch (err) {
-            alert("Failed to update name.");
+            showToast("Failed to update name.", "error");
           }
         }
       });
@@ -894,7 +959,7 @@
 
     document.getElementById('changeAvatarBtn')?.addEventListener('click', () => {
       const user = auth.currentUser;
-      if (!user) return alert("Not logged in.");
+      if (!user) return showToast("Please log in first.", "error");
       openAvatarChooser(user);
     });
 
@@ -902,7 +967,7 @@
     if (photoContainer) {
       photoContainer.addEventListener('click', () => {
         const user = auth.currentUser;
-        if (!user) return alert("Not logged in.");
+        if (!user) return showToast("Please log in first.", "error");
         openAvatarChooser(user);
       });
     }
@@ -933,9 +998,9 @@
               await db.collection('users').doc(user.uid).update({ avatarUrl: src });
               document.getElementById('profilePhoto').src = src;
               closeModal();
-              alert(translations[currentLang].avatarUpdated || "Avatar updated!");
+              sshowToast(translations[currentLang].avatarUpdated || "Avatar updated!", "success");
             } catch (err) {
-              alert("Failed to save avatar.");
+              showToast("Avatar Saved Successfully", "success");
             }
           };
           grid.appendChild(img);
@@ -945,7 +1010,7 @@
     }
 
     document.getElementById('logoutBtn')?.addEventListener('click', () => {
-      auth.signOut().then(() => location.href = '/').catch(err => alert("Logout failed."));
+      auth.signOut().then(() => location.href = '/').catch(err => showToast("Logout failed.", "error"));
     });
 
     // Modal system
@@ -1026,7 +1091,7 @@
     document.getElementById('saveLevelBtn')?.addEventListener('click', async () => {
       if (!selectedLevel) return;
       const user = auth.currentUser;
-      if (!user) return alert("Please log in first.");
+      if (!user) return showToast("Please log in first.", "error");
       try {
         await db.collection('users').doc(user.uid).update({ level: selectedLevel, englishLevel: selectedLevel, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
         const levelEl = document.getElementById('englishLevel');
@@ -1121,6 +1186,32 @@
     }
     loadRandomQuote();
 
+    // Custom Toast Notification with WebP Icons
+    function showToast(message, type = 'success', duration = 3200) {
+      const toast = document.getElementById('customToast');
+      const iconEl = document.getElementById('toastIcon');
+      const messageEl = document.getElementById('toastMessage');
+
+      // Reset classes
+      toast.classList.remove('toast-success', 'toast-error', 'show');
+
+      if (type === 'success') {
+          iconEl.src = '/assets/images/menu-icons/check.png';   // ← Change path if needed
+          toast.classList.add('toast-success');
+      } 
+      else if (type === 'error') {
+          iconEl.src = '/assets/images/menu-icons/close.png';     // ← Change path if needed
+          toast.classList.add('toast-error');
+      }
+
+      messageEl.textContent = message;
+      toast.classList.add('show');
+
+      // Auto dismiss
+      setTimeout(() => {
+          toast.classList.remove('show');
+      }, duration);
+    }
     // Blog search
     function initBlogSearch() {
       const searchInput = document.getElementById('blogSearch');
