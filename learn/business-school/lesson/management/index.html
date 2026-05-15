@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Redirecting...</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .loader-container {
+      text-align: center;
+    }
+
+    .spinner {
+      width: 80px;
+      height: 80px;
+      border: 8px solid rgba(242, 75, 11, 0.1);
+      border-top: 8px solid #f24b0b;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 24px;
+    }
+
+    .loading-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .sub-text {
+      font-size: 1rem;
+      color: #6b7280;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .spinner { width: 60px; height: 60px; border-width: 6px; }
+      .loading-text { font-size: 1.2rem; }
+      .sub-text { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loader-container">
+    <div class="spinner"></div>
+    <div class="loading-text">Redirecting...</div>
+    <div class="sub-text">Taking you to Summage Business School</div>
+  </div>
+
+  <script>
+    // Redirect immediately (or after delay if you want)
+    // Change the URL if your target path is different
+    window.location.replace("/learn/business-school/");
+
+    // Optional: if you want a small delay (e.g. 1.5 seconds) for the loader to be visible longer
+    // setTimeout(() => {
+    //   window.location.replace("/learn/business-school/");
+    // }, 1500);
+  </script>
+
+</body>
+</html>
