@@ -331,9 +331,7 @@
       </div>
 
       <div id="settingsMenu" class="settings-menu hidden">
-        <div style="position: absolute; top: 12px; right: 16px;">
-          <button id="closeMenuBtn" style="background:none; border:none; font-size:1.8rem; color:#6b7280; cursor:pointer;">×</button>
-        </div>
+        <button class="settings-close" id="settingsCloseBtn">×</button>
         <button class="menu-item" id="contactsBtn"><i class="fas fa-address-book"></i><span data-lang-key="menuContacts">Contacts</span></button>
         <button class="menu-item" id="helpBtn"><i class="fas fa-question-circle"></i><span data-lang-key="menuHelpCentre">Help Centre</span></button>
         <button class="menu-item" id="myInfoBtn"><i class="fas fa-info-circle"></i><span data-lang-key="menuUserInfo">My Info</span></button>
@@ -414,6 +412,8 @@
         <div id="toastMessage" class="toast-message"></div>
     </div>
   </div>
+
+  <div class="settings-overlay" id="settingsOverlay"></div>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
@@ -883,36 +883,50 @@
       photoEl.onerror = () => photoEl.src = "/assets/images/profile/1.jpg";
     });
 
-    // Settings menu
-    const settingsBtn  = document.getElementById('settingsBtn');
-    const settingsMenu = document.getElementById('settingsMenu');
+const settingsBtn = document.querySelector('.settings-btn');
+const settingsMenu = document.querySelector('.settings-menu');
+const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+const settingsOverlay = document.getElementById('settingsOverlay');
 
-    if (settingsBtn && settingsMenu) {
-      settingsBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        settingsMenu.classList.toggle('hidden');
-        document.body.classList.toggle('menu-open');
-      });
+function openSettingsMenu() {
+    settingsMenu.classList.add('show');
+    settingsOverlay.classList.add('show');
+}
 
-      document.addEventListener('click', e => {
-        if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
-          settingsMenu.classList.add('hidden');
-          document.body.classList.remove('menu-open');
-        }
-      });
+function closeSettingsMenu() {
+    settingsMenu.classList.remove('show');
+    settingsOverlay.classList.remove('show');
+}
 
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-          settingsMenu.classList.add('hidden');
-          document.body.classList.remove('menu-open');
-        }
-      });
+settingsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
 
-      document.getElementById('closeMenuBtn')?.addEventListener('click', () => {
-        settingsMenu.classList.add('hidden');
-        document.body.classList.remove('menu-open');
-      });
+    const isOpen = settingsMenu.classList.contains('show');
+
+    if (isOpen) {
+        closeSettingsMenu();
+    } else {
+        openSettingsMenu();
     }
+});
+
+settingsOverlay.addEventListener('click', closeSettingsMenu);
+settingsCloseBtn.addEventListener('click', closeSettingsMenu);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeSettingsMenu();
+    }
+});
+
+document.addEventListener('click', (e) => {
+    if (
+        !settingsMenu.contains(e.target) &&
+        !settingsBtn.contains(e.target)
+    ) {
+        closeSettingsMenu();
+    }
+});
 
     document.getElementById('contactsBtn')?.addEventListener('click', () => window.location.href = '/contacts/');
     document.getElementById('helpBtn')?.addEventListener('click', () => window.location.href = '/help-centre/');
