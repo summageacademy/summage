@@ -19,7 +19,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
   <style>
@@ -27,7 +27,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
@@ -892,20 +892,36 @@ html, body {
       }
     };
 
+  // ───────────────────────────────────────────────────────────────
+  // TRANSLATIONS
+  // ───────────────────────────────────────────────────────────────
+
   const LANG_KEY = 'summage_preferred_lang';
   let currentLang = localStorage.getItem(LANG_KEY) || 'en';
 
   function applyTranslations() {
     document.querySelectorAll('[data-lang-key]').forEach(el => {
       const key = el.getAttribute('data-lang-key');
-      const translated = translations[currentLang]?.[key] ?? translations['en'][key] ?? el.innerHTML;
+      const translated =
+        translations[currentLang]?.[key] ??
+        translations['en'][key] ??
+        el.innerHTML;
+
       el.innerHTML = translated;
     });
+
     document.documentElement.lang = currentLang;
   }
 
-  function showMessage(key, fallback = translations['en']['error.generic']) {
-    const msg = translations[currentLang]?.[key] ?? translations['en'][key] ?? fallback;
+  function showMessage(
+    key,
+    fallback = translations['en']['error.generic']
+  ) {
+    const msg =
+      translations[currentLang]?.[key] ??
+      translations['en'][key] ??
+      fallback;
+
     document.getElementById('errorMessage').innerHTML = msg;
     document.getElementById('errorModal').classList.remove('hidden');
   }
@@ -913,6 +929,7 @@ html, body {
   // ───────────────────────────────────────────────────────────────
   // FIREBASE CONFIG
   // ───────────────────────────────────────────────────────────────
+
   const firebaseConfig = {
     apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
     authDomain: "summage-backend.firebaseapp.com",
@@ -923,17 +940,22 @@ html, body {
   };
 
   firebase.initializeApp(firebaseConfig);
+
   const auth = firebase.auth();
   const db = firebase.firestore();
 
-  // Elements
+  // ───────────────────────────────────────────────────────────────
+  // ELEMENTS
+  // ───────────────────────────────────────────────────────────────
+
   const mainTitle = document.getElementById('mainTitle');
   const initialButtons = document.getElementById('initialButtons');
   const initialContent = document.getElementById('initialContent');
+
   const goalSelection = document.getElementById('goalSelection');
   const businessSub = document.getElementById('businessSub');
   const businessCourse = document.getElementById('businessCourse');
-  const bloggingForm = document.getElementById('bloggingForm');
+
   const loginForm = document.getElementById('loginForm');
   const finalSignup = document.getElementById('finalSignup');
 
@@ -944,8 +966,7 @@ html, body {
   const ieltsScoreScreen = document.getElementById('ieltsScoreScreen');
   const personalizationScreen = document.getElementById('personalizationScreen');
 
-  const progressBar = document.getElementById('progressBar');
-
+  // Optional illustration references
   const mainIllust = document.getElementById('mainIllust');
   const goalIllust = document.getElementById('goalIllust');
   const businessIllust = document.getElementById('businessIllust');
@@ -954,18 +975,43 @@ html, body {
 
   let userData = {};
 
+  // ───────────────────────────────────────────────────────────────
+  // UTILITIES
+  // ───────────────────────────────────────────────────────────────
+
   function fadeTransition(callback) {
     const overlay = document.getElementById('whiteFade');
+
     overlay.classList.add('active');
+
     setTimeout(() => {
+
       callback();
+
       applyTranslations();
-      setTimeout(() => overlay.classList.remove('active'), 80);
+
+      setTimeout(() => {
+        overlay.classList.remove('active');
+      }, 80);
+
     }, 380);
   }
 
   function hideAllIllusts() {
-    [mainIllust, goalIllust, businessIllust, blogIllust, loginIllust].forEach(img => img.classList.add('hidden'));
+
+    [
+      mainIllust,
+      goalIllust,
+      businessIllust,
+      blogIllust,
+      loginIllust
+    ].forEach(img => {
+
+      if (img) {
+        img.classList.add('hidden');
+      }
+
+    });
   }
 
   document.getElementById('closeError').onclick = () => {
@@ -974,93 +1020,159 @@ html, body {
 
   applyTranslations();
 
-  // ==================== SIGN UP FLOW ====================
+  // ───────────────────────────────────────────────────────────────
+  // SIGNUP START
+  // ───────────────────────────────────────────────────────────────
 
   document.getElementById('signupBtn').onclick = () => {
+
     userData = {};
+
     fadeTransition(() => {
+
       mainTitle.classList.add('hidden');
       initialButtons.classList.add('hidden');
       initialContent.classList.add('hidden');
+
       ageScreen.classList.remove('hidden');
+
       hideAllIllusts();
-      goalIllust.classList.remove('hidden');
+
+      if (goalIllust) {
+        goalIllust.classList.remove('hidden');
+      }
+
     });
   };
 
-  // Age
+  // ───────────────────────────────────────────────────────────────
+  // AGE SCREEN
+  // ───────────────────────────────────────────────────────────────
+
   ['age13-17', 'age18-24', 'age25-34', 'age35+'].forEach(id => {
+
     document.getElementById(id).onclick = () => {
+
       userData.age = id;
+
       fadeTransition(() => {
+
         ageScreen.classList.add('hidden');
         locationScreen.classList.remove('hidden');
+
       });
     };
   });
 
-  // Location
+  // ───────────────────────────────────────────────────────────────
+  // LOCATION SCREEN
+  // ───────────────────────────────────────────────────────────────
+
   document.getElementById('nextLocation').onclick = () => {
+
     const country = document.getElementById('countryInput').value.trim();
     const city = document.getElementById('cityInput').value.trim();
-    if (!country || !city) return showMessage('error.fillFields');
+
+    if (!country || !city) {
+      showMessage('error.fillFields');
+      return;
+    }
 
     userData.country = country;
     userData.city = city;
 
     fadeTransition(() => {
+
       locationScreen.classList.add('hidden');
       durationScreen.classList.remove('hidden');
+
     });
   };
 
-  // Duration
-  ['duration3','duration6','duration12','duration24'].forEach(id => {
+  // ───────────────────────────────────────────────────────────────
+  // DURATION SCREEN
+  // ───────────────────────────────────────────────────────────────
+
+  ['duration3', 'duration6', 'duration12', 'duration24'].forEach(id => {
+
     document.getElementById(id).onclick = () => {
-      userData.duration = id.replace('duration','');
+
+      userData.duration = id.replace('duration', '');
+
       fadeTransition(() => {
+
         durationScreen.classList.add('hidden');
         mainGoalScreen.classList.remove('hidden');
+
       });
     };
   });
 
-  // Main Goal
+  // ───────────────────────────────────────────────────────────────
+  // MAIN GOAL
+  // ───────────────────────────────────────────────────────────────
+
   document.getElementById('goalIelts').onclick = () => {
+
     userData.mainGoal = 'ielts';
+
     fadeTransition(() => {
+
       mainGoalScreen.classList.add('hidden');
       ieltsScoreScreen.classList.remove('hidden');
+
     });
   };
 
   ['goalImprove', 'goalConversation', 'goalBusinessEng'].forEach(id => {
+
     document.getElementById(id).onclick = () => {
-      userData.mainGoal = id.replace('goal','').toLowerCase();
+
+      userData.mainGoal =
+        id.replace('goal', '').toLowerCase();
+
       goToPersonalization();
+
     };
   });
 
-  // IELTS Score
-  ['score6','score75','score8'].forEach(id => {
+  // ───────────────────────────────────────────────────────────────
+  // IELTS SCORE
+  // ───────────────────────────────────────────────────────────────
+
+  ['score6', 'score75', 'score8'].forEach(id => {
+
     document.getElementById(id).onclick = () => {
-      userData.ieltsTarget = id.replace('score','');
+
+      userData.ieltsTarget =
+        id.replace('score', '');
+
       goToPersonalization();
+
     };
   });
+
+  // ───────────────────────────────────────────────────────────────
+  // PERSONALIZATION FLOW
+  // ───────────────────────────────────────────────────────────────
 
   function goToPersonalization() {
+
     fadeTransition(() => {
+
       mainGoalScreen.classList.add('hidden');
       ieltsScoreScreen.classList.add('hidden');
+
       personalizationScreen.classList.remove('hidden');
+
       hideAllIllusts();
 
       personalizationScreen.innerHTML = `
-        <div id="planStage" style="text-align:center; padding:30px 20px; opacity:0; transition:opacity 0.6s ease;">
-          
+
+        <div id="planStage"
+          style="text-align:center;padding:30px 20px;opacity:0;transition:opacity 0.6s ease;">
+
           <lottie-player 
-            id="planLottie"
             src="/authentication/rocket.json"
             background="transparent"
             speed="1"
@@ -1069,18 +1181,27 @@ html, body {
             loop>
           </lottie-player>
 
-          <h2 data-lang-key="personal.hangTight">Hang tight...</h2>
+          <h2 data-lang-key="personal.hangTight">
+            Hang tight...
+          </h2>
 
-          <p id="planText" style="color:#666;font-size:1.1rem;margin:15px 0 30px;">
+          <p id="planText"
+            style="color:#666;font-size:1.1rem;margin:15px 0 30px;">
             Creating your personalized learning plan...
           </p>
 
           <div style="width:100%;max-width:320px;margin:0 auto;">
+
             <div id="progressBar"
-              style="height:6px;background:linear-gradient(90deg,#f24b0b,#ff8a3d);
-              border-radius:9999px;width:0%;
-              transition:width 5.5s ease;">
+              style="
+                height:6px;
+                background:linear-gradient(90deg,#f24b0b,#ff8a3d);
+                border-radius:9999px;
+                width:0%;
+                transition:width 5.5s ease;
+              ">
             </div>
+
           </div>
         </div>
       `;
@@ -1091,13 +1212,13 @@ html, body {
       const bar = document.getElementById('progressBar');
       const text = document.getElementById('planText');
 
-      // fade in whole block
       requestAnimationFrame(() => {
+
         stage.style.opacity = "1";
         bar.style.width = "100%";
+
       });
 
-      // synced step updates (smooth pacing)
       const steps = [
         { t: 1200, text: "Analyzing your answers..." },
         { t: 2800, text: "Building your roadmap..." },
@@ -1105,22 +1226,32 @@ html, body {
       ];
 
       steps.forEach(step => {
+
         setTimeout(() => {
+
           text.style.opacity = "0.3";
+
           setTimeout(() => {
+
             text.innerText = step.text;
             text.style.opacity = "1";
+
           }, 200);
+
         }, step.t);
+
       });
 
-      // FINAL TRANSITION (whole block fades OUT together)
       setTimeout(() => {
+
         stage.style.opacity = "0";
 
         setTimeout(() => {
+
           personalizationScreen.innerHTML = `
-            <div style="text-align:center; padding:30px 20px; opacity:0; transition:opacity 0.6s ease;" id="finalStage">
+
+            <div id="finalStage"
+              style="text-align:center;padding:30px 20px;opacity:0;transition:opacity 0.6s ease;">
 
               <lottie-player 
                 src="/authentication/trophy.json"
@@ -1130,114 +1261,221 @@ html, body {
                 autoplay>
               </lottie-player>
 
-              <h2 data-lang-key="personal.allSet">All set!</h2>
+              <h2 data-lang-key="personal.allSet">
+                All set!
+              </h2>
 
               <p data-lang-key="personal.planReady"
                 style="color:#333;font-size:1.15rem;margin-bottom:45px;">
+
                 Your personalized plan is ready
+
               </p>
 
-              <button class="btn btn-primary" id="finishRegistrationBtn"
+              <button
+                class="btn btn-primary"
+                id="finishRegistrationBtn"
                 style="padding:19px 65px;font-size:17px;">
+
                 Finish Registration
+
               </button>
+
             </div>
           `;
 
           applyTranslations();
 
           requestAnimationFrame(() => {
+
             document.getElementById('finalStage').style.opacity = "1";
+
           });
 
           document.getElementById('finishRegistrationBtn').onclick = () => {
+
             fadeTransition(() => {
+
               personalizationScreen.classList.add('hidden');
               finalSignup.classList.remove('hidden');
+
               hideAllIllusts();
-              goalIllust.classList.remove('hidden');
+
+              if (goalIllust) {
+                goalIllust.classList.remove('hidden');
+              }
+
             });
           };
 
         }, 650);
 
       }, 5500);
+
     });
   }
-  // Login, Business, Blogging flows remain same (only added translations where needed)
+
+  // ───────────────────────────────────────────────────────────────
+  // LOGIN FLOW
+  // ───────────────────────────────────────────────────────────────
+
   document.getElementById('loginBtn').onclick = () => {
+
     fadeTransition(() => {
+
       mainTitle.classList.add('hidden');
       initialButtons.classList.add('hidden');
       initialContent.classList.add('hidden');
+
       loginForm.classList.remove('hidden');
+
       hideAllIllusts();
-      loginIllust.classList.remove('hidden');
+
+      if (loginIllust) {
+        loginIllust.classList.remove('hidden');
+      }
+
     });
   };
 
-  document.getElementById('businessSchool').onclick = () => {
-    userData.goal = 'businessSchool';
-    fadeTransition(() => {
-      goalSelection.classList.add('hidden');
-      businessSub.classList.remove('hidden');
-      hideAllIllusts();
-      businessIllust.classList.remove('hidden');
-    });
+  // ───────────────────────────────────────────────────────────────
+  // FINAL SIGNUP
+  // ───────────────────────────────────────────────────────────────
+  document.getElementById('completeSignup').onclick = async () => {
+      if (!document.getElementById('termsCheckbox').checked) {
+        showMessage('error.terms');
+        return;
+      }
+
+      const name     = document.getElementById('finalName').value.trim();
+      const email    = document.getElementById('finalEmail').value.trim();
+      const password = document.getElementById('finalPassword').value;
+
+      if (!name || !email || !password) {
+        showMessage('error.fillFields');
+        return;
+      }
+
+      const preferredLanguage = localStorage.getItem(LANG_KEY) || 'en';
+
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        await db.collection('users').doc(user.uid).set({
+          ...userData,
+          name,
+          email,
+          preferredLanguage,
+          agreedToTerms: true,
+          agreedToPrivacy: true,
+          consentsAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+
+        await user.updateProfile({ displayName: name });
+
+        window.location.href = '/learn/';
+      } catch (error) {
+        let key = 'error.generic';
+        switch (error.code) {
+          case 'auth/email-already-in-use':      key = 'error.emailTaken'; break;
+          case 'auth/invalid-email':             key = 'error.invalidEmail'; break;
+          case 'auth/weak-password':             key = 'error.weakPassword'; break;
+          case 'auth/operation-not-allowed':     key = 'error.operationNotAllowed'; break;
+        }
+        showMessage(key);
+        console.error('Sign-up error:', error);
+      }
+    };
+  // ───────────────────────────────────────────────────────────────
+  // LOGIN
+  // ───────────────────────────────────────────────────────────────
+
+  document.getElementById('doLogin').onclick = async () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    if (!email || !password) {
+      showMessage('error.fillFields');
+      return;
+    }
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      window.location.href = '/learn/';
+    } catch (error) {
+      let key = 'error.generic';
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        key = 'error.invalidEmail';
+      } else if (error.code === 'auth/invalid-email') {
+        key = 'error.invalidEmail';
+      }
+      showMessage(key);
+    }
   };
 
-  document.getElementById('learnEnglish').onclick = () => {
-    userData.goal = 'learnEnglish';
-    fadeTransition(() => {
-      goalSelection.classList.add('hidden');
-      ageScreen.classList.remove('hidden');
-      hideAllIllusts();
-      goalIllust.classList.remove('hidden');
-    });
-  };
+  // ───────────────────────────────────────────────────────────────
+  // PAGE LOADER
+  // ───────────────────────────────────────────────────────────────
 
-  document.getElementById('startBlogging').onclick = () => {
-    userData.goal = 'startBlogging';
-    fadeTransition(() => {
-      goalSelection.classList.add('hidden');
-      bloggingForm.classList.remove('hidden');
-      hideAllIllusts();
-      blogIllust.classList.remove('hidden');
-    });
-  };
-
-  // Final Signup & Login logic (unchanged)
-  document.getElementById('completeSignup').onclick = async () => { /* ... same as before ... */ };
-  document.getElementById('doLogin').onclick = async () => { /* ... same as before ... */ };
-  document.getElementById('submitBlogging').onclick = async () => { /* ... same as before ... */ };
-
-  // Page Loader
   const loader = document.getElementById('pageLoader');
   const owl = document.getElementById('splashOwl');
+
   const MIN_DURATION = 1500;
+
   let minTimePassed = false;
 
   setTimeout(() => {
+
     if (owl) {
+
       owl.style.opacity = '1';
       owl.style.transform = 'scale(1) translateY(0)';
+
     }
+
   }, 400);
 
-  setTimeout(() => { minTimePassed = true; if (document.readyState === 'complete') hideLoader(); }, MIN_DURATION);
+  setTimeout(() => {
+
+    minTimePassed = true;
+
+    if (document.readyState === 'complete') {
+      hideLoader();
+    }
+
+  }, MIN_DURATION);
 
   window.addEventListener('load', () => {
-    if (minTimePassed) hideLoader();
-    else setTimeout(hideLoader, MIN_DURATION);
+
+    if (minTimePassed) {
+      hideLoader();
+    }
+
+    else {
+      setTimeout(hideLoader, MIN_DURATION);
+    }
+
   });
 
   function hideLoader() {
-    if (loader.classList.contains('hidden')) return;
+
+    if (loader.classList.contains('hidden')) {
+      return;
+    }
+
     loader.classList.add('hidden');
-    setTimeout(() => loader.remove(), 1400);
+
+    setTimeout(() => {
+      loader.remove();
+    }, 1400);
   }
 
-  setTimeout(() => hideLoader(), 7000);
+  setTimeout(() => {
+    hideLoader();
+  }, 7000);
+
 </script>
 </body>
 </html>
