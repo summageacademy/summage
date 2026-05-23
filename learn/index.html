@@ -105,6 +105,10 @@
 
           <div class="spot island-spot" style="top:43%; left:47%;" data-academy="hq">
             <img src="/assets/images/islands/headquarters.webp" alt="HQ Island" class="island-image" style="z-index: 1;">
+            <div class="island-label" data-key="listening">
+                Listening
+            </div>
+
             <div class="bubble">
               <div class="bubble-header">
                 <div class="bubble-title" data-lang-key="hq">Headquarters</div>
@@ -116,6 +120,10 @@
 
           <div class="spot island-spot" style="top:54%; left:38%;" data-academy="grammar">
             <img src="/assets/images/islands/grammar-lessons.webp" alt="Grammar Island" class="island-image">
+            <div class="island-label" data-key="grammar">
+                Grammar
+            </div>
+
             <div class="bubble">
               <div class="bubble-header">
                 <div class="bubble-title" data-lang-key="academyGrammar">Grammar Academy</div>
@@ -128,6 +136,10 @@
 
           <div class="spot island-spot" style="top:48%; left:64%;" data-academy="reading">
             <img src="/assets/images/islands/testcentre.webp" alt="Test Centre Island" class="island-image">
+            <div class="island-label" data-key="tests">
+                Test Centre
+            </div>
+
             <div class="bubble">
               <div class="bubble-header">
                 <div class="bubble-title" data-lang-key="academyReading">Test Centre</div>
@@ -139,6 +151,10 @@
 
           <div class="spot island-spot" style="top:60%; left:55%;" data-academy="writing">
             <img src="/assets/images/islands/writings.webp" alt="Writing Island" class="island-image">
+            <div class="island-label" data-key="writing">
+                Writing
+            </div>
+
             <div class="bubble">
               <div class="bubble-header">
                 <div class="bubble-title" data-lang-key="academyWriting">Writing Academy</div>
@@ -496,7 +512,11 @@
         hqAbout:        "About Us",
         hqPrivacy:      "Privacy Policy",
         hqTerms:        "Terms of Service",
-        avatarUpdated:  "Avatar updated!"
+        avatarUpdated:  "Avatar updated!",
+        listening: "Listening",
+        writing: "Writing",
+        grammar: "Grammar",
+        tests: "Test Centre"
       },
       ru: {
         navHome: "Главная",
@@ -559,7 +579,11 @@
         hqAbout:        "О нас",
         hqPrivacy:      "Политика конфиденциальности",
         hqTerms:        "Условия использования",
-        avatarUpdated:  "Аватар обновлён!"
+        avatarUpdated:  "Аватар обновлён!",
+        listening: "Аудирование",
+        writing: "Writing",
+        grammar: "Грамматика",
+        tests: "Тестовый Центр"
       },
       uz: {
         navHome: "Bosh sahifa",
@@ -622,7 +646,11 @@
         hqAbout:        "Biz haqimizda",
         hqPrivacy:      "Maxfiylik siyosati",
         hqTerms:        "Foydalanish shartlari",
-        avatarUpdated:  "Avatar yangilandi!"
+        avatarUpdated:  "Avatar yangilandi!",
+        listening: "Listening",
+        writing: "Writing",
+        grammar: "Grammar",
+        tests: "Test Markazi"
       }
     };
 
@@ -641,7 +669,14 @@
           el.textContent = text;
         }
       });
+
+      document.querySelectorAll('.island-label').forEach(label => {
+          const key = label.dataset.key;
+          label.textContent = translations[currentLang][key];
+      });
     }
+
+    
 
     document.getElementById('mobileLangBtn')?.addEventListener('click', e => {
       e.stopPropagation();
