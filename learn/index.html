@@ -88,6 +88,10 @@
     </div>
   </div>
 
+  <button class="hq-float-btn" id="hqFloatBtn">
+      <img src="/assets/images/menu-icons/chat.webp" alt="HQ">
+  </button>
+
   <div class="mobile-bottom">
     <a href="#school" data-page="school"><i class="fas fa-briefcase"></i></a>
     <a href="#blogs"  data-page="blogs"><i class="fas fa-newspaper"></i></a>
@@ -104,17 +108,17 @@
           
 
           <div class="spot island-spot" style="top:43%; left:47%;" data-academy="hq">
-            <img src="/assets/images/islands/headquarters.webp" alt="HQ Island" class="island-image" style="z-index: 1;">
+            <img src="/assets/images/islands/listening.webp" alt="Listening Island" class="island-image" style="z-index: 1;">
             <div class="island-label" data-key="listening">
                 Listening
             </div>
 
             <div class="bubble">
               <div class="bubble-header">
-                <div class="bubble-title" data-lang-key="hq">Headquarters</div>
+                <div class="bubble-title" data-lang-key="academyListening">Grammar Academy</div>
                 <button class="close-btn">×</button>
               </div>
-              <button class="bubble-btn-hq" id="hqModalTrigger" data-lang-key="btnVisit">Visit HQ</button>
+              <a href="/learn/journeys/listening/" class="bubble-btn" data-lang-key="btnEnter">Enter Academy</a>
             </div>
           </div>
 
@@ -516,7 +520,8 @@
         listening: "Listening",
         writing: "Writing",
         grammar: "Grammar",
-        tests: "Test Centre"
+        tests: "Test Centre",
+        academyListening: "Listening Academy"
       },
       ru: {
         navHome: "Главная",
@@ -535,6 +540,7 @@
         academyGrammar: "Академия Грамматика",
         academyWriting: "Академия Письма",
         academyReading: "Reading Академия",
+        academyListening: "Listening Академия",
         hq: "Штаб-квартира",
         btnEnter: "Войти в Академию",
         btnVisit: "Посетить",
@@ -599,9 +605,10 @@
         descBlogs: "So'nggi maqolalar, maslahatlar va til o'rganish bo'yicha tushunchalar.",
         titleProfile: "Profil",
         descProfile: "Sizning o'quv yo'lingiz, yutuqlaringiz va sozlamalaringiz.",
-        academyGrammar: "Grammatika Akademiyasi",
+        academyGrammar: "Grammatika Oroli",
         academyWriting: "Writing Akademiyasi",
-        academyReading: "Reading Academiyasi",
+        academyReading: "Reading Akademiyasi",
+        academyListening: "Tinglash Akademiyasi",
         hq: "Bosh ofis",
         btnEnter: "Akademiyaga kirish",
         btnVisit: "Tashrif",
@@ -853,6 +860,19 @@
       document.getElementById('hqModalBackdrop').classList.remove('hidden');
     });
 
+    /* ── Floating HQ Button ───────────────────────── */
+    document.getElementById('hqFloatBtn')?.addEventListener('click', (e) => {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        document
+            .getElementById('hqModalBackdrop')
+            .classList
+            .remove('hidden');
+
+    });
+
     // ── Profile & Firebase logic ────────────────────────────────────
     auth.onAuthStateChanged(async (user) => {
       const photoEl   = document.getElementById('profilePhoto');
@@ -932,6 +952,33 @@ function closeSettingsMenu() {
     settingsMenu.classList.remove('show');
     settingsOverlay.classList.remove('show');
 }
+
+function updateHQButtonVisibility(){
+
+    const btn = document.querySelector('.hq-float-btn');
+
+    if(!btn) return;
+
+    const homePage = document.getElementById('home');
+
+    if(homePage.classList.contains('active')){
+        btn.style.display = 'flex';
+    }else{
+        btn.style.display = 'none';
+    }
+}
+
+/* run after navigation */
+document.querySelectorAll('[data-page]').forEach(btn => {
+    btn.addEventListener('click', () => {
+
+        setTimeout(updateHQButtonVisibility, 50);
+
+    });
+});
+
+/* initial */
+updateHQButtonVisibility();
 
 settingsBtn.addEventListener('click', (e) => {
     e.stopPropagation();
