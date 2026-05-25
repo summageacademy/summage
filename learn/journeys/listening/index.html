@@ -774,8 +774,16 @@ function showLockedToast() {
 }
 
 function goBack() {
-    window.location.assign('/learn/');
-}
+            const before = window.location.href;
+            
+            history.back();
+            
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/learn/');
+                }
+            }, 50);
+        }
 
 const loader = document.getElementById('pageLoader');
 
