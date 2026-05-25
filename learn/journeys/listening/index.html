@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Tests - Summage Academy</title>
+    <meta name="description" content="Practice IELTS Listening tests for free with Summage Academy." />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LZP4KSPR1V');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        .content::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', system-ui, sans-serif;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            color: #f24b0b;
+            text-transform: uppercase;
+        }
+
+        .language-selector {
+            position: relative;
+        }
+
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+
+        .language-button img {
+            width: 26px;
+            height: 26px;
+        }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+            min-width: 140px;
+            padding: 8px 0;
+            overflow: hidden;
+            z-index: 200;
+        }
+
+        .language-flags.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .flag {
+            padding: 13px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 15.5px;
+            color: #333;
+        }
+
+        .flag:hover {
+            background: #f24b0b10;
+        }
+
+        .flag img {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .content {
+            flex: 1;
+            padding: 60px 5vw 120px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .level-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #f24b0b;
+            line-height: 1;
+        }
+
+        .level-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .level-desc {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .lesson-card {
+            background: white;
+            border: 1px solid #f0e6d9;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(242, 75, 11, 0.12);
+        }
+
+        .lesson-header {
+            padding: 28px 28px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lesson-id {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #f24b0b;
+            text-transform: uppercase;
+        }
+
+        .lesson-title {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #222;
+            margin-top: 6px;
+        }
+
+        .lesson-desc {
+            margin-top: 16px;
+            font-size: 15.5px;
+            line-height: 1.55;
+            color: #555;
+            flex: 1;
+        }
+
+        .lesson-footer {
+            border-top: 1px solid #f0e6d9;
+            padding: 20px 28px;
+            background: #fffaf5;
+            margin-top: auto;
+        }
+
+        .start-btn {
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            padding: 16px;
+            border: none;
+            border-radius: 50px;
+            width: 100%;
+            box-shadow: 0 4px 0 #c23a0a;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
+        }
+
+        .locked-btn {
+            background: #f4f4f4;
+            color: #999;
+            font-weight: 600;
+            padding: 16px;
+            border-radius: 50px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: not-allowed;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border: 2px solid #f24b0b;
+            color: #222;
+            padding: 16px 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(242, 75, 11, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 9999;
+            animation: toastPop 0.4s ease;
+        }
+
+        @keyframes toastPop {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 30px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .mobile-footer-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 14px 5vw;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+
+        .mobile-back-btn {
+            width: 100%;
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 16px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 0 #c23a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .content {
+                padding: 40px 20px 100px;
+            }
+
+            .level-title {
+                font-size: 1.9rem;
+            }
+
+            .navbar {
+                padding: 20px;
+            }
+
+            .mobile-footer-bar {
+                display: block;
+            }
+
+            .back-btn {
+                display: none;
+            }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="pageLoader" class="page-loader">
+    <lottie-player 
+        id="splashOwl"
+        src="/assets/Sandy Loading.json"
+        background="transparent"
+        speed="0.9"
+        style="width:120px;height:120px;"
+        loop
+        autoplay>
+    </lottie-player>
+</div>
+
+<nav class="navbar">
+    <button onclick="goBack()" class="back-btn" id="desktop-back-btn">
+        <span data-key="back">Back</span>
+    </button>
+
+    <div class="logo-container" onclick="window.location.href='/'">
+        <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+        <div class="logo-text">Summage</div>
+    </div>
+
+    <div class="language-selector">
+        <button class="language-button" id="lang-btn">
+            <img src="/assets/images/lang/globe.webp" alt="">
+        </button>
+
+        <div class="language-flags" id="lang-flags">
+            <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png"> English</div>
+            <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png"> Русский</div>
+            <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png"> O'zbek</div>
+        </div>
+    </div>
+</nav>
+
+<main class="content" id="tests-container"></main>
+
+<div class="mobile-footer-bar">
+    <button onclick="goBack()" class="mobile-back-btn">
+        Back
+    </button>
+</div>
+
+<script type="module">
+
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+    authDomain: "summage-backend.firebaseapp.com",
+    projectId: "summage-backend",
+    storageBucket: "summage-backend.firebasestorage.app",
+    messagingSenderId: "128191434358",
+    appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const allTests = [
+    {
+        id: 1,
+        title: "Daily Conversations",
+        desc: "Short conversations and basic listening practice.",
+        level: "beginner"
+    },
+    {
+        id: 2,
+        title: "Campus Information",
+        desc: "University situations and student discussions.",
+        level: "beginner"
+    },
+    {
+        id: 3,
+        title: "Travel & Directions",
+        desc: "Listening for places, directions and transport.",
+        level: "beginner"
+    },
+    {
+        id: 4,
+        title: "Booking & Reservations",
+        desc: "Hotels, tickets and phone call listening tasks.",
+        level: "beginner"
+    },
+    {
+        id: 5,
+        title: "Workplace Conversations",
+        desc: "Office discussions and professional listening.",
+        level: "intermediate"
+    },
+    {
+        id: 6,
+        title: "Lecture Notes",
+        desc: "Academic lectures and note completion tasks.",
+        level: "intermediate"
+    },
+    {
+        id: 7,
+        title: "Science Topics",
+        desc: "Listening to educational science recordings.",
+        level: "intermediate"
+    },
+    {
+        id: 8,
+        title: "IELTS Section Practice",
+        desc: "Mixed IELTS Listening section exercises.",
+        level: "intermediate"
+    },
+    {
+        id: 9,
+        title: "Advanced IELTS Test 1",
+        desc: "Full IELTS Listening mock test.",
+        level: "advanced"
+    },
+    {
+        id: 10,
+        title: "Advanced IELTS Test 2",
+        desc: "Complex accents and difficult question types.",
+        level: "advanced"
+    },
+    {
+        id: 11,
+        title: "Academic Listening",
+        desc: "Advanced university-style listening tasks.",
+        level: "advanced"
+    },
+    {
+        id: 12,
+        title: "Full Listening Challenge",
+        desc: "Complete high-level IELTS Listening simulation.",
+        level: "advanced"
+    }
+];
+
+let completedTests = {};
+let currentUserLevel = "beginner";
+
+const levelLimits = {
+    beginner: 4,
+    intermediate: 8,
+    advanced: 12
+};
+
+async function loadUserData() {
+
+    const container = document.getElementById("tests-container");
+
+    onAuthStateChanged(auth, async (user) => {
+
+        if (!user) {
+            container.innerHTML = `
+                <div class="text-center py-20">
+                    <p class="text-xl">Please sign in to access listening tests</p>
+                    <a href="/login" class="inline-block mt-6 bg-[#f24b0b] text-white font-bold py-4 px-12 rounded-3xl">
+                        Sign In
+                    </a>
+                </div>
+            `;
+            hideLoader();
+            return;
+        }
+
+        try {
+
+            const userSnap = await getDoc(doc(db, "users", user.uid));
+
+            if (userSnap.exists()) {
+                currentUserLevel = userSnap.data().level || "beginner";
+            }
+
+            // LISTENING PROGRESS
+            const progressSnap = await getDoc(
+                doc(db, "users", user.uid, "progress", "listening")
+            );
+
+            completedTests = progressSnap.exists()
+                ? (progressSnap.data().tests || {})
+                : {};
+
+            renderTests();
+
+        } catch (err) {
+            console.error(err);
+            renderTests();
+        }
+    });
+}
+
+function getMaxUnlocked() {
+    return levelLimits[currentUserLevel] || 4;
+}
+
+function renderTests() {
+
+    const container = document.getElementById("tests-container");
+
+    container.innerHTML = `
+        <div class="max-w-6xl mx-auto">
+
+            <div class="mb-16">
+                <div class="level-header">
+                    <div class="level-number">01</div>
+
+                    <div>
+                        <h2 class="level-title">Beginner Listening</h2>
+                        <p class="level-desc">Basic everyday listening practice</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="beginner-grid"></div>
+            </div>
+
+            <div class="mb-16">
+                <div class="level-header">
+                    <div class="level-number">02</div>
+
+                    <div>
+                        <h2 class="level-title">Intermediate Listening</h2>
+                        <p class="level-desc">Improve speed and comprehension</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="intermediate-grid"></div>
+            </div>
+
+            <div>
+                <div class="level-header">
+                    <div class="level-number">03</div>
+
+                    <div>
+                        <h2 class="level-title">Advanced Listening</h2>
+                        <p class="level-desc">Master IELTS-level listening tasks</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="advanced-grid"></div>
+            </div>
+
+        </div>
+    `;
+
+    renderGroup("beginner", 0, 4);
+    renderGroup("intermediate", 4, 8);
+    renderGroup("advanced", 8, 12);
+
+    hideLoader();
+}
+
+function renderGroup(group, start, end) {
+
+    const grid = document.getElementById(group + "-grid");
+
+    let html = "";
+    const maxUnlocked = getMaxUnlocked();
+
+    for (let i = start; i < end; i++) {
+
+        const test = allTests[i];
+
+        const unlocked = test.id <= maxUnlocked;
+        const completed = !!completedTests[test.id];
+
+        html += `
+            <div class="lesson-card">
+
+                <div class="lesson-header">
+                    <div class="lesson-id">TEST ${test.id}</div>
+
+                    <div class="lesson-title">
+                        ${test.title}
+                    </div>
+
+                    <p class="lesson-desc">
+                        ${test.desc}
+                    </p>
+                </div>
+
+                <div class="lesson-footer">
+
+                    ${
+                        unlocked
+                        ?
+                        `
+                        <a
+                            href="/learn/journeys/listening/test/?id=${test.id}"
+                            class="${completed
+                                ? 'w-full py-4 px-6 text-white font-bold uppercase tracking-wide rounded-full bg-[#06a87c] shadow-[0_4px_0_#058f66] hover:shadow-[0_6px_0_#058f66] hover:-translate-y-0.5 transition-all duration-150 flex items-center justify-center gap-2'
+                                : 'start-btn'}"
+                        >
+                            ${completed ? 'Retake Test' : 'Start Test'}
+                        </a>
+                        `
+                        :
+                        `
+                        <button onclick="showLockedToast()" class="locked-btn">
+                            <i class="fa-solid fa-lock"></i>
+                            Locked
+                        </button>
+                        `
+                    }
+
+                </div>
+
+            </div>
+        `;
+    }
+
+    grid.innerHTML = html;
+}
+
+function showLockedToast() {
+
+    const toast = document.createElement("div");
+
+    toast.className = "toast";
+
+    toast.innerHTML = `
+        <i class="fa-solid fa-lock text-2xl text-[#f24b0b]"></i>
+
+        <div>
+            <div style="font-weight:700;">Test locked</div>
+            <div style="font-size:13px;color:#777;">
+                Complete previous levels to unlock
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+
+        toast.style.transition = "all 0.4s";
+        toast.style.opacity = "0";
+
+        setTimeout(() => toast.remove(), 400);
+
+    }, 2600);
+}
+
+function goBack() {
+    window.location.assign('/learn/');
+}
+
+const loader = document.getElementById('pageLoader');
+
+function hideLoader() {
+
+    if (!loader || loader.classList.contains('hidden')) return;
+
+    loader.classList.add('hidden');
+
+    setTimeout(() => {
+        loader.remove();
+    }, 1200);
+}
+
+setTimeout(hideLoader, 7000);
+
+window.addEventListener('load', () => {
+
+    loadUserData();
+
+    document.getElementById('lang-btn')?.addEventListener('click', e => {
+        e.stopPropagation();
+        document.getElementById('lang-flags').classList.toggle('show');
+    });
+
+    document.querySelectorAll('.flag').forEach(el => {
+
+        el.addEventListener('click', e => {
+
+            e.stopPropagation();
+
+            document.documentElement.lang = el.dataset.lang;
+
+            document.getElementById('lang-flags').classList.remove('show');
+        });
+    });
+
+    document.addEventListener('click', () => {
+        document.getElementById('lang-flags').classList.remove('show');
+    });
+});
+
+</script>
+
+</body>
+</html>
