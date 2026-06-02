@@ -88,9 +88,11 @@
     </div>
   </div>
 
-  <button class="hq-float-btn" id="hqFloatBtn">
-      <img src="/assets/images/menu-icons/chat.webp" alt="HQ">
-  </button>
+  <div class="desktop-lang-btn hq-float-btn" id="hqFloatBtn">
+      <button class="lang-btn" id="hqFloatBtn">
+          <img src="/assets/images/menu-icons/chat.webp" alt="HQ">
+      </button>
+  </div>
 
   <div class="mobile-bottom">
     <a href="#school" data-page="school"><i class="fas fa-briefcase"></i></a>
@@ -955,26 +957,31 @@ function closeSettingsMenu() {
 
 function updateHQButtonVisibility(){
 
-    const btn = document.querySelector('.hq-float-btn');
+    const btn = document.getElementById('hqFloatBtn');
 
     if(!btn) return;
 
     const homePage = document.getElementById('home');
 
-    if(homePage.classList.contains('active')){
-        btn.style.display = 'flex';
-    }else{
-        btn.style.display = 'none';
-    }
+    btn.style.display =
+        homePage.classList.contains('active')
+            ? 'flex'
+            : 'none';
 }
 
-/* run after navigation */
-document.querySelectorAll('[data-page]').forEach(btn => {
-    btn.addEventListener('click', () => {
+document.querySelectorAll('[data-page]').forEach(link => {
+  link.addEventListener('click', function(e) {
 
-        setTimeout(updateHQButtonVisibility, 50);
+    e.preventDefault();
 
-    });
+    document.querySelectorAll('[data-page]').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+    this.classList.add('active');
+    document.getElementById(this.dataset.page).classList.add('active');
+
+    updateHQButtonVisibility(); // ← immediately update
+  });
 });
 
 /* initial */
