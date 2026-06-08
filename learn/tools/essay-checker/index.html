@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Essay Checker - Estimated Band Scores for Your IELTS Essays</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+      color: #1f2937;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 5vw;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .back-btn { padding: 12px 28px; background: #f1192e; color: white; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; font-size: 15px; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 0 #c40e20; transition: all 0.25s ease; }
+    .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c40e20; }
+    .logo-container { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+    .logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 14px; box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15); }
+    .logo-text { font-size: 26px; font-weight: 800; color: #f24b0b; text-transform: uppercase; letter-spacing: 1.2px; }
+
+    /* Main Content */
+    .main-content {
+        padding-top: 80px;
+        padding-bottom: 120px;
+        height: 100vh;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    @media (max-width: 900px) {
+      .main-content { padding-top: 65px;
+      padding-bottom: 150px}
+    }
+
+    .main-content::-webkit-scrollbar { display: none; }
+
+    .hero { padding: 40px 24px; text-align: center; max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-size: clamp(2.8rem, 9vw, 4.5rem); font-weight: 800; color: #f24b0b; margin-bottom: 12px; }
+    .hero p { font-size: 1.25rem; color: #4b5563; margin-bottom: 32px; line-height: 1.5; }
+
+    .textarea-wrapper textarea {
+      width: 100%; min-height: 320px; padding: 20px; border: 2px solid #e5e7eb;
+      border-radius: 16px; font-size: 1.1rem; line-height: 1.7; resize: vertical;
+    }
+    .textarea-wrapper textarea:focus { outline: none; border-color: #f24b0b; box-shadow: 0 0 0 4px rgba(242,75,11,0.1); }
+
+    /* Bottom Bar */
+    .bottom-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 85px;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center;
+      justify-content: center; padding: 0 20px; z-index: 100;
+    }
+    .check-btn {
+      width: 100%; max-width: 420px; padding: 16px 32px; background: #06a87c;
+      color: white; border: none; border-radius: 50px; font-size: 1.25rem;
+      font-weight: 700; cursor: pointer; box-shadow: 0 6px 0 #058f66;
+    }
+
+    /* Full Screen Modal */
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none;
+      align-items: center; justify-content: center; z-index: 1000;
+    }
+    .modal-content {
+      background: white; width: 100%; max-width: 900px; height: 95vh;
+      margin: 20px; border-radius: 20px; overflow-y: auto; padding: 30px;
+      position: relative;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f24b0b;
+    }
+    .close-modal { font-size: 2rem; cursor: pointer; color: #666; }
+
+    .criteria-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px;
+    }
+    .criteria-card {
+      background: #f9fafb; padding: 24px; border-radius: 16px; border-left: 6px solid #06a87c;
+    }
+    .criteria-card h3 { margin-bottom: 12px; color: #1f2937; }
+    .score { font-size: 2.2rem; font-weight: 800; color: #06a87c; }
+
+    .mistakes-section { margin-top: 40px; }
+    .mistakes-section h3 { margin-bottom: 20px; color: #f24b0b; }
+    .feedback-list { list-style: none; }
+    .feedback-item {
+      padding: 16px; background: #fff1f0; border-radius: 12px; margin-bottom: 12px;
+      border-left: 4px solid #f24b0b;
+    }
+
+    .close-bottom-btn {
+      margin-top: 40px; width: 100%; padding: 16px; background: #f24b0b;
+      color: white; border: none; border-radius: 50px; font-size: 1.2rem;
+      font-weight: 700; cursor: pointer;
+    }
+
+    /* ==================== TASK SELECTOR ==================== */
+    .task-selector {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 32px auto 28px;
+      max-width: 420px;
+    }
+
+    /* ==================== TASK 1 IMAGE UPLOAD ==================== */
+    #task1-image-container {
+      max-width: 700px;
+      margin: 0 auto 32px;
+      padding: 28px;
+      background: white;
+      border: 2px dashed #e5e7eb;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    #task1-image-container:hover {
+      border-color: #f24b0b;
+      background: #fffaf5;
+    }
+
+    /* Custom File Upload Fix */
+    .custom-file-upload {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    #task1-image {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-label {
+      display: block;
+      padding: 32px 24px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+      position: relative;
+    }
+
+    #task1-image-container:hover .upload-label {
+      border-color: #f24b0b;
+      background: white;
+    }
+
+    .upload-label i {
+      font-size: 2.2rem;
+      color: #f24b0b;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .upload-label span {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 6px;
+    }
+
+    .upload-label small {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    /* Selected File Display */
+    .selected-file {
+      margin-top: 12px;
+      padding: 12px 16px;
+      background: #f0fdf4;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: #166534;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .selected-file::before {
+      content: "✅";
+    }
+
+    .task-btn {
+      flex: 1;
+      padding: 14px 24px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: 2px solid #e5e7eb;
+      background: white;
+      color: #4b5563;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .task-btn:hover {
+      border-color: #f24b0b;
+      color: #f24b0b;
+      transform: translateY(-2px);
+    }
+
+    .task-btn.active {
+      background: #f24b0b;
+      color: white;
+      border-color: #f24b0b;
+      box-shadow: 0 6px 12px rgba(242, 75, 11, 0.25);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+      <div class="logo-container" onclick="goBack()">
+          <img src="/assets/logo.webp" alt="Summage" class="logo-img">
+          <div class="logo-text">Summage</div>
+      </div>
+      <button class="back-btn" onclick="goBack()">Back</button>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+        <section class="hero">
+          <h1 data-lang-key="aiHeroTitle">Essay Checker</h1>
+          <p data-lang-key="aiHeroSubtitle">Essay </p>
+
+          <div class="task-selector">
+            <button class="task-btn active" data-task="task2">Task 2</button>
+            <button class="task-btn" data-task="task1">Task 1</button>
+          </div>
+
+          <div id="task1-image-container" style="display:none;">
+            <label style="display:block; font-weight:600; color:#374151; margin-bottom:12px;">
+              Task 1 Image (Chart / Graph)
+            </label>
+            
+            <div class="custom-file-upload">
+              <label for="task1-image" class="upload-label">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span>Choose Image</span>
+                <small>PNG, JPG or WebP • Max 7MB</small>
+              </label>
+              <input 
+                type="file" 
+                id="task1-image" 
+                accept="image/png,image/jpeg,image/webp"
+              >
+            </div>
+
+            <div id="selected-file" class="selected-file"></div>
+          </div>
+          
+          <!-- New Topic Input -->
+          <div style="margin-bottom: 20px; text-align: left; max-width: 700px; margin-left: auto; margin-right: auto;">
+            <label style="display:block; margin-bottom: 8px; font-weight: 600; color:#374151;">Essay Topic / Question</label>
+            <input 
+              type="text" 
+              id="essay-topic" 
+              placeholder="Paste the full IELTS question here (e.g. Some people believe that...)"
+              style="width:100%; padding: 14px 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 1.05rem;">
+          </div>
+
+          <div class="textarea-wrapper">
+            <textarea id="essay-text" placeholder="Write or paste your IELTS essay here..."></textarea>
+          </div>
+        </section>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+    <button class="check-btn" id="check-btn" data-lang-key="aiAnalyzeBtn">Check Essay</button>
+  </div>
+
+  <!-- Full Screen Results Modal -->
+  <div class="modal" id="results-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Analysis Results</div>
+        <span class="close-modal" onclick="closeModal()">×</span>
+      </div>
+
+      <div class="criteria-grid" id="criteria-grid"></div>
+
+      <div class="mistakes-section">
+        <h3>Key Mistakes & Improvements</h3>
+        <ul class="feedback-list" id="feedback-list"></ul>
+      </div>
+
+      <button class="close-bottom-btn" onclick="closeModal()">Close & Edit Essay</button>
+    </div>
+  </div>
+
+  <script>
+    // Language System
+    const translations = {
+      en: {
+        aiHeroTitle: "Essay Checker",
+        aiHeroSubtitle: "Get IELTS band score estimates, detailed feedback and improvement suggestions for Task 1 and Task 2 essays",
+        aiAnalyzeBtn: "Check Essay"
+      },
+      ru: {
+        aiHeroTitle: "Essay Checker",
+        aiHeroSubtitle: "Получайте прогноз балла IELTS и рекомендации по улучшению эссе Task 1 и Task 2.",
+        aiAnalyzeBtn: "Проверить эссе"
+      },
+      uz: {
+        aiHeroTitle: "Essay Checker",
+        aiHeroSubtitle: "Task 1 va Task 2 essays uchun taxminiy IELTS band score va tavsiyalar oling.",
+        aiAnalyzeBtn: "Esseni tekshirish"
+      }
+    };
+
+    let currentTask = "task2";
+    let currentLang = localStorage.getItem('summage_preferred_lang') || 'en';
+
+    // Task Selector
+    document.querySelectorAll('.task-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.task-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        currentTask = btn.dataset.task;
+
+        const imageContainer = document.getElementById('task1-image-container');
+        if (imageContainer) {
+          imageContainer.style.display = currentTask === "task1" ? "block" : "none";
+        }
+      });
+    });
+
+    // Image Size Validation (7MB)
+    // Image Validation + Selected File Display
+    const imageInput = document.getElementById("task1-image");
+    const selectedFileDiv = document.getElementById("selected-file");
+
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+      
+      if (!file) {
+        selectedFileDiv.style.display = "none";
+        return;
+      }
+
+      if (file.size > 7 * 1024 * 1024) {
+        alert("Maximum image size is 7 MB.");
+        imageInput.value = "";
+        selectedFileDiv.style.display = "none";
+        return;
+      }
+
+      // Show selected filename
+      selectedFileDiv.textContent = `Selected: ${file.name}`;
+      selectedFileDiv.style.display = "flex";
+    });
+
+    // Image Compression (Recommended for Gemini)
+    async function compressImage(file) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        const reader = new FileReader();
+
+        reader.onload = e => {
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const maxWidth = 1400;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > maxWidth) {
+              height *= maxWidth / width;
+              width = maxWidth;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const compressed = canvas.toDataURL("image/jpeg", 0.82);
+            resolve(compressed.split(",")[1]);
+          };
+          img.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Update Language
+    function updateLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('summage_preferred_lang', lang);
+      document.querySelectorAll('[data-lang-key]').forEach(el => {
+        const key = el.dataset.langKey;
+        if (translations[lang]?.[key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+    }
+
+    // Back Function
+    function goBack() {
+      history.back();
+      setTimeout(() => {
+        if (window.location.href === document.referrer) {
+          window.location.assign('/learn/');
+        }
+      }, 100);
+    }
+
+    // Modal Functions
+    function showModal() {
+      document.getElementById('results-modal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('results-modal').style.display = 'none';
+    }
+
+    // Main Check Essay Handler
+    document.getElementById('check-btn').addEventListener('click', async () => {
+      const essay = document.getElementById('essay-text').value.trim();
+      if (!essay) {
+        alert("Please write or paste your essay first.");
+        return;
+      }
+
+      const checkBtn = document.getElementById('check-btn');
+      checkBtn.textContent = "Analyzing with Gemini...";
+      checkBtn.disabled = true;
+
+      try {
+        const topic = document.getElementById('essay-topic').value.trim();
+        const imageFile = imageInput.files[0];
+
+        let prompt = "";
+        let requestBody = {};
+
+        if (currentTask === "task1") {
+          // ==================== TASK 1 PROMPT ====================
+          prompt = `You are a certified IELTS Academic Writing Task 1 examiner.
+
+The user has provided:
+1. Task 1 question.
+2. Task 1 chart/image.
+3. Student response.
+
+First determine whether the uploaded image is genuinely an IELTS Task 1 visual (bar chart, line graph, table, pie chart, process diagram, map, mixed chart, etc.) or unrelated/invalid.
+
+Return ONLY valid JSON with this structure:
+{
+  "imageIssue": false,
+  "imageIssueFeedback": "",
+  "taskResponse": { "score": 7.0, "feedback": "" },
+  "coherence": { "score": 7.5, "feedback": "" },
+  "lexical": { "score": 7.0, "feedback": "" },
+  "grammar": { "score": 7.5, "feedback": "" },
+  "overallBand": 7.0,
+  "mistakes": ["..."],
+  "improvements": ["..."]
+}`;
+
+          const parts = [{ text: prompt + `\n\nTopic/Question: ${topic || "Not provided"}\n\nEssay:\n"""${essay}"""` }];
+
+          if (imageFile) {
+            const compressedBase64 = await compressImage(imageFile);
+            parts.push({
+              inline_data: {
+                mime_type: "image/jpeg",
+                data: compressedBase64
+              }
+            });
+          }
+
+          requestBody = {
+            contents: [{ parts: parts }]
+          };
+
+        } else {
+          // ==================== TASK 2 PROMPT ====================
+          prompt = `You are a certified IELTS examiner.
+
+Evaluate this IELTS Academic Writing Task 2 essay.
+
+Topic/Question: ${topic || "Not provided"}
+
+Essay: """${essay}"""
+
+Return ONLY valid JSON with this structure:
+{
+  "taskResponse": { "score": 7.5, "feedback": "" },
+  "coherence": { "score": 8.0, "feedback": "" },
+  "lexical": { "score": 7.0, "feedback": "" },
+  "grammar": { "score": 7.5, "feedback": "" },
+  "overallBand": 7.5,
+  "mistakes": ["Example mistake"],
+  "improvements": ["Example suggestion"]
+}`;
+
+          requestBody = {
+            contents: [{ parts: [{ text: prompt }] }]
+          };
+        }
+
+        const response = await fetch(
+          "https://YOUR-WORKER-NAME.workers.dev",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+          }
+        );
+
+        if (!response.ok) throw new Error("API Error (Check your API key)");
+
+        const data = await response.json();
+        const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        
+        const jsonStr = resultText.replace(/```json|```/g, '').trim();
+        const analysis = JSON.parse(jsonStr);
+
+        renderResults(analysis);
+
+      } catch (err) {
+        console.error(err);
+        alert("Failed to analyze. Please check your API key and try again.");
+      } finally {
+        checkBtn.textContent = "Check Essay";
+        checkBtn.disabled = false;
+      }
+    });
+
+    // Show selected filename
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+      if (!file) return;
+
+      if (file.size > 7 * 1024 * 1024) {
+        alert("Maximum image size is 7 MB.");
+        imageInput.value = "";
+        return;
+      }
+
+      // Show filename
+      const container = document.getElementById('task1-image-container');
+      container.setAttribute('data-filename', `Selected: ${file.name}`);
+    });
+
+    // Render Results
+    function renderResults(analysis) {
+      const grid = document.getElementById('criteria-grid');
+      grid.innerHTML = `
+        <div class="criteria-card">
+          <h3>Task Response</h3>
+          <div class="score">${analysis.taskResponse?.score || 0}</div>
+          <p>${analysis.taskResponse?.feedback || ""}</p>
+        </div>
+        <div class="criteria-card">
+          <h3>Coherence & Cohesion</h3>
+          <div class="score">${analysis.coherence?.score || 0}</div>
+          <p>${analysis.coherence?.feedback || ""}</p>
+        </div>
+        <div class="criteria-card">
+          <h3>Lexical Resource</h3>
+          <div class="score">${analysis.lexical?.score || 0}</div>
+          <p>${analysis.lexical?.feedback || ""}</p>
+        </div>
+        <div class="criteria-card">
+          <h3>Grammatical Range</h3>
+          <div class="score">${analysis.grammar?.score || 0}</div>
+          <p>${analysis.grammar?.feedback || ""}</p>
+        </div>
+      `;
+
+      const list = document.getElementById('feedback-list');
+      let html = '';
+
+      // Image Issue Warning (Task 1)
+      if (analysis.imageIssue) {
+        html += `
+          <li class="feedback-item" style="background:#fef3c7;border-left-color:#f59e0b;">
+            ⚠️ ${analysis.imageIssueFeedback || "The uploaded image does not appear to be a valid IELTS Task 1 chart."}
+          </li>`;
+      }
+
+      // Mistakes
+      if (analysis.mistakes?.length) {
+        analysis.mistakes.forEach(m => {
+          html += `<li class="feedback-item">❌ ${m}</li>`;
+        });
+      }
+
+      // Improvements
+      if (analysis.improvements?.length) {
+        analysis.improvements.forEach(i => {
+          html += `<li class="feedback-item" style="background:#f0fdf4;border-left-color:#10b981;">💡 ${i}</li>`;
+        });
+      }
+
+      list.innerHTML = html || '<li class="feedback-item">No specific feedback available.</li>';
+
+      showModal();
+    }
+
+    // Initialize
+    updateLanguage(currentLang);
+  </script>
+</body>
+</html>
