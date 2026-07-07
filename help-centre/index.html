@@ -377,7 +377,7 @@
             max-width: 90vw;
             margin: 0 auto;
             padding: 14px;
-            background: #f24b0b;
+            background: #f1192e;
             color: white;
             font-weight: 700;
             text-transform: uppercase;
@@ -386,7 +386,7 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 0 #c23a0a;
+            box-shadow: 0 4px 0 #c40e20;
             transition: all 0.25s ease;
             display: flex;
             align-items: center;
@@ -396,7 +396,7 @@
 
         .mobile-back-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 0 #c23a0a;
+            box-shadow: 0 6px 0 #c40e20;
         }
 
         @media (max-width: 900px) {
@@ -458,7 +458,7 @@
         <div class="faq-item">
             <div class="faq-question" data-key="q1">Is Summage Academy really free?</div>
             <div class="faq-answer">
-                <p data-key="a1">Yes! All courses, lessons, practice tests, and materials on Summage Academy are 100% free forever. We believe world-class education should be accessible to everyone, without any paywalls or subscriptions.</p>
+                <p data-key="a1">Yes! All courses, lessons, practice tests and materials on Summage Academy are 100% free forever. We believe world-class education should be accessible to everyone, without any paywalls or subscriptions.</p>
             </div>
         </div>
 
@@ -487,6 +487,13 @@
             <div class="faq-question" data-key="q5">Will there be more courses in the future?</div>
             <div class="faq-answer">
                 <p data-key="a5">Yes! We're constantly adding new content. Follow our updates to be the first to know about new courses and features.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" data-key="q6">How do you earn if platform is completely free?</div>
+            <div class="faq-answer">
+                <p data-key="a6">We run ads across pages of our platform. Everytime student sees one, we get paid for displaying that advertisement.</p>
             </div>
         </div>
 
@@ -544,15 +551,17 @@
                 faqTitle: "Frequently Asked Questions",
                 faqSubtitle: "Everything you need to know about Summage Academy",
                 q1: "Is Summage Academy really free?",
-                a1: "Yes! All courses, lessons, practice tests, and materials on Summage Academy are 100% free forever. We believe world-class education should be accessible to everyone, without any paywalls or subscriptions.",
+                a1: "Yes! All courses, lessons, practice tests and materials on Summage Academy are 100% free forever. We believe world-class education should be accessible to everyone, without any paywalls or subscriptions.",
                 q2: "Do you offer official IELTS certificates?",
                 a2: "No, we do not issue official IELTS certificates. We provide high-quality preparation courses to help you achieve your target band score. You'll need to register for the official IELTS test through British Council, IDP, or Cambridge.",
                 q3: "Can I use Summage on my phone?",
                 a3: "Absolutely! Our platform is fully responsive and works perfectly on phones, tablets, and computers. You can study anytime, anywhere.",
                 q4: "How is Summage different from other platforms?",
-                a4: "Unlike most platforms, we are completely free with no hidden fees. Our content is created by experienced IELTS instructors, and we focus on real exam strategies that actually work.",
+                a4: "Unlike most platforms, we are completely free with no hidden fees. Our content is created by experienced IELTS instructors and we focus on real exam strategies that actually work.",
                 q5: "Will there be more courses in the future?",
                 a5: "Yes! We're constantly adding new content. Follow our updates to be the first to know about new courses and features.",
+                q6: "How do you earn if platform is completely free?",
+                a6: "We run ads across pages of our platform. Everytime student sees one, we get paid for displaying that advertisement.",
                 contactBtn: "Still have questions? Contact Us"
             },
             ru: {
@@ -569,6 +578,8 @@
                 a4: "В отличие от большинства, мы полностью бесплатны. Контент создают опытные преподаватели IELTS с реальными стратегиями.",
                 q5: "Будут ли новые курсы?",
                 a5: "Да! Мы постоянно добавляем новый контент. Следите за обновлениями!",
+                q6: "Как платформа зарабатывает, если она полностью бесплатна?",
+                a6: "Мы размещаем рекламу на страницах нашей платформы. Каждый раз, когда ее видит студент, мы получаем оплату за показ этой рекламы.",
                 contactBtn: "Остались вопросы? Напишите нам"
             },
             uz: {
@@ -585,6 +596,8 @@
                 a4: "Ko'pchilikdan farqli o'laroq, biz to'liq bepulmiz. Kontent tajribali IELTS o'qituvchilari tomonidan yaratilgan.",
                 q5: "Kelajakda yangi kurslar bo'ladimi?",
                 a5: "Ha! Biz doimiy ravishda yangi kontent qo'shamiz. Yangiliklardan xabardor bo'ling!",
+                q6: "Agar platformani ishlatish tekin bo'lsa, siz qanday qilib pul ishlaysiz?",
+                a6: "Biz platforma bo'ylab reklama e'lonlarini joylaganmiz va har doim o'quvchi ulardan birini ko'rganda biz pul ishlaymiz.",
                 contactBtn: "Savollaringiz bormi? Biz bilan bog'laning"
             }
         };
@@ -599,6 +612,12 @@
                     window.location.assign('/');
                 }
             }, 50);
+        }
+
+        function playClick() {
+            const sound = new Audio('/assets/audio/click.mp3');
+            sound.volume = 0.1;
+            sound.play().catch(() => {});
         }
 
         function updateLanguage(lang) {
@@ -622,6 +641,7 @@
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const item = question.parentElement;
+                playClick()
                 item.classList.toggle('open');
             });
         });

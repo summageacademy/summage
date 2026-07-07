@@ -51,11 +51,11 @@
       <cite id="quoteAuthor">— Summage</cite>
     </div>
     <div class="nav">
-      <a href="#home" class="active" data-page="home"><i class="fas fa-home"></i> Home</a>
-      <a href="#tools" data-page="tools"><i class="fas fa-tools"></i> Tools</a>
-      <a href="#school" data-page="school"><i class="fas fa-briefcase"></i> Business School</a>
-      <a href="#blogs" data-page="blogs"><i class="fas fa-newspaper"></i> Blogs</a>
-      <a href="#profile" data-page="profile"><i class="fas fa-user-circle"></i> Profile</a>
+      <a href="#home" class="active" data-page="home" onclick="playClick()"><i class="fas fa-home"></i> Home</a>
+      <a href="#tools" data-page="tools" onclick="playClick()"><i class="fas fa-tools"></i> Tools</a>
+      <a href="#school" data-page="school" onclick="playClick()"><i class="fas fa-briefcase"></i> Business School</a>
+      <a href="#blogs" data-page="blogs" onclick="playClick()"><i class="fas fa-newspaper"></i> Blogs</a>
+      <a href="#profile" data-page="profile" onclick="playClick()"><i class="fas fa-user-circle"></i> Profile</a>
     </div>
   </div>
 
@@ -66,7 +66,7 @@
     </div>
 
     <div class="language-selector">
-      <button class="lang-btn" id="mobileLangBtn">
+      <button class="lang-btn" id="mobileLangBtn" onclick="playClick()">
         <img src="/assets/images/lang/globe.webp" alt="Language">
       </button>
       <div class="language-flags" id="mobileLangMenu">
@@ -78,7 +78,7 @@
   </div>
 
   <div class="desktop-lang-btn language-selector">
-    <button class="lang-btn" id="desktopLangBtn">
+    <button class="lang-btn" id="desktopLangBtn" onclick="playClick()">
       <img src="/assets/images/lang/globe.webp" alt="Language">
     </button>
     <div class="language-flags" id="desktopLangMenu">
@@ -89,17 +89,17 @@
   </div>
 
   <div class="desktop-lang-btn hq-float-btn" id="hqFloatBtn">
-      <button class="lang-btn" id="hqFloatBtn">
+      <button class="lang-btn" id="hqFloatBtn" onclick="playClick()">
           <img src="/assets/images/menu-icons/chat.webp" alt="HQ">
       </button>
   </div>
 
   <div class="mobile-bottom">
-    <a href="#school" data-page="school"><i class="fas fa-briefcase"></i></a>
-    <a href="#blogs"  data-page="blogs"><i class="fas fa-newspaper"></i></a>
-    <a href="#home"   class="active" data-page="home"><i class="fas fa-home"></i></a>
-    <a href="#tools"  data-page="tools"><i class="fas fa-tools"></i></a>
-    <a href="#profile" data-page="profile"><i class="fas fa-user"></i></a>
+    <a href="#school" data-page="school" onclick="playClick()"><i class="fas fa-briefcase"></i></a>
+    <a href="#blogs"  data-page="blogs" onclick="playClick()"><i class="fas fa-newspaper"></i></a>
+    <a href="#home"   class="active" data-page="home" onclick="playClick()"><i class="fas fa-home"></i></a>
+    <a href="#tools"  data-page="tools" onclick="playClick()"><i class="fas fa-tools"></i></a>
+    <a href="#profile" data-page="profile" onclick="playClick()"><i class="fas fa-user"></i></a>
   </div>
 
   <div class="main-view">
@@ -179,26 +179,36 @@
 
       <div class="tools-grid">
         <div class="tool-card" onclick="window.location.href='/learn/tools/essay-checker/'">
-          <img class="tool-icon" src="/assets/images/menu-icons/icon1.webp" alt="Summage AI">
+          <img class="tool-icon" src="/assets/images/menu-icons/icon1.webp" alt="Essay Checker by Summage Academy">
           <div class="tool-text">
             <div class="tool-title" data-lang-key="toolSummageAITitle">Essay Checker</div>
             <div class="tool-desc" data-lang-key="toolSummageAIDesc">Upload Your IELTS Writing Essay and Get An Estimated Band Score by AI</div>
           </div>
         </div>
 
-        <div class="tool-card" onclick="window.location.href='/learn/tools/quizzes/'">
-          <img class="tool-icon" src="/assets/images/menu-icons/quiz.webp" alt="Online Quizzes">
+        <div class="tool-card" onclick="window.location.href='/learn/tools/essay-tasks/'">
+          <img class="tool-icon" src="/assets/images/menu-icons/quiz.webp" alt="Essay Tasks by Summage Academy">
           <div class="tool-text">
-            <div class="tool-title" data-lang-key="toolQuizzesTitle">Online Quizzes</div>
-            <div class="tool-desc" data-lang-key="toolQuizzesDesc">Interactive quizzes to test and improve your knowledge.</div>
+            <div class="tool-title" data-lang-key="toolQuizzesTitle">IELTS-Based Essay Tasks</div>
+            <div class="tool-desc" data-lang-key="toolQuizzesDesc">Explore 100+ IELTS-Style Task 1 and Task 2 essay questions</div>
           </div>
         </div>
 
-        <div class="tool-card" onclick="window.location.href='/learn/tools/grammar-checker/'">
-          <img class="tool-icon" src="/assets/images/menu-icons/ai.webp" alt="Grammar Checker">
+        <!-- Vocabulary -->
+        <div id="vocabularyCard" class="tool-card" onclick="window.location.href='/learn/tools/vocabulary-zone/'">
+          <img class="tool-icon" src="/assets/images/menu-icons/icon4.webp" alt="Vocabulary List by Summage Academy">
           <div class="tool-text">
-            <div class="tool-title" data-lang-key="toolGrammarTitle">Grammar Checker</div>
-            <div class="tool-desc" data-lang-key="toolGrammarDesc">Instant grammar and style suggestions for your writing.</div>
+            <div class="tool-title" data-lang-key="toolVocabulary">Vocabulary Zone</div>
+            <div class="tool-desc" data-lang-key="toolVocabularyDesc">Discover and Memorize New Words in a Simple Ways</div>
+          </div>
+        </div>
+
+        <!-- Speaking -->
+        <div id="speakingCard" class="tool-card" onclick="openSpeakingTool()">
+          <img class="tool-icon" src="/assets/images/menu-icons/ai.webp" alt="Speaking Practice with AI by Summage Academy">
+          <div class="tool-text">
+            <div class="tool-title" data-lang-key="toolSpeaking">Speaking Practice</div>
+            <div class="tool-desc" data-lang-key="toolSpeakingDesc">Have a practice sessions with AI Speaking Examiner</div>
           </div>
         </div>
 
@@ -206,16 +216,54 @@
     </div>
 
     <div id="school" class="page">
-      <h2 data-lang-key="titleSchool">Business School</h2>
-      <p data-lang-key="descSchool">Professional courses designed for real-world success. Choose your direction and start today.</p>
+      <h2 data-lang-key="gameTitle">Games</h2>
+      <p style="margin-bottom:32px;" data-lang-key="gameDescription">
+      Play educational and fun games while learning with Summage.
+      </p>
 
+      <!-- Desktop Hearts (next to language button) -->
+      <div id="hearts-desktop-container" class="hearts-desktop hidden">
+        <div id="hearts-bar-desktop"></div>
+      </div>
+
+      <!-- Mobile Hearts -->
+      <div id="mobile-hearts-container" class="mobile-hearts-container">
+        <div id="hearts-bar-mobile"></div>
+      </div>
+
+      <div class="games-grid">
+
+        <div class="game-card">
+            <img src="/assets/images/blog-assets/synonym-sprinter.webp" class="game-image">
+            <div class="game-content">
+
+                <button class="game-btn" onclick="window.location.href='/learn/games/synonym-sprint/'" data-lang-key="playgame">
+                    Play ▶
+                </button>
+            </div>
+        </div>
+
+        <!--- -- <div class="game-card" onclick="window.location.href='games/grammar-hero.html'">
+            <img src="/assets/images/blog-assets/reading-in-nature-summage-academy.webp" class="game-image">
+
+            <div class="game-content">
+                <h3 class="game-title">Grammar Hero</h3>
+
+                <button class="game-btn" data-lang-key="playgame">
+                    Play ▶
+                </button>
+            </div>
+        </div> --->
+
+      </div>
+      
       <div class="school-courses">
         <div class="course-card" onclick="window.location.href='/learn/business-school/?id=management'">
           <div class="course-icon">📊</div>
           <div class="course-title" data-lang-key="courseManagementTitle">Management & Leadership</div>
           <div class="course-desc" data-lang-key="courseManagementDesc">Build strong teams, master strategy, and lead with confidence in any business environment.</div>
           <div class="course-btn" data-lang-key="courseBtn">Start Course</div>
-        </div> <!-- Add more courses here -->
+        </div>
       </div>
     </div>
 
@@ -235,12 +283,10 @@
       </div>
 
       <div class="blogs-grid">
-
-        <!-- CARD 1 -->
         <div class="blog-card"
             onclick="window.location.href='/learn/blogs/best-european-countries-for-international-students/'">
 
-          <img src="/assets/images/blog-assets/reading-in-nature-summage-academy.png"
+          <img src="/assets/images/blog-assets/reading-in-nature-summage-academy.webp"
               class="blog-image"
               alt="Speaking Tips">
 
@@ -254,11 +300,10 @@
 
         </div>
 
-        <!-- CARD 2 -->
         <div class="blog-card"
             onclick="window.location.href='/learn/blogs/common-english-grammar-mistakes-students-do/'">
 
-          <img src="/assets/images/blog-assets/made-grammar-mistake.png"
+          <img src="/assets/images/blog-assets/made-grammar-mistake.webp"
               class="blog-image"
               alt="Grammar Mistakes">
 
@@ -272,11 +317,10 @@
 
         </div>
 
-        <!-- CARD 3 -->
         <div class="blog-card"
             onclick="window.location.href='/learn/blogs/how-to-improve-ielts-speaking-band-score/'">
 
-          <img src="/assets/images/blog-assets/redy-in-speaking-exam-summage-academy.png"
+          <img src="/assets/images/blog-assets/redy-in-speaking-exam-summage-academy.webp"
               class="blog-image"
               alt="Vocabulary">
 
@@ -290,11 +334,10 @@
 
         </div>
 
-        <!-- CARD 4 -->
         <div class="blog-card"
             onclick="window.location.href='/learn/blogs/best-youtube-channels-for-imroving-english/'">
 
-          <img src="/assets/images/blog-assets/youtuber-redy-summage-academy.jpg"
+          <img src="/assets/images/blog-assets/youtuber-redy-summage-academy.webp"
               class="blog-image"
               alt="IELTS Writing">
 
@@ -310,7 +353,6 @@
 
       </div>
 
-      <!-- READ MORE BUTTON -->
       <div class="blogs-readmore-wrap">
         <button class="blogs-readmore-btn"
                 onclick="window.location.href='/learn/blogs/'">
@@ -376,7 +418,6 @@
     </div>
   </div>
 
-  <!-- HQ Welcome Modal -->
   <div id="hqModalBackdrop" class="modal-backdrop hidden">
     <div class="modal-content hq-modal">
       <button id="hqCloseBtn" class="hq-close-btn">×</button>
@@ -404,25 +445,6 @@
         <button class="hq-btn" onclick="window.location.href='/terms/'">
           <span data-lang-key="hqTerms">Terms of Service</span>
         </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="levelPopupBackdrop" class="modal-backdrop hidden">
-    <div class="modal-content level-popup">
-      <div class="level-header">
-        <h3 data-lang-key="levelHeaderTitle">Welcome to Summage!</h3>
-        <p data-lang-key="levelHeaderDesc">Please select your current English level so we can personalize your journey.</p>
-      </div>
-
-      <div class="level-options">
-        <button class="level-btn" data-level="beginner" data-lang-key="levelBeginner">Beginner</button>
-        <button class="level-btn" data-level="intermediate" data-lang-key="levelIntermediate">Intermediate</button>
-        <button class="level-btn" data-level="advanced" data-lang-key="levelAdvanced">Advanced</button>
-      </div>
-
-      <div class="level-footer">
-        <button id="saveLevelBtn" class="save-btn" disabled data-lang-key="btnDone">Done</button>
       </div>
     </div>
   </div>
@@ -497,13 +519,13 @@
         levelIntermediate: "Intermediate",
         levelAdvanced: "Advanced",
         toolSummageAITitle: "Essay Checker",
-        toolSummageAIDesc: "Upload Your IELTS Essay and Get An Estimated Band Score by AI",
-        toolQuizzesTitle: "Online Quizzes",
-        toolQuizzesDesc: "Interactive quizzes to test and improve your knowledge.",
-        toolVocabularyTitle: "Vocabulary Builder",
-        toolVocabularyDesc: "Expand your word power with daily exercises.",
-        toolGrammarTitle: "Grammar Checker",
-        toolGrammarDesc: "Instant grammar and style suggestions for your writing.",
+        toolSummageAIDesc: "Upload Your IELTS Essay and Get an Estimated Band Score by AI",
+        toolQuizzesTitle: "Essay Tasks",
+        toolQuizzesDesc: "100+ IELTS-Style Writing Essay Tasks for You to Practice",
+        toolVocabulary: "Vocabulary Zone",
+        toolVocabularyDesc: "Discover and Memorize New Words in a Simple Ways",
+        toolSpeaking: "Speaking AI",
+        toolSpeakingDesc: "Have a practice sessions with AI Speaking Examiner",
         levelHeaderTitle: "Welcome to Summage!",
         levelHeaderDesc: "Please select your current English level so we can personalize your journey.",
         btnDone: "Done",
@@ -523,7 +545,10 @@
         writing: "Writing",
         grammar: "Grammar",
         tests: "Test Centre",
-        academyListening: "Listening Academy"
+        academyListening: "Listening Academy",
+        playgame: "Play ▶",
+        gameTitle: "Summage Games",
+        gameDescription: "Play educational and fun games while learning with Summage"
       },
       ru: {
         navHome: "Главная",
@@ -567,12 +592,12 @@
         levelAdvanced: "Продвинутый",
         toolSummageAITitle: "Essay Checker",
         toolSummageAIDesc: "Отправьте Эссе по IELTS Writing и Получите Примерную Band Оценку",
-        toolQuizzesTitle: "Онлайн Викторины",
-        toolQuizzesDesc: "Интерактивные викторины для проверки и улучшения знаний.",
-        toolVocabularyTitle: "Построитель словаря",
+        toolQuizzesTitle: "Темы для Writing",
+        toolQuizzesDesc: "100+ заданий для эссе в стиле IELTS для подготовки",
+        toolVocabulary: "Построитель Словаря",
         toolVocabularyDesc: "Расширьте свой словарный запас с ежедневными упражнениями.",
-        toolGrammarTitle: "Проверка грамматики",
-        toolGrammarDesc: "Мгновенные предложения по грамматике и стилю для вашего письма.",
+        toolSpeaking: "Speaking AI",
+        toolSpeakingDesc: "Практика Speaking с ИИ-экзаменатором",
         levelHeaderTitle: "Добро пожаловать в Summage!",
         levelHeaderDesc: "Пожалуйста, выберите ваш текущий уровень английского, чтобы мы могли персонализировать ваш путь.",
         btnDone: "Готово",
@@ -591,7 +616,10 @@
         listening: "Аудирование",
         writing: "Writing",
         grammar: "Грамматика",
-        tests: "Тестовый Центр"
+        tests: "Тестовый Центр",
+        playgame: "Играть ▶",
+        gameTitle: "Summage Игры",
+        gameDescription: "Играйте в обучающие и весёлые игры и учитесь вместе с Summage"
       },
       uz: {
         navHome: "Bosh sahifa",
@@ -616,10 +644,6 @@
         btnVisit: "Tashrif",
         courseManagementTitle: "Menejment va Liderlik",
         courseManagementDesc: "Kuchli jamoalar tuzing, strategiyani o‘zlashtiring va har qanday biznes muhitida ishonch bilan rahbarlik qiling.",
-        courseMarketingTitle: "Raqamli Marketing",
-        courseMarketingDesc: "Kontent, reklama, SEO, ijtimoiy tarmoqlar va ma’lumotlarga asoslangan strategiyalar bilan brendlarni rivojlantiring.",
-        courseEntrepreneurshipTitle: "Tadbirkorlik",
-        courseEntrepreneurshipDesc: "Ideyadan ishga tushirishgacha — o‘z biznesingizni bosqichma-bosqich yarating, rivojlantiring va kengaytiring.",
         courseBtn: "Kursni boshlash",
         coins: "Tangalar",
         diamonds: "Olmoslar",
@@ -635,12 +659,12 @@
         levelAdvanced: "Yuqori",
         toolSummageAITitle: "Essay Checker",
         toolSummageAIDesc: "IELTS esengizni yuklang va AI orqali taxminiy balingizni bilib oling.",
-        toolQuizzesTitle: "Onlayn Testlar",
-        toolQuizzesDesc: "Bilimingizni sinash va yaxshilash uchun interaktiv testlar.",
-        toolVocabularyTitle: "Lug'at Quruvchi",
+        toolQuizzesTitle: "Writing Topshiriqlar",
+        toolQuizzesDesc: "Tayyorlanish uchun 100+ Writing Task 1 va Task 2 essay savollari",
+        toolVocabulary: "Lug'at Quruvchi",
         toolVocabularyDesc: "Kunlik mashqlar bilan so'z boyligingizni kengaytiring.",
-        toolGrammarTitle: "Grammatika Tekshiruvi",
-        toolGrammarDesc: "Yozishingiz uchun darhol grammatika va uslub takliflari.",
+        toolSpeaking: "Speaking AI",
+        toolSpeakingDesc: "AI Speaking examiner bilan Speakingni mashq qiling",
         levelHeaderTitle: "Summage ga xush kelibsiz!",
         levelHeaderDesc: "Yo'lingizni shaxsiylashtirish uchun hozirgi ingliz tili darajangizni tanlang.",
         btnDone: "Tayyor",
@@ -659,9 +683,24 @@
         listening: "Listening",
         writing: "Writing",
         grammar: "Grammar",
-        tests: "Test Markazi"
+        tests: "Test Markazi",
+        playgame: "O'ynash ▶",
+        gameTitle: "Interaktiv O'yinlar",
+        gameDescription: "Summage bilan birga bilim oling hamda qiziqarli o'yinlar o'ynang"
       }
     };
+
+    function playPop() {
+      const sound = new Audio('/assets/audio/pop.mp3');
+      sound.volume = 0.4;
+      sound.play().catch(() => {});
+    }
+
+    function playClick() {
+      const sound = new Audio('/assets/audio/click.mp3');
+      sound.volume = 0.1;
+      sound.play().catch(() => {});
+    }
 
     const LANG_KEY = 'summage_preferred_lang';
     let currentLang = localStorage.getItem(LANG_KEY) || 'en';
@@ -721,6 +760,168 @@
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         this.classList.add('active');
         document.getElementById(this.dataset.page).classList.add('active');
+      });
+    });
+
+    // ====================== HEARTS SYSTEM (Games Section Only) ======================
+    let hearts = 5;
+    let lastHeartReset = null;
+
+    // Boost Variables
+    let isHeartbarActive = false;
+    let heartbarExpiresAt = 0;
+
+    const fullHeart = '/assets/images/menu-icons/game-heart.webp';
+    const emptyHeart = '/assets/images/menu-icons/game-heart-empty.webp';
+
+    function renderHearts() {
+        const isBoosted = isHeartbarActive;
+
+        // Desktop Container + Hearts
+        const desktopContainer = document.getElementById('hearts-desktop-container');
+        const desktopBar = document.getElementById('hearts-bar-desktop');
+
+        if (desktopContainer && desktopBar) {
+            desktopBar.innerHTML = '';
+
+            for (let i = 1; i <= 5; i++) {
+                const img = document.createElement('img');
+                img.className = `heart ${isBoosted ? 'boosted' : ''}`;
+                img.src = (i <= hearts) ? fullHeart : emptyHeart;
+                desktopBar.appendChild(img);
+            }
+
+            // Duolingo-style Golden Shiny Container
+            if (isBoosted) {
+                desktopContainer.style.background = 'linear-gradient(225deg, #ffd900fc 39%, #ffc400fa 81%)';
+                desktopContainer.style.border = '3px solid #fcd34d';
+            } else {
+                desktopContainer.style.background = 'rgba(255,255,255,0.95)';
+                desktopContainer.style.border = '1px solid #e5e7eb';
+            }
+        }
+
+        // Mobile Container + Hearts
+        const mobileContainer = document.getElementById('mobile-hearts-container');
+        const mobileBar = document.getElementById('hearts-bar-mobile');
+
+        if (mobileContainer && mobileBar) {
+            mobileBar.innerHTML = '';
+
+            for (let i = 1; i <= 5; i++) {
+                const img = document.createElement('img');
+                img.className = `heart ${isBoosted ? 'boosted' : ''}`;
+                img.src = (i <= hearts) ? fullHeart : emptyHeart;
+                mobileBar.appendChild(img);
+            }
+
+            if (isBoosted) {
+                mobileContainer.style.background = 'linear-gradient(225deg, #ffd900fc 39%, #ffc400fa 81%)';
+                mobileContainer.style.border = '3px solid #FF8C00';
+            } else {
+                mobileContainer.style.background = 'rgba(255,255,255,0.97)';
+                mobileContainer.style.border = '1px solid #e5e7eb';
+                mobileContainer.style.boxShadow = 'none';
+            }
+        }
+    }
+
+    async function loadUserHearts() {
+        const user = auth.currentUser;
+        if (!user || !db) {
+            hearts = 5;
+            renderHearts();
+            return;
+        }
+
+        try {
+            const userRef = db.collection("users").doc(user.uid);
+            const docSnap = await userRef.get();
+
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                hearts = data.hearts !== undefined ? data.hearts : 5;
+                lastHeartReset = data.lastHeartReset || null;
+                checkAndResetHearts();
+            } else {
+                await userRef.set({ hearts: 5, lastHeartReset: getTodayDateString() });
+                hearts = 5;
+            }
+
+            await loadActiveBoosts();   // ← Load boost
+            renderHearts();
+        } catch (e) {
+            console.error("Hearts load error:", e);
+            hearts = 5;
+            renderHearts();
+        }
+    }
+
+    async function loadActiveBoosts() {
+        const user = auth.currentUser;
+        if (!user || !db) return;
+
+        try {
+            const snapshot = await db.collection('purchases')
+                .where('userId', '==', user.uid)
+                .get();
+
+            isHeartbarActive = false;
+            heartbarExpiresAt = 0;
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (data.itemId === "full_heartbar" && data.expiresAt > Date.now()) {
+                    isHeartbarActive = true;
+                    heartbarExpiresAt = data.expiresAt;
+                }
+            });
+
+            console.log("💎 Full Heartbar Active:", isHeartbarActive);
+            renderHearts();
+        } catch (e) {
+            console.error("Boost load error:", e);
+        }
+    }
+
+    function getTodayDateString() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function checkAndResetHearts() {
+      const today = getTodayDateString();
+      if (lastHeartReset !== today) {
+        hearts = 5;
+        lastHeartReset = today;
+        saveUserHearts();
+      }
+    }
+
+    async function saveUserHearts() {
+      const user = auth.currentUser;
+      if (!user || !db) return;
+      try {
+        await db.collection("users").doc(user.uid).set({
+          hearts: hearts,
+          lastHeartReset: getTodayDateString()
+        }, { merge: true });
+      } catch (e) {
+        console.error("Save hearts error:", e);
+      }
+    }
+
+    // Show/hide hearts when switching pages
+    function toggleHeartsVisibility() {
+      const isSchoolActive = document.getElementById('school').classList.contains('active');
+      
+      document.getElementById('hearts-desktop-container').classList.toggle('hidden', !isSchoolActive);
+      document.getElementById('mobile-hearts-container').style.display = isSchoolActive ? 'flex' : 'none';
+    }
+
+    // Hook into page navigation
+    document.querySelectorAll('[data-page]').forEach(link => {
+      link.addEventListener('click', () => {
+        setTimeout(toggleHeartsVisibility, 50);
       });
     });
 
@@ -819,6 +1020,7 @@
       }
       const spot = e.target.closest('.spot');
       if (!spot) return;
+      playPop();
       e.stopImmediatePropagation();
       document.querySelectorAll('.bubble').forEach(b => b.style.display = 'none');
       const bubble = spot.querySelector('.bubble');
@@ -875,6 +1077,69 @@
 
     });
 
+    let currentUserLevel = "beginner";
+
+    function arrangeToolsByLevel(level) {
+
+        currentUserLevel = level?.toLowerCase() || "beginner";
+
+        const toolsGrid = document.querySelector('.tools-grid');
+        const vocabularyCard = document.getElementById('vocabularyCard');
+        const speakingCard = document.getElementById('speakingCard');
+
+        if (!toolsGrid || !vocabularyCard || !speakingCard) return;
+
+        // Remove lock if exists
+        speakingCard.classList.remove('tool-locked');
+
+        const existingLock = speakingCard.querySelector('.lock-overlay');
+        if (existingLock) existingLock.remove();
+
+        // Beginner + Intermediate
+        if (
+            currentUserLevel === 'beginner' ||
+            currentUserLevel === 'intermediate'
+        ) {
+
+            toolsGrid.prepend(vocabularyCard);
+
+        } else {
+
+            toolsGrid.appendChild(vocabularyCard);
+
+        }
+
+        // Lock speaking for beginners
+        if (currentUserLevel === 'beginner') {
+
+            speakingCard.classList.add('tool-locked');
+
+            const lock = document.createElement('div');
+            lock.className = 'lock-overlay';
+            lock.innerHTML = `
+                <i class="fas fa-lock"></i>
+                <span>Unlock at Intermediate Level</span>
+            `;
+
+            speakingCard.appendChild(lock);
+        }
+    }
+
+    function openSpeakingTool() {
+
+        if (currentUserLevel === 'beginner') {
+
+            showToast(
+                'Reach Intermediate level to unlock Speaking Practice.',
+                'error'
+            );
+
+            return;
+        }
+
+        window.location.href = '/learn/tools/speaking-ai/';
+    }
+
     // ── Profile & Firebase logic ────────────────────────────────────
     auth.onAuthStateChanged(async (user) => {
       const photoEl   = document.getElementById('profilePhoto');
@@ -907,6 +1172,9 @@
           diamEl.textContent  = data.diamonds ?? 0;
 
           const levelKey = (data.level || "beginner").toLowerCase();
+
+          arrangeToolsByLevel(levelKey);
+
           const levelMap = {
             "beginner":     "levelBeginner",
             "intermediate": "levelIntermediate",
@@ -1169,46 +1437,6 @@ document.addEventListener('click', (e) => {
     modalBackdrop?.addEventListener('click', e => { if (e.target === modalBackdrop) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    // Level popup
-    function showLevelPopup() {
-      document.getElementById('levelPopupBackdrop').classList.remove('hidden');
-      document.body.classList.add('menu-open');
-    }
-
-    function hideLevelPopup() {
-      document.getElementById('levelPopupBackdrop').classList.add('hidden');
-      document.body.classList.remove('menu-open');
-    }
-
-    let selectedLevel = null;
-
-    document.querySelectorAll('.level-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedLevel = btn.dataset.level;
-        document.getElementById('saveLevelBtn').disabled = false;
-      });
-    });
-
-    document.getElementById('saveLevelBtn')?.addEventListener('click', async () => {
-      if (!selectedLevel) return;
-      const user = auth.currentUser;
-      if (!user) return showToast("Please log in first.", "error");
-      try {
-        await db.collection('users').doc(user.uid).update({ level: selectedLevel, englishLevel: selectedLevel, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
-        const levelEl = document.getElementById('englishLevel');
-        if (levelEl) {
-          const levelMap = { beginner: 'levelBeginner', intermediate: 'levelIntermediate', advanced: 'levelAdvanced' };
-          const transKey = levelMap[selectedLevel] || 'levelBeginner';
-          levelEl.textContent = translations[currentLang][transKey] || selectedLevel;
-        }
-        hideLevelPopup();
-      } catch (err) {
-        console.error("Error saving level:", err);
-      }
-    });
-
     auth.onAuthStateChanged(async (user) => {
       if (!user) return;
       try {
@@ -1315,6 +1543,18 @@ document.addEventListener('click', (e) => {
           toast.classList.remove('show');
       }, duration);
     }
+
+    // Initialize hearts when user is loaded
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            loadUserHearts();
+        } else {
+            hearts = 5;
+            renderHearts();
+        }
+        toggleHeartsVisibility();
+    });
+
     // Blog search
     function initBlogSearch() {
       const searchInput = document.getElementById('blogSearch');

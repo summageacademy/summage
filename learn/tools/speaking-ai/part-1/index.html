@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Speaking Practice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans', system-ui, sans-serif;
+            background: #fffaf5;
+            color: #1f2937;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: all 0.6s ease;
+        }
+        .hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+        .hero { text-align: center; max-width: 420px; }
+        .illustration {
+            width: 260px; 
+            height: 240px;
+            background: url('/assets/images/illustrations/redy_trustworthy.webp') center/cover;
+            margin: 0 auto 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.4rem;
+            color: #f24b0b;
+            margin-bottom: 12px;
+        }
+
+        .instructions {
+            max-width: 520px;
+            background: white;
+            border-radius: 20px;
+            padding: 32px 28px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: left;
+        }
+
+        .instructions h2 {
+            font-family: 'Poppins', sans-serif;
+            color: #f24b0b;
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 1.8rem;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .instructions li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .instructions li:last-child { border-bottom: none; }
+        .instructions li::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+
+        .question-screen { padding-top: 90px; }
+        .question-area { text-align: center; max-width: 680px; padding: 0 20px; }
+        .question-text { 
+            font-size: 1.35rem; 
+            line-height: 1.45; 
+            color: #1f2937; 
+            margin-bottom: 25px; 
+            min-height: 120px;
+        }
+        .timer { font-size: 2.8rem; font-weight: 700; color: #f24b0b; margin-bottom: 20px; }
+        .status { margin: 15px 0; font-weight: 600; color: #ef4444; }
+
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 110px;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid #e5e7eb;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        #mic-btn {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: #ef4444;
+            border: none;
+            box-shadow: 0 10px 25px rgba(239,68,68,0.4);
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0;
+        }
+        #mic-btn.recording {
+            background: #22c55e;
+            animation: pulse 1.5s infinite;
+        }
+
+        #mic-btn:disabled{
+            cursor: default;
+            opacity: 1;
+        }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+
+        .modal {
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.85);
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            width: min(92vw, 900px);
+            max-height: 90vh;
+
+            border-radius: 24px;
+            padding: 42px;
+
+            text-align: center;
+            position: relative;
+
+            overflow-y: auto;
+        }
+
+        .close-modal { 
+            position: absolute; 
+            top: 14px; 
+            right: 20px; 
+            font-size: 2rem; 
+            cursor: pointer; 
+            color: #666; 
+        }
+        .band-score { font-size: 5.2rem; font-weight: 800; color: #f24b0b; margin: 15px 0; }
+    
+        /* Add these styles */
+        @media (max-width: 640px) {
+            .instructions {
+                padding: 28px 20px;
+                margin: 0 10px;
+                max-width: 100%;
+            }
+
+            .instructions h2 {
+                font-size: 1.65rem;
+                margin-bottom: 20px;
+            }
+
+            .instructions li {
+                padding: 10px 0;
+                font-size: 1.05rem;
+            }
+
+            /* Make the button smaller on mobile */
+            #instructions-screen button {
+                padding: 16px 60px;
+                font-size: 1.2rem;
+                margin-top: 30px;
+            }
+        }
+
+        /* Optional: Make the whole screen padding smaller on mobile */
+        @media (max-width: 640px) {
+            .screen {
+                padding: 15px;
+            }
+        }
+
+        .page-loader {
+                    position: fixed;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                    opacity: 1;
+                    transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .page-loader.hidden {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+
+                #splashOwl {
+                    transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    will-change: opacity, transform;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    #splashOwl,
+                    .page-loader,
+                    .page-loader.hidden {
+                        transition: none !important;
+                        opacity: 1;
+                        transform: none;
+                    }
+                }
+
+                #mic-btn img {
+                    width: 36px;
+                    height: 36px;
+                    object-fit: contain;
+                    object-position: center;
+                    pointer-events: none;
+
+                    filter: brightness(0) invert(1);
+
+                    transition: transform .25s ease;
+                }
+
+                #mic-btn.recording img{
+                    transform:scale(1.1);
+                }
+    </style>
+</head>
+<body>
+
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen">
+        <div class="hero">
+            <div class="illustration"></div>
+            <h1>ARE YOU READY?</h1>
+        </div>
+        <button onclick="showInstructions()" style="margin-top:50px; padding:18px 70px; background:#f24b0b; color:white; border:none; border-radius:50px; font-size:1.3rem; font-weight:700; box-shadow:0 4px 0 #c23a0a;">
+            START THE TEST
+        </button>
+    </div>
+
+    <!-- Instructions Screen -->
+    <div id="instructions-screen" class="screen hidden">
+        <div class="instructions">
+            <h2>Before You Start</h2>
+            <ul>
+                <li>Speak clearly and at a natural volume</li>
+                <li>Stay in a quiet environment with minimal background noise</li>
+                <li>Press the microphone button to start and stop recording</li>
+                <li>Allow microphone access when your browser asks</li>
+                <li>Speak naturally as you would in a real IELTS test</li>
+            </ul>
+        </div>
+
+        <button onclick="startQuestions()" 
+                style="margin-top:40px; padding:18px 70px; background:#22c55e; color:white; border:none; border-radius:50px; font-size:1.3rem; font-weight:700; box-shadow:0 4px 0 #15803d;">
+            UNDERSTOOD
+        </button>
+    </div>
+
+    <!-- Question Screen -->
+    <div id="question-screen" class="screen hidden question-screen">
+        <div class="question-area">
+            <div class="timer" id="timer">25</div>
+            <div class="question-text" id="question-text"></div>
+            <div class="status" id="status">Click mic to start speaking</div>
+        </div>
+    </div>
+
+    <!-- Good Job Screen -->
+    <div id="goodjob-screen" class="screen hidden">
+        <div class="hero">
+            <div class="illustration" style="background-image: url('/assets/images/illustrations/redy_winning.webp')"></div>
+            <h1 style="color:#22c55e;">WELL DONE!</h1>
+            <p style="font-size:1.25rem; margin:20px 0 40px;">You've completed the speaking test</p>
+        </div>
+        <button onclick="showFeedback()" style="padding:18px 60px; background:#22c55e; color:white; border:none; border-radius:50px; font-size:1.3rem; font-weight:700; box-shadow:0 4px 0 #15803d;">
+            GET DETAILED FEEDBACK
+        </button>
+    </div>
+
+    <div class="bottom-bar" id="bottom-bar">
+        <button id="mic-btn">
+            <img
+                src="/assets/images/menu-icons/mic.webp"
+                alt="Microphone"
+                id="mic-icon">
+        </button>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <div id="modal-content">
+                <div id="loading-state">
+                    <p style="margin:20px 0; color:#666;">AI Examiner is analyzing your audio...</p>
+                </div>
+                <div id="result-state" style="display:none;">
+                    <h2 style="color:#f24b0b;">Your Result</h2>
+                    <div id="band-score" class="band-score">7.0</div>
+                    <div id="feedback-text" style="margin:25px 0; font-size:1.1rem; line-height:1.6; color:#444; text-align:left;"></div>
+                    <button onclick="restartTest()" style="width:100%; padding:18px; background:#f24b0b; color:white; border:none; border-radius:50px; font-size:1.2rem; font-weight:700; margin-top:20px; box-shadow: 0 4px 0 #c23a0a;">
+                        BACK TO MENU
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="final-screen" class="screen hidden">
+
+        <div class="desktop-ad left-ad"></div>
+
+        <div class="hero">
+
+            <div class="illustration"
+                style="background-image:url('/assets/images/illustrations/redy_winning.webp');
+                        width:320px;
+                        height:290px;">
+            </div>
+
+            <h1 style="color:#22c55e;">
+                Thank you for practising!
+            </h1>
+
+            <p style="margin:25px 0 40px;font-size:1.15rem;">
+                Keep practising every day to improve your IELTS Speaking score.
+            </p>
+
+            <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;">
+
+                <button onclick="startQuestions()">
+                    Practice Again
+                </button>
+
+                <button onclick="window.location.href='index.html'">
+                    Back to Menu
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="desktop-ad right-ad"></div>
+
+    </div>
+
+    <script>
+        const questionsPool = [
+            "Tell me about your hometown.",
+            "What do you like most about your hometown?",
+            "Do you think your hometown is a good place for young people?",
+            "What kind of work do you do?",
+            "Do you enjoy your current job or studies?",
+            "How do you usually spend your weekends?",
+            "What kind of music do you like?",
+            "Do you enjoy travelling?",
+            "Tell me about your favourite season.",
+            "How important is technology in your daily life?"
+        ];
+
+        let currentQuestions = [], currentIndex = 0, answers = [], mediaRecorder, audioChunks = [];
+        let timerInterval = null, stream = null;
+
+        const startScreen = document.getElementById('start-screen');
+        const instructionsScreen = document.getElementById('instructions-screen');
+        const questionScreen = document.getElementById('question-screen');
+        const goodjobScreen = document.getElementById('goodjob-screen');
+        const timerEl = document.getElementById('timer');
+        const questionTextEl = document.getElementById('question-text');
+        const statusEl = document.getElementById('status');
+        const micBtn = document.getElementById('mic-btn');
+        const bottomBar = document.getElementById('bottom-bar');
+        const modal = document.getElementById('feedback-modal');
+
+        function showInstructions() {
+            startScreen.classList.add('hidden');
+            instructionsScreen.classList.remove('hidden');
+        }
+
+        function startQuestions() {
+            currentQuestions = questionsPool.sort(() => 0.5 - Math.random()).slice(0, 4);
+            currentIndex = 0;
+            answers = [];
+            
+            instructionsScreen.classList.add('hidden');
+            questionScreen.classList.remove('hidden');
+            bottomBar.style.display = 'flex';
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            questionTextEl.textContent = currentQuestions[currentIndex];
+            statusEl.textContent = "Click mic to start recording";
+            resetTimer();
+            audioChunks = [];
+        }
+
+        function resetTimer() {
+            let timeLeft = 25;
+            timerEl.textContent = timeLeft;
+            
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+
+                    if (mediaRecorder && mediaRecorder.state === "recording") {
+                        stopRecording();
+                    } else {
+                        // user never started recording
+                        answers[currentIndex] = {
+                            question: currentQuestions[currentIndex],
+                            audioBase64: null,
+                            mimeType: null
+                        };
+
+                        currentIndex++;
+
+                        if (currentIndex < currentQuestions.length) {
+                            loadQuestion();
+                        } else {
+                            finishTest();
+                        }
+                    }
+                }
+            }, 1000);
+        }
+
+        async function toggleRecording() {
+
+            // Already recording? Ignore extra clicks.
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                return;
+            }
+
+            await startRecording();
+
+        }
+
+        async function startRecording() {
+            console.log("Recording started");
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    saveAnswer(audioBlob);
+                };
+
+                mediaRecorder.start();
+                micBtn.classList.add("recording");
+                micBtn.disabled = true;
+                statusEl.textContent = "Recording... Speak naturally";
+                micBtn.classList.add('recording');
+                statusEl.textContent = "Recording... Speak naturally";
+            } catch (err) {
+                console.error(err);
+                alert("Microphone access denied or not available.\n\nPlease allow microphone permission and try again.");
+            }
+        }
+
+        function stopRecording() {
+
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                stream?.getTracks().forEach(track => track.stop());
+            }
+
+            micBtn.classList.remove("recording");
+            micBtn.disabled = false;
+
+            statusEl.textContent = "Processing...";
+        }
+
+        async function saveAnswer(audioBlob) {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                const base64Audio = reader.result.split(',')[1];
+                
+                answers[currentIndex] = {
+                    question: currentQuestions[currentIndex],
+                    audioBase64: base64Audio,
+                    mimeType: "audio/webm"
+                };
+
+                currentIndex++;
+
+                if (currentIndex < currentQuestions.length) {
+                    setTimeout(() => {
+                        loadQuestion();
+                    }, 400);
+                } else {
+                    setTimeout(() => {
+                        finishTest();
+                    }, 500);
+                }
+            };
+            reader.readAsDataURL(audioBlob);
+        }
+
+        function finishTest() {
+            bottomBar.style.display = 'none';
+            questionScreen.classList.add('hidden');
+            goodjobScreen.classList.remove('hidden');
+        }
+
+        // Rest of your functions (showFeedback, closeModal, restartTest) remain the same
+        async function showFeedback() {
+            goodjobScreen.classList.add('hidden');
+            modal.style.display = 'flex';
+            document.getElementById('loading-state').style.display = 'block';
+            document.getElementById('result-state').style.display = 'none';
+
+            let parts = [];
+
+            currentQuestions.forEach((q, i) => {
+                parts.push({ text: `Question ${i+1}: ${q}` });
+                if (answers[i]) {
+                    parts.push({
+                        inlineData: {
+                            mimeType: answers[i].mimeType,
+                            data: answers[i].audioBase64
+                        }
+                    });
+                }
+            });
+
+            const prompt = `
+                You are a strict IELTS Speaking examiner.
+
+                If the audio contains no speech, only silence, background noise, or cannot be evaluated,
+                return exactly:
+
+                {
+                "bandScore": 0,
+                "feedback": "No speech was detected.",
+                "advice": "Please answer all questions clearly and try again."
+                }
+
+                Otherwise, evaluate pronunciation, fluency, grammar, vocabulary and coherence.
+
+                Return ONLY valid JSON:
+
+                {
+                "bandScore": number,
+                "feedback": "...",
+                "advice": "..."
+                }
+                `;
+
+            try {
+                const res = await fetch("https://summage-ai.summage-socials.workers.dev", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [...parts, { text: prompt }]
+                        }]
+                    })
+                });
+
+                const data = await res.json();
+                const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '{"bandScore":6.0,"feedback":"Good attempt","advice":"Keep practicing"}';
+                
+                const result = JSON.parse(textResponse.replace(/```json|```/g, '').trim());
+
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('result-state').style.display = 'block';
+                document.getElementById('band-score').textContent = result.bandScore.toFixed(1);
+                document.getElementById('feedback-text').innerHTML = `
+                    <strong>Overall Band:</strong> ${result.bandScore}<br><br>
+                    ${result.feedback}<br><br>
+                    <strong>Advice:</strong> ${result.advice}
+                `;
+            } catch (e) {
+                console.error(e);
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('result-state').style.display = 'block';
+                document.getElementById('band-score').textContent = "0.0";
+                document.getElementById('feedback-text').innerHTML = "There was an error processing your responses.<br><br>Please try again.";
+            }
+        }
+
+        function closeModal() { modal.style.display = 'none'; window.location.href = "/learn/tools/speaking-ai" }
+
+        function restartTest() {
+            closeModal();
+            startScreen.classList.remove('hidden');
+            goodjobScreen.classList.add('hidden');
+            instructionsScreen.classList.add('hidden');
+            // Reset mic state
+            micBtn.classList.remove('recording');
+        }
+
+        // Event Listener
+        micBtn.addEventListener('click', toggleRecording);
+        micBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            toggleRecording();
+        }, { passive: false });
+
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) hideLoader();
+            else setTimeout(hideLoader, MIN_DURATION);
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>

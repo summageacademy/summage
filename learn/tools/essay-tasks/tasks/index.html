@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing - Summage Academy</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-LZP4KSPR1V');
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html {
+            overflow-y: scroll;
+            scrollbar-width: none;
+        }
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==================== NAVBAR (Exactly as requested) ==================== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5vw;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-img {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(242, 75, 11, 0.18);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+        }
+
+        .back-btn {
+            padding: 12px 32px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-container {
+            flex: 1;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 80px 5vw 120px;
+            width: 100%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .page-title {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #06a87c;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 32px;
+        }
+
+        .task-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 28px 60px rgba(0, 0, 0, 0.14);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 32px 28px;
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 14px;
+        }
+
+        .card-desc {
+            color: #666;
+            line-height: 1.65;
+            font-size: 1.05rem;
+        }
+
+                /* Practice View */
+        .practice-view {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 100px;
+        }
+
+        .practice-image-container {
+            position: relative;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 860px;
+            text-align: center;
+        }
+
+        .practice-image {
+            max-width: 100%;
+            max-height: 560px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            display: block;
+            width: 100%;
+        }
+
+        .download-btn {
+            margin-top: 16px;
+            padding: 14px 32px;
+            background: #7d2eeb;
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #5a18b8;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #5a18b8;
+        }
+
+        .prompt-box {
+            background: white;
+            max-width: 860px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+            line-height: 1.75;
+            font-size: 1.1rem;
+            color: #222;
+            position: relative;
+            padding-bottom: 70px; /* space for copy button */
+        }
+
+        .copy-btn {
+            margin-top: 16px;
+            padding: 14px 32px;
+            width: 100%;
+            background: #7d2eeb;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #5a18b8;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: #7d2eeb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #5a18b8;
+        }
+
+        @media (max-width: 768px) {
+            .download-btn {
+                max-width: 100%;
+            }
+        }
+
+        /* Sticky Bottom Bar */
+        .sticky-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 20px 5vw;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+        }
+
+        .bottom-back-btn {
+            width: 90%;
+            max-width: 600px;
+            padding: 16px 24px;
+            background: #06a87c;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #058f68;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bottom-back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #058f68;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .main-container {
+                padding: 60px 5vw 100px;
+            }
+            .page-title {
+                font-size: 2.25rem;
+            }
+        }
+
+        /* ── CUSTOM TOAST NOTIFICATION ───────────────────────────────── */
+        .custom-toast {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+            padding: 16px 20px;
+            max-width: 380px;
+            width: 90%;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px solid #e5e7eb;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            bottom: 30px;
+        }
+
+        .custom-toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+            pointer-events: all;
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+        }
+
+        .toast-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: contain;
+            flex-shrink: 0;
+            padding: 2px;
+        }
+
+        .toast-message {
+            font-size: 1.02rem;
+            font-weight: 500;
+            color: #1f2937;
+            line-height: 1.45;
+            flex: 1;
+        }
+
+        /* Success Style */
+        .toast-success {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .toast-success .toast-icon {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+        }
+
+        /* Error Style */
+        .toast-error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .toast-error .toast-icon {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .custom-toast {
+                bottom: 88px;
+            }
+        }
+
+        /* Loader */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    </style>
+</head>
+<body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container" onclick="window.location.href='https://summage.org'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Academy Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+        <button class="back-btn" onclick="window.location.href = '/learn/tools/essay-tasks/'">Back</button>
+    </nav>
+
+    <div class="main-container">
+        <!-- List View -->
+        <div id="listView">
+            <div class="page-header">
+                <h1 id="pageTitle" class="page-title">IELTS Writing Task 1</h1>
+                <p id="pageSubtitle" class="page-subtitle">Practice describing visual data with accuracy and clarity</p>
+            </div>
+            <div class="cards-grid" id="cardsContainer"></div>
+        </div>
+
+        <!-- Practice View -->
+        <div id="practiceView" class="practice-view">
+            <div class="practice-image-container">
+                <img id="practiceImage" class="practice-image" src="" alt="">
+                <button id="downloadBtn" class="download-btn" onclick="downloadImage()">Download Image</button>
+            </div>
+            <div class="prompt-box" id="promptBox">Loading prompt...</div>
+        </div>
+    </div>
+
+    <!-- Sticky Bottom Bar -->
+    <div id="stickyBottom" class="sticky-bottom">
+        <button class="bottom-back-btn" onclick="backToList(); playClick()">Back to All Tasks</button>
+    </div>
+
+    <!-- Custom Toast Notification -->
+    <div id="customToast" class="custom-toast">
+        <div class="toast-content">
+            <img id="toastIcon" class="toast-icon" src="" alt="">
+            <div id="toastMessage" class="toast-message"></div>
+        </div>
+    </div>
+
+    <script>
+        const BASE_PATH = "/assets/ielts_task1_pro/";
+
+        function getUrlParameter(name) {
+            return new URLSearchParams(window.location.search).get(name);
+        }
+
+        function playClick() {
+            const sound = new Audio('/assets/audio/click.mp3');
+            sound.volume = 0.1;
+            sound.play().catch(() => {});
+        }
+
+        // Improved Copy Function with Fallback
+        async function copyToClipboard(text) {
+            if (!text) {
+                showToast('Nothing to copy', 'error');
+                return;
+            }
+
+            try {
+                // Primary method
+                await navigator.clipboard.writeText(text);
+                playClick()
+                showToast('Prompt copied to clipboard!', 'success');
+            } catch (err) {
+                console.warn('Clipboard API failed, trying fallback...', err);
+                
+                // Fallback method (works better in many cases)
+                try {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    textArea.style.top = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    
+                    const successful = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+
+                    if (successful) {
+                        playClick()
+                        showToast('Prompt copied to clipboard!', 'success');
+                    } else {
+                        throw new Error('execCommand failed');
+                    }
+                } catch (fallbackErr) {
+                    console.error('Both copy methods failed', fallbackErr);
+                    showToast('Failed to copy. Please select and copy manually.', 'error');
+                }
+            }
+        }
+
+        function correctSound() {
+            const sound = new Audio('/assets/audio/correct.mp3');
+            sound.volume = 0.1;
+            sound.play().catch(() => {});
+        }
+
+        function incorrectSound() {
+                const sound = new Audio('/assets/audio/error.mp3');
+                sound.volume = 0.1;
+                sound.play().catch(() => {});
+            }
+
+        // Toast Function (Make sure this is updated too)
+        function showToast(message, type = 'success', duration = 3000) {
+            const toast = document.getElementById('customToast');
+            const icon = document.getElementById('toastIcon');
+            const msg = document.getElementById('toastMessage');
+
+            toast.classList.remove('toast-success', 'toast-error', 'show');
+
+            if (type === 'success') {
+                icon.src = '/assets/images/menu-icons/check.png';
+                correctSound()
+                toast.classList.add('toast-success');
+            } else {
+                icon.src = '/assets/images/menu-icons/close.png';
+                incorrectSound()
+                toast.classList.add('toast-error');
+            }
+
+            msg.textContent = message;
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // Download Image
+        function downloadImage() {
+            const img = document.getElementById('practiceImage');
+            if (!img || !img.src) {
+                showToast('No image to download', 'error');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = `IELTS_Task1_${new Date().toISOString().slice(0,10)}_Summage_Academy.webp`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast('Image downloaded successfully!', 'success');
+        }
+
+        async function loadTask1Graphs() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= 50; i++) {
+                const num = String(i).padStart(3, '0');
+                const imagePath = `${BASE_PATH}task1_${num}.webp`;
+
+                const card = document.createElement('div');
+                card.className = 'task-card';
+                card.innerHTML = `
+                    <img src="${imagePath}" class="card-image" 
+                         onerror="this.style.opacity='0.4'; this.src='/assets/logo.webp';">
+                    <div class="card-content" onclick="playClick()">
+                        <div class="card-title">Task ${i}</div>
+                        <div class="card-desc">Click to practice summarizing this graph</div>
+                    </div>
+                `;
+                card.onclick = () => openTask1Practice(i);
+                container.appendChild(card);
+            }
+        }
+
+        async function openTask1Practice(index) {
+            const num = String(index).padStart(3, '0');
+            const imagePath = `${BASE_PATH}task1_${num}.webp`;
+            const promptPath = `${BASE_PATH}task1_${num}_prompt.txt`;
+
+            document.getElementById('listView').style.display = 'none';
+            document.getElementById('practiceView').style.display = 'flex';
+            document.getElementById('stickyBottom').style.display = 'flex';
+
+            // Load Image
+            document.getElementById('practiceImage').src = imagePath;
+            document.getElementById('downloadBtn').style.display = 'block';
+
+            // Load Prompt
+            const promptBox = document.getElementById('promptBox');
+            promptBox.innerHTML = `<p><em>Loading prompt from file...</em></p>`;
+
+            try {
+                const response = await fetch(promptPath, { cache: 'no-cache' });
+                
+                if (response.ok) {
+                    let promptText = await response.text();
+                    promptText = promptText.trim();
+
+                    promptBox.innerHTML = `
+                        <h2 style="color:#06a87c; margin-bottom:20px;">IELTS Writing Task 1</h2>
+                        <div style="white-space: pre-line; line-height: 1.85; margin-bottom: 40px;">${promptText}</div>
+                        <p style="margin-bottom: 20px; color:#06a87c; font-weight:600;">Write at least 150 words.</p>
+                        <button id="copyBtn" class="copy-btn">Copy Prompt</button>
+                    `;
+
+                    // Attach event listener after inserting HTML
+                    document.getElementById('copyBtn').addEventListener('click', () => {
+                        copyToClipboard(promptText);
+                    });
+
+                } else {
+                    throw new Error();
+                }
+            } catch (error) {
+                console.warn("Could not load prompt file:", error);
+                
+                const defaultPrompt = `The image below shows some information.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.`;
+                
+                promptBox.innerHTML = `
+                    <h2 style="color:#06a87c; margin-bottom:20px;">IELTS Writing Task 1</h2>
+                    <div style="white-space: pre-line; line-height: 1.85; margin-bottom: 40px;">${defaultPrompt}</div>
+                    <p style="margin-bottom: 20px; color:#06a87c; font-weight:600;">Write at least 150 words.</p>
+                    <button id="copyBtn" onclick="playClick()" class="copy-btn">Copy Prompt</button>
+                `;
+
+                document.getElementById('copyBtn').addEventListener('click', () => {
+                    copyToClipboard(defaultPrompt);
+                });
+            }
+        }
+
+        // Task 2 Prompts
+        const task2Prompts = [
+            { id: 1, title: "Opinion Essay", prompt: "Some people believe that technology has made our lives too complex. Others think it has made life easier. Discuss both views and give your own opinion." },
+            { id: 2, title: "Discussion Essay", prompt: "Some people think that the best way to increase road safety is to increase the minimum legal age for driving cars or riding motorbikes. To what extent do you agree or disagree?" },
+            { id: 3, title: "Advantages & Disadvantages", prompt: "Today many people prefer to work from home instead of going to an office. What are the advantages and disadvantages of working from home?" },
+            { id: 4, title: "Opinion Essay", prompt: "Some people believe that children should start learning a foreign language at primary school. Do you agree or disagree?" },
+            { id: 5, title: "Problem & Solution", prompt: "Many cities around the world are facing the problem of traffic congestion. What are the causes of this issue and what measures can be taken to solve it?" },
+            { id: 6, title: "Discussion Essay", prompt: "Some people think that parents should teach children how to be good members of society. Others believe that schools should do this. Discuss both views and give your opinion." },
+            { id: 7, title: "Opinion Essay", prompt: "In many countries, the amount of crime is increasing. What do you think are the main causes of this problem and what solutions can you suggest?" },
+            { id: 8, title: "Advantages & Disadvantages", prompt: "In recent years, many people have started using social media as their main source of news. What are the advantages and disadvantages of this trend?" },
+            { id: 9, title: "Two-part Question", prompt: "Some people believe that the best way to reduce crime is to give longer prison sentences. Others think that there are better alternatives. Discuss both views and give your opinion." },
+            { id: 10, title: "Opinion Essay", prompt: "Governments should spend more money on education than on recreation and sports. Do you agree or disagree?" },
+
+            { id: 11, title: "Discussion Essay", prompt: "Some people think that it is better to live in a small town, while others prefer living in a big city. Discuss both views and give your opinion." },
+            { id: 12, title: "Problem & Solution", prompt: "Obesity is becoming a major problem in many countries. What are the causes of this issue and what solutions can you suggest?" },
+            { id: 13, title: "Advantages & Disadvantages", prompt: "Many students now study abroad. What are the advantages and disadvantages of studying in a foreign country?" },
+            { id: 14, title: "Opinion Essay", prompt: "Some people believe that money is the most important factor for achieving happiness. To what extent do you agree or disagree?" },
+            { id: 15, title: "Discussion Essay", prompt: "Some people think that the government should invest more in public transport. Others believe that building more roads is the best solution. Discuss both views." },
+            { id: 16, title: "Two-part Question", prompt: "Many young people today are leaving their homes to live and work in big cities. Why is this happening? Do you think this is a positive or negative development?" },
+            { id: 17, title: "Opinion Essay", prompt: "In the future, all cars, buses, and trucks will be driverless. Do you think the advantages of driverless vehicles outweigh the disadvantages?" },
+            { id: 18, title: "Advantages & Disadvantages", prompt: "Online shopping has become very popular in recent years. What are the advantages and disadvantages of this trend?" },
+            { id: 19, title: "Problem & Solution", prompt: "Many people are now using the internet to meet new people and form relationships. What problems can this cause and what are the solutions?" },
+            { id: 20, title: "Discussion Essay", prompt: "Some people believe that it is better to raise children in the countryside, while others think cities are better. Discuss both views and give your opinion." },
+
+            { id: 21, title: "Opinion Essay", prompt: "Environmental problems are too big for individuals to solve. Only governments and large companies can make a difference. To what extent do you agree or disagree?" },
+            { id: 22, title: "Two-part Question", prompt: "Many people are buying ready-made meals instead of cooking at home. Why is this happening? Is this a positive or negative development?" },
+            { id: 23, title: "Advantages & Disadvantages", prompt: "Some countries allow international students to work while studying. What are the advantages and disadvantages of this policy?" },
+            { id: 24, title: "Opinion Essay", prompt: "The best way to solve the world’s environmental problems is to increase the cost of fuel. Do you agree or disagree?" },
+            { id: 25, title: "Discussion Essay", prompt: "Some people think that museums should be free for everyone. Others believe that museums should charge an entrance fee. Discuss both views and give your opinion." },
+            { id: 26, title: "Problem & Solution", prompt: "Many people nowadays are suffering from stress-related illnesses. What are the causes of this problem and what can be done to reduce it?" },
+            { id: 27, title: "Opinion Essay", prompt: "Artificial intelligence will soon replace many jobs. To what extent do you agree or disagree with this statement?" },
+            { id: 28, title: "Advantages & Disadvantages", prompt: "Tourism has become one of the biggest industries in the world. What are the positive and negative effects of tourism on society?" },
+            { id: 29, title: "Two-part Question", prompt: "In many countries, the number of people living alone is increasing. Why is this happening? Is this a positive or negative trend?" },
+            { id: 30, title: "Discussion Essay", prompt: "Some people think that children should learn how to manage money at school. Others believe it is not necessary. Discuss both views." },
+
+            { id: 31, title: "Opinion Essay", prompt: "The internet has transformed the way we live and work. Do you think its advantages outweigh its disadvantages?" },
+            { id: 32, title: "Problem & Solution", prompt: "Plastic pollution is one of the most serious environmental issues today. What are the causes and what solutions can you suggest?" },
+            { id: 33, title: "Advantages & Disadvantages", prompt: "Many companies now allow employees to work from home. What are the advantages and disadvantages of remote working?" },
+            { id: 34, title: "Opinion Essay", prompt: "University education should be free for all students. To what extent do you agree or disagree?" },
+            { id: 35, title: "Discussion Essay", prompt: "Some people believe that sports should be compulsory in schools, while others think students should choose. Discuss both views." },
+            { id: 36, title: "Two-part Question", prompt: "Many people are choosing to live in large cities. What are the reasons for this? What problems does this cause?" },
+            { id: 37, title: "Opinion Essay", prompt: "It is better to have one true friend than many acquaintances. Do you agree or disagree?" },
+            { id: 38, title: "Advantages & Disadvantages", prompt: "The popularity of online learning has increased significantly. What are the benefits and drawbacks of studying online?" },
+            { id: 39, title: "Problem & Solution", prompt: "In many countries, the population is ageing rapidly. What problems does this cause and what can be done to solve them?" },
+            { id: 40, title: "Discussion Essay", prompt: "Some people think that success in life comes from hard work and determination. Others believe that luck is more important. Discuss both views." },
+
+            { id: 41, title: "Opinion Essay", prompt: "Governments should focus more on solving environmental problems rather than economic ones. To what extent do you agree?" },
+            { id: 42, title: "Two-part Question", prompt: "Fewer people are reading books nowadays. Why is this happening? What can be done to encourage more reading?" },
+            { id: 43, title: "Advantages & Disadvantages", prompt: "Many countries are encouraging the use of bicycles instead of cars. What are the advantages and disadvantages of this policy?" },
+            { id: 44, title: "Opinion Essay", prompt: "Celebrities should be role models for young people. Do you agree or disagree?" },
+            { id: 45, title: "Discussion Essay", prompt: "Some people think that the main purpose of education is to prepare people for work. Others believe education has a wider role. Discuss both views." },
+            { id: 46, title: "Problem & Solution", prompt: "Many young people are leaving rural areas to live in cities. What are the causes of this trend and what problems does it create?" },
+            { id: 47, title: "Opinion Essay", prompt: "Animal testing for medical research should be banned. To what extent do you agree or disagree?" },
+            { id: 48, title: "Advantages & Disadvantages", prompt: "Globalization has both positive and negative effects on developing countries. Discuss the advantages and disadvantages." },
+            { id: 49, title: "Two-part Question", prompt: "Many people now shop online instead of going to stores. Why is this the case? Do you think this is a positive development?" },
+            { id: 50, title: "Opinion Essay", prompt: "In the modern world, it is possible to live a healthy life without eating meat. Do you agree or disagree?" }
+        ];
+
+        function loadTask2Prompts() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+
+            task2Prompts.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'task-card';
+                card.innerHTML = `
+                    <div class="card-content" style="padding: 50px 28px;" onclick="playClick()">
+                        <div class="card-title">${item.title}</div>
+                        <div class="card-desc">${item.prompt}</div>
+                    </div>
+                `;
+                card.onclick = () => openTask2Practice(item);
+                container.appendChild(card);
+            });
+        }
+
+        function openTask2Practice(item) {
+            document.getElementById('listView').style.display = 'none';
+            document.getElementById('practiceView').style.display = 'flex';
+            document.getElementById('stickyBottom').style.display = 'flex';
+
+            document.getElementById('practiceImage').style.display = 'none';
+            document.getElementById('downloadBtn').style.display = 'none';
+
+            const promptBox = document.getElementById('promptBox');
+            
+            promptBox.innerHTML = `
+                <h2 style="color:#06a87c; margin-bottom:20px;">IELTS Writing Task 2</h2>
+                <p><strong>${item.title}</strong></p>
+                <p style="margin-top: 24px; line-height: 1.8;">${item.prompt}</p>
+                <p style="margin-top: 35px; color:#06a87c; font-weight:600;">Write at least 250 words.</p>
+                <button id="copyBtn" class="copy-btn">Copy Prompt</button>
+            `;
+
+            // Attach listener
+            document.getElementById('copyBtn').addEventListener('click', () => {
+                copyToClipboard(item.prompt);
+            });
+        }
+
+        function backToList() {
+            document.getElementById('listView').style.display = 'block';
+            document.getElementById('practiceView').style.display = 'none';
+            document.getElementById('stickyBottom').style.display = 'none';
+            document.getElementById('practiceImage').style.display = 'block';
+        }
+
+        function goBack() {
+            history.back();
+        }
+
+        // Initialize
+        window.onload = () => {
+            const id = getUrlParameter('id') || 'task1';
+            
+            if (id.toLowerCase() === 'task2') {
+                document.getElementById('pageTitle').textContent = "IELTS Writing Task 2";
+                document.getElementById('pageSubtitle').textContent = "Practice full essay writing with strong arguments";
+                loadTask2Prompts();
+            } else {
+                loadTask1Graphs();
+            }
+        };
+
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1200;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 300);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) hideLoader();
+            else setTimeout(hideLoader, MIN_DURATION);
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1200);
+        }
+    </script>
+</body>
+</html>

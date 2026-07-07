@@ -365,7 +365,7 @@
             max-width: 90vw;
             margin: 0 auto;
             padding: 14px;
-            background: #f24b0b;
+            background: #f1192e;
             color: white;
             font-weight: 700;
             text-transform: uppercase;
@@ -374,7 +374,7 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 0 #c23a0a;
+            box-shadow: 0 4px 0 #c40e20;
             transition: all 0.25s ease;
             display: flex;
             align-items: center;
@@ -384,7 +384,7 @@
 
         .mobile-back-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 0 #c23a0a;
+            box-shadow: 0 6px 0 #c40e20;
         }
 
         /* Mobile Adjustments */
@@ -728,6 +728,12 @@
             });
         }
 
+        function playClick() {
+            const sound = new Audio('/assets/audio/click.mp3');
+            sound.volume = 0.1;
+            sound.play().catch(() => {});
+        }
+
         // Section switching
         document.querySelectorAll('.section-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -736,6 +742,7 @@
                 tab.classList.add('active');
                 document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
                 document.getElementById(sectionId).classList.add('active');
+                playClick()
             });
         });
 

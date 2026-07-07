@@ -487,6 +487,27 @@ html, body {
   height: 100%;
   overflow: hidden;
 }
+
+.btn-loading {
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.btn-loading .spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
 </head>
 <body>
@@ -512,64 +533,42 @@ html, body {
         <h1 id="mainTitle" style="margin-bottom: 30px;" data-lang-key="welcome.title">Let's Get<br>Started</h1>
 
         <div class="buttons-group" id="initialButtons">
-          <button class="btn btn-primary" id="signupBtn" data-lang-key="button.signup">Sign Up</button>
-          <button class="btn btn-secondary" id="loginBtn" data-lang-key="button.login">Log In</button>
+          <button class="btn btn-primary" id="signupBtn" data-lang-key="button.signup" onclick="playClick()">Sign Up</button>
+          <button class="btn btn-secondary" id="loginBtn" data-lang-key="button.login" onclick="playClick()">Log In</button>
         </div>
       </div>
 
-      <!-- Goal selection -->
-      <div class="mobile-content hidden" id="goalSelection">
-        <img class="mobile-illust" src="/assets/images/illustrations/redy_idea.webp" alt="Goal">
-        <h2 data-lang-key="goal.title">What would you like to do?</h2>
-        <div class="buttons-group">
-          <button class="btn btn-primary" id="learnEnglish" data-lang-key="goal.learnEnglish">Learn English</button>
-          <button class="btn btn-primary" id="businessSchool" data-lang-key="goal.businessSchool">Business School</button>
-          <button class="btn btn-primary" id="startBlogging" data-lang-key="goal.startBlogging">Start Blogging</button>
-        </div>
-      </div>
-
-      <!-- English level -->
-      <div class="mobile-content hidden" id="englishLevel">
-        <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" alt="Goal">
-        <h2 data-lang-key="level.title">What's your English level?</h2>
-        <div class="buttons-group">
-          <button class="btn btn-primary" id="beginner">Beginner</button>
-          <button class="btn btn-primary" id="intermediate">Intermediate</button>
-          <button class="btn btn-primary" id="advanced">Advanced</button>
-        </div>
-      </div>
-
-      <!-- Business sub-selection -->
-      <div class="mobile-content hidden" id="businessSub">
-        <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" alt="Business">
-        <h2 data-lang-key="business.ageTitle">How old are you?</h2>
-        <div class="buttons-group">
-          <button class="btn btn-primary" id="ageUnder18" data-lang-key="business.ageUnder18">Under 18</button>
-          <button class="btn btn-primary" id="age18to30"  data-lang-key="business.age18to30">18-30</button>
-          <button class="btn btn-primary" id="ageOver30"  data-lang-key="business.ageOver30">Over 30</button>
-        </div>
-      </div>
-
-      <div class="mobile-content hidden" id="businessCourse">
-        <img class="mobile-illust" src="/assets/images/illustrations/redy_manager.webp" alt="Business">
-        <h2 data-lang-key="business.courseTitle">Which course interests you?</h2>
-        <div class="buttons-group">
-          <button class="btn btn-primary" id="courseManagement" data-lang-key="business.courseManagement">Management</button>
-          <button class="btn btn-primary" id="courseSales"      data-lang-key="business.courseSales">Sales</button>
-          <button class="btn btn-primary" id="courseMarketing"  data-lang-key="business.courseMarketing">Marketing</button>
-          <button class="btn btn-primary" id="courseOther"      data-lang-key="business.courseOther">Other</button>
-        </div>
-      </div>
-
-            <!-- NEW: Age -->
+      <!-- NEW: Age -->
       <div class="mobile-content hidden" id="ageScreen">
         <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" alt="Age">
         <h2 data-lang-key="personal.ageTitle">How old are you?</h2>
         <div class="buttons-group">
-          <button class="btn btn-primary" id="age13-17">13-17</button>
-          <button class="btn btn-primary" id="age18-24">18-24</button>
-          <button class="btn btn-primary" id="age25-34">25-34</button>
-          <button class="btn btn-primary" id="age35+">35+</button>
+          <button class="btn btn-primary" id="age13-17" onclick="playClick()">13-17</button>
+          <button class="btn btn-primary" id="age18-24" onclick="playClick()">18-24</button>
+          <button class="btn btn-primary" id="age25-34" onclick="playClick()">25-34</button>
+          <button class="btn btn-primary" id="age35+" onclick="playClick()">35+</button>
+        </div>
+      </div>
+
+      <div class="mobile-content hidden" id="englishLevelScreen">
+        <img class="mobile-illust"
+            src="/assets/images/illustrations/redy_trustworthy.webp"
+            alt="Level">
+
+        <h2>What's your English level?</h2>
+
+        <div class="buttons-group">
+          <button class="btn btn-primary" id="levelBeginner" onclick="playClick()">
+            Beginner
+          </button>
+
+          <button class="btn btn-primary" id="levelIntermediate" onclick="playClick()">
+            Intermediate
+          </button>
+
+          <button class="btn btn-primary" id="levelAdvanced" onclick="playClick()">
+            Advanced
+          </button>
         </div>
       </div>
 
@@ -595,10 +594,10 @@ html, body {
         <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" alt="Duration">
         <h2 data-lang-key="personal.durationTitle">How long do you plan to learn?</h2>
         <div class="buttons-group">
-          <button class="btn btn-primary" id="duration3">3 months</button>
-          <button class="btn btn-primary" id="duration6">6 months</button>
-          <button class="btn btn-primary" id="duration12">1 year</button>
-          <button class="btn btn-primary" id="duration24">2+ years</button>
+          <button class="btn btn-primary" id="duration3" onclick="playClick()">3 months</button>
+          <button class="btn btn-primary" id="duration6" onclick="playClick()">6 months</button>
+          <button class="btn btn-primary" id="duration12" onclick="playClick()">1 year</button>
+          <button class="btn btn-primary" id="duration24" onclick="playClick()">2+ years</button>
         </div>
       </div>
 
@@ -607,10 +606,10 @@ html, body {
         <img class="mobile-illust" src="/assets/images/illustrations/redy_idea.webp" alt="Goal">
         <h2 data-lang-key="personal.mainGoalTitle">What is your main goal?</h2>
         <div class="buttons-group">
-          <button class="btn btn-primary" id="goalIelts">Prepare for IELTS</button>
-          <button class="btn btn-primary" id="goalImprove">Just improve my English</button>
-          <button class="btn btn-primary" id="goalConversation">Daily conversation</button>
-          <button class="btn btn-primary" id="goalBusinessEng">Business English</button>
+          <button class="btn btn-primary" id="goalIelts" onclick="playClick()">Prepare for IELTS</button>
+          <button class="btn btn-primary" id="goalImprove" onclick="playClick()">Just improve my English</button>
+          <button class="btn btn-primary" id="goalConversation" onclick="playClick()">Daily conversation</button>
+          <button class="btn btn-primary" id="goalBusinessEng" onclick="playClick()">Business English</button>
         </div>
       </div>
 
@@ -619,9 +618,9 @@ html, body {
         <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" alt="IELTS">
         <h2 data-lang-key="personal.ieltsScoreTitle">What is your target IELTS score?</h2>
         <div class="buttons-group">
-          <button class="btn btn-primary" id="score6">Around 6.0 - 6.5</button>
-          <button class="btn btn-primary" id="score75">7.0 - 7.5</button>
-          <button class="btn btn-primary" id="score8">8.0+</button>
+          <button class="btn btn-primary" id="score6" onclick="playClick()">Around 6.0 - 6.5</button>
+          <button class="btn btn-primary" id="score75" onclick="playClick()">7.0 - 7.5</button>
+          <button class="btn btn-primary" id="score8" onclick="playClick()">8.0+</button>
         </div>
       </div>
 
@@ -669,9 +668,9 @@ html, body {
             </div>
             <label class="checkbox-label">
               <input type="checkbox" id="termsCheckbox" required>
-              <span data-lang-key="signup.acceptTerms">I accept the <a href="/terms/">Terms</a> and <a href="/privacy/">Privacy Policy</a></span>
+              <span data-lang-key="signup.acceptTerms" onclick="playClick()">I accept the <a href="/terms/">Terms</a> and <a href="/privacy/">Privacy Policy</a></span>
             </label>
-            <button class="btn btn-primary" id="completeSignup" data-lang-key="button.createAccount">Create Account</button>
+            <button class="btn btn-primary" id="completeSignup" data-lang-key="button.createAccount" onclick="playClick()">Create Account</button>
           </div>
         </div>
       </div>
@@ -689,7 +688,7 @@ html, body {
             <label data-lang-key="login.password">Password</label>
             <input type="password" id="loginPassword" required>
           </div>
-          <button class="btn btn-primary" id="doLogin" data-lang-key="button.logIn">Log In</button>
+          <button class="btn btn-primary" id="doLogin" data-lang-key="button.logIn" onclick="playClick()">Log In</button>
         </div>
       </div>
     </div>
@@ -701,7 +700,7 @@ html, body {
   <div id="errorModal" class="hidden">
     <img src="/assets/images/illustrations/issue-login.webp" alt="Sad owl">
     <div id="errorMessage" data-lang-key="error.generic">Oh no! Something went wrong.</div>
-    <button id="closeError" data-lang-key="button.ok">OK</button>
+    <button id="closeError" data-lang-key="button.ok" onclick="playClick()">OK</button>
   </div>
 
   <script>
@@ -913,6 +912,12 @@ html, body {
     document.documentElement.lang = currentLang;
   }
 
+  function playClick() {
+      const sound = new Audio('/assets/audio/click.mp3');
+      sound.volume = 0.1;
+      sound.play().catch(() => {});
+  }
+
   function showMessage(
     key,
     fallback = translations['en']['error.generic']
@@ -952,14 +957,11 @@ html, body {
   const initialButtons = document.getElementById('initialButtons');
   const initialContent = document.getElementById('initialContent');
 
-  const goalSelection = document.getElementById('goalSelection');
-  const businessSub = document.getElementById('businessSub');
-  const businessCourse = document.getElementById('businessCourse');
-
   const loginForm = document.getElementById('loginForm');
   const finalSignup = document.getElementById('finalSignup');
 
   const ageScreen = document.getElementById('ageScreen');
+  const englishLevelScreen = document.getElementById('englishLevelScreen');
   const locationScreen = document.getElementById('locationScreen');
   const durationScreen = document.getElementById('durationScreen');
   const mainGoalScreen = document.getElementById('mainGoalScreen');
@@ -1058,11 +1060,35 @@ html, body {
       fadeTransition(() => {
 
         ageScreen.classList.add('hidden');
-        locationScreen.classList.remove('hidden');
+        englishLevelScreen.classList.remove('hidden');
 
       });
     };
   });
+
+  ['levelBeginner', 'levelIntermediate', 'levelAdvanced']
+.forEach(id => {
+
+  document.getElementById(id).onclick = () => {
+
+    const levelMap = {
+      levelBeginner: 'Beginner',
+      levelIntermediate: 'Intermediate',
+      levelAdvanced: 'Advanced'
+    };
+
+    userData.englishLevel = levelMap[id];
+
+    fadeTransition(() => {
+
+      englishLevelScreen.classList.add('hidden');
+      locationScreen.classList.remove('hidden');
+
+    });
+
+  };
+
+});
 
   // ───────────────────────────────────────────────────────────────
   // LOCATION SCREEN
@@ -1277,7 +1303,7 @@ html, body {
                 id="finishRegistrationBtn"
                 style="padding:19px 65px;font-size:17px;">
 
-                Finish Registration
+                Finish
 
               </button>
 
@@ -1313,6 +1339,24 @@ html, body {
       }, 5500);
 
     });
+  }
+
+  function setButtonLoading(button) {
+    button.classList.add('btn-loading');
+
+    button.dataset.originalText = button.innerHTML;
+
+    button.innerHTML = `
+      <div class="spinner"></div>
+    `;
+  }
+
+  function restoreButton(button) {
+    button.classList.remove('btn-loading');
+
+    if (button.dataset.originalText) {
+      button.innerHTML = button.dataset.originalText;
+    }
   }
 
   // ───────────────────────────────────────────────────────────────
@@ -1357,6 +1401,7 @@ html, body {
       }
 
       const preferredLanguage = localStorage.getItem(LANG_KEY) || 'en';
+      setButtonLoading(signupBtn);
 
       try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
@@ -1377,6 +1422,7 @@ html, body {
 
         window.location.href = '/learn/';
       } catch (error) {
+        restoreButton(signupBtn);
         let key = 'error.generic';
         switch (error.code) {
           case 'auth/email-already-in-use':      key = 'error.emailTaken'; break;
@@ -1388,6 +1434,8 @@ html, body {
         console.error('Sign-up error:', error);
       }
     };
+
+    const signupBtn = document.getElementById('completeSignup');
   // ───────────────────────────────────────────────────────────────
   // LOGIN
   // ───────────────────────────────────────────────────────────────
@@ -1401,10 +1449,13 @@ html, body {
       return;
     }
 
+    setButtonLoading(loginBtn);
+
     try {
       await auth.signInWithEmailAndPassword(email, password);
       window.location.href = '/learn/';
     } catch (error) {
+      restoreButton(loginBtn);
       let key = 'error.generic';
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
         key = 'error.invalidEmail';
@@ -1414,6 +1465,8 @@ html, body {
       showMessage(key);
     }
   };
+
+  const loginBtn = document.getElementById('doLogin');
 
   // ───────────────────────────────────────────────────────────────
   // PAGE LOADER

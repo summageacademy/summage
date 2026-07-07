@@ -371,7 +371,7 @@
             max-width: 90vw;
             margin: 0 auto;
             padding: 16px;
-            background: #f24b0b;
+            background: #f1192e;
             color: white;
             font-weight: 700;
             text-transform: uppercase;
@@ -379,7 +379,7 @@
             font-size: 15px;
             border: none;
             border-radius: 50px;
-            box-shadow: 0 4px 0 #c23a0a;
+            box-shadow: 0 4px 0 #c40e20;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -426,6 +426,19 @@
             opacity: 0;
             visibility: hidden;
         }
+
+        .tests-section {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #222;
+            text-align: center;
+            margin-bottom: 48px;
+        }
     </style>
 </head>
 
@@ -444,7 +457,7 @@
 </div>
 
 <nav class="navbar">
-    <button onclick="goBack()" class="back-btn" id="desktop-back-btn">
+    <button onclick="window.location.href = '/learn/'" class="back-btn" id="desktop-back-btn">
         <span data-key="back">Back</span>
     </button>
 
@@ -469,7 +482,7 @@
 <main class="content" id="tests-container"></main>
 
 <div class="mobile-footer-bar">
-    <button onclick="goBack()" class="mobile-back-btn">
+    <button onclick="window.location.href = '/learn/'" class="mobile-back-btn">
         Back
     </button>
 </div>
@@ -496,76 +509,34 @@ const db = getFirestore(app);
 const allTests = [
     {
         id: 1,
-        title: "Daily Conversations",
-        desc: "Short conversations and basic listening practice.",
+        title: "English Club",
+        desc: "Short conversation and basic listening practice",
         level: "beginner"
     },
     {
         id: 2,
-        title: "Campus Information",
-        desc: "University situations and student discussions.",
+        title: "Trip to a Lake",
+        desc: "Trip situation and friends conversations",
         level: "beginner"
     },
     {
         id: 3,
-        title: "Travel & Directions",
-        desc: "Listening for places, directions and transport.",
+        title: "Library Interaction",
+        desc: "Basic Library Conversation",
         level: "beginner"
     },
     {
         id: 4,
-        title: "Booking & Reservations",
-        desc: "Hotels, tickets and phone call listening tasks.",
-        level: "beginner"
-    },
-    {
-        id: 5,
-        title: "Workplace Conversations",
-        desc: "Office discussions and professional listening.",
+        title: "Table Reservation",
+        desc: "Restaurant Conversation",
         level: "intermediate"
     },
-    {
-        id: 6,
-        title: "Lecture Notes",
-        desc: "Academic lectures and note completion tasks.",
-        level: "intermediate"
-    },
-    {
-        id: 7,
-        title: "Science Topics",
-        desc: "Listening to educational science recordings.",
-        level: "intermediate"
-    },
-    {
-        id: 8,
-        title: "IELTS Section Practice",
-        desc: "Mixed IELTS Listening section exercises.",
-        level: "intermediate"
-    },
-    {
-        id: 9,
-        title: "Advanced IELTS Test 1",
-        desc: "Full IELTS Listening mock test.",
-        level: "advanced"
-    },
-    {
-        id: 10,
-        title: "Advanced IELTS Test 2",
-        desc: "Complex accents and difficult question types.",
-        level: "advanced"
-    },
-    {
-        id: 11,
-        title: "Academic Listening",
-        desc: "Advanced university-style listening tasks.",
-        level: "advanced"
-    },
-    {
-        id: 12,
-        title: "Full Listening Challenge",
-        desc: "Complete high-level IELTS Listening simulation.",
-        level: "advanced"
-    }
+    // {
+    //    id: 12,
+    //    title: "Full Listening Challenge",
+    //    desc: "Complete high-level IELTS Listening simulation.",
+    //    level: "advanced"
+    //}
 ];
 
 let completedTests = {};
@@ -627,59 +598,55 @@ function getMaxUnlocked() {
 }
 
 function renderTests() {
-
     const container = document.getElementById("tests-container");
 
     container.innerHTML = `
-        <div class="max-w-6xl mx-auto">
-
-            <div class="mb-16">
-                <div class="level-header">
-                    <div class="level-number">01</div>
-
-                    <div>
-                        <h2 class="level-title">Beginner Listening</h2>
-                        <p class="level-desc">Basic everyday listening practice</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="beginner-grid"></div>
-            </div>
-
-            <div class="mb-16">
-                <div class="level-header">
-                    <div class="level-number">02</div>
-
-                    <div>
-                        <h2 class="level-title">Intermediate Listening</h2>
-                        <p class="level-desc">Improve speed and comprehension</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="intermediate-grid"></div>
-            </div>
-
-            <div>
-                <div class="level-header">
-                    <div class="level-number">03</div>
-
-                    <div>
-                        <h2 class="level-title">Advanced Listening</h2>
-                        <p class="level-desc">Master IELTS-level listening tasks</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="advanced-grid"></div>
-            </div>
-
+        <div class="tests-section">
+            <h1 class="section-title">All Listening Tests</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="all-tests-grid"></div>
         </div>
     `;
 
-    renderGroup("beginner", 0, 4);
-    renderGroup("intermediate", 4, 8);
-    renderGroup("advanced", 8, 12);
-
+    renderAllTests();
     hideLoader();
+}
+
+function renderAllTests() {
+    const grid = document.getElementById("all-tests-grid");
+    let html = "";
+    const maxUnlocked = getMaxUnlocked();
+
+    for (let i = 0; i < allTests.length; i++) {
+        const test = allTests[i];
+        const unlocked = test.id <= maxUnlocked;
+        const completed = !!completedTests[test.id];
+
+        html += `
+            <div class="lesson-card">
+                <div class="lesson-header">
+                    <div class="lesson-id">TEST ${test.id}</div>
+                    <div class="lesson-title">${test.title}</div>
+                    <p class="lesson-desc">${test.desc}</p>
+                </div>
+
+                <div class="lesson-footer">
+                    ${unlocked 
+                        ? `<a href="/learn/journeys/listening/test/${test.id}/" 
+                             class="${completed 
+                                ? 'w-full py-4 px-6 text-white font-bold uppercase tracking-wide rounded-full bg-[#06a87c] shadow-[0_4px_0_#058f66] hover:shadow-[0_6px_0_#058f66] hover:-translate-y-0.5 transition-all duration-150 flex items-center justify-center gap-2' 
+                                : 'start-btn'}">
+                            ${completed ? 'Retake Test' : 'Start Test'}
+                        </a>`
+                        : `<button onclick="showLockedToast()" class="locked-btn">
+                            <i class="fa-solid fa-lock"></i> Locked
+                        </button>`
+                    }
+                </div>
+            </div>
+        `;
+    }
+
+    grid.innerHTML = html;
 }
 
 function renderGroup(group, start, end) {
@@ -718,7 +685,7 @@ function renderGroup(group, start, end) {
                         ?
                         `
                         <a
-                            href="/learn/journeys/listening/test/?id=${test.id}"
+                            href="/learn/journeys/listening/test/${test.id}/"
                             class="${completed
                                 ? 'w-full py-4 px-6 text-white font-bold uppercase tracking-wide rounded-full bg-[#06a87c] shadow-[0_4px_0_#058f66] hover:shadow-[0_6px_0_#058f66] hover:-translate-y-0.5 transition-all duration-150 flex items-center justify-center gap-2'
                                 : 'start-btn'}"
@@ -774,16 +741,13 @@ function showLockedToast() {
 }
 
 function goBack() {
-            const before = window.location.href;
-            
-            history.back();
-            
-            setTimeout(() => {
-                if (window.location.href === before) {
-                    window.location.assign('/learn/');
-                }
-            }, 50);
+      history.back();
+      setTimeout(() => {
+        if (window.location.href === document.referrer) {
+          window.location.assign('/learn/');
         }
+      }, 100);
+    }
 
 const loader = document.getElementById('pageLoader');
 

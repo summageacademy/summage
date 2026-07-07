@@ -437,7 +437,7 @@
             max-width: 90vw;
             margin: 0 auto;
             padding: 14px;
-            background: #f24b0b;
+            background: #f1192e;
             color: white;
             font-weight: 700;
             text-transform: uppercase;
@@ -446,7 +446,7 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 0 #c23a0a;
+            box-shadow: 0 4px 0 #c40e20;
             transition: all 0.25s ease;
             display: flex;
             align-items: center;
@@ -456,7 +456,7 @@
 
         .mobile-back-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 0 #c23a0a;
+            box-shadow: 0 6px 0 #c40e20;
         }
 
         /* Mobile - Fully Optimized */
@@ -602,12 +602,12 @@
 
                 <div class="info-item">
                     <span data-key="instagramLabel">Instagram</span>
-                    <a href="https://instagram.com/summageacademy" target="_blank">@summageacademy</a>
+                    <a href="https://instagram.com/summageacademy" target="_blank" onclick="playClick()">@summageacademy</a>
                 </div>
 
                 <div class="social-links">
                     <a href="https://t.me/summage_uz" target="_blank">Telegram</a>
-                    <a href="https://instagram.com/summageacademy" target="_blank">Instagram</a>
+                    <a href="https://instagram.com/summageacademy" target="_blank" onclick="playClick()">Instagram</a>
                 </div>
             </div>
 
@@ -626,7 +626,7 @@
                     <div class="form-group">
                         <textarea id="message" name="message" rows="6" required placeholder="Your Message..."></textarea>
                     </div>
-                    <button type="submit" class="submit-btn" data-key="sendBtn">Send Message</button>
+                    <button type="submit" class="submit-btn" data-key="sendBtn" onclick="playClick()">Send Message</button>
                 </form>
                 <div class="form-response" id="formResponse"></div>
             </div>
@@ -729,6 +729,12 @@
                     window.location.assign('/');
                 }
             }, 50);
+        }
+
+        function playClick() {
+            const sound = new Audio('/assets/audio/click.mp3');
+            sound.volume = 0.1;
+            sound.play().catch(() => {});
         }
 
         function updateLanguage(lang) {

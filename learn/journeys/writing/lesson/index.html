@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Unavailable - Summage</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#fffaf5 0%,#f8f9fa 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    color:#222;
+}
+
+.container{
+    text-align:center;
+    max-width:520px;
+}
+
+.logo{
+    width:82px;
+    height:82px;
+    border-radius:22px;
+    object-fit:cover;
+    margin-bottom:28px;
+    box-shadow:0 8px 24px rgba(242,75,11,.15);
+}
+
+.subtitle{
+    color:#f24b0b;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+}
+
+.title{
+    font-size:42px;
+    line-height:1.1;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.desc{
+    font-size:17px;
+    line-height:1.7;
+    color:#666;
+    margin-bottom:34px;
+}
+
+.back-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    height:56px;
+    padding:0 30px;
+
+    border:none;
+    border-radius:999px;
+
+    background:#f24b0b;
+    color:#fff;
+
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+
+    cursor:pointer;
+
+    box-shadow:0 4px 0 #c23a0a;
+
+    transition:.2s ease;
+}
+
+.back-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 0 #c23a0a;
+}
+
+@media(max-width:700px){
+
+    .title{
+        font-size:32px;
+    }
+
+    .desc{
+        font-size:16px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <img
+        src="/assets/logo.webp"
+        alt="Summage"
+        class="logo"
+    >
+
+    <div class="subtitle">
+        Writing Lessons
+    </div>
+
+    <h1 class="title">
+        This Lesson Is Currently Unavailable
+    </h1>
+
+    
+
+    <button
+        class="back-btn"
+        onclick="window.location.href='/learn/journeys/writing/'"
+    >
+        Back
+    </button>
+
+</div>
+
+</body>
+</html>

@@ -5,16 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Essay Checker - Estimated Band Scores for Your IELTS Essays</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
   
+      gtag('config', 'G-LZP4KSPR1V');
+  </script>
+
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: 'Poppins', system-ui, sans-serif;
+      font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
       color: #1f2937;
       min-height: 100vh;
       overflow: hidden;
+    }
+
+    .logo-text {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 800;
+            letter-spacing: 1.2px;
     }
 
     /* Navbar */
@@ -38,16 +64,16 @@
 
     /* Main Content */
     .main-content {
-        padding-top: 80px;
-        padding-bottom: 120px;
+        padding-top: 85px;
+        padding-bottom: 150px;
         height: 100vh;
         overflow-y: auto;
         scrollbar-width: none;
     }
 
     @media (max-width: 900px) {
-      .main-content { padding-top: 65px;
-      padding-bottom: 150px}
+      .main-content { padding-top: 72px;
+      padding-bottom: 170px}
     }
 
     .main-content::-webkit-scrollbar { display: none; }
@@ -249,9 +275,121 @@
       box-shadow: 0 6px 12px rgba(242, 75, 11, 0.25);
     }
 
+    /* ==================== NOTIFICATION MODAL ==================== */
+    .notification-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .notification-content {
+      background: white;
+      max-width: 380px;
+      width: 90%;
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: slideUp 0.3s ease;
+    }
+
+    .notification-icon {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+    }
+
+    .notification-message {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #1f2937;
+      margin-bottom: 24px;
+    }
+
+    .notification-close {
+      padding: 12px 32px;
+      background: #f24b0b;
+      box-shadow: 0 4px 0 #c23a0a;      
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      width: 100%;
+    }
+
+    .notification-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #c23a0a;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Loader */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @media (max-width: 768px) {
+            .tasks-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .main-container {
+                padding: 80px 5vw 100px;
+            }
+            .page-title {
+                font-size: 2.2rem;
+            }
+        }
   </style>
 </head>
 <body>
+  <div id="pageLoader" class="page-loader">
+      <lottie-player 
+          id="splashOwl"
+          src="/assets/Sandy Loading.json"
+          background="transparent" 
+          speed="0.9" 
+          style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+          loop 
+          autoplay>
+      </lottie-player>
+  </div>
 
   <!-- Navbar -->
   <nav class="navbar">
@@ -269,8 +407,8 @@
           <p data-lang-key="aiHeroSubtitle">Essay </p>
 
           <div class="task-selector">
-            <button class="task-btn active" data-task="task2">Task 2</button>
-            <button class="task-btn" data-task="task1">Task 1</button>
+            <button class="task-btn active" data-task="task2" onclick="playClick()">Task 2</button>
+            <button class="task-btn" data-task="task1" onclick="playClick()">Task 1</button>
           </div>
 
           <div id="task1-image-container" style="display:none;">
@@ -312,7 +450,7 @@
 
   <!-- Bottom Bar -->
   <div class="bottom-bar">
-    <button class="check-btn" id="check-btn" data-lang-key="aiAnalyzeBtn">Check Essay</button>
+    <button class="check-btn" id="check-btn" data-lang-key="aiAnalyzeBtn" onclick="playClick()">Check Essay</button>
   </div>
 
   <!-- Full Screen Results Modal -->
@@ -330,11 +468,37 @@
         <ul class="feedback-list" id="feedback-list"></ul>
       </div>
 
-      <button class="close-bottom-btn" onclick="closeModal()">Close & Edit Essay</button>
+      <button class="close-bottom-btn" onclick="closeModal; playClick()">Close & Edit Essay</button>
+    </div>
+  </div>
+
+  <!-- Custom Notification Modal -->
+  <div class="notification-modal" id="notification-modal">
+    <div class="notification-content">
+      <div class="notification-icon" id="notification-icon"></div>
+      <div class="notification-message" id="notification-message"></div>
+      <button class="notification-close" onclick="hideNotification(); playClick()">OK</button>
     </div>
   </div>
 
   <script>
+    // ==================== FIREBASE CONFIG ====================
+    const firebaseConfig = {
+        apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+        authDomain: "summage-backend.firebaseapp.com",
+        projectId: "summage-backend",
+        storageBucket: "summage-backend.firebasestorage.app",
+        messagingSenderId: "128191434358",
+        appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    let currentUser = null;
+    let lastEssayCheckTime = 0;
+
     // Language System
     const translations = {
       en: {
@@ -357,6 +521,81 @@
     let currentTask = "task2";
     let currentLang = localStorage.getItem('summage_preferred_lang') || 'en';
 
+    // Check if user has active Essay Checking Boost
+    async function hasActiveEssayBoost() {
+        if (!currentUser) {
+            console.warn("User not logged in yet");
+            return false;
+        }
+
+        try {
+            const snapshot = await db.collection('purchases')
+                .where('userId', '==', currentUser.uid)
+                .where('itemId', '==', 'essay_checking')
+                .get();
+
+            let hasBoost = false;
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (data.expiresAt > Date.now()) {
+                    hasBoost = true;
+                }
+            });
+            return hasBoost;
+        } catch (e) {
+            console.error("Error checking boost:", e);
+            return false;
+        }
+    }
+
+    function playClick() {
+        const sound = new Audio('/assets/audio/click.mp3');
+        sound.volume = 0.1;
+        sound.play().catch(() => {});
+    }
+
+    // ==================== CUSTOM NOTIFICATION SYSTEM ====================
+    function showNotification(message, type = "info") {
+      const modal = document.getElementById('notification-modal');
+      const icon = document.getElementById('notification-icon');
+      const msgEl = document.getElementById('notification-message');
+
+      msgEl.textContent = message;
+
+      // Set icon and color based on type
+      switch(type) {
+        case "error":
+          icon.innerHTML = "❌";
+          icon.style.color = "#f24b0b";
+          break;
+        case "success":
+          icon.innerHTML = "✅";
+          icon.style.color = "#06a87c";
+          break;
+        case "warning":
+          icon.innerHTML = "⚠️";
+          icon.style.color = "#f59e0b";
+          break;
+        default:
+          icon.innerHTML = "ℹ️";
+          icon.style.color = "#3b82f6";
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function hideNotification() {
+      document.getElementById('notification-modal').style.display = 'none';
+    }
+
+    // Auto hide after 6 seconds (optional)
+    setTimeout(() => {
+      const modal = document.getElementById('notification-modal');
+      if (modal.style.display === 'flex') {
+        hideNotification();
+      }
+    }, 6000);
+    
     // Task Selector
     document.querySelectorAll('.task-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -386,7 +625,7 @@
       }
 
       if (file.size > 7 * 1024 * 1024) {
-        alert("Maximum image size is 7 MB.");
+        showNotification("Maximum image size is 7 MB.", "error");
         imageInput.value = "";
         selectedFileDiv.style.display = "none";
         return;
@@ -460,11 +699,21 @@
       document.getElementById('results-modal').style.display = 'none';
     }
 
-    // Main Check Essay Handler
+        // Main Check Essay Handler with Cooldown Logic
     document.getElementById('check-btn').addEventListener('click', async () => {
       const essay = document.getElementById('essay-text').value.trim();
       if (!essay) {
-        alert("Please write or paste your essay first.");
+        showNotification("Please write or paste your essay first.", "warning");
+        return;
+      }
+
+      const now = Date.now();
+      const hasBoost = await hasActiveEssayBoost();
+
+      // Cooldown check (60 minutes = 3600000 ms)
+      if (!hasBoost && (now - lastEssayCheckTime < 3600000)) {
+        const remainingMinutes = Math.ceil((3600000 - (now - lastEssayCheckTime)) / 60000);
+        showNotification(`⏳ You have used your free check.\nPlease wait ${remainingMinutes} minutes or purchase the Unlimited Essay Checking boost.`, "warning");
         return;
       }
 
@@ -480,7 +729,6 @@
         let requestBody = {};
 
         if (currentTask === "task1") {
-          // ==================== TASK 1 PROMPT ====================
           prompt = `You are a certified IELTS Academic Writing Task 1 examiner.
 
 The user has provided:
@@ -515,12 +763,9 @@ Return ONLY valid JSON with this structure:
             });
           }
 
-          requestBody = {
-            contents: [{ parts: parts }]
-          };
+          requestBody = { contents: [{ parts: parts }] };
 
         } else {
-          // ==================== TASK 2 PROMPT ====================
           prompt = `You are a certified IELTS examiner.
 
 Evaluate this IELTS Academic Writing Task 2 essay.
@@ -540,35 +785,57 @@ Return ONLY valid JSON with this structure:
   "improvements": ["Example suggestion"]
 }`;
 
-          requestBody = {
-            contents: [{ parts: [{ text: prompt }] }]
-          };
+          requestBody = { contents: [{ parts: [{ text: prompt }] }] };
         }
 
         const response = await fetch(
-          "https://YOUR-WORKER-NAME.workers.dev",
+          "https://summage-ai.summage-socials.workers.dev",
           {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestBody)
           }
         );
 
-        if (!response.ok) throw new Error("API Error (Check your API key)");
+        console.log("Worker Status:", response.status);
 
-        const data = await response.json();
-        const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        
-        const jsonStr = resultText.replace(/```json|```/g, '').trim();
-        const analysis = JSON.parse(jsonStr);
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Worker Error Response:", errorText);
+          throw new Error(`API Error: ${response.status}`);
+        }
+
+        const rawText = await response.text();
+        console.log("Raw AI Response:", rawText);
+
+        let resultText = rawText;
+
+        // Clean markdown code blocks
+        resultText = resultText.replace(/```json|```/g, '').trim();
+
+        let analysis;
+        try {
+          // Handle nested structure from Gemini
+          const parsed = JSON.parse(resultText);
+          if (parsed.candidates && parsed.candidates[0]) {
+            const textContent = parsed.candidates[0].content.parts[0].text;
+            analysis = JSON.parse(textContent.replace(/```json|```/g, '').trim());
+          } else {
+            analysis = parsed;
+          }
+        } catch (e) {
+          console.error("JSON Parse Error. Raw text:", resultText);
+          throw new Error("AI response was not valid JSON");
+        }
 
         renderResults(analysis);
 
+        // SUCCESS: Update last check time
+        lastEssayCheckTime = Date.now();
+
       } catch (err) {
         console.error(err);
-        alert("Failed to analyze. Please check your API key and try again.");
+        showNotification("Failed to analyze. Please try again.", "error");
       } finally {
         checkBtn.textContent = "Check Essay";
         checkBtn.disabled = false;
@@ -581,7 +848,7 @@ Return ONLY valid JSON with this structure:
       if (!file) return;
 
       if (file.size > 7 * 1024 * 1024) {
-        alert("Maximum image size is 7 MB.");
+        showNotification("Maximum image size is 7 MB.", "error");
         imageInput.value = "";
         return;
       }
@@ -591,13 +858,12 @@ Return ONLY valid JSON with this structure:
       container.setAttribute('data-filename', `Selected: ${file.name}`);
     });
 
-    // Render Results
     function renderResults(analysis) {
       const grid = document.getElementById('criteria-grid');
       grid.innerHTML = `
         <div class="criteria-card">
           <h3>Task Response</h3>
-          <div class="score">${analysis.taskResponse?.score || 0}</div>
+          <div class="score">${analysis.taskResponse?.score || analysis.overallBand || 0}</div>
           <p>${analysis.taskResponse?.feedback || ""}</p>
         </div>
         <div class="criteria-card">
@@ -620,23 +886,13 @@ Return ONLY valid JSON with this structure:
       const list = document.getElementById('feedback-list');
       let html = '';
 
-      // Image Issue Warning (Task 1)
-      if (analysis.imageIssue) {
-        html += `
-          <li class="feedback-item" style="background:#fef3c7;border-left-color:#f59e0b;">
-            ⚠️ ${analysis.imageIssueFeedback || "The uploaded image does not appear to be a valid IELTS Task 1 chart."}
-          </li>`;
-      }
-
-      // Mistakes
-      if (analysis.mistakes?.length) {
+      if (analysis.mistakes && analysis.mistakes.length) {
         analysis.mistakes.forEach(m => {
           html += `<li class="feedback-item">❌ ${m}</li>`;
         });
       }
 
-      // Improvements
-      if (analysis.improvements?.length) {
+      if (analysis.improvements && analysis.improvements.length) {
         analysis.improvements.forEach(i => {
           html += `<li class="feedback-item" style="background:#f0fdf4;border-left-color:#10b981;">💡 ${i}</li>`;
         });
@@ -647,8 +903,46 @@ Return ONLY valid JSON with this structure:
       showModal();
     }
 
+    // Firebase Auth
+    auth.onAuthStateChanged(user => {
+        currentUser = user;
+        if (!user) {
+            auth.signInAnonymously();
+        }
+    });
+
     // Initialize
     updateLanguage(currentLang);
+
+    // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1200;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 300);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) hideLoader();
+            else setTimeout(hideLoader, MIN_DURATION);
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1200);
+        }
   </script>
 </body>
 </html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Speaking Practice - Summage Academy</title>
+    <meta name="description" content="Practice IELTS Speaking with Part 1, Part 2, Part 3 and Full Mock Tests">
+    <meta name="keywords" content="IELTS Speaking, Speaking Practice, IELTS Part 1, Part 2, Part 3, Summage Academy">
+    <meta name="author" content="Summage Academy">
+    <meta name="robots" content="index, follow">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3670975798301808"
+     crossorigin="anonymous"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <!-- Google tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LZP4KSPR1V');
+    </script>
+    <link rel="stylesheet" href="/ads/320x50/ad320x50.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/learn/blogs/blog.css">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+            min-height: 100vh;
+        }
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .speaking-hero {
+            padding: 40px 20px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hero-content {
+            max-width: 1000px;
+            width: 100%;
+        }
+        .page-title {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: #555;
+            margin-bottom: 50px;
+            font-weight: 500;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .speaking-card {
+            background: white;
+            border-radius: 20px;
+            padding: 36px 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.016);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        .speaking-card:hover {
+            transform: translateY(-5px);
+        }
+        .card-title {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 14px;
+        }
+        .card-desc {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.08rem;
+            margin-bottom: 32px;
+        }
+        .start-btn {
+            background: #06a87c;
+            color: white;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 #05946b;
+            width: 100%;
+            max-width: 260px;
+        }
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #05946b;
+        }
+
+        /* Unavailable Style */
+        .speaking-card.unavailable {
+            opacity: 0.75;
+            pointer-events: none;
+            border-color: #e0e0e0;
+        }
+        .speaking-card.unavailable .start-btn {
+            background: #9ca3af;
+            box-shadow: 0 4px 0 #6b7280;
+            cursor: not-allowed;
+        }
+        .speaking-card.unavailable .start-btn:hover {
+            transform: none;
+            box-shadow: 0 4px 0 #6b7280;
+        }
+
+        /* Hide scrollbar completely but keep scrolling */
+        .speaking-hero {
+            scrollbar-width: none; /* Firefox */
+        }
+        .speaking-hero::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        /* Desktop Layout */
+        @media (min-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .page-title {
+                font-size: 3.2rem;
+            }
+            .speaking-hero {
+                padding: 60px 20px 80px;
+            }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo-container" onclick="window.location.href='https://summage.org'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Academy Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+        <button class="back-btn" id="desktop-back-btn">Back</button>
+    </nav>
+    <div class="speaking-hero">
+        <div class="hero-content">
+            <div class="cards-grid">
+                <!-- Card 1 - Part 1 (Active) -->
+                <a href="/learn/tools/speaking-ai/part-1/" class="speaking-card">
+                    <div class="card-title">Part 1</div>
+                    <div class="card-desc">Introduction &amp; Interview<br>Short personal questions</div>
+                    <button class="start-btn">Start Part 1</button>
+                </a>
+
+                <!-- Card 2 - Part 2 (Unavailable) -->
+                <a href="#" class="speaking-card unavailable">
+                    <div class="card-title">Part 2</div>
+                    <div class="card-desc">Individual Long Turn<br>Cue Card + 1-2 minutes speaking</div>
+                    <button class="start-btn">Unavailable</button>
+                </a>
+
+                <!-- Card 3 - Part 3 (Unavailable) -->
+                <a href="#" class="speaking-card unavailable">
+                    <div class="card-title">Part 3</div>
+                    <div class="card-desc">Discussion<br>Deeper follow-up questions</div>
+                    <button class="start-btn">Unavailable</button>
+                </a>
+
+                <!-- Card 4 - Full Mock Test (Unavailable) -->
+                <a href="#" class="speaking-card unavailable">
+                    <div class="card-title">Full Mock Test</div>
+                    <div class="card-desc">Complete IELTS Speaking Test<br>All 3 parts in one go (11-14 minutes)</div>
+                    <button class="start-btn">Unavailable</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+                    window.location.assign('/learn/');
+        }
+        document.getElementById('desktop-back-btn').addEventListener('click', goBack);
+    
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>

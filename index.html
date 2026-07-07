@@ -455,12 +455,14 @@
             align-items: center;
             gap: 80px;
             width: 100%;
+            padding: 0 5vw;
         }
 
         .section-image {
             flex: 1;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
 
         .section-image img {
@@ -472,7 +474,9 @@
 
         .section-text {
             flex: 1;
-            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .section-text h2 {
@@ -488,6 +492,7 @@
             color: #555;
             line-height: 1.7;
             font-weight: 600;
+            max-width: 520px;   /* Keeps text readable */
         }
 
         @media (max-width: 900px) {
@@ -500,6 +505,7 @@
                 flex-direction: column;
                 gap: 40px;
                 text-align: center;
+                padding: 0 20px;
             }
             
             .section-text {
@@ -507,7 +513,7 @@
             }
             
             .section-image img {
-                max-width: 280px;
+                max-width: 260px;
             }
         }
         .navbar {

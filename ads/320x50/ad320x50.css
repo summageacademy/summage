@@ -1,0 +1,50 @@
+/* Hide by default (desktop) */
+.ad-banner-placeholder {
+    display: none;
+}
+
+/* Show only on mobile */
+@media (max-width: 768px) {
+    .ad-banner-placeholder {
+        display: block;
+    }
+
+    .ad-container {
+        max-width: 320px;
+        margin: 30px auto;
+        background: white;
+        overflow: hidden;
+        border-radius: 11px;
+        margin-bottom: 30px;
+    }
+
+    .ad-header {
+        height: 38px;
+        display: flex;
+        align-items: center;
+        padding: 0 18px;
+        font-size: 13.5px;
+        font-weight: 800;
+        letter-spacing: 1.1px;
+        color: white;
+        border-bottom: 3px solid;
+    }
+
+    .ad-banner {
+        height: 50px;
+        background: #fafafa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-left: 4px solid;
+        border-right: 4px solid;
+        border-bottom: 4px solid;
+    }
+
+    .ad-banner .placeholder-content {
+        text-align: center;
+        color: #777;
+        font-size: 13px;
+        font-weight: 500;
+    }
+}

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Listening Practice - Library Interaction | Summage Academy</title>
+    <meta name="description" content="Practice IELTS Listening with a real conversation. Test your understanding with 5 multiple choice questions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LZP4KSPR1V');
+    </script>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <link rel="stylesheet" href="/ads/320x50/ad320x50.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        html {
+            overflow-y: scroll;
+            scrollbar-width: none;
+        }
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.01);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 5vw 180px;
+            width: 100%;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 24px;
+            padding: 45px 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .lesson-title {
+            font-size: 2.35rem;
+            font-weight: 800;
+            color: #06a87c;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .lesson-subtitle {
+            font-size: 1.32rem;
+            font-weight: 600;
+            color: #f24b0b;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .audio-info {
+            background: #f0f8f4;
+            padding: 18px 24px;
+            border-radius: 16px;
+            margin-bottom: 35px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .question-card {
+            background: white;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: #06a87c;
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .question-text {
+            font-size: 1.22rem;
+            font-weight: 600;
+            color: #222;
+            flex: 1;
+            padding-top: 6px; /* Fine alignment with circle */
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .option {
+            padding: 18px 22px;
+            border: 2px solid #e5e5e5;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.08rem;
+        }
+
+        .option:hover {
+            border-color: #06a87c;
+            background: #f8fdfb;
+        }
+
+        .option.selected {
+            border-color: #06a87c;
+            background: #e6f7f1;
+        }
+
+        .submit-btn {
+            padding: 18px 40px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            font-size: 1.15rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 6px 0 #c23a0a;
+            transition: all 0.25s;
+        }
+
+        /* Desktop Audio Player */
+        .audio-player {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 24px;
+            padding: 16px 28px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            z-index: 2000;
+            width: 92%;
+            max-width: 820px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid #eee;
+        }
+
+        .player-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .progress-container {
+            height: 5px;
+            background: #e5e5e5;
+            border-radius: 9999px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #f24b0b;
+            width: 0%;
+            border-radius: 9999px;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Audio Player Controls - Improved */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            justify-content: center;
+        }
+
+        .play-btn {
+            width: 48px;
+            height: 48px;
+            background: #06a87c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.45rem;           /* Smaller icon */
+            cursor: pointer;
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+            padding-left: 3px;            /* Moves play icon (▶) slightly right */
+        }
+
+        .play-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .play-btn:active {
+            transform: scale(0.94);
+        }
+
+        /* Pause state (❚❚) stays centered */
+        .play-btn.paused {
+            padding-left: 0;
+        }
+
+        .control-btn {
+            width: 38px;
+            height: 38px;
+            background: none;
+            border: none;
+            color: #444;
+            font-size: 1.35rem;           /* Smaller skip icons */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn.skip {
+            font-size: 1.6rem;
+        }
+
+        .track-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            min-width: 240px;
+        }
+
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 30px 20px 160px;
+            }
+            
+            .hero {
+                background: transparent;
+                padding: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .lesson-title {
+                font-size: 2rem;
+            }
+            
+            .question-card {
+                background: white;
+                padding: 24px;
+                margin-bottom: 20px;
+                border-radius: 18px;
+            }
+            
+            .question-number {
+                width: 34px;
+                height: 34px;
+                font-size: 1.05rem;
+            }
+            
+            .question-text {
+                font-size: 1.15rem;
+            }
+
+            .audio-player {
+                bottom: 16px;
+                width: 94%;
+                padding: 14px 18px;
+                border-radius: 20px;
+            }
+            
+            .track-info {
+                min-width: auto;
+                flex: 1;
+            }
+            
+            .controls {
+                gap: 12px;
+            }
+            
+            .control-btn.skip {
+                display: none !important;
+            }
+            
+            .play-btn {
+                width: 46px;
+                height: 46px;
+                font-size: 1.35rem;
+            }
+            
+            .control-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1.3rem;
+            }
+            
+            .progress-container {
+                height: 4px;
+            }
+        }
+
+        /* Full Screen Results Modal */
+        .result-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 92vh;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+        }
+
+        .result-header {
+            padding: 32px 32px 20px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .result-body {
+            padding: 20px 32px 32px;
+            max-height: calc(92vh - 180px);
+            overflow-y: auto;
+        }
+
+        .result-footer {
+            padding: 24px 32px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+                /* Close Button for Results Modal */
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+            z-index: 10;
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo-container" onclick="window.location.href='https://summage.org'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Academy Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+        <button class="back-btn" onclick="goBack()">Back</button>
+    </nav>
+
+    <div class="main-content">
+        <div class="hero">
+            
+            <div class="audio-info">
+                <span style="font-size: 1.6rem;">🎧</span>
+                <div>
+                    <strong>Librarian &amp; Student Conversation</strong><br>
+                    <small>Listen carefully and answer the questions</small>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="question-number">1</div>
+                    <div class="question-text">Which book did the student enjoy the most?</div>
+                </div>
+                <div class="options" data-question="1">
+                    <div class="option" data-value="A">A) The book about animals</div>
+                    <div class="option" data-value="B">B) The book about history</div>
+                    <div class="option" data-value="C">C) The book about space</div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="question-number">2</div>
+                    <div class="question-text">Why does the student need another book?</div>
+                </div>
+                <div class="options" data-question="2">
+                    <div class="option" data-value="A">A) For an English class</div>
+                    <div class="option" data-value="B">B) For a reading competition</div>
+                    <div class="option" data-value="C">C) For a science project</div>
+                </div>
+            </div>
+
+            <div class="ad-banner-placeholder"></div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="question-number">3</div>
+                    <div class="question-text">What kind of book does the student want?</div>
+                </div>
+                <div class="options" data-question="3">
+                    <div class="option" data-value="A">A) A difficult book</div>
+                    <div class="option" data-value="B">B) An easy book</div>
+                    <div class="option" data-value="C">C) A very long book</div>
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="submitAnswers(); playClick()">Submit Answers</button>
+        </div>
+    </div>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <div class="track-info">
+            <div style="font-size:2rem;">🎵</div>
+            <div>
+                <div style="font-weight:700;">Conversation</div>
+                <div style="font-size:0.9rem; color:#666;">Librarian &amp; Student</div>
+            </div>
+        </div>
+
+        <div class="player-main">
+            <div class="controls">
+                <button class="control-btn skip" onclick="skipBackward()">⤆</button>
+                <button id="play-btn" class="play-btn" onclick="togglePlay()">▶</button>
+                <button class="control-btn skip" onclick="skipForward()">⤇</button>
+            </div>
+            
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="time-info">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Results Modal -->
+    <div id="results" class="result-modal">
+        <div class="result-content" style="position:relative;">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            
+            <div class="result-header">
+                <h2 style="color:#06a87c; margin-bottom:8px;">Your Score</h2>
+                <div id="score" style="font-size: 3.8rem; font-weight:800; color:#222;"></div>
+            </div>
+            
+            <div class="result-body" id="feedback">
+                <!-- Populated by JS -->
+            </div>
+            
+            <div class="result-footer">
+                <button onclick="window.location.reload()" style="width:100%; padding:18px; background:#f24b0b; color:white; border:none; border-radius:50px; font-weight:700; font-size:1.1rem; cursor:pointer;">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="audio" src="/assets/audio/tests/test3.mp3" preload="metadata"></audio>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const playBtn = document.getElementById('play-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+        
+        let isPlaying = false;
+
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
+        function updateProgress() {
+            if (audio.duration) {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+            }
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerHTML = '▶';
+                playBtn.classList.remove('paused');
+            } else {
+                audio.play();
+                playBtn.innerHTML = '❚❚';
+                playBtn.classList.add('paused');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function skipForward() { audio.currentTime += 15; }
+        function skipBackward() { audio.currentTime -= 15; }
+
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = pos * audio.duration;
+        });
+
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('loadedmetadata', () => durationEl.textContent = formatTime(audio.duration));
+        audio.addEventListener('ended', () => {
+            isPlaying = false;
+            playBtn.innerHTML = '▶';
+        });
+
+        let answers = {};
+
+        function playClick() {
+            const sound = new Audio('/assets/audio/click.mp3');
+            sound.volume = 0.1;
+            sound.play().catch(() => {});
+        }
+
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                const parent = opt.parentElement;
+                playClick();
+                parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                answers[parent.dataset.question] = opt.dataset.value;
+            });
+        });
+
+        function submitAnswers() {
+            const correct = { "1": "A", "2": "C", "3": "B"};
+            let score = 0;
+            let html = '';
+
+            Object.keys(correct).forEach(q => {
+                const userAns = answers[q];
+                const isCorrect = userAns === correct[q];
+                if (isCorrect) score++;
+                html += `
+                    <div style="padding:18px; margin:12px 0; border-radius:14px; background:${isCorrect ? '#e6f7f1' : '#fdf2f2'}; border:1px solid ${isCorrect ? '#b5e6d8' : '#f5d0d0'}">
+                        <strong>Question ${q}:</strong> ${isCorrect ? '✅ Correct' : '❌ Incorrect'}
+                    </div>`;
+            });
+
+            document.getElementById('score').innerHTML = `${score}/3`;
+            document.getElementById('feedback').innerHTML = html;
+            document.getElementById('results').style.display = 'flex';
+        }
+
+        function goBack() {
+            const before = window.location.href;
+            
+            history.back();
+            
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/learn/journeys/listening/');
+                }
+            }, 50);
+        }
+
+        function closeModal() {
+            document.getElementById('results').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlay();
+            }
+        });
+
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+    <script src="/ads/320x50/ad320x50.js"></script>
+</body>
+</html>

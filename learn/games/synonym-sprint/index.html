@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Synonym Sprint - Summage Academy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-LZP4KSPR1V');
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+
+    <style>
+        /* Hide scrollbar */
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            overflow-x: hidden;
+        }
+        html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
+            display: none;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            color: #222;
+        }
+
+        /* Logo text always uses Poppins - regardless of language */
+        .logo-text {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 5vw;
+            background: rgba(255,255,255,0.78);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            min-width: 120px;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c40e20; }
+
+        .logo-container {
+            display: flex; align-items: center; gap: 14px;
+            cursor: pointer; transition: transform 0.3s ease;
+        }
+        .logo-container:hover { transform: scale(1.04); }
+        .logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 14px; box-shadow: 0 2px 8px rgba(242,75,11,0.15); }
+        .logo-text { font-size: 26px; font-weight: 800; color: #f24b0b; text-transform: uppercase; letter-spacing: 1.2px; }
+
+        .language-selector { position: relative; }
+        .language-button { background: none; border: none; padding: 10px; cursor: pointer; border-radius: 50%; transition: all 0.25s ease; }
+        .language-button:hover { background: rgba(242,75,11,0.1); transform: scale(1.12); }
+        .language-button img { width: 26px; height: 26px; }
+        .language-flags {
+            position: absolute; top: 140%; right: 0; background: white; border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); opacity: 0; transform: translateY(-10px);
+            transition: all 0.25s ease; pointer-events: none; min-width: 140px; padding: 8px 0; z-index: 200;
+        }
+        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .flag { padding: 13px 24px; display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 15.5px; color: #333; }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; height: 28px; border-radius: 6px; }
+
+        /* Hero – positioned between navbar and center better spacing on desktop, still comfortable on mobile */
+        .hero {
+            padding-top: 125px;           /* good desktop feeling — adjust between 110–150 */
+            min-height: 60vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+
+        @media (max-width: 1023px) {
+            .hero {
+                padding-top: 100px;       /* safer on tablets & smaller laptops */
+            }
+        }
+        .hero-content {
+            max-width: 860px;
+            width: 100%;
+            text-align: center;
+        }
+        .hero-text {
+            font-size: clamp(1.55rem, 5vw, 3.1rem);
+            font-weight: 700;
+            line-height: 1.38;
+            color: #222;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .hero-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero-text strong { color: #f24b0b; font-weight: 800; }
+
+        /* Bottom Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding: 24px 5vw 30px;
+            z-index: 999;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .option {
+            border: 3px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 18px 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            text-align: center;
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .option:hover { border-color: #f24b0b; transform: translateY(-3px); }
+        .option.selected {
+            border-color: #f24b0b;
+            background: #fffaf5;
+        }
+        .option.correct {
+            border-color: #10b981;
+            color: #10b981;
+            background: #f0fdf4;
+        }
+        .option.wrong {
+            border-color: #ef4444;
+            color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .check-btn {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            display: block;
+            padding: 18px 24px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 15.5px;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 0 #c23a0a;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .check-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c23a0a; }
+        .check-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 3px 0 #c23a0a;
+        }
+
+        #continue-btn:disabled {
+            opacity: 0.75;
+            cursor: not-allowed;
+            box-shadow: 0 4px 0 #6b7280 !important;   /* darker gray shadow */
+            transform: none;
+        }
+
+        @media (max-width: 767px) {
+            .back-btn { display: none; }
+            .navbar { padding: 14px 5vw; }
+            .hero { padding-top: 90px; min-height: 55vh; }
+            .option { padding: 16px 12px; font-size: 1rem; }
+        }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            padding: 32px 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+        .modal-close:hover { color: #f24b0b; }
+
+        .ad-modal {
+            max-width: 420px;
+        }
+
+        /* Hearts */
+        .hearts-container {
+            display: flex;
+            gap: 6px;
+        }
+        .heart {
+            width: 32px;
+            height: 32px;
+            transition: all 0.3s ease;
+        }
+        .heart.lost {
+            opacity: 0.4;
+            transform: scale(0.7);
+        }
+
+        /* Modals (keep from previous) */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 28px;
+            max-width: 400px;
+            width: 92%;
+            text-align: center;
+            padding: 40px 28px;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .ad-modal {
+            max-width: 420px;
+        }
+
+        .modal h2, .modal h3 {
+            font-size: 1.95rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 12px;
+        }
+
+        .modal p {
+            color: #555;
+            line-height: 1.5;
+            font-size: 1.05rem;
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+        .modal-close:hover { color: #f24b0b; }
+
+        /* Enhanced Mobile Hearts */
+        #hearts-mobile {
+            align-items: center;
+        }
+
+        #hearts-mobile #hearts-count {
+            font-size: 1.45rem;
+            line-height: 1;
+            color: #f24b0b;
+            font-weight: 800;
+        }
+
+        #hearts-mobile span:nth-child(2) {  /* the "x" */
+            font-size: 1.2rem;
+            color: #f24b0b;
+            font-weight: 700;
+        }
+
+        /* Improve Navbar on Mobile */
+        @media (max-width: 767px) {
+            .navbar {
+                padding: 16px 5vw;     /* Slightly more padding */
+                min-height: 68px;      /* Give more breathing room */
+            }
+            
+            .logo-container {
+                gap: 10px;
+            }
+            
+            .logo-img {
+                width: 42px;
+                height: 42px;
+            }
+            
+            .logo-text {
+                font-size: 22px;
+            }
+        }
+
+        /* Golden Heartbar Boost */
+        .heart.boosted {
+            filter: 
+                drop-shadow(0 0 6px #fbbf24) 
+                drop-shadow(0 0 12px #f59e0b) 
+                drop-shadow(0 0 18px #d97706);
+            animation: heartPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        /* Mobile boost style */
+        #hearts-mobile.boosted #hearts-count {
+            color: #fbbf24 !important;
+            text-shadow: 0 0 8px #fbbf24;
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <nav class="navbar">
+        <button onclick="history.back()" class="back-btn">
+            <span>Back</span>
+        </button>
+
+        <div class="logo-container" onclick="window.location.href='/'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+
+        <div class="flex items-center gap-6 md:gap-10">
+            <!-- Hearts Desktop -->
+            <div id="hearts-container" class="hearts-container hidden md:flex"></div>
+
+            <!-- Hearts Mobile -->
+            <div id="hearts-mobile" class="md:hidden flex items-center gap-2 text-xl font-bold">
+                <span id="hearts-count" class="text-[#f24b0b]">5</span>
+                <span class="text-[#f24b0b]">x</span>
+                <img src="/assets/images/menu-icons/game-heart.webp" alt="❤️" class="w-8 h-8">
+            </div>
+
+            <a href="/learn/" class="md:hidden">
+                <img src="/assets/images/menu-icons/arrow.webp" alt="Back" class="w-9 h-9 object-contain">
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div id="prompt-text" class="hero-text"></div>
+        </div>
+    </section>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+        <div id="options-grid" class="options-grid"></div>
+        <button id="check-btn" class="check-btn">CHECK ANSWER</button>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal">
+        <div class="modal-content">
+            <img src="/assets/images/illustrations/no-hearts.webp" 
+                alt="No hearts" 
+                style="width: 160px; height: 160px; margin: 0 auto 28px; display: block;">
+            
+            <h2>No hearts left!</h2>
+            <p style="margin-bottom:32px;">Watch a short ad to get +3 hearts and continue playing.</p>
+            
+            <button onclick="watchAdForHearts(); playClick()" 
+                    style="background:#f24b0b; box-shadow: 0 4px 0 #c23a0a; color:white; padding:18px 32px; border:none; border-radius:50px; font-weight:700; font-size:16.5px; width:100%;">
+                GET HEARTS
+            </button>
+        </div>
+    </div>
+
+    <!-- Ad Modal -->
+    <div id="ad-modal" class="modal">
+        <div class="modal-content ad-modal">
+            <span class="modal-close" onclick="closeAdModal(); playClick()">×</span>
+            
+            <div style="background: linear-gradient(135deg, #f24b0b, #f97316); color:white; height:240px; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:24px 0 28px; font-size:1.15rem; font-weight:700; box-shadow: 0 10px 20px rgba(242,75,11,0.3);">
+                [ Ad Placeholder ]
+            </div>
+            
+            <h3 style="margin-bottom:16px;">Ads keep Summage free for everyone</h3>
+
+            <button class="continue-btn" id="continue-btn" onclick="finishAdAndContinue(); playClick()" 
+                    style="background:#10b981; box-shadow: 0 4px 0 #0b9265; color:white; padding:17px 32px; border:none; border-radius:50px; font-weight:700; font-size:16px; width:100%; margin-top: 10px;">
+                CONTINUE PLAYING
+            </button>
+        </div>
+    </div>
+
+    <script>
+    // ====================== FIREBASE SETUP ======================
+    let auth, db;
+
+    async function loadFirebase() {
+        const scripts = [
+            'https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js',
+            'https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js',
+            'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js'
+        ];
+
+        for (let src of scripts) {
+            await new Promise(resolve => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                document.head.appendChild(script);
+            });
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+            authDomain: "summage-backend.firebaseapp.com",
+            projectId: "summage-backend",
+            storageBucket: "summage-backend.firebasestorage.app",
+            messagingSenderId: "128191434358",
+            appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+
+        console.log("✅ Firebase initialized");
+        initAuthListener();
+    }
+
+    // ====================== GAME VARIABLES ======================
+    const translations = {
+        en: { back: "Back", check: "CHECK ANSWER", loading: "LOADING..." },
+        ru: { back: "Назад", check: "ПРОВЕРИТЬ", loading: "ЗАГРУЗКА..." },
+        uz: { back: "Orqaga", check: "TEKSHIRISH", loading: "YUKLANMOQDA..." }
+    };
+
+    let currentLang = localStorage.getItem('summage_lang') || 'en';
+    document.documentElement.lang = currentLang;
+
+    const tasks = [
+        { html: "One major <strong>advantage</strong> of studying abroad is cultural exposure.", options: ["benefit", "drawback", "problem", "challenge"], correct: 0 },
+        { html: "Climate change has a huge <strong>impact</strong> on global food production.", options: ["effect", "cause", "solution", "benefit"], correct: 0 },
+        { html: "Education is <strong>crucial</strong> for long-term economic growth.", options: ["essential", "optional", "minor", "irrelevant"], correct: 0 },
+        { html: "The government wants to <strong>increase</strong> investment in green technology.", options: ["rise", "decrease", "reduce", "lower"], correct: 0 },
+        { html: "Finding a permanent <strong>solution</strong> to traffic jams is difficult.", options: ["approach", "problem", "cause", "question"], correct: 0 },
+        { html: "Many countries now use <strong>renewable</strong> energy sources.", options: ["sustainable", "fossil", "nuclear", "traditional"], correct: 0 },
+        { html: "Social media has a strong <strong>influence</strong> on young people's behaviour.", options: ["effect", "control", "freedom", "isolation"], correct: 0 },
+        { html: "Teamwork is <strong>essential</strong> in modern workplaces.", options: ["vital", "unnecessary", "rare", "optional"], correct: 0 },
+        { html: "Globalization has both positive and negative <strong>consequences</strong>.", options: ["results", "causes", "solutions", "origins"], correct: 0 },
+        { html: "Governments should protect the <strong>environment</strong> more strictly.", options: ["nature", "economy", "technology", "society"], correct: 0 }
+    ];
+
+    let currentIndex = 0;
+    let selectedIndex = null;
+    let isChecking = false;
+    let currentUser = null;
+    let hearts = null;
+    let lastHeartReset = null;
+    let isHeartsLoaded = false;
+
+    // Boost Variables
+    let isHeartbarActive = false;
+    let heartbarExpiresAt = 0;
+
+    const fullHeart = '/assets/images/menu-icons/game-heart.webp';
+    const emptyHeart = '/assets/images/menu-icons/game-heart-empty.webp';
+
+    const promptEl = document.getElementById('prompt-text');
+    const gridEl = document.getElementById('options-grid');
+    const checkBtn = document.getElementById('check-btn');
+
+    function playClick() {
+        const sound = new Audio('/assets/audio/click.mp3');
+        sound.volume = 0.1;
+        sound.play().catch(() => {});
+    }
+
+    // ====================== HEARTS RENDER ======================
+    function renderHearts() {
+        if (hearts === null) return;
+
+        const isBoosted = isHeartbarActive;
+
+        // Desktop
+        const desktopContainer = document.getElementById('hearts-container');
+        desktopContainer.innerHTML = '';
+        for (let i = 1; i <= 5; i++) {
+            const img = document.createElement('img');
+            img.className = `heart ${isBoosted ? 'boosted' : ''}`;
+            img.src = (i <= hearts) ? fullHeart : emptyHeart;
+            desktopContainer.appendChild(img);
+        }
+
+        // Mobile
+        const countEl = document.getElementById('hearts-count');
+        if (countEl) {
+            countEl.textContent = isBoosted ? '∞' : hearts;
+            countEl.style.color = isBoosted ? '#fbbf24' : '#f24b0b';
+        }
+        document.getElementById('hearts-mobile').classList.toggle('boosted', isBoosted);
+    }
+
+    // ====================== FIREBASE HEART + BOOST SYSTEM ======================
+    async function loadUserHearts() {
+        if (!currentUser || !db) return;
+
+        try {
+            const userRef = db.collection("users").doc(currentUser.uid);
+            const docSnap = await userRef.get();
+
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                hearts = data.hearts !== undefined ? data.hearts : 5;
+                lastHeartReset = data.lastHeartReset || null;
+                checkAndResetHearts();
+            } else {
+                await userRef.set({ hearts: 5, lastHeartReset: getTodayDateString() });
+                hearts = 5;
+            }
+
+            isHeartsLoaded = true;
+            await loadActiveBoosts();   // Load boost after hearts
+            renderHearts();
+        } catch (e) {
+            console.error("❌ Load hearts error:", e);
+            hearts = 5;
+            isHeartsLoaded = true;
+            renderHearts();
+        }
+    }
+
+    async function loadActiveBoosts() {
+        if (!currentUser || !db) return;
+
+        try {
+            const snapshot = await db.collection('purchases')
+                .where('userId', '==', currentUser.uid)
+                .get();
+
+            isHeartbarActive = false;
+            heartbarExpiresAt = 0;
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (data.itemId === "full_heartbar" && data.expiresAt > Date.now()) {
+                    isHeartbarActive = true;
+                    heartbarExpiresAt = data.expiresAt;
+                }
+            });
+
+            console.log("💎 Full Heartbar Active:", isHeartbarActive);
+            renderHearts();
+        } catch (e) {
+            console.error("Boost load error:", e);
+        }
+    }
+
+    function getTodayDateString() {
+        return new Date().toISOString().split('T')[0];
+    }
+
+    function checkAndResetHearts() {
+        const today = getTodayDateString();
+        if (lastHeartReset !== today) {
+            hearts = 5;
+            lastHeartReset = today;
+            saveUserHearts();
+        }
+    }
+
+    async function saveUserHearts() {
+        if (!currentUser || !db) return;
+        try {
+            const userRef = db.collection("users").doc(currentUser.uid);
+            await userRef.set({
+                hearts: hearts,
+                lastHeartReset: getTodayDateString()
+            }, { merge: true });
+        } catch (e) {
+            console.error("❌ Save hearts error:", e);
+        }
+    }
+
+    function initAuthListener() {
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            console.log("🔐 Auth:", user ? "Logged in" : "Guest");
+            if (user) {
+                loadUserHearts();
+            } else {
+                hearts = 5;
+                isHeartsLoaded = true;
+                renderHearts();
+            }
+        });
+    }
+
+    // ====================== GAME FUNCTIONS ======================
+    function updateButtonTexts() {
+        const t = translations[currentLang] || translations.en;
+        const backBtn = document.querySelector('.back-btn');
+        if (backBtn) backBtn.innerHTML = `<span>${t.back}</span>`;
+
+        if (checkBtn && !checkBtn.disabled) checkBtn.textContent = t.check;
+    }
+
+    function loadNewTask() {
+        isChecking = false;
+        selectedIndex = null;
+        checkBtn.disabled = false;
+
+        const t = translations[currentLang] || translations.en;
+        checkBtn.textContent = t.check;
+
+        let newIndex = currentIndex;
+        while (newIndex === currentIndex) newIndex = Math.floor(Math.random() * tasks.length);
+        currentIndex = newIndex;
+        const task = tasks[currentIndex];
+
+        promptEl.classList.remove('visible');
+        setTimeout(() => {
+            promptEl.innerHTML = task.html;
+            promptEl.classList.add('visible');
+        }, 400);
+
+        gridEl.innerHTML = '';
+        task.options.forEach((opt, i) => {
+            const div = document.createElement('div');
+            div.className = 'option';
+            div.textContent = opt;
+            div.dataset.index = i;
+            div.onclick = () => selectOption(i);
+            gridEl.appendChild(div);
+        });
+    }
+
+    function selectOption(index) {
+        if (isChecking) return;
+        selectedIndex = index;
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.classList.remove('selected');
+            if (parseInt(opt.dataset.index) === index) opt.classList.add('selected');
+        });
+    }
+
+    function correctSound() {
+            const sound = new Audio('/assets/audio/correct.mp3');
+            sound.volume = 0.1;
+            sound.play().catch(() => {});
+        }
+
+    function incorrectSound() {
+            const sound = new Audio('/assets/audio/error.mp3');
+            sound.volume = 0.1;
+            sound.play().catch(() => {});
+        }
+    
+    function checkAnswer() {
+        if (isChecking || selectedIndex === null) return;
+        if (!canPlay()) {
+            document.getElementById('game-over-modal').style.display = 'flex';
+            return;
+        }
+
+        isChecking = true;
+        checkBtn.disabled = true;
+        const t = translations[currentLang] || translations.en;
+        checkBtn.textContent = t.loading;
+
+        const task = tasks[currentIndex];
+        const isCorrect = selectedIndex === task.correct;
+
+        // Visual feedback
+        document.querySelectorAll('.option').forEach(opt => {
+            const idx = parseInt(opt.dataset.index);
+            opt.classList.remove('selected');
+
+            if (idx === task.correct) {
+                opt.classList.add('correct');
+            }
+
+            if (idx === selectedIndex && !isCorrect) {
+                opt.classList.add('wrong');
+            }
+        });
+
+        // Play sounds OUTSIDE the loop - only once
+        if (isCorrect) {
+            correctSound();
+        } else {
+            incorrectSound();
+            
+            if (!isHeartbarActive) {
+                hearts = Math.max(0, hearts - 1);
+                renderHearts();
+                saveUserHearts();
+            }
+
+            if (hearts <= 0 && !isHeartbarActive) {
+                setTimeout(() => {
+                    document.getElementById('game-over-modal').style.display = 'flex';
+                }, 1400);
+                return;
+            }
+        }
+
+        setTimeout(loadNewTask, 2200);
+    }
+
+    // ====================== MODALS & HEARTS LOGIC ======================
+    let countdownInterval = null;
+
+    function closeGameOverModal() {
+        document.getElementById('game-over-modal').style.display = 'none';
+        // IMPORTANT: Do NOT reset hearts here
+    }
+
+    function watchAdForHearts() {
+        document.getElementById('game-over-modal').style.display = 'none';
+        document.getElementById('ad-modal').style.display = 'flex';
+        startAdCountdown();
+    }
+
+    function closeAdModal() {
+        document.getElementById('ad-modal').style.display = 'none';
+        // Optional: allow user to close ad but they still have 0 hearts
+    }
+
+    function finishAdAndContinue() {
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+        }
+        
+        document.getElementById('ad-modal').style.display = 'none';
+        
+        hearts = Math.min(5, (hearts || 0) + 3);
+        renderHearts();
+        saveUserHearts();
+        loadNewTask();
+    }
+
+    function startAdCountdown() {
+        const continueBtn = document.getElementById('continue-btn');
+        let timeLeft = 5;
+        
+        continueBtn.disabled = true;
+        continueBtn.style.background = '#9ca3af';
+        continueBtn.style.boxShadow = '0 4px 0 #6b7280';
+        continueBtn.textContent = "5";
+        
+        if (countdownInterval) clearInterval(countdownInterval);
+        
+        countdownInterval = setInterval(() => {
+            timeLeft--;
+            continueBtn.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+                continueBtn.textContent = "CONTINUE PLAYING";
+                continueBtn.disabled = false;
+                continueBtn.style.background = '#10b981';
+                continueBtn.style.boxShadow = '0 4px 0 #0b9265';
+            }
+        }, 1000);
+    }
+
+    function canPlay() {
+        return hearts > 0 || isHeartbarActive;   // ← Updated
+    }
+
+    // ====================== INITIALIZE ======================
+    checkBtn.addEventListener('click', checkAnswer);
+
+    loadFirebase();
+
+    // Initial render
+    loadNewTask();
+    updateButtonTexts();
+
+    // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+</script>
+</body>
+</html>

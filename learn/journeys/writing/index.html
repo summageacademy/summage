@@ -1,61 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Writing Training - Summage Academy</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Lessons - Summage Academy</title>
+    <meta name="description" content="Master IELTS-style Writing Task 1 and Task 2 with structured lessons from Summage Academy." />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-    
         gtag('config', 'G-LZP4KSPR1V');
     </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <style>
-        /* Hide scrollbar */
+        /* Same styles as grammar page - only minor changes for writing */
         html, body {
             scrollbar-width: none;
             -ms-overflow-style: none;
-            overflow-x: hidden;
         }
-        html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
+        html::-webkit-scrollbar, body::-webkit-scrollbar, .content::-webkit-scrollbar {
             display: none;
         }
-
-        * { margin:0; padding:0; box-sizing:border-box; }
-
-        body {
-            font-family: 'Poppins', system-ui, sans-serif;
-            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
-            min-height: 100vh;
-            color: #222;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        html[lang="ru"] * { font-family: 'Poppins', system-ui, sans-serif; }
+        .logo-text {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            color: #333;
+        }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 5vw;
-            background: rgba(255,255,255,0.78);
+            padding: 24px 5vw;
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .back-btn {
@@ -71,158 +79,290 @@
             cursor: pointer;
             box-shadow: 0 4px 0 #c40e20;
             transition: all 0.25s ease;
-            min-width: 120px;
-        }
-        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c40e20; }
-
-        .logo-container {
-            display: flex; align-items: center; gap: 14px;
-            cursor: pointer; transition: transform 0.3s ease;
-        }
-        .logo-container:hover { transform: scale(1.04); }
-        .logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 14px; box-shadow: 0 2px 8px rgba(242,75,11,0.15); }
-        .logo-text { font-size: 26px; font-weight: 800; color: #f24b0b; text-transform: uppercase; letter-spacing: 1.2px; }
-
-        .language-selector { position: relative; }
-        .language-button { background: none; border: none; padding: 10px; cursor: pointer; border-radius: 50%; transition: all 0.25s ease; }
-        .language-button:hover { background: rgba(242,75,11,0.1); transform: scale(1.12); }
-        .language-button img { width: 26px; height: 26px; }
-        .language-flags {
-            position: absolute; top: 140%; right: 0; background: white; border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15); opacity: 0; transform: translateY(-10px);
-            transition: all 0.25s ease; pointer-events: none; min-width: 140px; padding: 8px 0; z-index: 200;
-        }
-        .language-flags.show { opacity: 1; transform: translateY(0); pointer-events: all; }
-        .flag { padding: 13px 24px; display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 15.5px; color: #333; }
-        .flag:hover { background: #f24b0b10; }
-        .flag img { width: 28px; height: 28px; border-radius: 6px; }
-
-        /* Hero – positioned between navbar and center better spacing on desktop, still comfortable on mobile */
-        .hero {
-            padding-top: 125px;           /* good desktop feeling — adjust between 110–150 */
-            min-height: 60vh;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding-left: 5vw;
-            padding-right: 5vw;
-        }
-
-        @media (max-width: 1023px) {
-            .hero {
-                padding-top: 100px;       /* safer on tablets & smaller laptops */
-            }
-        }
-        .hero-content {
-            max-width: 860px;
-            width: 100%;
-            text-align: center;
-        }
-        .hero-text {
-            font-size: clamp(1.55rem, 5vw, 3.1rem);
-            font-weight: 700;
-            line-height: 1.38;
-            color: #222;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(25px);
-            transition: all 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .hero-text.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .hero-text strong { color: #f24b0b; font-weight: 800; }
-
-        /* Bottom Bar */
-        .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(14px);
-            border-top: 1px solid rgba(0,0,0,0.08);
-            padding: 24px 5vw 30px;
-            z-index: 999;
-        }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 24px;
-        }
-        .option {
-            border: 3px solid #e5e7eb;
-            border-radius: 20px;
-            padding: 18px 16px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            text-align: center;
-            min-height: 78px;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        .option:hover { border-color: #f24b0b; transform: translateY(-3px); }
-        .option.selected {
-            border-color: #f24b0b;
-            background: #fffaf5;
-        }
-        .option.correct {
-            border-color: #10b981;
-            color: #10b981;
-            background: #f0fdf4;
-        }
-        .option.wrong {
-            border-color: #ef4444;
-            color: #ef4444;
-            background: #fef2f2;
+            gap: 10px;
+            min-width: 120px;
         }
 
-        .check-btn {
-            width: 100%;
-            max-width: 420px;
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c40e20;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f24b0b;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        /* Language Selector (same) */
+        .language-selector { position: relative; }
+        .language-button {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+        .language-button:hover {
+            background-color: rgba(242, 75, 11, 0.1);
+            transform: scale(1.12);
+        }
+        .language-button img { width: 26px; height: 26px; }
+
+        .language-flags {
+            position: absolute;
+            top: 140%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+            min-width: 140px;
+            padding: 8px 0;
+            overflow: hidden;
+            z-index: 200;
+        }
+        .language-flags.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+            pointer-events: all; 
+        }
+
+        .flag {
+            padding: 13px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 15.5px;
+            color: #333;
+        }
+        .flag:hover { background: #f24b0b10; }
+        .flag img { width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0; }
+
+        .content {
+            flex: 1;
+            padding: 60px 5vw 120px;
+            max-width: 1400px;
             margin: 0 auto;
-            display: block;
-            padding: 18px 24px;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .section-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #f24b0b;
+            line-height: 1;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #222;
+        }
+        .section-desc {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .lesson-card {
+            background: white;
+            border: 1px solid #f0e6d9;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .lesson-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(242, 75, 11, 0.12);
+        }
+
+        .lesson-header {
+            padding: 28px 28px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .lesson-id {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #f24b0b;
+            text-transform: uppercase;
+        }
+        .lesson-title {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #222;
+            margin-top: 6px;
+        }
+        .lesson-desc {
+            margin-top: 16px;
+            font-size: 15.5px;
+            line-height: 1.55;
+            color: #555;
+            flex: 1;
+        }
+
+        .lesson-footer {
+            border-top: 1px solid #f0e6d9;
+            padding: 20px 28px;
+            background: #fffaf5;
+            margin-top: auto;
+        }
+
+        .start-btn {
             background: #f24b0b;
             color: white;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 15.5px;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            padding: 16px;
             border: none;
             border-radius: 50px;
+            width: 100%;
             box-shadow: 0 4px 0 #c23a0a;
-            cursor: pointer;
             transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        .check-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c23a0a; }
-        .check-btn:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 0 3px 0 #c23a0a;
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a;
         }
 
-        @media (max-width: 767px) {
-            .back-btn { display: none; }
-            .navbar { padding: 14px 5vw; }
-            .hero { padding-top: 90px; min-height: 55vh; }
-            .option { padding: 16px 12px; font-size: 1rem; }
+        .completed-btn {
+            background: #06a87c;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            padding: 16px;
+            border: none;
+            border-radius: 50px;
+            width: 100%;
+            box-shadow: 0 4px 0 #058f66;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
+
+        .mobile-footer-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 14px 5vw;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+        .mobile-back-btn {
+            width: 100%;
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 16px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .content { padding: 40px 20px 100px; }
+            .section-title { font-size: 1.9rem; }
+            .navbar { padding: 20px; }
+            .mobile-footer-bar { display: block; }
+            .back-btn { display: none; }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .page-loader.hidden { opacity: 0; visibility: hidden; }
     </style>
 </head>
 <body>
+    <!-- Loader -->
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
 
+    <!-- Navbar -->
     <nav class="navbar">
-        <button onclick="history.back()" class="back-btn">
-            <span>Back</span>
+        <button onclick="goBack()" class="back-btn" id="desktop-back-btn">
+            <span data-key="back">Back</span>
         </button>
 
         <div class="logo-container" onclick="window.location.href='/'">
@@ -230,266 +370,253 @@
             <div class="logo-text">Summage</div>
         </div>
 
-        <div class="flex items-center gap-6 md:gap-10">
-            <div class="language-selector hidden md:block">
-                <button id="lang-btn" class="language-button" aria-label="Select language">
-                    <img src="/assets/images/lang/globe.webp" alt="Globe">
-                </button>
-                <div id="lang-flags" class="language-flags">
-                    <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
-                    <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
-                    <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
-                </div>
+        <div class="language-selector">
+            <button class="language-button" id="lang-btn" aria-label="Select language">
+                <img src="/assets/images/lang/globe.webp" alt="">
+            </button>
+            <div class="language-flags" id="lang-flags">
+                <div class="flag" data-lang="en"><img src="/assets/images/lang/en.png" alt="EN"> English</div>
+                <div class="flag" data-lang="ru"><img src="/assets/images/lang/ru.png" alt="RU"> Русский</div>
+                <div class="flag" data-lang="uz"><img src="/assets/images/lang/uz.png" alt="UZ"> O'zbek</div>
             </div>
-
-            <a href="/learn/" class="md:hidden">
-                <img src="/assets/images/menu-icons/arrow.webp" alt="Back" class="w-9 h-9 object-contain">
-            </a>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div id="prompt-text" class="hero-text"></div>
-        </div>
-    </section>
+    <!-- Main Content -->
+    <main class="content" id="writing-container">
+        <!-- Populated by JS -->
+    </main>
 
-    <!-- Bottom Bar -->
-    <div class="bottom-bar">
-        <div id="options-grid" class="options-grid"></div>
-        <button id="check-btn" class="check-btn">CHECK ANSWER</button>
+    <!-- Mobile Footer -->
+    <div class="mobile-footer-bar">
+        <button onclick="goBack()" class="mobile-back-btn" id="mobile-back-btn">
+            <span data-key="back">Back</span>
+        </button>
     </div>
 
-    <script>
-        // Translations object
-        const translations = {
-            en: {
-                back: "Back",
-                check: "CHECK ANSWER",
-                loading: "LOADING..."
-            },
-            ru: {
-                back: "Назад",
-                check: "ПРОВЕРИТЬ",
-                loading: "ЗАГРУЗКА..."
-            },
-            uz: {
-                back: "Orqaga",
-                check: "TEKSHIRISH",
-                loading: "YUKLANMOQDA..."
-            }
-        };
+    <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js';
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js';
+    import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js';
 
-        // Current language – load from localStorage or default to English
-        let currentLang = localStorage.getItem('summage_lang') || 'en';
-        document.documentElement.lang = currentLang;
+    const firebaseConfig = {
+        apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+        authDomain: "summage-backend.firebaseapp.com",
+        projectId: "summage-backend",
+        storageBucket: "summage-backend.firebasestorage.app",
+        messagingSenderId: "128191434358",
+        appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
 
-        // Tasks data
-        const tasks = [
-            {
-                html: "One major <strong>advantage</strong> of studying abroad is cultural exposure.",
-                options: ["benefit", "drawback", "problem", "challenge"],
-                correct: 0
-            },
-            {
-                html: "Climate change has a huge <strong>impact</strong> on global food production.",
-                options: ["effect", "cause", "solution", "benefit"],
-                correct: 0
-            },
-            {
-                html: "Education is <strong>crucial</strong> for long-term economic growth.",
-                options: ["essential", "optional", "minor", "irrelevant"],
-                correct: 0
-            },
-            {
-                html: "The government wants to <strong>increase</strong> investment in green technology.",
-                options: ["rise", "decrease", "reduce", "lower"],
-                correct: 0
-            },
-            {
-                html: "Finding a permanent <strong>solution</strong> to traffic jams is difficult.",
-                options: ["approach", "problem", "cause", "question"],
-                correct: 0
-            },
-            {
-                html: "Many countries now use <strong>renewable</strong> energy sources.",
-                options: ["sustainable", "fossil", "nuclear", "traditional"],
-                correct: 0
-            },
-            {
-                html: "Social media has a strong <strong>influence</strong> on young people's behaviour.",
-                options: ["effect", "control", "freedom", "isolation"],
-                correct: 0
-            },
-            {
-                html: "Teamwork is <strong>essential</strong> in modern workplaces.",
-                options: ["vital", "unnecessary", "rare", "optional"],
-                correct: 0
-            },
-            {
-                html: "Globalization has both positive and negative <strong>consequences</strong>.",
-                options: ["results", "causes", "solutions", "origins"],
-                correct: 0
-            },
-            {
-                html: "Governments should protect the <strong>environment</strong> more strictly.",
-                options: ["nature", "economy", "technology", "society"],
-                correct: 0
-            }
-        ];
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-        let currentIndex = 0;
-        let selectedIndex = null;
-        let isChecking = false;
+    const allWritingLessons = [
+        // Task 1
+        { id: 1, task: "task1", title: "Understanding Writing Task 1", desc: "Overview of Task 1 requirements and marking criteria", group: "task1" },
+        { id: 2, task: "task1", title: "Writing a Strong Introduction", desc: "How to write clear and accurate introductions for Task 1", group: "task1" },
+        { id: 3, task: "task1", title: "Writing an Effective Overview", desc: "Key techniques for writing high-scoring overviews", group: "task1" },
+        { id: 4, task: "task1", title: "Body Paragraphs - Trends & Data", desc: "How to describe trends, numbers and comparisons", group: "task1" },
 
-        const promptEl = document.getElementById('prompt-text');
-        const gridEl = document.getElementById('options-grid');
-        const checkBtn = document.getElementById('check-btn');
+        // Task 2
+        { id: 6, task: "task2", title: "Understanding Writing Task 2", desc: "Essay types, structure and marking criteria", group: "task2" },
+        { id: 7, task: "task2", title: "Essay Introductions", desc: "How to write powerful introductions for Task 2", group: "task2" },
+        { id: 8, task: "task2", title: "Writing Strong Body Paragraphs", desc: "Topic sentences, explanations and examples", group: "task2" },
+        { id: 9, task: "task2", title: "Writing Conclusions", desc: "How to write impactful essay conclusions", group: "task2" },
+        { id: 10, task: "task2", title: "Linking Words & Cohesion", desc: "Advanced connectors for better coherence", group: "task2" },
+        { id: 11, task: "task2", title: "Common Essay Structures", desc: "Opinion, Discussion, Advantages/Disadvantages essays", group: "task2" }
+    ];
 
-        // ────────────────────────────────────────────────────────────────
-        // Update all translatable UI elements
-        // ────────────────────────────────────────────────────────────────
-        function updateButtonTexts() {
-            const t = translations[currentLang] || translations.en;
+    let completedLessons = {};
 
-            // Back button (desktop version)
-            const backBtn = document.querySelector('.back-btn');
-            if (backBtn) {
-                backBtn.innerHTML = `<span>${t.back}</span>`;
-            }
-
-            // Check button – only update if not in loading/disabled state
-            if (checkBtn && !checkBtn.disabled) {
-                checkBtn.textContent = t.check;
-            }
+    const translations = {
+        en: {
+            back: "Back",
+            loading: "Loading your progress...",
+            signIn: "Please sign in to access personalized lessons",
+            signInBtn: "Sign In",
+            task1Title: "Writing Task 1",
+            task1Desc: "Describing charts, graphs, and data",
+            task2Title: "Writing Task 2",
+            task2Desc: "Essay writing skills",
+            startLesson: "Start Lesson",
+            retake: "Retake",
+            locked: "Locked"
+        },
+        ru: {
+            back: "Назад",
+            loading: "Загрузка вашего прогресса...",
+            signIn: "Пожалуйста, войдите, чтобы увидеть персонализированные уроки",
+            signInBtn: "Войти",
+            task1Title: "Writing Task 1",
+            task1Desc: "Описание графиков и данных",
+            task2Title: "Writing Task 2",
+            task2Desc: "Навыки написания эссе",
+            startLesson: "Начать урок",
+            retake: "Повторить",
+            locked: "Заблокировано"
+        },
+        uz: {
+            back: "Orqaga",
+            loading: "Sizning taraqqiyotingiz yuklanmoqda...",
+            signIn: "Shaxsiy darslarni ko'rish uchun tizimga kiring",
+            signInBtn: "Kirish",
+            task1Title: "Writing Task 1",
+            task1Desc: "Jadvallar va grafiklar tavsifi",
+            task2Title: "Writing Task 2",
+            task2Desc: "Insho yozish ko'nikmalari",
+            startLesson: "Darsni boshlash",
+            retake: "Qaytarish",
+            locked: "Bloklangan"
         }
+    };
 
-        // ────────────────────────────────────────────────────────────────
-        // Load a new synonym task
-        // ────────────────────────────────────────────────────────────────
-        function loadNewTask() {
-            isChecking = false;
-            selectedIndex = null;
-            checkBtn.disabled = false;
+    let currentLang = localStorage.getItem('summage_preferred_lang') || 'en';
 
-            const t = translations[currentLang] || translations.en;
-            checkBtn.textContent = t.check;
+    function t(key) {
+        return translations[currentLang]?.[key] || translations.en[key] || key;
+    }
 
-            // Pick a different random task
-            let newIndex = currentIndex;
-            while (newIndex === currentIndex) {
-                newIndex = Math.floor(Math.random() * tasks.length);
-            }
-            currentIndex = newIndex;
-            const task = tasks[currentIndex];
+    function updateLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('summage_preferred_lang', lang);
+        document.documentElement.lang = lang;
+        renderWritingLessons();
+    }
 
-            // Fade out → update → fade in
-            promptEl.classList.remove('visible');
-            setTimeout(() => {
-                promptEl.innerHTML = task.html;
-                promptEl.classList.add('visible');
-            }, 400);
+    async function loadUserData() {
+        const container = document.getElementById("writing-container");
 
-            // Clear and render options
-            gridEl.innerHTML = '';
-            task.options.forEach((opt, i) => {
-                const div = document.createElement('div');
-                div.className = 'option';
-                div.textContent = opt;
-                div.dataset.index = i;
-                div.onclick = () => selectOption(i);
-                gridEl.appendChild(div);
-            });
-        }
-
-        // ────────────────────────────────────────────────────────────────
-        // Handle option selection
-        // ────────────────────────────────────────────────────────────────
-        function selectOption(index) {
-            if (isChecking) return;
-            selectedIndex = index;
-
-            document.querySelectorAll('.option').forEach(opt => {
-                opt.classList.remove('selected');
-                if (parseInt(opt.dataset.index) === index) {
-                    opt.classList.add('selected');
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                try {
+                    const progressSnap = await getDoc(doc(db, "users", user.uid, "progress", "writing"));
+                    completedLessons = progressSnap.exists() 
+                        ? (progressSnap.data().lessons || {}) 
+                        : {};
+                    renderWritingLessons();
+                } catch (e) {
+                    console.error("Firestore error:", e);
+                    renderWritingLessons();
                 }
-            });
-        }
+            } else {
+                container.innerHTML = `
+                    <div class="text-center py-20">
+                        <p class="text-xl">${t('signIn')}</p>
+                        <a href="/login" class="inline-block mt-6 bg-[#f24b0b] text-white font-bold py-4 px-12 rounded-3xl">${t('signInBtn')}</a>
+                    </div>`;
+                hideLoader();
+            }
+        });
+    }
 
-        // ────────────────────────────────────────────────────────────────
-        // Check answer and show feedback
-        // ────────────────────────────────────────────────────────────────
-        function checkAnswer() {
-            if (isChecking || selectedIndex === null) return;
+    function renderWritingLessons() {
+        const container = document.getElementById("writing-container");
 
-            isChecking = true;
-            checkBtn.disabled = true;
+        let html = `
+            <div class="max-w-6xl mx-auto">
+                <!-- Task 1 -->
+                <div class="mb-16">
+                    <div class="section-header">
+                        <div class="section-number">01</div>
+                        <div>
+                            <h2 class="section-title">${t('task1Title')}</h2>
+                            <p class="section-desc">${t('task1Desc')}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="task1-grid"></div>
+                </div>
 
-            const t = translations[currentLang] || translations.en;
-            checkBtn.textContent = t.loading;
+                <!-- Task 2 -->
+                <div>
+                    <div class="section-header">
+                        <div class="section-number">02</div>
+                        <div>
+                            <h2 class="section-title">${t('task2Title')}</h2>
+                            <p class="section-desc">${t('task2Desc')}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="task2-grid"></div>
+                </div>
+            </div>
+        `;
 
-            const task = tasks[currentIndex];
-            const isCorrect = selectedIndex === task.correct;
+        container.innerHTML = html;
 
-            document.querySelectorAll('.option').forEach(opt => {
-                const idx = parseInt(opt.dataset.index);
-                opt.classList.remove('selected');
+        renderGroup("task1", allWritingLessons.filter(l => l.group === "task1"));
+        renderGroup("task2", allWritingLessons.filter(l => l.group === "task2"));
+        hideLoader();
+    }
 
-                if (idx === task.correct) {
-                    opt.classList.add('correct');
-                }
-                if (idx === selectedIndex && !isCorrect) {
-                    opt.classList.add('wrong');
-                }
-            });
+    function renderGroup(groupId, lessons) {
+        const grid = document.getElementById(groupId + "-grid");
+        let html = "";
 
-            // Auto advance after delay
-            setTimeout(() => {
-                loadNewTask();
-            }, 3000);
-        }
+        lessons.forEach(l => {
+            const isCompleted = !!completedLessons[l.id];
 
-        // ────────────────────────────────────────────────────────────────
-        // Language selector logic
-        // ────────────────────────────────────────────────────────────────
-        const langBtn = document.getElementById('lang-btn');
-        const langFlags = document.getElementById('lang-flags');
+            html += `
+                <div class="lesson-card">
+                    <div class="lesson-header">
+                        <div class="lesson-title">${l.title}</div>
+                        <p class="lesson-desc">${l.desc}</p>
+                    </div>
+                    
+                    <div class="lesson-footer">
+                        <a href="/learn/journeys/writing/lesson/${l.id}/" 
+                           class="${isCompleted ? 'completed-btn' : 'start-btn'}">
+                            ${isCompleted ? t('retake') : t('startLesson')}
+                        </a>
+                    </div>
+                </div>
+            `;
+        });
 
-        if (langBtn && langFlags) {
-            langBtn.addEventListener('click', e => {
+        grid.innerHTML = html;
+    }
+
+    function goBack() {
+        window.location.assign('/learn/');
+    }
+
+    // Loader logic
+    const loader = document.getElementById('pageLoader');
+    const owl = document.getElementById('splashOwl');
+    let minTimePassed = false;
+
+    setTimeout(() => { if (owl) { owl.style.opacity = '1'; owl.style.transform = 'scale(1) translateY(0)'; } }, 400);
+    setTimeout(() => { minTimePassed = true; }, 1600);
+
+    function hideLoader() {
+        if (!loader || loader.classList.contains('hidden')) return;
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 1400);
+    }
+
+    // Event listeners
+    window.addEventListener('load', () => {
+        loadUserData();
+
+        // Language selector
+        document.getElementById('lang-btn')?.addEventListener('click', e => {
+            e.stopPropagation();
+            document.getElementById('lang-flags').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.flag').forEach(el => {
+            el.addEventListener('click', e => {
                 e.stopPropagation();
-                langFlags.classList.toggle('show');
+                updateLanguage(el.dataset.lang);
+                document.getElementById('lang-flags').classList.remove('show');
             });
+        });
 
-            document.addEventListener('click', () => {
-                langFlags.classList.remove('show');
-            });
+        document.addEventListener('click', () => document.getElementById('lang-flags').classList.remove('show'));
 
-            document.querySelectorAll('.flag').forEach(flag => {
-                flag.addEventListener('click', e => {
-                    e.stopPropagation();
-                    const lang = flag.dataset.lang;
-                    currentLang = lang;
-                    localStorage.setItem('summage_lang', lang);
-                    document.documentElement.lang = lang;
-
-                    // Update visible texts
-                    updateButtonTexts();
-
-                    langFlags.classList.remove('show');
-                });
-            });
-        }
-
-        // ────────────────────────────────────────────────────────────────
-        // Event listeners & initial setup
-        // ────────────────────────────────────────────────────────────────
-        checkBtn.addEventListener('click', checkAnswer);
-
-        // First load
-        loadNewTask();
-        updateButtonTexts();  // Apply correct language from the very beginning
+        document.getElementById('desktop-back-btn')?.addEventListener('click', goBack);
+        document.getElementById('mobile-back-btn')?.addEventListener('click', goBack);
+    });
     </script>
 </body>
 </html>

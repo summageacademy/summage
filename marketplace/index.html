@@ -18,6 +18,8 @@
         gtag('config', 'G-LZP4KSPR1V');
     </script>
 
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -284,6 +286,11 @@
             box-shadow: 0 6px 0 #c23a0a;
         }
 
+        .close-ad-button {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c23a0a
+        }
+
         footer {
             background: #1a1a1a;
             color: #ccc;
@@ -409,16 +416,69 @@
             background: #fef2f2;
             border: 2px solid #ef4444;
         }
+
+        /* Ad Modal Countdown */
+        #countdown {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #f24b0b;
+            transition: all 0.3s;
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
     </style>
 </head>
 <body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
 
     <nav class="navbar">
         <div class="logo-container" onclick="window.location.href='https://summage.org'">
             <img class="logo-img" src="/assets/logo.webp" alt="Summage Academy Logo">
             <div class="logo-text">Summage</div>
         </div>
-        <button class="back-btn" id="desktop-back-btn">Back</button>
+        <button class="back-btn" onclick="goBack()">Back</button>
     </nav>
 
     <div class="marketplace-container">
@@ -440,6 +500,31 @@
             </div>
             <div class="modal-footer">
                 <button onclick="confirmPurchase()" class="confirm-btn">Watch Ad to Unlock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ad Reward Modal -->
+    <div id="ad-modal" class="modal">
+        <div class="modal-content" style="max-width: 520px; text-align:center;">
+            <div style="padding: 30px 20px;">
+                
+                <!-- Yandex Banner Ad Area -->
+                <div id="yandex-banner" style="margin: 20px 0; min-height: 300px; background:#f8f9fa; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                    <!-- Yandex Ad will load here -->
+                </div>
+
+                <h2 style="color:#06a87c; margin-bottom:20px; font-weight: bolder;">Thank You for Supporting Us ❤️</h2>
+
+                <div id="countdown" style="font-size: 2.2rem; font-weight: 800; color:#f24b0b; margin: 25px 0;">
+                    5
+                </div>
+
+                <button id="close-ad-btn" class="close-ad-button" onclick="closeAdModal()" 
+                        style="display:none; width:100%; padding:16px; background: #f24b0b;
+            box-shadow: 0 4px 0 #c23a0a; color:white; border:none; border-radius:50px; font-weight:700;">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -504,15 +589,6 @@
 
         const items = [
             {
-                id: "ai_practice",
-                title: "Unlimited AI Practice",
-                duration: "1 hour",
-                price: 45000,
-                currency: "coins",
-                image: "/assets/images/blog-assets/speaking-purchase.webp",
-                description: "Unlimited AI conversations and practice sessions for 1 hour"
-            },
-            {
                 id: "essay_checking",
                 title: "Unlimited Essay Checking",
                 duration: "12 hours",
@@ -529,6 +605,15 @@
                 currency: "diamonds",
                 image: "/assets/images/blog-assets/game-hearts-purchase.webp",
                 description: "Unlimited hearts for all games for 1 hour"
+            },
+            {
+                id: "ai_practice",
+                title: "Unlimited AI Practice",
+                duration: "1 hour",
+                price: 45000,
+                currency: "coins",
+                image: "/assets/images/blog-assets/speaking-purchase.webp",
+                description: "Unlimited AI conversations and practice sessions for 1 hour"
             }
         ];
 
@@ -551,14 +636,39 @@
                     <img src="${item.image}" class="card-image" alt="${item.title}">
                     <div class="card-content">
                         <h3 class="item-title">${item.title}</h3>
-                        ${isOwned ? 
-                            `<button class="buy-btn" style="background:#888; box-shadow:0 4px 0 #555; cursor:default;">You Have It</button>` :
-                            `<button class="buy-btn" onclick="openPurchaseModal('${item.id}')">Watch Ad</button>`
+                        ${isOwned
+                            ? `<button class="buy-btn" style="background:#888; box-shadow:0 4px 0 #555; cursor:default;" disabled>You Have It</button>`
+                            : item.id === "ai_practice"
+                                ? `<button class="buy-btn" style="background:#b8b8b8; box-shadow:0 4px 0 #8c8c8c; cursor:not-allowed; opacity:0.9;" disabled>Coming Soon</button>`
+                                : `<button class="buy-btn" onclick="openPurchaseModal('${item.id}')">Watch Ad</button>`
                         }
                     </div>
                 `;
                 grid.appendChild(card);
             });
+        }
+
+        async function loadUserPurchases() {
+            if (!currentUser) return;
+
+            try {
+                const snapshot = await db.collection('purchases')
+                    .where('userId', '==', currentUser.uid)
+                    .get();
+
+                userPurchases = {};
+                
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.expiresAt > Date.now()) {
+                        userPurchases[data.itemId] = data.expiresAt;
+                    }
+                });
+
+                renderMarketplace();   // Refresh the cards
+            } catch (e) {
+                console.error("Failed to load purchases:", e);
+            }
         }
 
         function openPurchaseModal(id) {
@@ -607,34 +717,22 @@
                 return;
             }
 
-            closeModal();
+            closeModal(); // Close purchase modal
 
-            // Show Yandex Fullscreen Ad
-            try {
-                window.yaContextCb.push(() => {
-                    Ya.Context.AdvManager.render({
-                        "blockId": "R-A-19402847-3",
-                        "type": "fullscreen",
-                        "platform": "touch",
-                        onClose: () => {
-                            // User watched the ad → give reward
-                            rewardUserAfterAd();
-                        },
-                        onError: () => {
-                            showToast("Ad could not be loaded. Please try again later.", "error");
-                        }
-                    });
-                });
-            } catch (e) {
-                showToast("Ad service is not available right now.", "error");
-            }
+            // Show custom Ad Modal
+            document.getElementById('ad-modal').classList.add('show');
+            startCountdown();
         }
 
-        // New function to save purchase after ad is watched
+        // Updated reward function
         async function rewardUserAfterAd() {
-            try {
-                const expiresAt = Date.now() + (selectedItem.duration.includes("12") ? 12 : 1) * 60 * 60 * 1000;
+            if (!currentUser || !selectedItem) return;
 
+            try {
+                const durationHours = selectedItem.duration.includes("12") ? 12 : 1;
+                const expiresAt = Date.now() + durationHours * 60 * 60 * 1000;
+
+                // Save the purchase
                 await db.collection('purchases').add({
                     userId: currentUser.uid,
                     itemId: selectedItem.id,
@@ -644,17 +742,95 @@
                     source: "ad_reward"
                 });
 
-                showToast(`✅ ${selectedItem.title} unlocked successfully!`, "success");
-                loadUserPurchases();   // Refresh cards to show "You Have It"
+                // === SPECIAL HANDLING FOR FULL HEARTBAR ===
+                if (selectedItem.id === "full_heartbar") {
+                    const userRef = db.collection("users").doc(currentUser.uid);
+                    
+                    await userRef.set({
+                        hearts: 5,                    // Refill to maximum
+                        lastHeartReset: getTodayDateString()  // Update reset date so it doesn't reset soon
+                    }, { merge: true });
+
+                    console.log("💎 Full Heartbar purchased → Hearts refilled to 5");
+                }
+
+                showToast(`${selectedItem.title} unlocked successfully!`, "success");
+                
+                // Refresh purchases (and cards)
+                await loadUserPurchases();
+
             } catch (error) {
-                console.error(error);
-                showToast("Failed to save reward. Please try again.", "error");
+                console.error("Reward error:", error);
+                showToast("Failed to unlock item. Please try again.", "error");
             }
+        }
+
+        // Helper function (add this if not already present)
+        function getTodayDateString() {
+            return new Date().toISOString().split('T')[0];
         }
 
         // Close modal when clicking overlay
         document.getElementById('purchase-modal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
+        });
+
+        function goBack() {
+            const before = window.location.href;
+            
+            history.back();
+            
+            setTimeout(() => {
+                if (window.location.href === before) {
+                    window.location.assign('/learn/');
+                }
+            }, 50);
+        }
+
+        let countdownInterval;
+
+        function startCountdown() {
+            let timeLeft = 5;
+            const countdownEl = document.getElementById('countdown');
+            const closeBtn = document.getElementById('close-ad-btn');
+
+            closeBtn.style.display = 'none';
+
+            // Load Yandex Banner Ad
+            try {
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        "blockId": "R-A-19402847-3",   // Change if you have another block ID for banner
+                        "type": "banner",
+                        "platform": "touch"
+                    });
+                });
+            } catch(e) {}
+
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                countdownEl.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownEl.style.display = 'none';
+                    closeBtn.style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function closeAdModal() {
+            clearInterval(countdownInterval);
+            document.getElementById('ad-modal').classList.remove('show');
+            document.getElementById('countdown').style.display = 'block';
+            
+            // Give reward after user closes ad modal
+            rewardUserAfterAd();
+        }
+
+        // Close ad modal when clicking overlay
+        document.getElementById('ad-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeAdModal();
         });
 
         // Initialize
@@ -667,10 +843,45 @@
             }
         });
 
-        document.getElementById('desktop-back-btn').addEventListener('click', () => history.back());
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
         window.onload = renderMarketplace;
+
+        
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) {
+                hideLoader();
+            } else {
+                setTimeout(hideLoader, MIN_DURATION);
+            }
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
     </script>
 </body>
 </html>
