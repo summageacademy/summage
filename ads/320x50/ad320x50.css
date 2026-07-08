@@ -2,13 +2,11 @@
 .ad-banner-placeholder {
     display: none;
 }
-
 /* Show only on mobile */
 @media (max-width: 768px) {
     .ad-banner-placeholder {
         display: block;
     }
-
     .ad-container {
         max-width: 320px;
         margin: 30px auto;
@@ -17,7 +15,6 @@
         border-radius: 11px;
         margin-bottom: 30px;
     }
-
     .ad-header {
         height: 38px;
         display: flex;
@@ -29,7 +26,6 @@
         color: white;
         border-bottom: 3px solid;
     }
-
     .ad-banner {
         height: 100px;
         background: #fafafa;
@@ -40,7 +36,6 @@
         border-right: 4px solid;
         border-bottom: 4px solid;
     }
-
     .ad-banner .placeholder-content {
         text-align: center;
         color: #777;
