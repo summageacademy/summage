@@ -12,8 +12,16 @@ function createAdBanner() {
         </div>
         <div class="ad-banner" style="border-color: ${randomColor};">
             <div class="placeholder-content">
-                Your Ad Here<br>
-                <small>320 × 50</small>
+                <!-- Yandex.RTB R-A-19402847-1 -->
+                <div id="yandex_rtb_R-A-19402847-1"></div>
+                <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        "blockId": "R-A-19402847-1",
+                        "renderTo": "yandex_rtb_R-A-19402847-1"
+                    })
+                })
+                </script>
             </div>
         </div>
     `;
