@@ -25,6 +25,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
 
+    <!-- Yandex.RTB -->
+    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+
     <style>
         /* Hide scrollbar */
         html, body {
@@ -504,7 +508,16 @@
             <span class="modal-close" onclick="closeAdModal(); playClick()">×</span>
             
             <div style="background: linear-gradient(135deg, #f24b0b, #f97316); color:white; height:240px; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:24px 0 28px; font-size:1.15rem; font-weight:700; box-shadow: 0 10px 20px rgba(242,75,11,0.3);">
-                [ Ad Placeholder ]
+                <!-- Yandex.RTB R-A-19402847-4 -->
+                <div id="yandex_rtb_R-A-19402847-4"></div>
+                <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        "blockId": "R-A-19402847-4",
+                        "renderTo": "yandex_rtb_R-A-19402847-4"
+                    })
+                })
+                </script>
             </div>
             
             <h3 style="margin-bottom:16px;">Ads keep Summage free for everyone</h3>
