@@ -508,6 +508,59 @@ html, body {
     transform: rotate(360deg);
   }
 }
+
+.option-btn:active {
+  transform: translateY(1px);
+}
+
+#preTestScreen, #testResultScreen {
+  text-align: center;
+}
+
+#questionText {
+  text-align: left;
+  min-height: 120px;
+}
+
+.option-btn {
+  width: 100%;
+  padding: 18px 22px;
+  font-size: 1.08rem;
+  border: 2px solid #e5e5e5;
+  background: white;
+  border-radius: 18px;
+  text-align: left;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.option-btn:hover {
+  border-color: #f24b0b;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(242, 75, 11, 0.12);
+}
+
+#preTestScreen h2 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #f24b0b;
+  margin-bottom: 18px;
+  line-height: 1.1;
+}
+
+#preTestScreen p {
+  color: #333;
+  font-size: 1.18rem;
+  line-height: 1.45;
+  max-width: 340px;
+  font-weight: 500;
+}
+
+#preTestScreen p:last-child {
+  color: #666;
+  font-size: 1rem;
+  margin-top: 25px;
+}
 </style>
 </head>
 <body>
@@ -550,42 +603,54 @@ html, body {
         </div>
       </div>
 
-      <div class="mobile-content hidden" id="englishLevelScreen">
-        <img class="mobile-illust"
-            src="/assets/images/illustrations/redy_trustworthy.webp"
-            alt="Level">
+      <!-- PRE-TEST EXPLANATION -->
+      <div class="mobile-content hidden" id="preTestScreen">
+        <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" 
+            alt="Quick Test" style="max-width: 260px; margin-bottom: 40px;">
+        
+        <h2 data-lang-key="test.preTitle">Quick English Level Test</h2>
+        
+        <p data-lang-key="test.preDescription" style="color: #333; font-size: 1.18rem; line-height: 1.45; max-width: 340px; font-weight: 500;">
+          We'll ask you 8 questions to determine your English level.
+        </p>
+      </div>
 
-        <h2>What's your English level?</h2>
+      <!-- ENGLISH LEVEL MINI TEST - Improved -->
+      <div class="mobile-content hidden" id="englishTestScreen">
+        <div style="width:100%; max-width:380px;">
+          <!-- Progress -->
+          <div style="margin-bottom:30px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:#666; margin-bottom:8px;">
+              <span data-lang-key="test.title">English Level Test</span>
+              <span id="questionCounter">1/8</span>
+            </div>
+            <div style="height:6px; background:#ddd; border-radius:9999px; overflow:hidden;">
+              <div id="testProgress" style="height:100%; width:12.5%; background:linear-gradient(90deg, #f24b0b, #ff8a3d); transition:width 0.6s cubic-bezier(0.4,0,0.2,1);"></div>
+            </div>
+          </div>
 
-        <div class="buttons-group">
-          <button class="btn btn-primary" id="levelBeginner" onclick="playClick()">
-            Beginner
-          </button>
+          <!-- Question -->
+          <div id="questionText" style="font-size:1.45rem; font-weight:600; line-height:1.35; text-align:left; min-height:110px; color:#222;"></div>
 
-          <button class="btn btn-primary" id="levelIntermediate" onclick="playClick()">
-            Intermediate
-          </button>
-
-          <button class="btn btn-primary" id="levelAdvanced" onclick="playClick()">
-            Advanced
-          </button>
+          <!-- Options -->
+          <div id="optionsContainer" style="margin-top:35px; display:flex; flex-direction:column; gap:14px;"></div>
         </div>
       </div>
 
-      <!-- NEW: Country & City -->
-      <div class="mobile-content hidden" id="locationScreen">
-        <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" alt="Location">
-        <h2 data-lang-key="personal.locationTitle">Where are you from?</h2>
-        <div class="form-wrapper">
-          <div class="form-group">
-            <label data-lang-key="personal.country">Country</label>
-            <input type="text" id="countryInput" placeholder="Uzbekistan" required>
-          </div>
-          <div class="form-group">
-            <label data-lang-key="personal.city">City</label>
-            <input type="text" id="cityInput" placeholder="Tashkent" required>
-          </div>
-          <button class="btn btn-primary" id="nextLocation">Continue</button>
+      <!-- TEST RESULT SCREEN -->
+      <div class="mobile-content hidden" id="testResultScreen">
+        <div style="text-align:center; width:100%; max-width:340px;">
+          <lottie-player 
+            id="resultLottie"
+            src="/authentication/trophy.json"
+            background="transparent"
+            speed="0.9"
+            style="width:160px;height:160px;margin:0 auto 25px;"
+            autoplay>
+          </lottie-player>
+          
+          <h2 id="resultLevel" style="font-size:2rem; margin-bottom:12px; color:#f24b0b;"></h2>
+          <p id="resultMessage" style="color:#444; font-size:1.1rem; line-height:1.5;"></p>
         </div>
       </div>
 
@@ -594,10 +659,10 @@ html, body {
         <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" alt="Duration">
         <h2 data-lang-key="personal.durationTitle">How long do you plan to learn?</h2>
         <div class="buttons-group">
-          <button class="btn btn-primary" id="duration3" onclick="playClick()">3 months</button>
-          <button class="btn btn-primary" id="duration6" onclick="playClick()">6 months</button>
-          <button class="btn btn-primary" id="duration12" onclick="playClick()">1 year</button>
-          <button class="btn btn-primary" id="duration24" onclick="playClick()">2+ years</button>
+          <button class="btn btn-primary" id="duration3" data-lang-key="duration.3months" onclick="playClick()">3 months</button>
+          <button class="btn btn-primary" id="duration6" data-lang-key="duration.6months" onclick="playClick()">6 months</button>
+          <button class="btn btn-primary" id="duration12" data-lang-key="duration.1year" onclick="playClick()">1 year</button>
+          <button class="btn btn-primary" id="duration24" data-lang-key="duration.2years" onclick="playClick()">2+ years</button>
         </div>
       </div>
 
@@ -606,10 +671,10 @@ html, body {
         <img class="mobile-illust" src="/assets/images/illustrations/redy_idea.webp" alt="Goal">
         <h2 data-lang-key="personal.mainGoalTitle">What is your main goal?</h2>
         <div class="buttons-group">
-          <button class="btn btn-primary" id="goalIelts" onclick="playClick()">Prepare for IELTS</button>
-          <button class="btn btn-primary" id="goalImprove" onclick="playClick()">Just improve my English</button>
-          <button class="btn btn-primary" id="goalConversation" onclick="playClick()">Daily conversation</button>
-          <button class="btn btn-primary" id="goalBusinessEng" onclick="playClick()">Business English</button>
+          <button class="btn btn-primary" id="goalIelts" data-lang-key="goal.ielts" onclick="playClick()">Prepare for IELTS</button>
+          <button class="btn btn-primary" id="goalImprove" data-lang-key="goal.improve" onclick="playClick()">Just improve my English</button>
+          <button class="btn btn-primary" id="goalConversation" data-lang-key="goal.conversation" onclick="playClick()">Daily conversation</button>
+          <button class="btn btn-primary" id="goalBusinessEng" data-lang-key="goal.business" onclick="playClick()">Business English</button>
         </div>
       </div>
 
@@ -618,9 +683,9 @@ html, body {
         <img class="mobile-illust" src="/assets/images/illustrations/redy_trustworthy.webp" alt="IELTS">
         <h2 data-lang-key="personal.ieltsScoreTitle">What is your target IELTS score?</h2>
         <div class="buttons-group">
-          <button class="btn btn-primary" id="score6" onclick="playClick()">Around 6.0 - 6.5</button>
-          <button class="btn btn-primary" id="score75" onclick="playClick()">7.0 - 7.5</button>
-          <button class="btn btn-primary" id="score8" onclick="playClick()">8.0+</button>
+          <button class="btn btn-primary" id="score6" data-lang-key="ielts.6" onclick="playClick()">Around 6.0 - 6.5</button>
+          <button class="btn btn-primary" id="score75" data-lang-key="ielts.7" onclick="playClick()">7.0 - 7.5</button>
+          <button class="btn btn-primary" id="score8" data-lang-key="ielts.8" onclick="playClick()">8.0+</button>
         </div>
       </div>
 
@@ -704,193 +769,170 @@ html, body {
   </div>
 
   <script>
-    // ───────────────────────────────────────────────────────────────
-    // TRANSLATIONS
-    // ───────────────────────────────────────────────────────────────
     const translations = {
-      en: {
-        "welcome.title": "Let's Get<br>Started",
-        "button.signup": "Sign Up",
-        "button.login": "Log In",
-        "goal.title": "What would you like to do?",
-        "goal.learnEnglish": "Learn English",
-        "goal.businessSchool": "Business School",
-        "goal.startBlogging": "Start Blogging",
-        "level.title": "What's your English level?",
-        "business.ageTitle": "How old are you?",
-        "business.ageUnder18": "Under 18",
-        "business.age18to30": "18-30",
-        "business.ageOver30": "Over 30",
-        "business.courseTitle": "Which course interests you?",
-        "business.courseManagement": "Management",
-        "business.courseSales": "Sales",
-        "business.courseMarketing": "Marketing",
-        "business.courseOther": "Other",
-        "signup.lastStep": "Last step to complete your account",
-        "signup.fullName": "Full Name",
-        "signup.email": "Email",
-        "signup.password": "Password",
-        "signup.acceptTerms": "I accept the <a href='/terms/'>Terms</a> and <a href='/privacy/'>Privacy Policy</a>",
-        "button.createAccount": "Create Account",
-        "blog.title": "Tell us about your blogging interest",
-        "blog.fullName": "Full Name",
-        "blog.email": "Email",
-        "blog.telegram": "Telegram Username (optional)",
-        "blog.topic": "What do you want to write about?",
-        "blog.acceptTerms": "I accept the <a href='/terms/'>Terms</a> and <a href='/privacy/'>Privacy Policy</a>",
-        "button.submitRequest": "Submit Request",
-        "login.title": "Log In",
-        "login.email": "Email",
-        "login.password": "Password",
-        "button.logIn": "Log In",
-        "error.generic": "Oh no! Something went wrong.",
-        "error.fillFields": "Please fill in all required fields.",
-        "error.terms": "Please accept the Terms and Privacy Policy.",
-        "error.emailTaken": "This email is already registered.",
-        "error.invalidEmail": "Please enter a valid email address.",
-        "error.weakPassword": "Password should be at least 6 characters.",
-        "error.operationNotAllowed": "Account creation is currently disabled.",
-        "success.blogSubmitted": "Request submitted successfully! We will review it soon.",
-        "error.blogFailed": "Oh no! Could not submit request.",
-        "button.ok": "OK",
-        "button.continue": "Continue",
-        "button.finishRegistration": "Finish Registration",
+  en: {
+    "welcome.title": "Let's Get<br>Started",
+    "button.signup": "Sign Up",
+    "button.login": "Log In",
+    "signup.lastStep": "Last step to complete your account",
+    "signup.fullName": "Full Name",
+    "signup.email": "Email",
+    "signup.password": "Password",
+    "signup.acceptTerms": "I accept the <a href='/terms/'>Terms</a> and <a href='/privacy/'>Privacy Policy</a>",
+    "button.createAccount": "Create Account",
+    "login.title": "Log In",
+    "login.email": "Email",
+    "login.password": "Password",
+    "button.logIn": "Log In",
+    "error.generic": "Oh no! Something went wrong.",
+    "error.fillFields": "Please fill in all required fields.",
+    "error.terms": "Please accept the Terms and Privacy Policy.",
+    "error.emailTaken": "This email is already registered.",
+    "error.invalidEmail": "Please enter a valid email address.",
+    "error.weakPassword": "Password should be at least 6 characters.",
+    "error.operationNotAllowed": "Account creation is currently disabled.",
+    "button.ok": "OK",
 
-        // New keys
-        "personal.ageTitle": "How old are you?",
-        "personal.locationTitle": "Where are you from?",
-        "personal.country": "Country",
-        "personal.city": "City",
-        "personal.durationTitle": "How long do you plan to learn?",
-        "personal.mainGoalTitle": "What is your main goal?",
-        "personal.ieltsScoreTitle": "What is your target IELTS score?",
-        "personal.hangTight": "Hang tight...",
-        "personal.creatingPlan": "We are creating your personalized learning plan",
-        "personal.allSet": "All set!",
-        "personal.planReady": "Your personalized English learning plan is ready"
-      },
-      ru: {
-        "welcome.title": "Давайте начнём",
-        "button.signup": "Регистрация",
-        "button.login": "Войти",
-        "goal.title": "Что вы хотите делать?",
-        "goal.learnEnglish": "Изучать английский",
-        "goal.businessSchool": "Бизнес-школа",
-        "goal.startBlogging": "Начать вести блог",
-        "level.title": "Какой у вас уровень английского?",
-        "business.ageTitle": "Сколько вам лет?",
-        "business.ageUnder18": "Меньше 18",
-        "business.age18to30": "18–30",
-        "business.ageOver30": "Больше 30",
-        "business.courseTitle": "Какой курс вас интересует?",
-        "business.courseManagement": "Менеджмент",
-        "business.courseSales": "Продажи",
-        "business.courseMarketing": "Маркетинг",
-        "business.courseOther": "Другое",
-        "signup.lastStep": "Последний шаг для создания аккаунта",
-        "signup.fullName": "Полное имя",
-        "signup.email": "Email",
-        "signup.password": "Пароль",
-        "signup.acceptTerms": "Я принимаю <a href='/terms/'>Условия</a> и <a href='/privacy/'>Политику конфиденциальности</a>",
-        "button.createAccount": "Создать аккаунт",
-        "blog.title": "Расскажите о ваших интересах в блогинге",
-        "blog.fullName": "Полное имя",
-        "blog.email": "Email",
-        "blog.telegram": "Telegram username (необязательно)",
-        "blog.topic": "О чём вы хотите писать?",
-        "blog.acceptTerms": "Я принимаю <a href='/terms/'>Условия</a> и <a href='/privacy/'>Политику конфиденциальности</a>",
-        "button.submitRequest": "Отправить заявку",
-        "login.title": "Войти",
-        "login.email": "Email",
-        "login.password": "Пароль",
-        "button.logIn": "Войти",
-        "error.generic": "Ой! Что-то пошло не так.",
-        "error.fillFields": "Пожалуйста, заполните все обязательные поля.",
-        "error.terms": "Пожалуйста, примите Условия и Политику конфиденциальности.",
-        "error.emailTaken": "Этот email уже зарегистрирован.",
-        "error.invalidEmail": "Пожалуйста, введите корректный email.",
-        "error.weakPassword": "Пароль должен содержать минимум 6 символов.",
-        "error.operationNotAllowed": "Создание аккаунта сейчас отключено.",
-        "success.blogSubmitted": "Заявка успешно отправлена! Мы рассмотрим её в ближайшее время.",
-        "error.blogFailed": "Не удалось отправить заявку.",
-        "button.ok": "ОК",
-        "button.continue": "Продолжить",
-        "button.finishRegistration": "Завершить регистрацию",
+    // New: Mini Test Translations
+    "personal.ageTitle": "How old are you?",
+    "personal.durationTitle": "How long do you plan to learn?",
+    "personal.mainGoalTitle": "What is your main goal?",
+    "personal.ieltsScoreTitle": "What is your target IELTS score?",
+    "personal.hangTight": "Hang tight...",
+    "personal.creatingPlan": "We are creating your personalized learning plan",
+    "personal.allSet": "All set!",
+    "personal.planReady": "Your personalized English learning plan is ready",
 
-        "personal.ageTitle": "Сколько вам лет?",
-        "personal.locationTitle": "Откуда вы?",
-        "personal.country": "Страна",
-        "personal.city": "Город",
-        "personal.durationTitle": "Как долго вы планируете учиться?",
-        "personal.mainGoalTitle": "Какая ваша главная цель?",
-        "personal.ieltsScoreTitle": "Какой целевой балл IELTS вы хотите получить?",
-        "personal.hangTight": "Подождите...",
-        "personal.creatingPlan": "Мы создаём для вас персонализированный план обучения",
-        "personal.allSet": "Готово!",
-        "personal.planReady": "Ваш персонализированный план обучения готов"
-      },
-      uz: {
-        "welcome.title": "Keling, boshlaymiz",
-        "button.signup": "Ro'yxatdan o'tish",
-        "button.login": "Kirish",
-        "goal.title": "Nima qilmoqchisiz?",
-        "goal.learnEnglish": "Ingliz tilini o'rganish",
-        "goal.businessSchool": "Biznes maktabi",
-        "goal.startBlogging": "Blog yuritishni boshlash",
-        "level.title": "Ingliz tilingiz qaysi darajada?",
-        "business.ageTitle": "Yoshingiz nechada?",
-        "business.ageUnder18": "18 yoshdan kichik",
-        "business.age18to30": "18-30",
-        "business.ageOver30": "30+",
-        "business.courseTitle": "Qaysi kurs sizni qiziqtiradi?",
-        "business.courseManagement": "Menejment",
-        "business.courseSales": "Sotuvlar",
-        "business.courseMarketing": "Marketing",
-        "business.courseOther": "Boshqa",
-        "signup.lastStep": "Hisobingizni yakunlash uchun oxirgi qadam",
-        "signup.fullName": "To'liq ism",
-        "signup.email": "Email",
-        "signup.password": "Parol",
-        "signup.acceptTerms": "Men <a href='/terms/'>Shartlar</a> va <a href='/privacy/'>Maxfiylik siyosati</a>ni qabul qilaman",
-        "button.createAccount": "Hisob yaratish",
-        "blog.title": "Blog yuritish qiziqishingiz haqida ayting",
-        "blog.fullName": "To'liq ism",
-        "blog.email": "Email",
-        "blog.telegram": "Telegram username (ixtiyoriy)",
-        "blog.topic": "Nima haqida yozmoqchisiz?",
-        "blog.acceptTerms": "Men <a href='/terms/'>Shartlar</a> va <a href='/privacy/'>Maxfiylik siyosati</a>ni qabul qilaman",
-        "button.submitRequest": "So'rov yuborish",
-        "login.title": "Kirish",
-        "login.email": "Email",
-        "login.password": "Parol",
-        "button.logIn": "Kirish",
-        "error.generic": "Voy! Nimadir xato ketdi.",
-        "error.fillFields": "Iltimos, barcha majburiy maydonlarni to'ldiring.",
-        "error.terms": "Iltimos, Shartlar va Maxfiylik siyosatini qabul qiling.",
-        "error.emailTaken": "Bu email allaqachon ro'yxatdan o'tgan.",
-        "error.invalidEmail": "Iltimos, to'g'ri email kiriting.",
-        "error.weakPassword": "Parol kamida 6 ta belgidan iborat bo'lishi kerak.",
-        "error.operationNotAllowed": "Hisob yaratish hozirda o'chirilgan.",
-        "success.blogSubmitted": "So'rov muvaffaqiyatli yuborildi! Tez orada ko'rib chiqamiz.",
-        "error.blogFailed": "So'rov yuborib bo'lmadi.",
-        "button.ok": "OK",
-        "button.continue": "Davom ettirish",
-        "button.finishRegistration": "Ro'yxatni yakunlash",
+    "personal.analyzing": "Analyzing your answers...",
+    "personal.building": "Building your roadmap...",
+    "personal.finalizing": "Finalizing your plan...",
 
-        "personal.ageTitle": "Yoshingiz nechada?",
-        "personal.locationTitle": "Qayerdansiz?",
-        "personal.country": "Davlat",
-        "personal.city": "Shahar",
-        "personal.durationTitle": "Qancha vaqt o'rganmoqchisiz?",
-        "personal.mainGoalTitle": "Asosiy maqsadingiz nima?",
-        "personal.ieltsScoreTitle": "IELTS bo'yicha qanday ball olishni xohlaysiz?",
-        "personal.hangTight": "Kuting...",
-        "personal.creatingPlan": "Siz uchun shaxsiy o'quv rejasini tayyorlayapmiz",
-        "personal.allSet": "Tayyor!",
-        "personal.planReady": "Sizning shaxsiy ingliz tili o'quv rejangiz tayyor"
-      }
-    };
+    "duration.3months": "3 months",
+    "duration.6months": "6 months",
+    "duration.1year": "1 year",
+    "duration.2years": "2+ years",
 
+    "ielts.6": "Around 6.0 - 6.5",
+    "ielts.7": "7.0 - 7.5",
+    "ielts.8": "8.0+",
+
+    "test.title": "English Level Test",
+    "test.preTitle": "Quick English Level Test",
+    "test.preDescription": "We'll ask you 8 questions to determine your English level automatically.",
+    "test.preTime": "It only takes about 1 minute",
+    "test.resultAdvanced": "Excellent! You have a strong command of English.",
+    "test.resultIntermediate": "Great! You have a solid foundation.",
+    "test.resultBeginner": "Good start! We'll build from the basics."
+  },
+  ru: {
+    "welcome.title": "Давайте начнём",
+    "button.signup": "Регистрация",
+    "button.login": "Войти",
+    "signup.lastStep": "Последний шаг для создания аккаунта",
+    "signup.fullName": "Полное имя",
+    "signup.email": "Email",
+    "signup.password": "Пароль",
+    "signup.acceptTerms": "Я принимаю <a href='/terms/'>Условия</a> и <a href='/privacy/'>Политику конфиденциальности</a>",
+    "button.createAccount": "Создать аккаунт",
+    "login.title": "Войти",
+    "login.email": "Email",
+    "login.password": "Пароль",
+    "button.logIn": "Войти",
+    "error.generic": "Ой! Что-то пошло не так.",
+    "error.fillFields": "Пожалуйста, заполните все обязательные поля.",
+    "error.terms": "Пожалуйста, примите Условия и Политику конфиденциальности.",
+    "error.emailTaken": "Этот email уже зарегистрирован.",
+    "error.invalidEmail": "Пожалуйста, введите корректный email.",
+    "error.weakPassword": "Пароль должен содержать минимум 6 символов.",
+    "error.operationNotAllowed": "Создание аккаунта сейчас отключено.",
+    "button.ok": "ОК",
+
+    // New: Mini Test Translations (Russian)
+    "personal.ageTitle": "Сколько вам лет?",
+    "personal.durationTitle": "Как долго вы планируете учиться?",
+    "personal.mainGoalTitle": "Какая ваша главная цель?",
+    "personal.ieltsScoreTitle": "Какой целевой балл IELTS вы хотите получить?",
+    "personal.hangTight": "Подождите...",
+    "personal.creatingPlan": "Мы создаём для вас персонализированный план обучения",
+    "personal.allSet": "Готово!",
+    "personal.planReady": "Ваш персонализированный план обучения готов",
+
+    "personal.analyzing": "Анализируем ваши ответы...",
+    "personal.building": "Строим ваш план обучения...",
+    "personal.finalizing": "Завершаем подготовку...",
+
+    "duration.3months": "3 месяца",
+    "duration.6months": "6 месяцев",
+    "duration.1year": "1 год",
+    "duration.2years": "2+ года",
+
+    "ielts.6": "Около 6.0 - 6.5",
+    "ielts.7": "7.0 - 7.5",
+    "ielts.8": "8.0+",
+
+    "test.title": "Тест на уровень английского",
+    "test.preTitle": "Быстрый тест на уровень английского",
+    "test.preDescription": "Мы зададим вам 8 вопросов, чтобы автоматически определить ваш уровень английского.",
+    "test.preTime": "Это займёт около 1 минуты",
+    "test.resultAdvanced": "Отлично! У вас сильный уровень английского.",
+    "test.resultIntermediate": "Отлично! У вас хороший фундамент.",
+    "test.resultBeginner": "Хорошее начало! Мы начнём с основ."
+  },
+  uz: {
+    "welcome.title": "Keling, boshlaymiz",
+    "button.signup": "Ro'yxatdan o'tish",
+    "button.login": "Kirish",
+    "signup.lastStep": "Hisobingizni yakunlash uchun oxirgi qadam",
+    "signup.fullName": "To'liq ism",
+    "signup.email": "Email",
+    "signup.password": "Parol",
+    "signup.acceptTerms": "Men <a href='/terms/'>Shartlar</a> va <a href='/privacy/'>Maxfiylik siyosati</a>ni qabul qilaman",
+    "button.createAccount": "Hisob yaratish",
+    "login.title": "Kirish",
+    "login.email": "Email",
+    "login.password": "Parol",
+    "button.logIn": "Kirish",
+    "error.generic": "Voy! Nimadir xato ketdi.",
+    "error.fillFields": "Iltimos, barcha majburiy maydonlarni to'ldiring.",
+    "error.terms": "Iltimos, Shartlar va Maxfiylik siyosatini qabul qiling.",
+    "error.emailTaken": "Bu email allaqachon ro'yxatdan o'tgan.",
+    "error.invalidEmail": "Iltimos, to'g'ri email kiriting.",
+    "error.weakPassword": "Parol kamida 6 ta belgidan iborat bo'lishi kerak.",
+    "error.operationNotAllowed": "Hisob yaratish hozirda o'chirilgan.",
+    "button.ok": "OK",
+
+    "personal.analyzing": "Javoblaringizni tahlil qilmoqdamiz...",
+    "personal.building": "Siz uchun yo‘l xaritasini yaratmoqdamiz...",
+    "personal.finalizing": "Rejani yakunlamoqdamiz...",
+
+    // New: Mini Test Translations (Uzbek)
+    "personal.ageTitle": "Yoshingiz nechada?",
+    "personal.durationTitle": "Qancha vaqt o'rganmoqchisiz?",
+    "personal.mainGoalTitle": "Asosiy maqsadingiz nima?",
+    "personal.ieltsScoreTitle": "IELTS bo'yicha qanday ball olishni xohlaysiz?",
+    "personal.hangTight": "Kuting...",
+    "personal.creatingPlan": "Siz uchun shaxsiy o'quv rejasini tayyorlayapmiz",
+    "personal.allSet": "Tayyor!",
+    "personal.planReady": "Sizning shaxsiy ingliz tili o'quv rejangiz tayyor",
+
+    "test.title": "Ingliz tili darajasi testi",
+    "test.preTitle": "Tez ingliz tili darajasi testi",
+    "test.preDescription": "Sizning ingliz tili darajangizni avtomatik aniqlash uchun 8 ta savol beramiz.",
+    "test.preTime": "Bu taxminan 1 daqiqa vaqt oladi",
+    "test.resultAdvanced": "Ajoyib! Ingliz tilingiz juda yaxshi.",
+    "test.resultIntermediate": "Zo'r! Sizda mustahkam asos bor.",
+    "test.resultBeginner": "Yaxshi boshlanish! Biz asoslardan boshlaymiz.",
+
+    "duration.3months": "3 oy",
+    "duration.6months": "6 oy",
+    "duration.1year": "1 yil",
+    "duration.2years": "2+ yil",
+
+    "ielts.6": "Taxminan 6.0 - 6.5",
+    "ielts.7": "7.0 - 7.5",
+    "ielts.8": "8.0+"
+  }
+};
   // ───────────────────────────────────────────────────────────────
   // TRANSLATIONS
   // ───────────────────────────────────────────────────────────────
@@ -1047,74 +1089,127 @@ html, body {
     });
   };
 
-  // ───────────────────────────────────────────────────────────────
-  // AGE SCREEN
-  // ───────────────────────────────────────────────────────────────
-
-  ['age13-17', 'age18-24', 'age25-34', 'age35+'].forEach(id => {
-
-    document.getElementById(id).onclick = () => {
-
-      userData.age = id;
-
-      fadeTransition(() => {
-
-        ageScreen.classList.add('hidden');
-        englishLevelScreen.classList.remove('hidden');
-
-      });
-    };
-  });
-
-  ['levelBeginner', 'levelIntermediate', 'levelAdvanced']
-.forEach(id => {
-
+  // === AFTER AGE SCREEN ===
+['age13-17', 'age18-24', 'age25-34', 'age35+'].forEach(id => {
   document.getElementById(id).onclick = () => {
-
-    const levelMap = {
-      levelBeginner: 'Beginner',
-      levelIntermediate: 'Intermediate',
-      levelAdvanced: 'Advanced'
-    };
-
-    userData.englishLevel = levelMap[id];
-
-    fadeTransition(() => {
-
-      englishLevelScreen.classList.add('hidden');
-      locationScreen.classList.remove('hidden');
-
-    });
-
+    userData.age = id;
+    startEnglishTest();        // ← changed
   };
-
 });
 
-  // ───────────────────────────────────────────────────────────────
-  // LOCATION SCREEN
-  // ───────────────────────────────────────────────────────────────
+// ==================== ENGLISH LEVEL TEST ====================
 
-  document.getElementById('nextLocation').onclick = () => {
+let currentQuestion = 0;
+let score = 0;
 
-    const country = document.getElementById('countryInput').value.trim();
-    const city = document.getElementById('cityInput').value.trim();
+const questions = [
+  { q: "Choose the correct sentence:", options: ["She go to school every day.", "She goes to school every day.", "She going to school every day."], correct: 1 },
+  { q: "What does 'ubiquitous' mean?", options: ["Very rare", "Present everywhere", "Extremely expensive"], correct: 1 },
+  { q: "If I ___ more time, I would travel the world.", options: ["have", "had", "would have"], correct: 1 },
+  { q: "The meeting has been ___ until next week.", options: ["postponed", "preponed", "cancelled"], correct: 0 },
+  { q: "Which word is different?", options: ["Eloquent", "Fluent", "Silent", "Articulate"], correct: 2 },
+  { q: "I wish I ___ speak Spanish fluently.", options: ["can", "could", "would"], correct: 1 },
+  { q: "What is the synonym of 'resilient'?", options: ["Fragile", "Adaptable", "Lazy"], correct: 1 },
+  { q: "Complete: 'By the time we arrive, the movie ___ .'", options: ["will start", "will have started", "starts"], correct: 1 }
+];
 
-    if (!country || !city) {
-      showMessage('error.fillFields');
-      return;
-    }
+function startEnglishTest() {
+  currentQuestion = 0;
+  score = 0;
 
-    userData.country = country;
-    userData.city = city;
+  fadeTransition(() => {
+    document.getElementById('ageScreen').classList.add('hidden');
+    document.getElementById('preTestScreen').classList.remove('hidden');
+  });
 
+  // Auto start test after 5 seconds
+  setTimeout(() => {
     fadeTransition(() => {
-
-      locationScreen.classList.add('hidden');
-      durationScreen.classList.remove('hidden');
-
+      document.getElementById('preTestScreen').classList.add('hidden');
+      document.getElementById('englishTestScreen').classList.remove('hidden');
+      showQuestion();
     });
-  };
+  }, 5000);
+}
 
+function showQuestion() {
+  const q = questions[currentQuestion];
+  
+  document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/${questions.length}`;
+  document.getElementById('testProgress').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+  document.getElementById('questionText').textContent = q.q;
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+
+  q.options.forEach((option, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn option-btn';
+    btn.style.textAlign = 'left';
+    btn.textContent = option;
+    btn.onclick = () => handleAnswer(index, btn, q.correct);
+    container.appendChild(btn);
+  });
+}
+
+async function handleAnswer(selectedIndex, selectedBtn, correctIndex) {
+  const allBtns = document.querySelectorAll('.option-btn');
+  allBtns.forEach(btn => btn.disabled = true);
+
+  // Visual feedback
+  if (selectedIndex === correctIndex) {
+    selectedBtn.style.borderColor = '#06a87c';
+    selectedBtn.style.background = '#e6f7f0';
+    score++;
+  } else {
+    selectedBtn.style.borderColor = '#f24b0b';
+    allBtns[correctIndex].style.borderColor = '#06a87c';
+    allBtns[correctIndex].style.background = '#e6f7f0';
+  }
+
+  // Auto advance after delay (except on last question)
+  await new Promise(resolve => setTimeout(resolve, 900));
+
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    fadeTransition(() => showQuestion(), 250);
+  } else {
+    // Show result IMMEDIATELY after last answer
+    finishTest();
+  }
+}
+
+function finishTest() {
+  let level = score >= 6 ? 'advanced' : score >= 4 ? 'intermediate' : 'beginner';
+  
+  userData.level = level;  // ← CHANGED: Use 'level' instead of 'englishLevel'
+
+
+  const levelText = level === 'advanced' ? 'Advanced' : 
+                    level === 'intermediate' ? 'Intermediate' : 'Beginner';
+
+  let messageKey = 'test.resultBeginner';
+  if (level === 'advanced') messageKey = 'test.resultAdvanced';
+  else if (level === 'intermediate') messageKey = 'test.resultIntermediate';
+
+  fadeTransition(() => {
+    document.getElementById('englishTestScreen').classList.add('hidden');
+    
+    const resultScreen = document.getElementById('testResultScreen');
+    resultScreen.classList.remove('hidden');
+    
+    document.getElementById('resultLevel').textContent = levelText + " Level";
+    document.getElementById('resultMessage').setAttribute('data-lang-key', messageKey);
+  });
+
+  setTimeout(() => {
+    fadeTransition(() => {
+      document.getElementById('testResultScreen').classList.add('hidden');
+      document.getElementById('durationScreen').classList.remove('hidden');
+    });
+  }, 5000);
+}
   // ───────────────────────────────────────────────────────────────
   // DURATION SCREEN
   // ───────────────────────────────────────────────────────────────
@@ -1246,26 +1341,19 @@ html, body {
       });
 
       const steps = [
-        { t: 1200, text: "Analyzing your answers..." },
-        { t: 2800, text: "Building your roadmap..." },
-        { t: 4300, text: "Finalizing your plan..." }
+        { t: 1200, key: "personal.analyzing" },
+        { t: 2800, key: "personal.building" },
+        { t: 4300, key: "personal.finalizing" }
       ];
 
       steps.forEach(step => {
-
         setTimeout(() => {
-
           text.style.opacity = "0.3";
-
           setTimeout(() => {
-
-            text.innerText = step.text;
+            text.innerHTML = translations[currentLang]?.[step.key] ?? translations['en'][step.key];
             text.style.opacity = "1";
-
           }, 200);
-
         }, step.t);
-
       });
 
       setTimeout(() => {

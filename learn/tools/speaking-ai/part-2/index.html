@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Speaking Part 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        /* [KEEP ALL YOUR ORIGINAL CSS FROM PART 1 HERE] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans', system-ui, sans-serif; background: #fffaf5; color: #1f2937; min-height: 100vh; overflow: hidden; }
+        .screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: all 0.6s ease; }
+        .hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+        
+        .hero { text-align: center; max-width: 420px; }
+        .illustration { width: 260px; height: 240px; background: url('/assets/images/illustrations/redy_trustworthy.webp') center/cover; margin: 0 auto 20px; }
+        .hero h1 { font-family: 'Poppins', sans-serif; font-size: 2.4rem; color: #f24b0b; margin-bottom: 12px; }
+
+        .btn-main { padding: 18px 70px; background: #f24b0b; color: white; border: none; border-radius: 50px; font-size: 1.3rem; font-weight: 700; box-shadow: 0 4px 0 #c23a0a; cursor: pointer; transition: transform 0.1s; margin-top: 30px; }
+        .btn-main:active { transform: translateY(4px); box-shadow: 0 0 0 #c23a0a; }
+        .btn-green { background: #22c55e; box-shadow: 0 4px 0 #15803d; }
+        .btn-green:active { box-shadow: 0 0 0 #15803d; }
+
+        .instructions, .cue-card { max-width: 520px; background: white; border-radius: 20px; padding: 32px 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: left; width: 100%; }
+        .instructions h2, .cue-card h2 { font-family: 'Poppins', sans-serif; color: #f24b0b; text-align: center; margin-bottom: 24px; font-size: 1.8rem; }
+        .instructions ul { list-style: none; padding: 0; }
+        .instructions li { padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 1.1rem; line-height: 1.5; display: flex; align-items: flex-start; }
+        .instructions li:last-child { border-bottom: none; }
+        .instructions li::before { content: "✓"; color: #22c55e; font-weight: bold; margin-right: 12px; font-size: 1.3rem; }
+
+        /* Specific styles for Cue Card */
+        .cue-card { border: 2px solid #e5e7eb; border-left: 6px solid #f24b0b; }
+        .cue-card h3 { font-size: 1.3rem; margin-bottom: 15px; color: #1f2937; }
+        .cue-card ul { padding-left: 20px; margin-bottom: 20px; list-style-type: disc; }
+        .cue-card li { font-size: 1.15rem; padding: 5px 0; border: none; display: list-item; color: #4b5563; }
+        .cue-card li::before { content: none; }
+
+        .question-screen { padding-top: 40px; }
+        .question-area { text-align: center; max-width: 680px; padding: 0 20px; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        
+        .timer-container { text-align: center; margin-bottom: 20px; }
+        .timer-label { font-size: 1rem; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .timer { font-size: 2.8rem; font-weight: 700; color: #f24b0b; }
+        .status { margin: 15px 0; font-weight: 600; color: #ef4444; }
+
+        .cooldown-text { font-size: 1.4rem; color: #ef4444; font-weight: 700; margin-top: 30px; font-family: 'Poppins', sans-serif; justify-content: center; text-align: center;}
+
+        .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 110px; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border-top: 1px solid #e5e7eb; display: none; align-items: center; justify-content: center; z-index: 100; }
+        #mic-btn { width: 85px; height: 85px; border-radius: 50%; background: #ef4444; border: none; box-shadow: 0 10px 25px rgba(239,68,68,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+        #mic-btn.recording { background: #22c55e; animation: pulse 1.5s infinite; }
+        #mic-btn:disabled { cursor: default; opacity: 0.5; animation: none; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+        #mic-btn img { width: 36px; height: 36px; object-fit: contain; filter: brightness(0) invert(1); transition: transform .25s ease; }
+        #mic-btn.recording img { transform: scale(1.1); }
+
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-content { background: white; width: min(92vw, 900px); max-height: 90vh; border-radius: 24px; padding: 42px; text-align: center; position: relative; overflow-y: auto; }
+        .close-modal { position: absolute; top: 14px; right: 20px; font-size: 2rem; cursor: pointer; color: #666; }
+        .band-score { font-size: 5.2rem; font-weight: 800; color: #f24b0b; margin: 15px 0; }
+
+        .page-loader { position: fixed; inset: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 1.25s; }
+        .page-loader.hidden { opacity: 0; visibility: hidden; }
+        @media (max-width: 640px) {
+            .instructions, .cue-card { padding: 28px 20px; margin: 0 10px; }
+            .btn-main { padding: 16px 50px; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pageLoader" class="page-loader">
+        <lottie-player 
+            id="splashOwl"
+            src="/assets/Sandy Loading.json"
+            background="transparent" 
+            speed="0.9" 
+            style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+            loop 
+            autoplay>
+        </lottie-player>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen">
+        <div class="hero">
+            <div class="illustration"></div>
+            <h1>PART 2 PREP</h1>
+            <p>You will have 1 minute to prepare, and 2 minutes to speak.</p>
+        </div>
+        
+        <div id="loading-auth" style="margin-top: 20px; font-weight: bold; color: #666;">Checking permissions...</div>
+        
+        <button id="start-btn" class="btn-main" onclick="showInstructions()" style="display: none;">
+            START THE TEST
+        </button>
+        
+        <div id="cooldown-timer-display" class="cooldown-text" style="display: none;">
+            Please wait <span id="cooldown-time"></span> before testing again.
+        </div>
+    </div>
+
+    <!-- Instructions Screen -->
+    <div id="instructions-screen" class="screen hidden">
+        <div class="instructions">
+            <h2>How Part 2 Works</h2>
+            <ul>
+                <li>You will see a topic (Cue Card)</li>
+                <li>You have exactly 1 minute to prepare and take notes</li>
+                <li>After 1 minute, the mic will unlock</li>
+                <li>You must speak for <b>1 to 2 minutes</b></li>
+                <li>Press the mic button when you finish speaking</li>
+            </ul>
+        </div>
+        <button onclick="startPrepPhase()" class="btn-main btn-green">I'M READY</button>
+    </div>
+
+    <!-- Question/Prep Screen -->
+    <div id="question-screen" class="screen hidden question-screen">
+        <div class="question-area">
+            <div class="timer-container">
+                <div class="timer-label" id="timer-label">Preparation Time</div>
+                <div class="timer" id="timer">60</div>
+            </div>
+            
+            <div class="cue-card" id="cue-card">
+                <h3 id="card-title"></h3>
+                <p style="margin-bottom: 10px; color: #4b5563;">You should say:</p>
+                <ul id="card-points"></ul>
+                <p id="card-explain" style="font-weight: 600; color: #1f2937;"></p>
+            </div>
+            
+            <div class="status" id="status">Read the card and prepare your answer...</div>
+        </div>
+    </div>
+
+    <!-- Good Job Screen -->
+    <div id="goodjob-screen" class="screen hidden">
+        <div class="hero">
+            <div class="illustration" style="background-image: url('/assets/images/illustrations/redy_winning.webp')"></div>
+            <h1 style="color:#22c55e;">WELL DONE!</h1>
+            <p style="font-size:1.25rem; margin:20px 0 40px;">You've completed Part 2</p>
+        </div>
+        <button onclick="showFeedback()" class="btn-main btn-green">GET DETAILED FEEDBACK</button>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar" id="bottom-bar">
+        <button id="mic-btn" disabled>
+            <img src="/assets/images/menu-icons/mic.webp" alt="Microphone">
+        </button>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <div id="modal-content">
+                <div id="loading-state">
+                    <p style="margin:20px 0; color:#666;">AI Examiner is analyzing your monologue...</p>
+                </div>
+                <div id="result-state" style="display:none;">
+                    <h2 style="color:#f24b0b;">Your Result</h2>
+                    <div id="band-score" class="band-score">0.0</div>
+                    <div id="feedback-text" style="margin:25px 0; font-size:1.1rem; line-height:1.6; color:#444; text-align:left;"></div>
+                    <button onclick="window.location.href='/index.html'" class="btn-main" style="width:100%; margin-top:20px;">
+                        BACK TO MENU
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- FIREBASE SETUP & COOLDOWN LOGIC ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+            authDomain: "summage-backend.firebaseapp.com",
+            projectId: "summage-backend",
+            storageBucket: "summage-backend.firebasestorage.app",
+            messagingSenderId: "128191434358",
+            appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentUserRef = null;
+        const COOLDOWN_MS = 25 * 60 * 1000; // 25 minutes
+        let cooldownInterval = null;
+
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '/authentication/';
+            } else {
+                currentUserRef = db.collection('users').doc(user.uid);
+                checkCooldown();
+            }
+        });
+
+        async function checkCooldown() {
+            try {
+                const doc = await currentUserRef.get();
+                document.getElementById('loading-auth').style.display = 'none';
+
+                // TARGET PART 2 FIELD ONLY
+                if (doc.exists && doc.data().lastPart2TestTime) {
+                    const lastTime = doc.data().lastPart2TestTime.toMillis();
+                    const diff = Date.now() - lastTime;
+
+                    if (diff < COOLDOWN_MS) {
+                        startCooldownUI(COOLDOWN_MS - diff);
+                        return;
+                    }
+                }
+                
+                document.getElementById('cooldown-timer-display').style.display = 'none';
+                document.getElementById('start-btn').style.display = 'block';
+            } catch (error) {
+                console.error("Firestore Check Failed: ", error);
+                document.getElementById('loading-auth').innerText = "Network timeout. Try refreshing.";
+            }
+        }
+
+        function startCooldownUI(remainingMs) {
+            document.getElementById('start-btn').style.display = 'none';
+            const cooldownCard = document.getElementById('cooldown-content');
+            const timerDisplay = document.getElementById('cooldown-time');
+            cooldownCard.style.display = 'block';
+
+            let timeLeft = Math.floor(remainingMs / 1000);
+            if (cooldownInterval) clearInterval(cooldownInterval);
+            
+            cooldownInterval = setInterval(() => {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                timeLeft--;
+                if (timeLeft < 0) {
+                    clearInterval(cooldownInterval);
+                    cooldownCard.style.display = 'none';
+                    document.getElementById('normal-start-content').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        // Ensure your logTestStart updates the Part 2 specific field
+        async function logTestStart() {
+            if(currentUserRef) {
+                await currentUserRef.set({
+                    lastPart2TestTime: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            }
+        }
+
+        // --- CUE CARDS LOGIC ---
+        const cueCardsPool = [
+            {
+                title: "Describe a memorable journey you have made.",
+                points: ["Where you went", "How you traveled", "Who you went with"],
+                explain: "And explain why it is memorable to you."
+            },
+            {
+                title: "Describe a book that had a major influence on you.",
+                points: ["What the book is", "When you read it", "What it is about"],
+                explain: "And explain how it influenced you."
+            },
+            {
+                title: "Describe an important goal you achieved.",
+                points: ["What the goal was", "When you achieved it", "How hard it was"],
+                explain: "And explain how you felt after achieving it."
+            }
+        ];
+
+        let currentCard, mediaRecorder, audioChunks = [], stream = null;
+        let timerInterval = null, isPrepPhase = true;
+        let finalAudioData = null, finalMimeType = null;
+
+        const screens = {
+            start: document.getElementById('start-screen'),
+            instructions: document.getElementById('instructions-screen'),
+            question: document.getElementById('question-screen'),
+            goodjob: document.getElementById('goodjob-screen')
+        };
+        const els = {
+            timerLabel: document.getElementById('timer-label'),
+            timer: document.getElementById('timer'),
+            status: document.getElementById('status'),
+            micBtn: document.getElementById('mic-btn'),
+            bottomBar: document.getElementById('bottom-bar')
+        };
+
+        function showInstructions() {
+            logTestStart(); // Trigger cooldown lock immediately on start
+            screens.start.classList.add('hidden');
+            screens.instructions.classList.remove('hidden');
+        }
+
+        function startPrepPhase() {
+            // Pick a random card
+            currentCard = cueCardsPool[Math.floor(Math.random() * cueCardsPool.length)];
+            document.getElementById('card-title').textContent = currentCard.title;
+            document.getElementById('card-points').innerHTML = currentCard.points.map(p => `<li>${p}</li>`).join('');
+            document.getElementById('card-explain').textContent = currentCard.explain;
+
+            screens.instructions.classList.add('hidden');
+            screens.question.classList.remove('hidden');
+            
+            isPrepPhase = true;
+            els.timerLabel.textContent = "Preparation Time";
+            els.timerLabel.style.color = "#6b7280";
+            els.timer.style.color = "#1f2937";
+            els.status.textContent = "Take notes. Mic is locked.";
+            els.bottomBar.style.display = 'flex';
+            els.micBtn.disabled = true;
+
+            runTimer(60, startSpeakingPhase);
+        }
+
+        function startSpeakingPhase() {
+            isPrepPhase = false;
+            els.timerLabel.textContent = "Speaking Time";
+            els.timerLabel.style.color = "#f24b0b";
+            els.timer.style.color = "#f24b0b";
+            els.status.textContent = "Click mic to start speaking (Up to 2 minutes)";
+            els.timer.textContent = "120";
+            
+            els.micBtn.disabled = false; // Unlock mic
+        }
+
+        function runTimer(seconds, onFinish) {
+            let timeLeft = seconds;
+            els.timer.textContent = timeLeft;
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                els.timer.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    onFinish();
+                }
+            }, 1000);
+        }
+
+        async function toggleRecording() {
+            if (isPrepPhase) return;
+
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                stopRecording();
+            } else {
+                await startRecording();
+            }
+        }
+
+        async function startRecording() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    saveAnswer(audioBlob);
+                };
+
+                mediaRecorder.start();
+                els.micBtn.classList.add("recording");
+                els.status.textContent = "Recording... Speak clearly. Click mic to finish early.";
+                
+                // Start 2-minute limit
+                runTimer(120, () => {
+                    if (mediaRecorder.state === "recording") stopRecording();
+                });
+
+            } catch (err) {
+                console.error(err);
+                alert("Microphone access denied or not available.");
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                stream?.getTracks().forEach(track => track.stop());
+            }
+            clearInterval(timerInterval);
+            els.micBtn.classList.remove("recording");
+            els.micBtn.disabled = true;
+            els.status.textContent = "Processing audio...";
+        }
+
+        async function saveAnswer(audioBlob) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                finalAudioData = reader.result.split(',')[1];
+                finalMimeType = "audio/webm";
+                setTimeout(finishTest, 500);
+            };
+            reader.readAsDataURL(audioBlob);
+        }
+
+        function finishTest() {
+            els.bottomBar.style.display = 'none';
+            screens.question.classList.add('hidden');
+            screens.goodjob.classList.remove('hidden');
+        }
+
+        async function showFeedback() {
+            screens.goodjob.classList.add('hidden');
+            const modal = document.getElementById('feedback-modal');
+            modal.style.display = 'flex';
+
+            const cardContent = `${currentCard.title}\n${currentCard.points.join(', ')}\n${currentCard.explain}`;
+
+            const prompt = `
+                You are a strict IELTS Speaking examiner grading a Part 2 monologue.
+                The cue card given to the student was:
+                "${cardContent}"
+
+                If the audio contains no speech, return exactly:
+                {
+                "bandScore": 0,
+                "feedback": "No speech was detected.",
+                "advice": "Please attempt to speak on the topic."
+                }
+
+                Otherwise, evaluate Pronunciation, Lexical Resource, Grammatical Range, and Fluency. Did they cover all parts of the cue card?
+                Return ONLY valid JSON:
+                {
+                "bandScore": number,
+                "feedback": "...",
+                "advice": "..."
+                }
+            `;
+
+            try {
+                const res = await fetch("https://summage-ai.summage-socials.workers.dev", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [
+                                { text: `Part 2 Cue Card Topic: ${cardContent}` },
+                                { inlineData: { mimeType: finalMimeType, data: finalAudioData } },
+                                { text: prompt }
+                            ]
+                        }]
+                    })
+                });
+
+                const data = await res.json();
+                const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '{"bandScore":6.0,"feedback":"Good attempt","advice":"Keep practicing"}';
+                const result = JSON.parse(textResponse.replace(/```json|```/g, '').trim());
+
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('result-state').style.display = 'block';
+                document.getElementById('band-score').textContent = result.bandScore.toFixed(1);
+                document.getElementById('feedback-text').innerHTML = `
+                    <strong>Overall Band:</strong> ${result.bandScore}<br><br>
+                    ${result.feedback}<br><br>
+                    <strong>Advice:</strong> ${result.advice}
+                `;
+            } catch (e) {
+                console.error(e);
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('result-state').style.display = 'block';
+                document.getElementById('feedback-text').innerHTML = "Error processing your response. Please try again.";
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('feedback-modal').style.display = 'none';
+            window.location.href = "/learn/tools/speaking-ai/";
+        }
+
+        els.micBtn.addEventListener('click', toggleRecording);
+
+        // Splash screen logic
+        const loader = document.getElementById('pageLoader');
+        const owl = document.getElementById('splashOwl');
+
+        const MIN_DURATION = 1500;
+        let minTimePassed = false;
+
+        setTimeout(() => {
+            if (owl) {
+                owl.style.opacity = '1';
+                owl.style.transform = 'scale(1) translateY(0)';
+            }
+        }, 400);
+
+        setTimeout(() => {
+            minTimePassed = true;
+            if (document.readyState === 'complete') hideLoader();
+        }, MIN_DURATION);
+
+        window.addEventListener('load', () => {
+            if (minTimePassed) hideLoader();
+            else setTimeout(hideLoader, MIN_DURATION);
+        });
+
+        function hideLoader() {
+            if (loader.classList.contains('hidden')) return;
+            loader.classList.add('hidden');
+            setTimeout(() => loader.remove(), 1400);
+        }
+
+        setTimeout(() => hideLoader(), 7000);
+    </script>
+</body>
+</html>

@@ -104,75 +104,152 @@
 
   <div class="main-view">
     <div id="home" class="page active">
-      <div class="map-container" id="mapContainer">
-        <div class="map-content" id="mapContent">
-          <div class="sky-background"></div>
-          
-
-          <div class="spot island-spot" style="top:43%; left:47%;" data-academy="hq">
-            <img src="/assets/images/islands/listening.webp" alt="Listening Island" class="island-image" style="z-index: 1;">
-            <div class="island-label" data-key="listening">
-                Listening
-            </div>
-
-            <div class="bubble">
-              <div class="bubble-header">
-                <div class="bubble-title" data-lang-key="academyListening">Grammar Academy</div>
-                <button class="close-btn">×</button>
-              </div>
-              <a href="/learn/journeys/listening/" class="bubble-btn" data-lang-key="btnEnter">Enter Academy</a>
-            </div>
-          </div>
-
-          <div class="spot island-spot" style="top:54%; left:38%;" data-academy="grammar">
-            <img src="/assets/images/islands/grammar-lessons.webp" alt="Grammar Island" class="island-image">
-            <div class="island-label" data-key="grammar">
-                Grammar
-            </div>
-
-            <div class="bubble">
-              <div class="bubble-header">
-                <div class="bubble-title" data-lang-key="academyGrammar">Grammar Academy</div>
-                <button class="close-btn">×</button>
-              </div>
-              <a href="/learn/journeys/grammar/" class="bubble-btn" data-lang-key="btnEnter">Enter Academy</a>
-            </div>
-          </div>
-
-
-          <div class="spot island-spot" style="top:48%; left:64%;" data-academy="reading">
-            <img src="/assets/images/islands/testcentre.webp" alt="Test Centre Island" class="island-image">
-            <div class="island-label" data-key="tests">
-                Test Centre
-            </div>
-
-            <div class="bubble">
-              <div class="bubble-header">
-                <div class="bubble-title" data-lang-key="academyReading">Test Centre</div>
-                <button class="close-btn">×</button>
-              </div>
-              <a href="/learn/journeys/test-centre/" class="bubble-btn" data-lang-key="btnEnter">Enter Academy</a>
-            </div>
-          </div>
-
-          <div class="spot island-spot" style="top:60%; left:55%;" data-academy="writing">
-            <img src="/assets/images/islands/writings.webp" alt="Writing Island" class="island-image">
-            <div class="island-label" data-key="writing">
-                Writing
-            </div>
-
-            <div class="bubble">
-              <div class="bubble-header">
-                <div class="bubble-title" data-lang-key="academyWriting">Writing Academy</div>
-                <button class="close-btn">×</button>
-              </div>
-              <a href="/learn/journeys/writing/" class="bubble-btn" data-lang-key="btnEnter">Enter Academy</a>
-            </div>
-          </div>
+      <!-- DESKTOP ACADEMY MENU -->
+  <div class="desktop-academy-menu desktop-only">
+    <div class="academy-container">
+      
+      <!-- LEFT SIDE - 4 IELTS Modules -->
+      <div class="academy-left">
+        <div class="academy-card" onclick="window.location.href='/learn/journeys/listening/'">
+          <div class="academy-text"><h3>IELTS<br>Listening</h3></div>
+          <div class="academy-image"><img src="/assets/images/islands/listening.webp" alt="Listening"></div>
+        </div>
         
+        <div class="academy-card" onclick="window.location.href='/learn/journeys/reading/'">
+          <div class="academy-text"><h3>IELTS<br>Reading</h3></div>
+          <div class="academy-image"><img src="/assets/images/islands/reading.webp" alt="Reading"></div>
+        </div>
+        
+        <div class="academy-card" onclick="window.location.href='/learn/journeys/writing/'">
+          <div class="academy-text"><h3>IELTS<br>Writing</h3></div>
+          <div class="academy-image"><img src="/assets/images/islands/writings.webp" alt="Writing"></div>
+        </div>
+        
+        <div class="academy-card" onclick="window.location.href='/learn/journeys/speaking/'">
+          <div class="academy-text"><h3>IELTS<br>Speaking</h3></div>
+          <div class="academy-image"><img src="/assets/images/islands/grammar-lessons.webp" alt="Speaking"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE - Promo + Wide Cards -->
+      <div class="academy-right">
+        <div class="hero-promo-card" id="heroPromoCard">
+          <div class="promo-content">
+            <div class="promo-text">
+              <h2 id="promoTitle">Try Our Speaking AI</h2>
+              <p id="promoDesc">Practice real IELTS speaking with AI examiner and get instant feedback.</p>
+            </div>
+            <div class="promo-image">
+              <img id="promoImage" src="/assets/images/tools/speaking.webp" alt="Speaking AI">
+            </div>
+          </div>
+        </div>
+
+        <div class="wide-cards">
+          <div class="wide-card" onclick="window.location.href='/learn/journeys/test-centre/'">
+            <div class="wide-text">
+              <h3>Full IELTS Mock Tests</h3>
+              <p>Real exam simulation</p>
+            </div>
+            <div class="wide-image">
+              <img src="/assets/images/islands/testcentre.webp" alt="Mocks">
+            </div>
+          </div>
+
+          <div class="wide-card" onclick="window.location.href='/learn/journeys/grammar/'">
+            <div class="wide-text">
+              <h3>Grammar Lessons</h3>
+              <p>Complete grammar course from A to Z</p>
+            </div>
+            <div class="wide-image">
+              <img src="/assets/images/islands/grammar-lessons.webp" alt="Grammar">
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+
+      
+      <!-- NEW MOBILE ACADEMY MENU -->
+      <div class="mobile-academy-menu mobile-only">
+          <!-- Hero Promo Card -->
+          <div class="hero-promo-card" id="heroPromoCard">
+              <div class="promo-content">
+                  <div class="promo-text">
+                      <h2 id="promoTitle">Try Our Speaking AI</h2>
+                      <p id="promoDesc">Practice real IELTS speaking with AI examiner and get instant feedback.</p>
+                  </div>
+                  <div class="promo-image">
+                      <img id="promoImage" src="/assets/images/tools/speaking.webp" alt="Speaking AI">
+                  </div>
+              </div>
+          </div>
+
+          <!-- Academy Cards Grid -->
+          <div class="academy-grid">
+              <div class="academy-card" onclick="window.location.href='/learn/journeys/listening/'">
+                  <div class="academy-text">
+                      <h3>IELTS<br>Listening</h3>
+                  </div>
+                  <div class="academy-image">
+                      <img src="/assets/images/islands/listening.webp" alt="Listening">
+                  </div>
+              </div>
+
+              <div class="academy-card" onclick="window.location.href='/learn/journeys/reading/'">
+                  <div class="academy-text">
+                      <h3>IELTS<br>Reading</h3>
+                  </div>
+                  <div class="academy-image">
+                      <img src="/assets/images/islands/reading.webp" alt="Reading">
+                  </div>
+              </div>
+
+              <div class="academy-card" onclick="window.location.href='/learn/journeys/writing/'">
+                  <div class="academy-text">
+                      <h3>IELTS<br>Writing</h3>
+                  </div>
+                  <div class="academy-image">
+                      <img src="/assets/images/islands/writings.webp" alt="Writing">
+                  </div>
+              </div>
+
+              <div class="academy-card" onclick="window.location.href='/learn/journeys/speaking/'">
+                  <div class="academy-text">
+                      <h3>IELTS<br>Speaking</h3>
+                  </div>
+                  <div class="academy-image">
+                      <img src="/assets/images/islands/grammar-lessons.webp" alt="Speaking">
+                  </div>
+              </div>
+          </div>
+
+          <!-- Wide Cards -->
+          <div class="wide-cards">
+              <div class="wide-card" onclick="window.location.href='/learn/journeys/test-centre/'">
+                  <div class="wide-text">
+                      <h3>Full IELTS Mock Tests</h3>
+                      <p>Real exam simulation</p>
+                  </div>
+                  <div class="wide-image">
+                      <img src="/assets/images/islands/testcentre.webp" alt="Mocks">
+                  </div>
+              </div>
+
+              <div class="wide-card" onclick="window.location.href='/learn/journeys/grammar/'">
+                  <div class="wide-text">
+                      <h3>Grammar Lessons</h3>
+                      <p>Complete grammar course from A to Z</p>
+                  </div>
+                  <div class="wide-image">
+                      <img src="/assets/images/islands/grammar-lessons.webp" alt="Grammar">
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
     <div id="tools" class="page">
       <h2 data-lang-key="titleTools">Study Tools</h2>
       <p data-lang-key="descTools">Powerful tools to help you learn faster and smarter.</p>
@@ -209,6 +286,15 @@
           <div class="tool-text">
             <div class="tool-title" data-lang-key="toolSpeaking">Speaking Practice</div>
             <div class="tool-desc" data-lang-key="toolSpeakingDesc">Have a practice sessions with AI Speaking Examiner</div>
+          </div>
+        </div>
+
+        <!-- Grammar -->
+        <div id="GrammarCard" class="tool-card" onclick="window.location.href='/learn/tools/grammar-checker/'">
+          <img class="tool-icon" src="/assets/images/menu-icons/grammar.webp" alt="Grammar Check with AI by Summage Academy">
+          <div class="tool-text">
+            <div class="tool-title">Grammar AI</div>
+            <div class="tool-desc" data-lang-key="toolGrammarDesc">Check your essays and find out if they are grammatically correct</div>
           </div>
         </div>
 
@@ -361,53 +447,55 @@
       </div>
     </div>
 
-    <div id="profile" class="page" style="padding: 80px 24px 100px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 32px; background: linear-gradient(180deg, rgba(242,75,11,0.04) 0%, transparent 40%); position: relative;">
+    <div id="profile" class="page" style="padding: 80px 24px 100px; display: flex; justify-content: center; background: linear-gradient(180deg, rgba(242,75,11,0.04) 0%, transparent 40%); position: relative;">
 
-      <div class="profile-card" id="profileCard">
-        <button id="settingsBtn" class="settings-btn top-right">
-          <i class="fas fa-gear"></i>
-        </button>
+      <!-- Main Layout Wrapper -->
+      <div class="profile-layout-container">
+        
+        <!-- LEFT HALF: The Original Profile Card -->
+        <div class="profile-card">
+          <button id="settingsBtn" class="settings-btn">
+            <i class="fas fa-gear"></i>
+          </button>
 
-        <div class="profile-photo-container">
-          <img id="profilePhoto" src="" alt="Profile Photo" class="profile-photo">
-          <div class="photo-overlay">Change</div>
+          <div class="profile-photo-container">
+            <img id="profilePhoto" src="" alt="Profile Photo" class="profile-photo">
+            <div class="photo-overlay">Change</div>
+          </div>
+
+          <h2 id="profileName" class="profile-name">Guest User</h2>
+          <div class="profile-level"><span data-lang-key="levelProfile">English Level:</span> <span id="englishLevel">Beginner</span></div>
+
+          <div class="stats-row">
+            <div class="stat-item">
+              <i class="fas fa-coins"></i>
+              <span id="coins">0</span>
+              <small data-lang-key="coins">Coins</small>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-gem"></i>
+              <span id="diamonds">0</span>
+              <small data-lang-key="diamonds">Diamonds</small>
+            </div>
+          </div>
         </div>
 
-        <h2 id="profileName" class="profile-name">Guest User</h2>
-        <div class="profile-level"><span data-lang-key="levelProfile">English Level:</span> <span id="englishLevel">Beginner</span></div>
+        <!-- RIGHT HALF: Promo Cards -->
+        <div class="profile-cards-grid">
+          
+          <!-- 1. Marketplace Card -->
+          <div class="profile-feature-card" onclick="window.location.href='/marketplace/'">
+            <img src="/assets/images/blog-assets/marketplace.webp" alt="Marketplace">
+          </div>
 
-        <div class="stats-row">
-          <div class="stat-item">
-            <i class="fas fa-coins"></i>
-            <span id="coins">0</span>
-            <small data-lang-key="coins">Coins</small>
+          <!-- 2. Random Promo Card -->
+          <div class="profile-feature-card" id="randomProfilePromo">
+            <img id="randomPromoImg" src="" alt="Promo">
           </div>
-          <div class="stat-item">
-            <i class="fas fa-gem"></i>
-            <span id="diamonds">0</span>
-            <small data-lang-key="diamonds">Diamonds</small>
-          </div>
+
         </div>
-
-        <button class="nft-btn" onclick="window.location.href='/marketplace/'" data-lang-key="nftmenu">
-          <i class="fas fa-palette"></i> Marketplace
-        </button>
-      </div>
-
-      <div id="settingsMenu" class="settings-menu hidden">
-        <button class="settings-close" id="settingsCloseBtn">×</button>
-        <button class="menu-item" id="contactsBtn"><i class="fas fa-address-book"></i><span data-lang-key="menuContacts">Contacts</span></button>
-        <button class="menu-item" id="helpBtn"><i class="fas fa-question-circle"></i><span data-lang-key="menuHelpCentre">Help Centre</span></button>
-        <button class="menu-item" id="myInfoBtn"><i class="fas fa-info-circle"></i><span data-lang-key="menuUserInfo">My Info</span></button>
-        <button class="menu-item" id="changeNameBtn"><i class="fas fa-edit"></i><span data-lang-key="menuChangeName">Change Name</span></button>
-        <button class="menu-item" id="changeAvatarBtn">
-          <i class="fas fa-user-circle"></i><span data-lang-key="menuAvatars">Change Avatar</span>
-        </button>
-        <hr class="menu-divider">
-        <button class="menu-item logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span data-lang-key="menuLogOut">Log Out</span></button>
       </div>
     </div>
-  </div>
 
   <div id="modalBackdrop" class="modal-backdrop hidden">
     <div class="modal-content">
@@ -455,6 +543,19 @@
         <img id="toastIcon" class="toast-icon" src="" alt="">
         <div id="toastMessage" class="toast-message"></div>
     </div>
+  </div>
+
+  <div id="settingsMenu" class="settings-menu hidden">
+    <button class="settings-close" id="settingsCloseBtn">×</button>
+    <button class="menu-item" id="contactsBtn"><i class="fas fa-address-book"></i><span data-lang-key="menuContacts">Contacts</span></button>
+    <button class="menu-item" id="helpBtn"><i class="fas fa-question-circle"></i><span data-lang-key="menuHelpCentre">Help Centre</span></button>
+    <button class="menu-item" id="myInfoBtn"><i class="fas fa-info-circle"></i><span data-lang-key="menuUserInfo">My Info</span></button>
+    <button class="menu-item" id="changeNameBtn"><i class="fas fa-edit"></i><span data-lang-key="menuChangeName">Change Name</span></button>
+    <button class="menu-item" id="changeAvatarBtn">
+      <i class="fas fa-user-circle"></i><span data-lang-key="menuAvatars">Change Avatar</span>
+    </button>
+    <hr class="menu-divider">
+    <button class="menu-item logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span data-lang-key="menuLogOut">Log Out</span></button>
   </div>
 
   <div class="settings-overlay" id="settingsOverlay"></div>
@@ -526,6 +627,7 @@
         toolVocabularyDesc: "Discover and Memorize New Words in a Simple Ways",
         toolSpeaking: "Speaking AI",
         toolSpeakingDesc: "Have a practice sessions with AI Speaking Examiner",
+        toolGrammarDesc: "Check your essays and find out if they are grammatically correct",
         levelHeaderTitle: "Welcome to Summage!",
         levelHeaderDesc: "Please select your current English level so we can personalize your journey.",
         btnDone: "Done",
@@ -598,6 +700,7 @@
         toolVocabularyDesc: "Расширьте свой словарный запас с ежедневными упражнениями.",
         toolSpeaking: "Speaking AI",
         toolSpeakingDesc: "Практика Speaking с ИИ-экзаменатором",
+        toolGrammarDesc: "Проверьте свои эссе и узнайте, грамматически ли они правильны",
         levelHeaderTitle: "Добро пожаловать в Summage!",
         levelHeaderDesc: "Пожалуйста, выберите ваш текущий уровень английского, чтобы мы могли персонализировать ваш путь.",
         btnDone: "Готово",
@@ -665,6 +768,7 @@
         toolVocabularyDesc: "Kunlik mashqlar bilan so'z boyligingizni kengaytiring.",
         toolSpeaking: "Speaking AI",
         toolSpeakingDesc: "AI Speaking examiner bilan Speakingni mashq qiling",
+        toolGrammarDesc: "Insholaringizni tekshiring va ular grammatik jihatdan to‘g‘ri ekanligini bilib oling",
         levelHeaderTitle: "Summage ga xush kelibsiz!",
         levelHeaderDesc: "Yo'lingizni shaxsiylashtirish uchun hozirgi ingliz tili darajangizni tanlang.",
         btnDone: "Tayyor",
@@ -702,6 +806,93 @@
       sound.play().catch(() => {});
     }
 
+    // Random Profile Promos 
+    const profilePromos = [
+        {
+            image: "/assets/images/blog-assets/ielts.webp",
+            link: "/learn/blogs/ielts/"
+        }
+    ];
+
+    function randomizeProfilePromo() {
+        const random = profilePromos[Math.floor(Math.random() * profilePromos.length)];
+        
+        const card = document.getElementById('randomProfilePromo');
+        const imgEl = document.getElementById('randomPromoImg');
+
+        if (card && imgEl) {
+            imgEl.src = random.image;
+            
+            card.onclick = () => {
+                window.location.href = random.link;
+            };
+        }
+    }
+
+    // Call this on load to set the initial card
+    document.addEventListener('DOMContentLoaded', randomizeProfilePromo);
+
+    // Call it when the user navigates to the profile page to keep it fresh
+    document.querySelectorAll('[data-page]').forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(randomizeProfilePromo, 100);
+        });
+    });
+
+    // Random Promo Cards - FIXED
+    const promoItems = [
+        {
+            title: "Try Our Speaking AI",
+            desc: "Practice real IELTS speaking with AI examiner and get instant feedback.",
+            image: "/assets/images/menu-icons/ai.webp",
+            link: "/learn/tools/speaking-ai/"
+        },
+        {
+            title: "Essay Checker AI",
+            desc: "Upload your IELTS essay and get estimated band score instantly.",
+            image: "/assets/images/menu-icons/icon1.webp",
+            link: "/learn/tools/essay-checker/"
+        },
+        {
+            title: "Vocabulary Zone",
+            desc: "Build powerful vocabulary with smart spaced repetition.",
+            image: "/assets/images/menu-icons/icon4.webp",
+            link: "/learn/tools/vocabulary-zone/"
+        }
+    ];
+
+    function randomizePromo() {
+        const random = promoItems[Math.floor(Math.random() * promoItems.length)];
+
+        // Update BOTH desktop and mobile promo cards
+        const promoCards = document.querySelectorAll('.hero-promo-card');
+        
+        promoCards.forEach(card => {
+            const titleEl = card.querySelector('#promoTitle');
+            const descEl = card.querySelector('#promoDesc');
+            const imageEl = card.querySelector('#promoImage');
+
+            if (titleEl) titleEl.textContent = random.title;
+            if (descEl) descEl.textContent = random.desc;
+            if (imageEl) imageEl.src = random.image;
+
+            // Make the whole card clickable
+            card.style.cursor = 'pointer';
+            card.onclick = () => {
+                window.location.href = random.link;
+            };
+        });
+    }
+
+    // Run on load
+    document.addEventListener('DOMContentLoaded', randomizePromo);
+
+    // Also run when language changes or page is shown (extra safety)
+    document.querySelectorAll('[data-page]').forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(randomizePromo, 100);
+        });
+    });
     const LANG_KEY = 'summage_preferred_lang';
     let currentLang = localStorage.getItem(LANG_KEY) || 'en';
 
@@ -718,10 +909,7 @@
         }
       });
 
-      document.querySelectorAll('.island-label').forEach(label => {
-          const key = label.dataset.key;
-          label.textContent = translations[currentLang][key];
-      });
+      
     }
 
     
@@ -923,138 +1111,6 @@
       link.addEventListener('click', () => {
         setTimeout(toggleHeartsVisibility, 50);
       });
-    });
-
-    // ───────────────────────────────────────────────────────────────
-    // IMPROVED MAP DRAGGING + MOMENTUM + SMOOTH BUBBLES
-    // ───────────────────────────────────────────────────────────────
-    const mapContainer = document.getElementById('mapContainer');
-    const mapContent   = document.getElementById('mapContent');
-
-    let isDragging = false;
-    let startX = 0, startY = 0;
-    let currentX = 0, currentY = 0;
-    let velocityX = 0, velocityY = 0;
-    let lastTime = 0;
-    let rafId = null;
-
-    function updateTransform() {
-      mapContent.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-    }
-
-    function animateMomentum() {
-      if (Math.abs(velocityX) < 0.1 && Math.abs(velocityY) < 0.1) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-        return;
-      }
-      currentX += velocityX;
-      currentY += velocityY;
-      velocityX *= 0.92;
-      velocityY *= 0.92;
-
-      const maxOffset = 400;
-      currentX = Math.max(-maxOffset, Math.min(maxOffset, currentX));
-      currentY = Math.max(-maxOffset, Math.min(maxOffset, currentY));
-
-      updateTransform();
-      rafId = requestAnimationFrame(animateMomentum);
-    }
-
-    function startDrag(e) {
-      if (e.target.closest('.bubble') || e.target.closest('.bubble-btn') || e.target.closest('.bubble-btn-hq')) {
-        return;
-      }
-      isDragging = true;
-      const pointer = e.touches ? e.touches[0] : e;
-      startX = pointer.clientX - currentX;
-      startY = pointer.clientY - currentY;
-      velocityX = velocityY = 0;
-      lastTime = performance.now();
-      mapContainer.style.cursor = 'grabbing';
-      e.preventDefault();
-    }
-
-    function onMove(e) {
-      if (!isDragging) return;
-      e.preventDefault();
-      const pointer = e.touches ? e.touches[0] : e;
-      const now = performance.now();
-      const dt = now - lastTime || 16;
-      lastTime = now;
-
-      const newX = pointer.clientX - startX;
-      const newY = pointer.clientY - startY;
-
-      velocityX = (newX - currentX) * (1000 / dt) * 0.016;
-      velocityY = (newY - currentY) * (1000 / dt) * 0.016;
-
-      currentX = newX;
-      currentY = newY;
-      updateTransform();
-    }
-
-    function stopDrag() {
-      if (!isDragging) return;
-      isDragging = false;
-      mapContainer.style.cursor = 'grab';
-      if (Math.abs(velocityX) > 0.5 || Math.abs(velocityY) > 0.5) {
-        if (!rafId) rafId = requestAnimationFrame(animateMomentum);
-      }
-    }
-
-    mapContainer.addEventListener('mousedown', startDrag);
-    mapContainer.addEventListener('touchstart', startDrag, { passive: false });
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('mouseup', stopDrag);
-    window.addEventListener('touchend', stopDrag);
-    window.addEventListener('touchcancel', stopDrag);
-
-    updateTransform();
-
-    // ── Bubble interaction ──────────────────────────────────────────
-    function handleIslandTap(e) {
-      if (e.target.closest('.bubble') || e.target.closest('.bubble-btn') || e.target.closest('.bubble-btn-hq')) {
-        return;
-      }
-      const spot = e.target.closest('.spot');
-      if (!spot) return;
-      playPop();
-      e.stopImmediatePropagation();
-      document.querySelectorAll('.bubble').forEach(b => b.style.display = 'none');
-      const bubble = spot.querySelector('.bubble');
-      if (bubble) bubble.style.display = 'block';
-    }
-
-    mapContainer.addEventListener('click', handleIslandTap);
-    mapContainer.addEventListener('touchend', handleIslandTap, { passive: false });
-
-    document.querySelectorAll('.bubble .close-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        e.preventDefault();
-        btn.closest('.bubble').style.display = 'none';
-      });
-      btn.addEventListener('touchend', e => {
-        e.stopPropagation();
-        e.preventDefault();
-        btn.closest('.bubble').style.display = 'none';
-      }, { passive: false });
-    });
-
-    if (window.innerWidth <= 768) {
-      document.addEventListener('touchend', e => {
-        if (e.target.closest('.bubble') || e.target.closest('.bubble-btn') || e.target.closest('.bubble-btn-hq')) return;
-        if (!e.target.closest('.spot')) {
-          document.querySelectorAll('.bubble').forEach(b => b.style.display = 'none');
-        }
-      }, { passive: true });
-    }
-
-    document.querySelectorAll('.island-image').forEach(img => {
-      img.setAttribute('draggable', 'false');
-      img.addEventListener('dragstart', e => e.preventDefault());
     });
 
     // ── HQ Modal open fix ───────────────────────────────────────────

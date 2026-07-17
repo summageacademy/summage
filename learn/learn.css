@@ -55,127 +55,46 @@ body { font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "
 #home.page { padding:0; }
 h2 { font-size:2.1rem; font-weight:700; color:#111827; margin-bottom:1.5rem; }
 p { font-size:1.1rem; line-height:1.7; color:#4b5563; }
-
-.map-container { width:100%; height:100%; position:relative; overflow:hidden; touch-action:pan-x pan-y; cursor:grab; user-select:none; background:#0f1a3a; display:flex; align-items:center; justify-content:center; }
-.map-content { position:absolute; width:3000px; height:2000px; transform: translate3d(0,0,0); transition:transform 0.22s ease-out; }
-.sky-background { position:absolute; inset:0; background:linear-gradient(135deg,#258eff 0%,#3985ff 30%,#16b5ff 60%,#5599ff 100%); opacity:0.92; pointer-events:none; }
-
-.map-paths { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
-.map-paths path { stroke-linecap:round; }
-
-.island-spot { position:absolute; transform:translate(-50%,-50%); cursor:pointer; z-index:10; width:240px; height:240px; display:flex; align-items:center; justify-content:center; transition:transform 0.35s ease,filter 0.35s ease; }
-.island-spot:hover { transform:translate(-50%,-50%) scale(1.01) !important; filter:drop-shadow(0 20px 40px rgba(242,75,11,0.25)); }
-.island-image { width:100%; height:100%; z-index:10; object-fit:contain; filter:drop-shadow(0 10px 20px rgba(0,0,0,0.2)); }
-.bubble { position:absolute; bottom:calc(100% + 24px); left:50%; transform:translateX(-50%); background:rgba(255,255,255,0.97); border:1px solid rgba(242,75,11,0.22); border-radius:18px; padding:1.5rem 1.8rem; width:300px; max-width:90vw; display:none; z-index:9999; box-shadow:0 16px 48px rgba(0,0,0,0.15); }
-.bubble-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.1rem; }
-.bubble-title { font-size:1.35rem; font-weight:700; color:#f24b0b; }
-.close-btn { background:none; border:none; color:#6b7280; font-size:1.8rem; cursor:pointer; padding:0 8px; line-height:1; transition:all 0.28s ease; }
-.close-btn:hover { color:#f24b0b; background:rgba(242,75,11,0.08); transform:rotate(90deg) scale(1.15); }
-.bubble-btn { display:block; width:100%; background:#f24b0b; color:white; text-align:center; padding:0.95rem; border-radius:19px; text-decoration:none; font-weight:700; margin-top:1.2rem; box-shadow:0 4px 0 #c23a0a; transition:all 0.25s ease; }
-.bubble-btn:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c23a0a; }
-
-
-/* ───────────────── ISLAND TITLE ───────────────── */
-
-.island-label{
-    position:absolute;
-
-    left:50%;
-    top:-18px;
-
-    transform:translateX(-50%);
-
-    padding:12px 22px;
-
-    border-radius:18px;
-
-    background:rgba(255,255,255,0.94);
-
-    border:1px solid rgba(242,75,11,0.14);
-
-    box-shadow:
-        0 10px 26px rgba(242,75,11,0.12),
-        0 2px 8px rgba(0,0,0,0.06);
-
-    backdrop-filter:blur(12px);
-
-    font-size:1rem;
-    font-weight:800;
-    letter-spacing:0.3px;
-
-    color:#f24b0b;
-
-    white-space:nowrap;
-
-    z-index:25;
-
-    transition:
-        transform 0.28s cubic-bezier(0.34,1.12,0.48,1),
-        box-shadow 0.28s ease,
-        background 0.28s ease;
+.map-container { 
+    width: 100%; 
+    height: 100%; 
+    position: relative; 
+    overflow: hidden; 
+    background: #0f1a3a; 
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
 }
 
-/* floating feel */
-
-.island-label::after{
-    content:'';
-
-    position:absolute;
-
-    left:50%;
-    bottom:-8px;
-
-    width:16px;
-    height:16px;
-
-    background:rgba(255,255,255,0.94);
-
-    border-right:1px solid rgba(242,75,11,0.14);
-    border-bottom:1px solid rgba(242,75,11,0.14);
-
-    transform:
-        translateX(-50%)
-        rotate(45deg);
-
-    z-index:-1;
+.map-content { 
+    position: absolute; 
+    width: 3000px; 
+    height: 2000px; 
+    left: 50%;
+    top: 50%;
+    transform-origin: 0 0;
+    will-change: transform;
+    transition: none;   /* JS will control everything */
 }
 
-/* hover */
-
-.island-spot:hover .island-label{
-    transform:
-        translateX(-50%)
-        translateY(-4px);
-
-}
-
-/* mobile */
-
-@media (max-width:768px){
-
-    .island-label{
-        top:-12px;
-
-        padding:10px 16px;
-
-        font-size:0.84rem;
-
-        border-radius:15px;
+/* Desktop starting position */
+@media (min-width: 769px) {
+    .map-content {
+        transform: translate(-850px, -450px) !important;
     }
-
-    .island-label::after{
-        width:13px;
-        height:13px;
-        bottom:-6px;
-    }
-
 }
 
-.bubble-btn-hq { display:block; width:100%; background:#f24b0b; color:white; text-align:center; padding:0.95rem; border-radius:19px; text-decoration:none; font-weight:700; margin-top:1.2rem; box-shadow:0 4px 0 #c23a0a; transition:all 0.25s ease; border:none; font-family: 'Poppins',system-ui,sans-serif; font-size:1.06rem;}
-.bubble-btn-hq:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c23a0a; }
+/* Mobile starting position */
+@media (max-width: 768px) {
+    .map-content {
+        width: 1600px;
+        height: 1900px;
+        transform: translate(-400px, -500px) !important;
+    }
+}
 
 @media (min-width:769px) { .sidebar { display:block; } .mobile-top,.mobile-bottom { display:none; } .main-view { margin-left:260px; } .desktop-lang-btn { display:block; } }
-@media (max-width:768px) { .sidebar { display:none; } .mobile-top,.mobile-bottom { display:flex; } .page { padding:80px 24px 100px; } .bubble { width:250px; max-width:86vw; padding:1.3rem 1.5rem; } .map-content { width:1200px; height:2000px; } .island-spot { width:180px; height:180px; } }
+@media (max-width:768px) { .sidebar { display:none; } .mobile-top,.mobile-bottom { display:flex; } .page { padding:80px 24px 160px; } .bubble { width:250px; max-width:86vw; padding:1.3rem 1.5rem; } .map-content { width:1200px; height:2000px; } .island-spot { width:180px; height:180px; } }
 
 .school-courses { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin:32px 0; padding:0 8px; }
 .course-card { background:rgba(255,255,255,0.94); border:1px solid rgba(242,75,11,0.12); border-radius:20px; padding:28px 24px; text-align:center; transition:all 0.28s cubic-bezier(0.34,1.12,0.48,1); box-shadow:0 10px 30px rgba(242,75,11,0.08); cursor:pointer; position:relative; overflow:hidden; }
@@ -400,7 +319,40 @@ p { font-size:1.1rem; line-height:1.7; color:#4b5563; }
     }
 }
 
-.profile-card { background:rgba(255,255,255,0.96); border-radius:24px; padding:40px 32px 32px; width:100%; max-width:420px; text-align:center; box-shadow:0 14px 44px rgba(242,75,11,0.14); border:1px solid rgba(242,75,11,0.12); }
+/* ───────────────── LAYOUT WRAPPER ───────────────── */
+.profile-layout-container {
+    display: flex;
+    flex-direction: column; /* Stacked vertically on mobile */
+    gap: 24px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Desktop 60/40 Split View */
+@media (min-width: 769px) {
+    .profile-layout-container {
+        display: grid;
+        grid-template-columns: 6fr 4fr; /* Exactly 60% left, 40% right */
+        align-items: stretch; /* Forces both columns to have identical heights */
+    }
+}
+
+/* ───────────────── LEFT: PROFILE CARD ───────────────── */
+.profile-card {
+    position: relative;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgba(242,75,11,0.05);
+    height: 100%; /* Stretches to fill its grid track */
+    box-sizing: border-box; /* Ensures padding doesn't break the layout height */
+}
+
 .profile-photo-container { position:relative; width:140px; height:140px; margin:0 auto 20px; }
 .profile-photo { width:100%; height:100%; border-radius:50%; object-fit:cover; border:5px solid white; box-shadow:0 8px 28px rgba(0,0,0,0.16); }
 .photo-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.55); color:white; display:flex; align-items:center; justify-content:center; border-radius:50%; opacity:0; transition:opacity 0.3s; font-size:0.95rem; font-weight:600; pointer-events:none; }
@@ -415,71 +367,147 @@ p { font-size:1.1rem; line-height:1.7; color:#4b5563; }
 .nft-btn { background:linear-gradient(135deg,#f24b0b,#ff6b3d); color:white; border:none; padding:14px 36px; border-radius:50px; font-size:1.08rem; font-weight:600; cursor:pointer; box-shadow: 0 4px 0 #c23a0a; transition:all 0.25s ease; display:flex; align-items:center; gap:12px; margin:0 auto; }
 .nft-btn:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c23a0a; }
 
+/* ====================== DESKTOP PROFILE CARD IMPROVEMENTS ====================== */
+@media (min-width: 769px) {
+    .profile-card {
+        padding: 50px 32px;
+        /* This perfectly distributes the elements to cover the vertical free space */
+        justify-content: space-between; 
+    }
+    
+    .profile-photo-container {
+        width: 180px;       /* Bigger photo */
+        height: 180px;
+        margin: 0 auto;     /* Removed bottom margin so Flexbox handles spacing */
+    }
+    
+    .profile-name {
+        font-size: 2.4rem;  /* Bigger name */
+        margin-bottom: 0; 
+    }
+    
+    .profile-level {
+        font-size: 1.3rem;  /* Bigger level text */
+        margin-bottom: 0;
+    }
+    
+    .stats-row {
+        gap: 80px;          /* Wider gap between stats */
+        margin-bottom: 0;
+    }
+    
+    .stat-item i {
+        font-size: 2.6rem;  /* Bigger icons */
+    }
+    
+    .stat-item span {
+        font-size: 2.2rem;  /* Bigger numbers */
+    }
+    
+    .stat-item small {
+        font-size: 1.1rem;  /* Bigger labels */
+    }
+    
+    .nft-btn {
+        padding: 18px 46px; /* Thicker, wider button */
+        font-size: 1.25rem;
+        margin: 0 auto;
+    }
+}
+
 /* ───────────────── PROFILE CARD ───────────────── */
-
-.profile-card{
-    position:relative;
-    background:rgba(255,255,255,0.96);
-    border-radius:28px;
-    padding:42px 32px 34px;
-    width:100%;
-    max-width:430px;
-    text-align:center;
-    box-shadow:
-        0 14px 44px rgba(242,75,11,0.14),
-        0 2px 10px rgba(0,0,0,0.04);
-    border:1px solid rgba(242,75,11,0.10);
-    overflow:visible;
+.settings-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: #fff7f3;
+    color: #f24b0b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.22s ease, background 0.22s ease;
+    z-index: 10;
 }
 
-/* ───────────────── SETTINGS BUTTON ───────────────── */
-
-.settings-btn{
-    position:absolute;
-    top:18px;
-    right:18px;
-
-    width:46px;
-    height:46px;
-
-    border:none;
-    border-radius:50%;
-
-    background:white;
-    color:#f24b0b;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:1.25rem;
-    cursor:pointer;
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,0.08),
-        0 2px 6px rgba(0,0,0,0.04);
-
-    transition:
-        transform 0.22s ease,
-        background 0.22s ease,
-        box-shadow 0.22s ease;
-
-    z-index:40;
+.settings-btn:hover { 
+    background: #f24b0b; 
+    color: white; 
+    transform: rotate(90deg); 
 }
 
-.settings-btn:hover{
-    background:#fff7f3;
-    transform:translateY(-2px);
-    box-shadow:
-        0 12px 28px rgba(242,75,11,0.16),
-        0 2px 8px rgba(0,0,0,0.06);
+.profile-photo-container {
+    margin: 0 auto 20px auto;
+}
+
+.stats-row {
+    justify-content: center;
+    margin-bottom: 0;
 }
 
 .settings-btn:active{
     transform:scale(0.96);
 }
 
-/* ───────────────── SETTINGS BACKDROP ───────────────── */
+/* ───────────────── RIGHT: PROMO CARDS ───────────────── */
+.profile-cards-grid {
+    display: flex;
+    flex-direction: column; /* 1 card per row */
+    gap: 24px;
+    height: 100%; /* Fills the exact height of the Grid container dictated by the left card */
+}
+
+.profile-feature-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    border: 1px solid rgba(242,75,11,0.12);
+    flex: 1; /* Automatically divides the available height perfectly in half */
+    min-height: 180px; /* Keeps them from squishing too small on mobile */
+}
+
+.profile-feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(242,75,11,0.18);
+}
+
+.profile-feature-card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image always fills the card regardless of its stretched dimensions */
+}
+
+.card-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+    color: white;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+@media (max-width: 768px) {
+    .profile-feature-card:last-child {
+        margin-bottom: 95px; /* Adjust this value to clear your 72px bottom bar + spacing */
+    }
+}
 
 /* ───────────────── SETTINGS BACKDROP ───────────────── */
 .settings-overlay {
@@ -646,6 +674,15 @@ p { font-size:1.1rem; line-height:1.7; color:#4b5563; }
 /* ───────────────── MOBILE ───────────────── */
 
 @media (max-width:768px){
+
+    #profile {
+        padding-bottom: 160px !important;
+    }
+
+    /* 2. Allow the promo cards container to expand naturally in vertical view */
+    .profile-cards-grid {
+        height: auto;
+    }
 
     .profile-card{
         max-width:100%;
@@ -1617,4 +1654,366 @@ p { font-size:1.1rem; line-height:1.7; color:#4b5563; }
 @keyframes heartPulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.15); }
+}
+
+/* ==================== MOBILE ACADEMY MENU ==================== */
+.mobile-only { display: none; }
+.desktop-only { display: block; }
+
+/* ==================== MOBILE ACADEMY MENU - FIXED ==================== */
+@media (max-width: 768px) {
+    .mobile-only { display: block; }
+    .desktop-only { display: none; }
+
+    .mobile-academy-menu {
+        padding: 85px 16px 110px 16px;   /* Increased top padding to avoid navbar overlap */
+        max-width: 100%;
+    }
+
+    /* Hero Promo Card */
+    .hero-promo-card {
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(242,75,11,0.15);
+        margin-bottom: 32px;
+    }
+
+    .promo-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .promo-text {
+        padding: 26px 22px;
+        flex: 1;
+    }
+
+    .promo-text h2 {
+        font-size: 1.45rem;
+        line-height: 1.3;
+        margin-bottom: 10px;
+    }
+
+    .promo-text p {
+        font-size: 0.98rem;
+        line-height: 1.45;
+        color: #555;
+    }
+
+    .promo-btn {
+        display: inline-block;
+        background: #f24b0b;
+        color: white;
+        padding: 13px 26px;
+        border-radius: 50px;
+        font-weight: 700;
+        margin-top: 14px;
+        text-decoration: none;
+        box-shadow: 0 4px 0 #c23a0a;
+        font-size: 1rem;
+    }
+
+    .promo-image {
+        width: 40%;
+        position: relative;
+    }
+
+    .promo-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0 24px 24px 0;
+    }
+
+    /* ===================== ACADEMY GRID ===================== */
+    .academy-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .academy-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.09);
+        display: flex;
+        align-items: center;
+        height: 110px;               /* Fixed height for consistency */
+        position: relative;
+        cursor: pointer;
+    }
+
+    .academy-text {
+        padding: 0 13px;
+        flex: 1;
+    }
+
+    .academy-text h3 {
+        margin: 0;
+        font-size: 1.1rem;           /* Smaller & cleaner */
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .academy-image {
+        width: 50%; /* Gives the text slightly more room so it doesn't crowd the image */
+        height: 100%;
+        position: relative;
+    }
+
+    .academy-image img {
+        width: 140%; /* Over-scales the image so it intentionally bleeds off the right edge */
+        height: 100%;
+        object-fit: cover;
+        object-position: left center; /* Forces the left side of the artwork to stay fully visible */
+        position: absolute;
+        left: 0; /* Anchors the image right next to the text boundary */
+        top: 0;
+    }
+
+    /* ===================== WIDE CARDS ===================== */
+    .wide-card {
+        background: white;
+        border-radius: 22px;
+        display: flex;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(242,75,11,0.1);
+        margin-bottom: 18px;
+        height: 130px;
+        cursor: pointer;
+    }
+
+    .wide-text {
+        padding: 22px 20px;
+        flex: 1;
+    }
+
+    .wide-text h3 {
+        margin: 0 0 8px 0;
+        font-size: 1.25rem;
+    }
+
+    .wide-image {
+        width: 38%;
+        position: relative;
+    }
+
+    .wide-image img {
+        width: 135%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        right: -32%;
+        top: 0;
+    }
+}
+
+/* ==================== DESKTOP ACADEMY MENU ==================== */
+@media (min-width: 769px) {
+    .desktop-academy-menu {
+        padding: 120px 40px 80px; /* Increased top padding to 120px */
+        background-color: #f9fafb; 
+        display: flex;
+        justify-content: center;
+    }
+
+    .academy-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        max-width: 1280px; 
+        width: 100%;
+        /* Forces both sides to stretch to the exact same height */
+        align-items: stretch; 
+    }
+
+    /* ================= LEFT SIDE (4 Modules) ================= */
+    .academy-left {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 24px;
+    }
+/* ================= LEFT SIDE (4 Modules) Redesign ================= */
+    .desktop-academy-menu .academy-card {
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        display: flex;
+        flex-direction: column;       /* Stacks text on top of image */
+        padding: 32px;                /* Even padding all around */
+        min-height: 240px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .desktop-academy-menu .academy-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 35px rgba(0,0,0,0.1);
+    }
+
+    /* Text stays neatly at the top */
+    .desktop-academy-menu .academy-text {
+        width: 100%;
+        text-align: center;           /* Centers the title */
+        z-index: 2;
+    }
+
+    .desktop-academy-menu .academy-text h3 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #111827;
+        line-height: 1.3;
+    }
+
+    /* Image takes up the rest of the space and centers perfectly */
+    .desktop-academy-menu .academy-image {
+        width: 100%;
+        flex: 1;                      /* Fills the remaining vertical space */
+        display: flex;
+        align-items: center;          /* Vertically centers the image */
+        justify-content: center;      /* Horizontally centers the image */
+        margin-top: 16px;             /* Breathes space below the text */
+    }
+
+    .desktop-academy-menu .academy-image img {
+        width: 110px;                 /* Controlled, uniform size */
+        height: 110px;
+        object-fit: contain;          /* Ensures no clipping */
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy easing */
+    }
+
+    /* Fun interactive pop on hover */
+    .desktop-academy-menu .academy-card:hover .academy-image img {
+        transform: scale(1.15) translateY(-5px); 
+    }
+    
+    /* ================= RIGHT SIDE (Promo + Wide Cards) ================= */
+    .academy-right {
+        display: grid;
+        grid-template-rows: 1fr 1fr; /* Splits top (promo) and bottom (wide cards) evenly */
+        gap: 24px;
+    }
+
+    /* Hero Promo Card */
+    .desktop-academy-menu .hero-promo-card {
+        background: white;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(242,75,11,0.12); /* Brighter shadow using your brand color */
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .desktop-academy-menu .hero-promo-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 45px rgba(242,75,11,0.18);
+    }
+
+    .desktop-academy-menu .promo-content {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
+    .desktop-academy-menu .promo-text {
+        padding: 40px;
+        flex: 1.2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .desktop-academy-menu .promo-text h2 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #111827;
+        margin: 0 0 12px 0;
+        line-height: 1.15;
+    }
+
+    .desktop-academy-menu .promo-text p {
+        font-size: 1.1rem;
+        color: #555;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .desktop-academy-menu .promo-image {
+        flex: 1;
+        position: relative;
+    }
+
+    .desktop-academy-menu .promo-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0 28px 28px 0;
+    }
+
+    /* Wide Cards Container */
+    .desktop-academy-menu .wide-cards {
+        display: grid;
+        grid-template-rows: 1fr 1fr; /* 2 stacked cards */
+        gap: 24px;
+    }
+
+    .desktop-academy-menu .wide-card {
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .desktop-academy-menu .wide-card:hover {
+        transform: translateX(6px); /* Slides right playfully instead of up */
+        box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+
+    .desktop-academy-menu .wide-text {
+        padding: 0 32px;
+        flex: 1;
+        z-index: 2;
+    }
+
+    .desktop-academy-menu .wide-text h3 {
+        margin: 0 0 6px 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #111827;
+    }
+    
+    .desktop-academy-menu .wide-text p {
+        margin: 0;
+        color: #666;
+        font-size: 1rem;
+    }
+
+    .desktop-academy-menu .wide-image {
+        width: 180px;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        overflow: hidden;
+    }
+
+    .desktop-academy-menu .wide-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0 24px 24px 0;
+    }
 }

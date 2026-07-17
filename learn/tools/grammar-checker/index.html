@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grammar Checker - Instant Feedback</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #f0f9ff 0%, #f8fafc 100%);
+      color: #1f2937;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .logo-text { font-family: 'Poppins', sans-serif !important; font-weight: 800; letter-spacing: 1.2px; }
+
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 5vw; background: rgba(255,255,255,0.7); backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .back-btn { 
+      padding: 12px 28px; background: #f1192e; color: white; font-weight: 700; 
+      text-transform: uppercase; letter-spacing: 0.8px; font-size: 15px; border: none; 
+      border-radius: 50px; cursor: pointer; box-shadow: 0 4px 0 #c40e20; 
+    }
+    .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c40e20; }
+
+    .logo-container { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+    .logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 14px; box-shadow: 0 2px 8px rgba(242, 75, 11, 0.15); }
+    .logo-text { font-size: 26px; font-weight: 800; color: #f24b0b; text-transform: uppercase; letter-spacing: 1.2px; }
+
+    .main-content {
+      padding-top: 85px; padding-bottom: 150px; height: 100vh; overflow-y: auto; scrollbar-width: none;
+    }
+    .main-content::-webkit-scrollbar { display: none; }
+
+    .hero { padding: 40px 24px; text-align: center; max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-size: clamp(2.8rem, 8vw, 4.2rem); font-weight: 800; color: #0ea5e9; margin-bottom: 12px; }
+    .hero p { font-size: 1.25rem; color: #475569; line-height: 1.5; }
+
+    .textarea-wrapper { max-width: 860px; margin: 30px auto; padding: 0 24px; }
+    #essay-text {
+      width: 100%; min-height: 420px; padding: 24px; border: 2px solid #e2e8f0;
+      border-radius: 16px; font-size: 1.15rem; line-height: 1.75; resize: vertical;
+    }
+    #essay-text:focus { outline: none; border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14,165,233,0.1); }
+
+    #result-area { max-width: 860px; margin: 30px auto; padding: 0 24px; display: none; }
+    .highlighted-text {
+      background: white; padding: 28px; border-radius: 16px; border: 2px solid #e2e8f0;
+      line-height: 1.85; font-size: 1.15rem;
+    }
+    .error { color: #ef4444; text-decoration: line-through; background: #fee2e2; padding: 2px 4px; border-radius: 4px; }
+    .correction { color: #10b981; font-weight: 600; background: #ecfdf5; padding: 2px 6px; border-radius: 4px; margin-left: 4px; }
+
+    .bottom-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 85px;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(0,0,0,0.1); display: flex; align-items: center;
+      justify-content: center; padding: 0 20px; z-index: 100;
+    }
+    .check-btn {
+      width: 100%; max-width: 420px; padding: 16px 32px; background: #0ea5e9;
+      color: white; border: none; border-radius: 50px; font-size: 1.25rem;
+      font-weight: 700; cursor: pointer; box-shadow: 0 6px 0 #0284c8;
+    }
+    .check-btn:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
+
+    .loader { display: none; text-align: center; padding: 80px 20px; }
+    .loader.show { display: block; }
+    .word-count { text-align: right; color: #64748b; font-size: 0.95rem; margin-top: 8px; }
+
+    .success-message {
+      text-align: center; padding: 40px 20px; color: #10b981; font-size: 1.4rem; font-weight: 600;
+    }
+
+    /* Custom Toast */
+    .custom-toast {
+      position: fixed; left: 50%; transform: translateX(-50%);
+      background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+      padding: 16px 20px; max-width: 380px; width: 90%; z-index: 3000;
+      display: flex; align-items: center; gap: 14px; border: 1px solid #e5e7eb;
+      opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      bottom: 30px;
+    }
+    .custom-toast.show { opacity:1; visibility:visible; transform: translateX(-50%) translateY(-8px); pointer-events:all; }
+    @media (max-width: 768px) { .custom-toast { bottom: 88px; } }
+
+    .toast-content { display:flex; align-items:center; gap:14px; width:100%; }
+    .toast-icon { width:42px; height:42px; border-radius:50%; object-fit:contain; flex-shrink:0; padding:2px; }
+    .toast-message { font-size:1.02rem; font-weight:500; color:#1f2937; line-height:1.45; flex:1; }
+    .toast-success { border-color:#10b981; background:#f0fdf4; }
+    .toast-success .toast-icon { background:#ecfdf5; border:2px solid #10b981; }
+    .toast-error { border-color:#ef4444; background:#fef2f2; }
+    .toast-error .toast-icon { background:#fef2f2; border:2px solid #ef4444; }
+  
+    .page-loader {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #splashOwl {
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #splashOwl,
+            .page-loader,
+            .page-loader.hidden {
+                transition: none !important;
+                opacity: 1;
+                transform: none;
+            }
+        }
+  </style>
+</head>
+<body>
+  <div id="pageLoader" class="page-loader">
+      <lottie-player 
+          id="splashOwl"
+          src="/assets/Sandy Loading.json"
+          background="transparent" 
+          speed="0.9" 
+          style="width: 120px; height: 120px; opacity: 0; transform: scale(0.7) translateY(20px);"
+          loop 
+          autoplay>
+      </lottie-player>
+  </div>
+
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="/assets/logo.webp" alt="Summage" class="logo-img">
+      <div class="logo-text">Summage</div>
+    </div>
+    <button class="back-btn" onclick="window.location.href='/learn/'">Back</button>
+  </nav>
+
+  <div class="main-content">
+    <section class="hero">
+      <h1>Grammar Checker</h1>
+      <p>Get instant, detailed grammar corrections with explanations</p>
+    </section>
+
+    <div class="textarea-wrapper" id="input-area">
+      <textarea id="essay-text" placeholder="Write or paste your text here (minimum 70 words)..."></textarea>
+      <div class="word-count" id="word-count">0 words</div>
+    </div>
+
+    <div class="loader" id="loader">
+      <h3>Analyzing your text with AI...</h3>
+      <p style="color:#64748b; margin-top:12px;">This usually takes 5-8 seconds</p>
+    </div>
+
+    <div id="result-area">
+      <h3 style="margin: 0 24px 16px; color:#0ea5e9;" id="result-title">Corrected Version</h3>
+      <div class="highlighted-text" id="highlighted-text"></div>
+      
+      <div style="text-align:center; margin: 40px 0;">
+        <button class="check-btn" onclick="resetChecker()" style="background:#64748b; box-shadow:0 6px 0 #475569;">
+          Check New Text
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <button class="check-btn" id="check-btn">Check Grammar</button>
+  </div>
+
+  <!-- Custom Toast -->
+  <div id="customToast" class="custom-toast">
+    <div class="toast-content">
+      <img id="toastIcon" class="toast-icon" src="" alt="">
+      <div id="toastMessage" class="toast-message"></div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== DOM ELEMENTS ====================
+    const textarea = document.getElementById('essay-text');
+    const wordCountEl = document.getElementById('word-count');
+    const checkBtn = document.getElementById('check-btn');
+    const loader = document.getElementById('loader');
+    const inputArea = document.getElementById('input-area');
+    const resultArea = document.getElementById('result-area');
+    const resultTitle = document.getElementById('result-title');
+    const highlightedText = document.getElementById('highlighted-text');
+
+    // ==================== FIREBASE ====================
+    const firebaseConfig = {
+      apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+      authDomain: "summage-backend.firebaseapp.com",
+      projectId: "summage-backend",
+      storageBucket: "summage-backend.firebasestorage.app",
+      messagingSenderId: "128191434358",
+      appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let cooldownInterval = null;
+    const COOLDOWN_MS = 20 * 60 * 1000;
+
+    // ==================== TOAST ====================
+    function showToast(message, type = 'success', duration = 3500) {
+      const toast = document.getElementById('customToast');
+      const iconEl = document.getElementById('toastIcon');
+      const msgEl = document.getElementById('toastMessage');
+
+      toast.classList.remove('toast-success', 'toast-error', 'show');
+
+      if (type === 'success') {
+        iconEl.src = '/assets/images/menu-icons/check.png';
+        toast.classList.add('toast-success');
+      } else {
+        iconEl.src = '/assets/images/menu-icons/close.png';
+        toast.classList.add('toast-error');
+      }
+
+      msgEl.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    // ==================== WORD COUNT ====================
+    function countWords(text) {
+      return text.trim().split(/\s+/).filter(Boolean).length;
+    }
+
+    function updateWordCount() {
+      const count = countWords(textarea.value);
+      wordCountEl.textContent = `${count} words`;
+      wordCountEl.style.color = count < 70 ? '#ef4444' : '#64748b';
+    }
+    textarea.addEventListener('input', updateWordCount);
+
+    // ==================== COOLDOWN ====================
+    function startCooldown(endTime) {
+      if (cooldownInterval) clearInterval(cooldownInterval);
+      const update = () => {
+        const left = endTime - Date.now();
+        if (left <= 0) {
+          checkBtn.disabled = false;
+          checkBtn.textContent = "Check Grammar";
+          clearInterval(cooldownInterval);
+          return;
+        }
+        const m = Math.floor(left / 60000);
+        const s = Math.floor((left % 60000) / 1000);
+        checkBtn.textContent = `Wait ${m}:${s < 10 ? '0' : ''}${s}`;
+        checkBtn.disabled = true;
+      };
+      update();
+      cooldownInterval = setInterval(update, 1000);
+    }
+
+    async function checkCooldownStatus() {
+      if (!currentUser) return;
+      try {
+        const doc = await db.collection('grammar_usage').doc(currentUser.uid).get();
+        if (doc.exists) {
+          const endTime = (doc.data().lastUsed || 0) + COOLDOWN_MS;
+          if (endTime > Date.now()) startCooldown(endTime);
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    async function saveLastUsage() {
+      if (!currentUser) return;
+      try {
+        await db.collection('grammar_usage').doc(currentUser.uid).set({ lastUsed: Date.now() }, { merge: true });
+      } catch (e) { console.error(e); }
+    }
+
+    // ==================== CHECK GRAMMAR ====================
+    async function checkGrammar() {
+      const text = textarea.value.trim();
+      if (countWords(text) < 70) {
+        showToast("Please write at least 70 words.", "error", 4000);
+        return;
+      }
+      if (!currentUser) {
+        showToast("Please log in to continue.", "error");
+        return;
+      }
+      if (checkBtn.disabled) return;
+
+      const originalBtnText = checkBtn.textContent;
+      checkBtn.textContent = "Checking...";
+      checkBtn.disabled = true;
+      showLoader();
+
+      try {
+        const prompt = `Fix the grammar and spelling only.
+
+Return ONLY valid JSON in this format:
+
+{
+  "status": "correct" or "has_issues",
+  "correctedText": "...",
+  "corrections": [
+    {
+      "original": "EXACT text from the user's paragraph",
+      "correction": "replacement only"
+    }
+  ]
+}
+
+Rules:
+- "original" MUST exactly match the user's text.
+- Do not paraphrase.
+- Do not rewrite entire sentences unless necessary.
+- Return only JSON.
+
+Text: """${text}"""`;
+
+        const response = await fetch("https://summage-ai.summage-socials.workers.dev", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        });
+
+        const gemini = await response.json();
+
+        let raw = gemini.candidates[0].content.parts[0].text;
+
+        console.log(raw);
+
+        raw = raw.replace(/```json|```/g, "").trim();
+
+        const result = JSON.parse(raw);
+
+        console.log(result);
+
+        await saveLastUsage();
+        startCooldown(Date.now() + COOLDOWN_MS);
+
+        inputArea.style.display = "none";
+        resultArea.style.display = "block";
+
+        if (result.status === "correct") {
+          resultTitle.textContent = "✅ Perfect!";
+          highlightedText.innerHTML = `<div class="success-message">Your text has no grammar mistakes.<br>Well done! 👏</div>`;
+        } else {
+          resultTitle.textContent = "Corrected Version";
+          renderHighlightedText(
+              text,
+              result.correctedText || text,
+              result.corrections || []
+          );
+          console.log(result);
+        }
+
+        showToast("Grammar check completed!", "success");
+
+      } catch (err) {
+        console.error(err);
+        showToast("Failed to analyze text. Try again.", "error");
+        checkBtn.textContent = originalBtnText;
+        checkBtn.disabled = false;
+      } finally {
+        hideLoader();
+      }
+    }
+
+    checkBtn.addEventListener('click', checkGrammar);
+
+    // ==================== RENDER CORRECTIONS (Fixed) ====================
+    function renderHighlightedText(originalText, correctedText, corrections) {
+      let html = originalText.replace(/\n/g, '<br>');
+
+      if (Array.isArray(corrections) && corrections.length > 0) {
+        corrections.forEach(item => {
+          if (item.original && item.correction) {
+            const escaped = escapeRegExp(item.original.trim());
+            const regex = new RegExp(escaped, 'gi');
+            html = html.replace(regex, match => 
+              `<span class="error">${match}</span><span class="correction">→ ${item.correction}</span>`
+            );
+          }
+        });
+      }
+
+      highlightedText.innerHTML = html || correctedText.replace(/\n/g, '<br>');
+    }
+
+    function escapeRegExp(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function showLoader() {
+      loader.classList.add('show');
+    }
+
+    function hideLoader() {
+      loader.classList.remove('show');
+    }
+
+    function resetChecker() {
+      inputArea.style.display = "block";
+      resultArea.style.display = "none";
+      textarea.value = '';
+      updateWordCount();
+      textarea.focus();
+    }
+
+    // ==================== AUTH & SPLASH ====================
+    auth.onAuthStateChanged(user => {
+      currentUser = user;
+      if (!user) window.location.href = "/learn/";
+      else checkCooldownStatus();
+    });
+
+    // Splash
+    setTimeout(() => {
+      const owl = document.getElementById('splashOwl');
+      if (owl) {
+        owl.style.opacity = '1';
+        owl.style.transform = 'scale(1) translateY(0)';
+      }
+    }, 400);
+
+    setTimeout(() => {
+      const pl = document.getElementById('pageLoader');
+      pl.classList.add('hidden');
+      setTimeout(() => pl.remove(), 1400);
+    }, 1800);
+
+    window.resetChecker = resetChecker;
+</script>
+</body>
+</html>

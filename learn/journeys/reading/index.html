@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing Lessons - Summage Academy</title>
-    <meta name="description" content="Master IELTS-style Writing Task 1 and Task 2 with structured lessons from Summage Academy." />
+    <title>Reading Menu - Summage Academy</title>
+    <meta name="description" content="Master IELTS Reading with structured lessons and full-length mock tests from Summage Academy." />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
     
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -20,13 +19,12 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <style>
-        /* Same styles as grammar page - only minor changes for writing */
         html, body {
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -115,7 +113,6 @@
             letter-spacing: 1.2px;
         }
 
-        /* Language Selector (same) */
         .language-selector { position: relative; }
         .language-button {
             background: none;
@@ -175,18 +172,6 @@
             overflow-y: auto;
         }
 
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 32px;
-        }
-        .section-number {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: #f24b0b;
-            line-height: 1;
-        }
         .section-title {
             font-size: 2.2rem;
             font-weight: 700;
@@ -346,10 +331,9 @@
     </style>
 </head>
 <body>
-    <!-- Loader -->
     <div id="pageLoader" class="page-loader">
         <lottie-player 
-            id="splashOwl"
+            id="splashPanda"
             src="/assets/Sandy Loading.json"
             background="transparent" 
             speed="0.9" 
@@ -359,7 +343,6 @@
         </lottie-player>
     </div>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <button onclick="goBack()" class="back-btn" id="desktop-back-btn">
             <span data-key="back">Back</span>
@@ -382,12 +365,9 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="content" id="writing-container">
-        <!-- Populated by JS -->
+    <main class="content" id="reading-container">
     </main>
 
-    <!-- Mobile Footer -->
     <div class="mobile-footer-bar">
         <button onclick="goBack()" class="mobile-back-btn" id="mobile-back-btn">
             <span data-key="back">Back</span>
@@ -412,24 +392,17 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const allWritingLessons = [
-        // Task 1
-        { id: 1, task: "task1", title: "Understanding Writing Task 1", desc: "Overview of Task 1 requirements and marking criteria", group: "task1" },
-        { id: 2, task: "task1", title: "Writing a Strong Introduction", desc: "How to write clear and accurate introductions for Task 1", group: "task1" },
-        { id: 3, task: "task1", title: "Writing an Effective Overview", desc: "Key techniques for writing high-scoring overviews", group: "task1" },
-        { id: 4, task: "task1", title: "Body Paragraphs - Trends & Data", desc: "How to describe trends, numbers and comparisons", group: "task1" },
-
-        // Task 2
-        { id: 6, task: "task2", title: "Understanding Writing Task 2", desc: "Essay types, structure and marking criteria", group: "task2" },
-        { id: 7, task: "task2", title: "Essay Introductions", desc: "How to write powerful introductions for Task 2", group: "task2" },
-        { id: 8, task: "task2", title: "Writing Strong Body Paragraphs", desc: "Topic sentences, explanations and examples", group: "task2" },
-        { id: 9, task: "task2", title: "Writing Conclusions", desc: "How to write impactful essay conclusions", group: "task2" },
-        { id: 10, task: "task2", title: "Linking Words & Cohesion", desc: "Advanced connectors for better coherence", group: "task2" },
-        { id: 11, task: "task2", title: "Common Essay Structures", desc: "Opinion, Discussion, Advantages/Disadvantages essays", group: "task2" }
+    const allReadingLessons = [
+        { id: 1, title: "Introduction & Skimming", desc: "Learn the core basics of IELTS Reading and how to quickly skim passages for main ideas.", group: "lessons" },
+        { id: 2, title: "True / False / Not Given", desc: "Master the most challenging question type with clear, actionable identification strategies.", group: "lessons" },
+        { id: 3, title: "Matching Headings", desc: "Develop the ability to identify paragraph themes quickly and accurately without reading every word.", group: "lessons" },
+        { id: 4, title: "Summary Completion", desc: "Find specific information rapidly and fill in the blanks using grammar and context clues.", group: "lessons" },
+        { id: 5, title: "Multiple Choice Questions", desc: "Learn how to systematically eliminate distractors and pinpoint the correct answers.", group: "lessons" },
+        { id: 6, title: "Time Management & Pacing", desc: "Essential strategies to ensure you complete all 40 questions within the strict 60-minute limit.", group: "lessons" }
     ];
 
     let completedLessons = {};
-    let currentView = 'selection'; // 'selection' or 'task1' or 'task2'
+    let currentView = 'selection'; // 'selection', 'lessons'
     let currentLang = localStorage.getItem('summage_preferred_lang') || 'en';
 
     const translations = {
@@ -438,42 +411,48 @@
             loading: "Loading your progress...",
             signIn: "Please sign in to access personalized lessons",
             signInBtn: "Sign In",
-            task1Title: "Writing Task 1",
-            task1Desc: "Describing charts, graphs, and data",
-            task2Title: "Writing Task 2",
-            task2Desc: "Essay writing skills",
+            mocksTitle: "Reading Mocks",
+            mocksDesc: "Test your skills with full-length, timed reading exams.",
+            lessonsTitle: "Reading Lessons",
+            lessonsDesc: "Master reading strategies from scratch to band 9.",
+            startMocks: "Go to Mocks",
+            startLessons: "View Lessons",
             startLesson: "Start Lesson",
             retake: "Retake",
-            locked: "Locked",
-            selectTask: "Choose Your Task"
+            lessonsHeader: "IELTS Reading Lessons",
+            lessonsSubHeader: "Learn the keys and components to solve any reading passage."
         },
         ru: {
             back: "Назад",
             loading: "Загрузка вашего прогресса...",
             signIn: "Пожалуйста, войдите, чтобы увидеть персонализированные уроки",
             signInBtn: "Войти",
-            task1Title: "Writing Task 1",
-            task1Desc: "Описание графиков и данных",
-            task2Title: "Writing Task 2",
-            task2Desc: "Навыки написания эссе",
+            mocksTitle: "Пробные тесты",
+            mocksDesc: "Проверьте свои навыки на полных пробных экзаменах.",
+            lessonsTitle: "Уроки по Reading",
+            lessonsDesc: "Освойте стратегии чтения с нуля.",
+            startMocks: "Перейти к тестам",
+            startLessons: "Смотреть уроки",
             startLesson: "Начать урок",
             retake: "Повторить",
-            locked: "Заблокировано",
-            selectTask: "Выберите задание"
+            lessonsHeader: "Уроки IELTS Reading",
+            lessonsSubHeader: "Изучите ключевые компоненты для решения любого текста."
         },
         uz: {
             back: "Orqaga",
             loading: "Sizning taraqqiyotingiz yuklanmoqda...",
             signIn: "Shaxsiy darslarni ko'rish uchun tizimga kiring",
             signInBtn: "Kirish",
-            task1Title: "Writing Task 1",
-            task1Desc: "Jadvallar va grafiklar tavsifi",
-            task2Title: "Writing Task 2",
-            task2Desc: "Insho yozish ko'nikmalari",
+            mocksTitle: "Reading Mocks",
+            mocksDesc: "To'liq hajmdagi sinov imtihonlari orqali malakangizni tekshiring.",
+            lessonsTitle: "Reading Darslari",
+            lessonsDesc: "Reading strategiyalarini noldan o'rganing.",
+            startMocks: "Boshlash",
+            startLessons: "Darslarni ko'rish",
             startLesson: "Darsni boshlash",
             retake: "Qaytarish",
-            locked: "Bloklangan",
-            selectTask: "Vazifani tanlang"
+            lessonsHeader: "IELTS Reading Darslari",
+            lessonsSubHeader: "Har qanday matnni yechish uchun asosiy qismlarni o'rganing."
         }
     };
 
@@ -489,12 +468,13 @@
     }
 
     async function loadUserData() {
-        const container = document.getElementById("writing-container");
+        const container = document.getElementById("reading-container");
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 try {
-                    const progressSnap = await getDoc(doc(db, "users", user.uid, "progress", "writing"));
+                    // Changed from "speaking" to "reading"
+                    const progressSnap = await getDoc(doc(db, "users", user.uid, "progress", "reading"));
                     completedLessons = progressSnap.exists() 
                         ? (progressSnap.data().lessons || {}) 
                         : {};
@@ -514,130 +494,109 @@
         });
     }
 
+    function generateLessonGrid() {
+        let cardsHTML = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">`;
+        
+        allReadingLessons.forEach(l => {
+            const isCompleted = !!completedLessons[l.id];
+            cardsHTML += `
+                <div class="lesson-card">
+                    <div class="lesson-header">
+                        <div class="lesson-id">LESSON ${l.id}</div>
+                        <div class="lesson-title">${l.title}</div>
+                        <p class="lesson-desc">${l.desc}</p>
+                    </div>
+                    
+                    <div class="lesson-footer">
+                        <a href="/learn/journeys/reading/lesson/?id=${l.id}" 
+                           class="${isCompleted ? 'completed-btn' : 'start-btn'}">
+                            ${isCompleted ? t('retake') : t('startLesson')}
+                        </a>
+                    </div>
+                </div>
+            `;
+        });
+        cardsHTML += `</div>`;
+        return cardsHTML;
+    }
+
     function renderCurrentView() {
-        const container = document.getElementById("writing-container");
+        const container = document.getElementById("reading-container");
 
         if (currentView === 'selection') {
+            // Main Selection View for BOTH Desktop and Mobile
             container.innerHTML = `
                 <div class="max-w-4xl mx-auto">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Task 1 Card -->
-                        <div onclick="selectTask('task1')" 
-                             class="lesson-card cursor-pointer group">
-                            <div class="lesson-header p-10 text-center">
-                                <h2 class="text-3xl font-bold mb-3">${t('task1Title')}</h2>
-                                <p class="text-gray-600 text-lg">${t('task1Desc')}</p>
+                        
+                        <div onclick="window.location.href='/learn/journeys/reading/mocks/'" class="lesson-card cursor-pointer group">
+                            <div class="lesson-header p-8 text-center flex flex-col items-center justify-center">
+                                <h2 class="text-2xl font-bold mb-3">${t('mocksTitle')}</h2>
+                                <p class="text-gray-600">${t('mocksDesc')}</p>
                             </div>
-                            <div class="lesson-footer text-center py-6">
-                                <button class="start-btn text-lg px-12 py-5">
-                                    Start Task 1
-                                </button>
+                            <div class="lesson-footer text-center py-4">
+                                <button class="start-btn w-full">${t('startMocks')}</button>
                             </div>
                         </div>
 
-                        <!-- Task 2 Card -->
-                        <div onclick="selectTask('task2')" 
-                             class="lesson-card cursor-pointer group">
-                            <div class="lesson-header p-10 text-center">
-                                <h2 class="text-3xl font-bold mb-3">${t('task2Title')}</h2>
-                                <p class="text-gray-600 text-lg">${t('task2Desc')}</p>
+                        <div onclick="selectView('lessons')" class="lesson-card cursor-pointer group">
+                            <div class="lesson-header p-8 text-center flex flex-col items-center justify-center">
+                                <h2 class="text-2xl font-bold mb-3" style="margin-top: 20px">${t('lessonsTitle')}</h2>
+                                <p class="text-gray-600">${t('lessonsDesc')}</p>
                             </div>
-                            <div class="lesson-footer text-center py-6">
-                                <button class="start-btn text-lg px-12 py-5">
-                                    Start Task 2
-                                </button>
+                            <div class="lesson-footer text-center py-4">
+                                <button class="start-btn w-full">${t('startLessons')}</button>
                             </div>
                         </div>
+
                     </div>
                 </div>`;
-        } 
-        else {
-            // Show lessons for selected task
-            const selectedTask = currentView;
-            const lessons = allWritingLessons.filter(l => l.group === selectedTask);
-            const taskTitle = selectedTask === 'task1' ? t('task1Title') : t('task2Title');
-            const taskDesc = selectedTask === 'task1' ? t('task1Desc') : t('task2Desc');
-
-            let html = `
+        } else if (currentView === 'lessons') {
+            // The 6 Lessons Grid View
+            container.innerHTML = `
                 <div class="max-w-6xl mx-auto">
-                    <div class="flex items-center gap-4 mb-10">
-                        <div>
-                            <h2 class="section-title">${taskTitle}</h2>
-                            <p class="section-desc">${taskDesc}</p>
+                    <div class="mb-10">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div>
+                                <h2 class="section-title">${t('lessonsHeader')}</h2>
+                                <p class="section-desc">${t('lessonsSubHeader')}</p>
+                            </div>
                         </div>
+                        ${generateLessonGrid()}
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="lessons-grid"></div>
                 </div>
             `;
-
-            container.innerHTML = html;
-
-            // Render lesson cards
-            const grid = document.getElementById("lessons-grid");
-            let cardsHTML = "";
-
-            lessons.forEach(l => {
-                const isCompleted = !!completedLessons[l.id];
-                cardsHTML += `
-                    <div class="lesson-card">
-                        <div class="lesson-header">
-                            <div class="lesson-id">LESSON ${l.id}</div>
-                            <div class="lesson-title">${l.title}</div>
-                            <p class="lesson-desc">${l.desc}</p>
-                        </div>
-                        
-                        <div class="lesson-footer">
-                            <a href="/learn/journeys/writing/lesson/${l.id}/" 
-                               class="${isCompleted ? 'completed-btn' : 'start-btn'}">
-                                ${isCompleted ? t('retake') : t('startLesson')}
-                            </a>
-                        </div>
-                    </div>
-                `;
-            });
-
-            grid.innerHTML = cardsHTML;
         }
 
         hideLoader();
     }
 
-    window.selectTask = function(task) {
-        currentView = task;
+    window.selectView = function(viewName) {
+        currentView = viewName;
         renderCurrentView();
     };
 
-    window.goBackToSelection = function() {
-        currentView = 'selection';
-        renderCurrentView();
-    };
-
-    function renderWritingLessons() {
-        renderCurrentView();
-    }
-
-    function goBack() {
-        if (currentView !== 'selection') {
-            goBackToSelection();
+    window.goBack = function() {
+        // If in lessons view, back goes to the selection menu
+        if (currentView === 'lessons') {
+            currentView = 'selection';
+            renderCurrentView();
         } else {
+            // If already in selection menu, back goes to main learning hub
             window.location.assign('/learn/');
         }
     }
 
     // Loader logic
     const loader = document.getElementById('pageLoader');
-    const owl = document.getElementById('splashOwl');
-    let minTimePassed = false;
+    const splashAnim = document.getElementById('splashPanda');
 
     setTimeout(() => { 
-        if (owl) { 
-            owl.style.opacity = '1'; 
-            owl.style.transform = 'scale(1) translateY(0)'; 
+        if (splashAnim) { 
+            splashAnim.style.opacity = '1'; 
+            splashAnim.style.transform = 'scale(1) translateY(0)'; 
         } 
     }, 400);
-
-    setTimeout(() => { minTimePassed = true; }, 1600);
 
     function hideLoader() {
         if (!loader || loader.classList.contains('hidden')) return;
@@ -666,10 +625,7 @@
         document.addEventListener('click', () => {
             document.getElementById('lang-flags').classList.remove('show');
         });
-
-        document.getElementById('desktop-back-btn')?.addEventListener('click', goBack);
-        document.getElementById('mobile-back-btn')?.addEventListener('click', goBack);
     });
-</script>
+    </script>
 </body>
 </html>

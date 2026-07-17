@@ -13,7 +13,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <!-- Google tag -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -27,6 +26,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/learn/blogs/blog.css">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     
     <style>
         body {
@@ -138,6 +141,21 @@
             box-shadow: 0 4px 0 #6b7280;
         }
 
+        /* ADDED: Dynamic Purple Patient Cooldown Style */
+        .speaking-card.cooldown-active {
+            pointer-events: none; 
+            border-color: #d8b4fe;
+        }
+        .speaking-card.cooldown-active .start-btn {
+            background: #8b5cf6;
+            box-shadow: 0 4px 0 #6d28d9;
+            cursor: not-allowed;
+        }
+        .speaking-card.cooldown-active .start-btn:hover {
+            transform: none;
+            box-shadow: 0 4px 0 #6d28d9;
+        }
+
         /* Hide scrollbar completely but keep scrolling */
         .speaking-hero {
             scrollbar-width: none; /* Firefox */
@@ -217,28 +235,24 @@
     <div class="speaking-hero">
         <div class="hero-content">
             <div class="cards-grid">
-                <!-- Card 1 - Part 1 (Active) -->
-                <a href="/learn/tools/speaking-ai/part-1/" class="speaking-card">
+                <a href="/learn/tools/speaking-ai/part-1/" class="speaking-card" id="part1-card">
                     <div class="card-title">Part 1</div>
                     <div class="card-desc">Introduction &amp; Interview<br>Short personal questions</div>
-                    <button class="start-btn">Start Part 1</button>
+                    <button class="start-btn" id="part1-btn">Start Part 1</button>
                 </a>
 
-                <!-- Card 2 - Part 2 (Unavailable) -->
-                <a href="#" class="speaking-card unavailable">
+                <a href="/learn/tools/speaking-ai/part-2/" class="speaking-card" id="part2-card">
                     <div class="card-title">Part 2</div>
                     <div class="card-desc">Individual Long Turn<br>Cue Card + 1-2 minutes speaking</div>
-                    <button class="start-btn">Unavailable</button>
+                    <button class="start-btn" id="part2-btn">Start Part 2</button>
                 </a>
 
-                <!-- Card 3 - Part 3 (Unavailable) -->
                 <a href="#" class="speaking-card unavailable">
                     <div class="card-title">Part 3</div>
                     <div class="card-desc">Discussion<br>Deeper follow-up questions</div>
                     <button class="start-btn">Unavailable</button>
                 </a>
 
-                <!-- Card 4 - Full Mock Test (Unavailable) -->
                 <a href="#" class="speaking-card unavailable">
                     <div class="card-title">Full Mock Test</div>
                     <div class="card-desc">Complete IELTS Speaking Test<br>All 3 parts in one go (11-14 minutes)</div>
@@ -250,7 +264,7 @@
 
     <script>
         function goBack() {
-                    window.location.assign('/learn/');
+            window.location.assign('/learn/');
         }
         document.getElementById('desktop-back-btn').addEventListener('click', goBack);
     
@@ -288,6 +302,86 @@
         }
 
         setTimeout(() => hideLoader(), 7000);
+
+        // --- ADDED: FIREBASE INITIALIZATION & INDEPENDENT COOLDOWN TRACKING ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+            authDomain: "summage-backend.firebaseapp.com",
+            projectId: "summage-backend",
+            storageBucket: "summage-backend.firebasestorage.app",
+            messagingSenderId: "128191434358",
+            appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const COOLDOWN_MS = 25 * 60 * 1000; 
+        const liveIntervals = {};
+
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '/authentication/';
+            } else {
+                checkDashboardCooldowns(user.uid);
+            }
+        });
+
+        async function checkDashboardCooldowns(uid) {
+            try {
+                const userDoc = await db.collection('users').doc(uid).get();
+                if (userDoc.exists) {
+                    const data = userDoc.data();
+                    
+                    // Handle Part 1 Cooldown
+                    if (data.lastPart1TestTime) {
+                        const remaining1 = COOLDOWN_MS - (Date.now() - data.lastPart1TestTime.toMillis());
+                        if (remaining1 > 0) startCardCooldown('part1', remaining1);
+                    }
+                    
+                    // Handle Part 2 Cooldown
+                    if (data.lastPart2TestTime) {
+                        const remaining2 = COOLDOWN_MS - (Date.now() - data.lastPart2TestTime.toMillis());
+                        if (remaining2 > 0) startCardCooldown('part2', remaining2);
+                    }
+                }
+            } catch (error) {
+                console.error("Error reading backend user cooldowns: ", error);
+            }
+        }
+
+        function startCardCooldown(targetId, initialTimeMs) {
+            const cardEl = document.getElementById(`${targetId}-card`);
+            const btnEl = document.getElementById(`${targetId}-btn`);
+            
+            if (!cardEl || !btnEl) return;
+
+            // Apply style hooks
+            cardEl.classList.add('cooldown-active');
+            
+            let timeLeftSec = Math.floor(initialTimeMs / 1000);
+            
+            if (liveIntervals[targetId]) clearInterval(liveIntervals[targetId]);
+
+            const updateTimerDisplay = () => {
+                let minutes = Math.floor(timeLeftSec / 60);
+                let seconds = timeLeftSec % 60;
+                btnEl.innerText = `Wait ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            };
+
+            updateTimerDisplay();
+
+            liveIntervals[targetId] = setInterval(() => {
+                timeLeftSec--;
+                if (timeLeftSec <= 0) {
+                    clearInterval(liveIntervals[targetId]);
+                    cardEl.classList.remove('cooldown-active');
+                    btnEl.innerText = targetId === 'part1' ? 'Start Part 1' : 'Start Part 2';
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
     </script>
 </body>
 </html>

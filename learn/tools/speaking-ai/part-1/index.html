@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IELTS Speaking Practice</title>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -275,9 +280,17 @@
             <div class="illustration"></div>
             <h1>ARE YOU READY?</h1>
         </div>
-        <button onclick="showInstructions()" style="margin-top:50px; padding:18px 70px; background:#f24b0b; color:white; border:none; border-radius:50px; font-size:1.3rem; font-weight:700; box-shadow:0 4px 0 #c23a0a;">
+
+        <!-- Add these new cooldown elements -->
+        <div id="loading-auth" style="margin-top: 20px; font-weight: bold; color: #666;">Checking permissions...</div>
+        
+        <button id="start-btn" onclick="showInstructions()" style="display:none; margin-top:50px; padding:18px 70px; background:#f24b0b; color:white; border:none; border-radius:50px; font-size:1.3rem; font-weight:700; box-shadow:0 4px 0 #c23a0a;">
             START THE TEST
         </button>
+
+        <div id="cooldown-timer-display" style="display: none; font-size: 1.4rem; color: #ef4444; font-weight: 700; margin-top: 30px; font-family: 'Poppins', sans-serif; text-align: center;">
+            Please wait <span id="cooldown-time"></span> before testing again.
+        </div>
     </div>
 
     <!-- Instructions Screen -->
@@ -415,7 +428,90 @@
         const bottomBar = document.getElementById('bottom-bar');
         const modal = document.getElementById('feedback-modal');
 
+        // --- ADD FIREBASE COOLDOWN LOGIC HERE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+            authDomain: "summage-backend.firebaseapp.com",
+            projectId: "summage-backend",
+            storageBucket: "summage-backend.firebasestorage.app",
+            messagingSenderId: "128191434358",
+            appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentUserRef = null;
+        const COOLDOWN_MS = 25 * 60 * 1000; 
+        let cooldownInterval = null;
+
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '/authentication/';
+            } else {
+                currentUserRef = db.collection('users').doc(user.uid);
+                checkCooldown();
+            }
+        });
+
+        async function checkCooldown() {
+            try {
+                const doc = await currentUserRef.get();
+                document.getElementById('loading-auth').style.display = 'none';
+
+                // TARGET PART 1 FIELD ONLY
+                if (doc.exists && doc.data().lastPart1TestTime) {
+                    const lastTime = doc.data().lastPart1TestTime.toMillis();
+                    const diff = Date.now() - lastTime;
+
+                    if (diff < COOLDOWN_MS) {
+                        startCooldownUI(COOLDOWN_MS - diff);
+                        return;
+                    }
+                }
+                
+                // FIX: Changed 'cooldown-content' to 'cooldown-timer-display'
+                document.getElementById('cooldown-timer-display').style.display = 'none';
+                // FIX: Changed 'normal-start-content' to 'start-btn'
+                document.getElementById('start-btn').style.display = 'block';
+            } catch (error) {
+                console.error("Firestore Check Failed: ", error);
+                document.getElementById('loading-auth').innerText = "Network timeout. Try refreshing.";
+            }
+        }
+
+        function startCooldownUI(remainingMs) {
+            // FIX: Changed 'normal-start-content' to 'start-btn'
+            document.getElementById('start-btn').style.display = 'none';
+            // FIX: Changed 'cooldown-content' to 'cooldown-timer-display'
+            const cooldownCard = document.getElementById('cooldown-timer-display');
+            const timerDisplay = document.getElementById('cooldown-time');
+            cooldownCard.style.display = 'block';
+
+            let timeLeft = Math.floor(remainingMs / 1000);
+            if (cooldownInterval) clearInterval(cooldownInterval);
+            
+            cooldownInterval = setInterval(() => {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                timeLeft--;
+                if (timeLeft < 0) {
+                    clearInterval(cooldownInterval);
+                    cooldownCard.style.display = 'none';
+                    // FIX: Changed 'normal-start-content' to 'start-btn'
+                    document.getElementById('start-btn').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        // Ensure your showInstructions updates the Part 1 specific field
         function showInstructions() {
+            if(currentUserRef) {
+                currentUserRef.set({
+                    lastPart1TestTime: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            }
             startScreen.classList.add('hidden');
             instructionsScreen.classList.remove('hidden');
         }
@@ -557,7 +653,6 @@
             goodjobScreen.classList.remove('hidden');
         }
 
-        // Rest of your functions (showFeedback, closeModal, restartTest) remain the same
         async function showFeedback() {
             goodjobScreen.classList.add('hidden');
             modal.style.display = 'flex';
@@ -578,28 +673,24 @@
                 }
             });
 
+            // Updated Prompt: Removed cue card reference, added strict rules for silence/nonsense
             const prompt = `
-                You are a strict IELTS Speaking examiner.
+                You are a strict and expert IELTS Speaking examiner grading Part 1 responses.
+                Listen to the provided audio answers for the given questions.
 
-                If the audio contains no speech, only silence, background noise, or cannot be evaluated,
-                return exactly:
+                CRITICAL RULES:
+                1. IF NO SPEECH IS DETECTED (pure silence or just background noise): You must return a bandScore of 0.
+                2. IF THE SPEECH IS COMPLETE NONSENSE OR COMPLETELY OFF-TOPIC: Return a bandScore between 1.0 and 3.0.
+                3. Do NOT look for a "cue card" (this is Part 1). 
+                4. Do NOT inflate scores. Grade strictly based on Fluency, Lexical Resource, Grammar, and Pronunciation.
 
+                Return ONLY a valid JSON object. Do not include markdown formatting or backticks.
                 {
-                "bandScore": 0,
-                "feedback": "No speech was detected.",
-                "advice": "Please answer all questions clearly and try again."
+                    "bandScore": number,
+                    "feedback": "Detailed explanation of the errors made and why this score was given.",
+                    "advice": "Actionable tips for improvement."
                 }
-
-                Otherwise, evaluate pronunciation, fluency, grammar, vocabulary and coherence.
-
-                Return ONLY valid JSON:
-
-                {
-                "bandScore": number,
-                "feedback": "...",
-                "advice": "..."
-                }
-                `;
+            `;
 
             try {
                 const res = await fetch("https://summage-ai.summage-socials.workers.dev", {
@@ -613,9 +704,17 @@
                 });
 
                 const data = await res.json();
-                const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '{"bandScore":6.0,"feedback":"Good attempt","advice":"Keep practicing"}';
                 
-                const result = JSON.parse(textResponse.replace(/```json|```/g, '').trim());
+                // Extract text. If the AI blocked the request or failed, this will be undefined.
+                const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (!textResponse) {
+                    throw new Error("AI returned an empty response. Audio might have been totally silent or unintelligible.");
+                }
+                
+                // Clean up any stray markdown backticks the model might still try to inject
+                const cleanText = textResponse.replace(/```json|```/gi, '').trim();
+                const result = JSON.parse(cleanText);
 
                 document.getElementById('loading-state').style.display = 'none';
                 document.getElementById('result-state').style.display = 'block';
@@ -626,15 +725,20 @@
                     <strong>Advice:</strong> ${result.advice}
                 `;
             } catch (e) {
-                console.error(e);
+                console.error("Evaluation Error:", e);
                 document.getElementById('loading-state').style.display = 'none';
                 document.getElementById('result-state').style.display = 'block';
+                
+                // If we hit an error (like silent audio causing an API rejection), fail gracefully to a 0
                 document.getElementById('band-score').textContent = "0.0";
-                document.getElementById('feedback-text').innerHTML = "There was an error processing your responses.<br><br>Please try again.";
+                document.getElementById('feedback-text').innerHTML = `
+                    <strong>Audio Unrecognizable</strong><br><br>
+                    We couldn't detect any valid speech in your recording, or there was an error processing the audio. Make sure your microphone is working and you are speaking clearly.
+                `;
             }
         }
 
-        function closeModal() { modal.style.display = 'none'; window.location.href = "/learn/tools/speaking-ai" }
+        function closeModal() { modal.style.display = 'none'; window.location.href = "/learn/tools/speaking-ai/" }
 
         function restartTest() {
             closeModal();
