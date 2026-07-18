@@ -447,7 +447,7 @@
     </div>
 
     <nav class="navbar">
-        <button onclick="history.back()" class="back-btn">
+        <button onclick="goBack()" class="back-btn">
             <span>Back</span>
         </button>
 
@@ -612,6 +612,18 @@
         const sound = new Audio('/assets/audio/click.mp3');
         sound.volume = 0.1;
         sound.play().catch(() => {});
+    }
+
+    function goBack() {
+        const before = window.location.href;
+        
+        history.back();
+        
+        setTimeout(() => {
+            if (window.location.href === before) {
+                window.location.assign('/');
+            }
+        }, 50);
     }
 
     // ====================== HEARTS RENDER ======================

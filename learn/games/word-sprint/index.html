@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Word Sprint - Summage Academy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZP4KSPR1V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-LZP4KSPR1V');
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+
+    <!-- Yandex.RTB -->
+    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+
+    <style>
+        /* Hide scrollbar */
+        html, body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            overflow-x: hidden;
+        }
+        html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
+            display: none;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; user-select: none; }
+
+        body {
+            font-family: 'Noto Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            color: #222;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 5vw;
+            background: rgba(255,255,255,0.78);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .back-btn {
+            padding: 12px 28px;
+            background: #f1192e;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c40e20;
+            transition: all 0.25s ease;
+            min-width: 120px;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c40e20; }
+
+        .logo-container {
+            display: flex; align-items: center; gap: 14px;
+            cursor: pointer; transition: transform 0.3s ease;
+        }
+        .logo-container:hover { transform: scale(1.04); }
+        .logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 14px; box-shadow: 0 2px 8px rgba(242,75,11,0.15); }
+        .logo-text { font-size: 26px; font-weight: 800; color: #f24b0b; text-transform: uppercase; letter-spacing: 1.2px; }
+
+        .hero {
+            padding-top: 60px;
+            min-height: 35vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+
+        .hero-content {
+            max-width: 860px;
+            width: 100%;
+            text-align: center;
+        }
+        .hero-text {
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.38;
+            color: #222;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .hero-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Input Display area style */
+        .answer-box {
+            min-height: 64px;
+            border-bottom: 4px solid #e5e7eb;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #f24b0b;
+            transition: all 0.2s ease;
+        }
+        .answer-box.correct {
+            color: #10b981;
+            border-color: #10b981;
+        }
+        .answer-box.wrong {
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        /* Virtual Custom Keyboard Layout */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding: 16px 4vw 24px;
+            z-index: 999;
+        }
+        
+        .kb-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        .kb-key {
+            background: #f3f4f6;
+            border: none;
+            border-bottom: 4px solid #d1d5db;
+            border-radius: 8px;
+            color: #1f2937;
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding: 14px 0;
+            flex: 1;
+            max-width: 46px;
+            text-align: center;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: background 0.1s;
+        }
+        .kb-key:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+            background: #e5e7eb;
+        }
+        .kb-key.special {
+            max-width: 70px;
+            background: #d1d5db;
+            border-bottom-color: #9ca3af;
+            font-size: 1rem;
+        }
+
+        .check-btn {
+            width: 100%;
+            max-width: 420px;
+            margin: 12px auto 0;
+            display: block;
+            padding: 16px 24px;
+            background: #f24b0b;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 15.5px;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 0 #c23a0a;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .check-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c23a0a; }
+        .check-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 3px 0 #c23a0a;
+        }
+
+        @media (max-width: 767px) {
+            .back-btn { display: none; }
+            .navbar { padding: 14px 5vw; }
+            .hero { padding-top: 40px; min-height: 25vh; }
+            .kb-key { padding: 12px 0; font-size: 1.1rem; border-radius: 6px; }
+        }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 28px;
+            max-width: 400px;
+            width: 92%;
+            text-align: center;
+            padding: 40px 28px;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal h2, .modal h3 { font-size: 1.95rem; font-weight: 700; color: #222; margin-bottom: 12px; }
+        .modal p { color: #555; line-height: 1.5; font-size: 1.05rem; }
+
+        /* Hearts styling */
+        .hearts-container { display: flex; gap: 6px; }
+        .heart { width: 32px; height: 32px; transition: all 0.3s ease; }
+        .heart.lost { opacity: 0.4; transform: scale(0.7); }
+        .heart.boosted {
+            filter: drop-shadow(0 0 6px #fbbf24) drop-shadow(0 0 12px #f59e0b);
+            animation: heartPulse 2s infinite ease-in-out;
+        }
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #fffaf5 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 1.25s ease;
+        }
+        .page-loader.hidden { opacity: 0; visibility: hidden; }
+    </style>
+</head>
+<body>
+    <div id="pageLoader" class="page-loader">
+        <lottie-player id="splashOwl" src="/assets/Sandy Loading.json" background="transparent" speed="0.9" style="width: 120px; height: 120px;" loop autoplay></lottie-player>
+    </div>
+
+    <nav class="navbar">
+        <button onclick="goBack()" class="back-btn"><span>Back</span></button>
+        <div class="logo-container" onclick="window.location.href='/'">
+            <img class="logo-img" src="/assets/logo.webp" alt="Summage Logo">
+            <div class="logo-text">Summage</div>
+        </div>
+        <div class="flex items-center gap-6 md:gap-10">
+            <div id="hearts-container" class="hearts-container hidden md:flex"></div>
+            <div id="hearts-mobile" class="md:hidden flex items-center gap-2 text-xl font-bold">
+                <span id="hearts-count" class="text-[#f24b0b]">5</span>
+                <span class="text-[#f24b0b]">x</span>
+                <img src="/assets/images/menu-icons/game-heart.webp" alt="❤️" class="w-8 h-8">
+            </div>
+            <a href="/learn/" class="md:hidden"><img src="/assets/images/menu-icons/arrow.webp" alt="Back" class="w-9 h-9 object-contain"></a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div id="prompt-text" class="hero-text"></div>
+            <div class="w-full max-w-md mx-auto mt-6 px-4">
+                <div id="answer-display" class="answer-box flex items-center justify-center"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Container with Custom Keyboard -->
+    <div class="bottom-bar">
+        <div id="keyboard-container" class="max-w-xl mx-auto w-full"></div>
+        <button id="check-btn" class="check-btn">CHECK ANSWER</button>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal">
+        <div class="modal-content">
+            <img src="/assets/images/illustrations/no-hearts.webp" alt="No hearts" style="width: 160px; height: 160px; margin: 0 auto 28px; display: block;">
+            <h2>No hearts left!</h2>
+            <p style="margin-bottom:32px;">Watch a short ad to get +3 hearts and continue playing.</p>
+            <button onclick="watchAdForHearts(); playClick()" style="background:#f24b0b; box-shadow: 0 4px 0 #c23a0a; color:white; padding:18px 32px; border:none; border-radius:50px; font-weight:700; font-size:16.5px; width:100%;">GET HEARTS</button>
+        </div>
+    </div>
+
+    <!-- Ad Modal -->
+    <div id="ad-modal" class="modal">
+        <div class="modal-content">
+            <div style="background: linear-gradient(135deg, #f24b0b, #f97316); color:white; height:240px; border-radius:20px; display:flex; align-items:center; justify-content:center; margin:24px 0 28px; font-size:1.15rem; font-weight:700;">
+                <div id="yandex_rtb_R-A-19402847-4"></div>
+                <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({ "blockId": "R-A-19402847-4", "renderTo": "yandex_rtb_R-A-19402847-4" })
+                })
+                </script>
+            </div>
+            <h3 style="margin-bottom:16px;">Ads keep Summage free for everyone</h3>
+            <button class="continue-btn" id="continue-btn" onclick="finishAdAndContinue(); playClick()" style="background:#10b981; box-shadow: 0 4px 0 #0b9265; color:white; padding:17px 32px; border:none; border-radius:50px; font-weight:700; font-size:16px; width:100%; margin-top: 10px;">CONTINUE PLAYING</button>
+        </div>
+    </div>
+
+    <script>
+    // ====================== FIREBASE SETUP ======================
+    let auth, db;
+
+    async function loadFirebase() {
+        const scripts = [
+            'https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js',
+            'https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js',
+            'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js'
+        ];
+        for (let src of scripts) {
+            await new Promise(resolve => {
+                const script = document.createElement('script'); script.src = src; script.onload = resolve; document.head.appendChild(script);
+            });
+        }
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX73k3QqXr9xu_PKkQBkr9pUNp7zmtrW0",
+            authDomain: "summage-backend.firebaseapp.com",
+            projectId: "summage-backend",
+            storageBucket: "summage-backend.firebasestorage.app",
+            messagingSenderId: "128191434358",
+            appId: "1:128191434358:web:4c9e9f4f9ff4a23db5d957"
+        };
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+        initAuthListener();
+    }
+
+    // ====================== GAME DATA & STATE ======================
+    const translations = {
+        en: { back: "Back", check: "CHECK ANSWER", loading: "LOADING...", empty: "TYPE ANSWER" },
+        ru: { back: "Назад", check: "ПРОВЕРИТЬ", loading: "ЗАГРУЗКА...", empty: "ВВЕДИТЕ ОТВЕТ" },
+        uz: { back: "Orqaga", check: "TEKSHIRISH", loading: "YUKLANMOQDA...", empty: "JAVOBNI YOZING" }
+    };
+
+    let currentLang = localStorage.getItem('summage_lang') || 'uz'; // Base dictionary target lang
+    if (currentLang === 'en') currentLang = 'uz'; // Fallback so we don't translate English to English
+    document.documentElement.lang = currentLang;
+
+    // Word collection database mapping Uzbek/Russian to expected English
+    const tasks = [
+        // Your original 10 words
+        { uz: "MUVAFFAQIYAT", ru: "УСПЕХ", correct: ["SUCCESS"] },
+        { uz: "FOYDA", ru: "ПОЛЬЗА", correct: ["BENEFIT", "ADVANTAGE", "PROFIT"] },
+        { uz: "TA'SIR", ru: "ВЛИЯНИЕ", correct: ["IMPACT", "INFLUENCE", "EFFECT"] },
+        { uz: "MUHIM", ru: "ВАЖНО", correct: ["CRUCIAL", "IMPORTANT", "ESSENTIAL", "VITAL"] },
+        { uz: "YORUG'LIK", ru: "СВЕТ", correct: ["LIGHT"] },
+        { uz: "SAYOHAT", ru: "ПУТЕШЕСТВИЕ", correct: ["TRAVEL", "JOURNEY", "TRIP"] },
+        { uz: "IMKONIYAT", ru: "ВОЗМОЖНОСТЬ", correct: ["OPPORTUNITY", "CHANCE"] },
+        { uz: "MUAMMO", ru: "ПРОБЛЕМА", correct: ["PROBLEM", "ISSUE"] },
+        { uz: "SAYYORA", ru: "ПЛАНЕТА", correct: ["PLANET"] },
+        { uz: "RIVOJLANISH", ru: "РАЗВИТИЕ", correct: ["DEVELOPMENT", "GROWTH", "PROGRESS"] },
+
+        // New additions (Core Nouns & Concepts)
+        { uz: "MAQSAD", ru: "ЦЕЛЬ", correct: ["GOAL", "AIM", "TARGET", "OBJECTIVE"] },
+        { uz: "SABAB", ru: "ПРИЧИНА", correct: ["REASON", "CAUSE"] },
+        { uz: "NATIJA", ru: "РЕЗУЛЬТАТ", correct: ["RESULT", "OUTCOME", "CONSEQUENCE"] },
+        { uz: "XATO", ru: "ОШИБКА", correct: ["MISTAKE", "ERROR", "FAULT"] },
+        { uz: "XAVF", ru: "ОПАСНОСТЬ", correct: ["DANGER", "RISK", "THREAT", "HAZARD"] },
+        { uz: "XAVFSIZLIK", ru: "БЕЗОПАСНОСТЬ", correct: ["SAFETY", "SECURITY"] },
+        { uz: "YORDAM", ru: "ПОМОЩЬ", correct: ["HELP", "ASSISTANCE", "AID", "SUPPORT"] },
+        { uz: "TA'LIM", ru: "ОБРАЗОВАНИЕ", correct: ["EDUCATION", "TRAINING", "LEARNING"] },
+        { uz: "BILIM", ru: "ЗНАНИЕ", correct: ["KNOWLEDGE", "UNDERSTANDING"] },
+        { uz: "FIKR", ru: "МЫСЛЬ", correct: ["THOUGHT", "IDEA", "OPINION", "MIND"] },
+        { uz: "MAMLAKAT", ru: "СТРАНА", correct: ["COUNTRY", "NATION", "STATE"] },
+        { uz: "SHAHAR", ru: "ГОРОД", correct: ["CITY", "TOWN"] },
+        { uz: "VAQT", ru: "ВРЕМЯ", correct: ["TIME", "PERIOD", "ERA"] },
+        { uz: "PUL", ru: "ДЕНЬГИ", correct: ["MONEY", "CASH", "FUNDS"] },
+        { uz: "ISH", ru: "РАБОТА", correct: ["WORK", "JOB", "TASK", "EMPLOYMENT"] },
+        { uz: "KORXONA", ru: "КОМПАНИЯ", correct: ["COMPANY", "BUSINESS", "FIRM", "ENTERPRISE"] },
+        { uz: "HUKUMAT", ru: "ПРАВИТЕЛЬСТВО", correct: ["GOVERNMENT", "AUTHORITY"] },
+        { uz: "QONUN", ru: "ЗАКОН", correct: ["LAW", "RULE", "REGULATION"] },
+        { uz: "MANBA", ru: "ИСТОЧНИК", correct: ["SOURCE", "ORIGIN", "RESOURCE"] },
+        { uz: "TIZIM", ru: "СИСТЕМА", correct: ["SYSTEM", "STRUCTURE", "NETWORK"] },
+        { uz: "SINOV", ru: "ТЕСТ", correct: ["TEST", "TRIAL", "EXAM", "EXAMINATION"] },
+        { uz: "TANLOV", ru: "ВЫБОР", correct: ["CHOICE", "SELECTION", "OPTION"] },
+        { uz: "XARID", ru: "ПОКУПКА", correct: ["PURCHASE", "BUY"] },
+        { uz: "SOTUV", ru: "PRODAJA", correct: ["SALE", "SELLING"] },
+        { uz: "MUKOFOT", ru: "НАГРАДА", correct: ["REWARD", "AWARD", "PRIZE"] },
+        { uz: "HIMOYA", ru: "ЗАЩИТА", correct: ["PROTECTION", "DEFENSE", "SECURITY"] },
+        { uz: "URINISH", ru: "ПОПЫТКА", correct: ["ATTEMPT", "TRY", "EFFORT"] },
+        { uz: "QUVONCH", ru: "РАДОСТЬ", correct: ["JOY", "DELIGHT", "PLEASURE"] },
+        { uz: "BAXT", ru: "СЧАСТЬЕ", correct: ["HAPPINESS", "BLISS"] },
+        { uz: "SOG'LIQ", ru: "ЗДОРОВЬЕ", correct: ["HEALTH"] },
+
+        // Core Adjectives
+        { uz: "QIYIN", ru: "СЛОЖНЫЙ", correct: ["DIFFICULT", "HARD", "COMPLEX", "COMPLICATED"] },
+        { uz: "OSON", ru: "ЛЕГКИЙ", correct: ["EASY", "SIMPLE"] },
+        { uz: "TEZKOR", ru: "БЫСТРЫЙ", correct: ["FAST", "QUICK", "RAPID", "SWIFT"] },
+        { uz: "SEKIN", ru: "МЕДЛЕННЫЙ", correct: ["SLOW"] },
+        { uz: "GO'ZAL", ru: "КРАСИВЫЙ", correct: ["BEAUTIFUL", "PRETTY", "LOVELY", "GORGEOUS"] },
+        { uz: "YANGI", ru: "НОВЫЙ", correct: ["NEW", "MODERN", "RECENT"] },
+        { uz: "ESKI", ru: "СТАРЫЙ", correct: ["OLD", "ANCIENT"] },
+        { uz: "KATTA", ru: "БОЛЬШОЙ", correct: ["BIG", "LARGE", "HUGE", "GIANT"] },
+        { uz: "KICHIK", ru: "МАЛЕНЬКИЙ", correct: ["SMALL", "LITTLE", "TINY"] },
+        { uz: "TO'G'RI", ru: "ПРАВИЛЬНЫЙ", correct: ["CORRECT", "RIGHT", "ACCURATE", "TRUE"] },
+        { uz: "NOTO'G'RI", ru: "НЕПРАВИЛЬНЫЙ", correct: ["WRONG", "INCORRECT", "FALSE"] },
+        { uz: "XALQARO", ru: "МЕЖДУНАРОДНЫЙ", correct: ["INTERNATIONAL", "GLOBAL"] },
+        { uz: "MAHALLIY", ru: "МЕСТНЫЙ", correct: ["LOCAL", "REGIONAL"] },
+        { uz: "UMUMIY", ru: "ОБЩИЙ", correct: ["GENERAL", "COMMON", "UNIVERSAL", "TOTAL"] },
+        { uz: "MAXSUS", ru: "СПЕЦИАЛЬНЫЙ", correct: ["SPECIAL", "SPECIFIC", "PARTICULAR"] },
+        { uz: "ASOSIY", ru: "ГЛАВНЫЙ", correct: ["MAIN", "CHIEF", "PRINCIPAL", "PRIMARY", "MAJOR"] },
+        { uz: "ODDIY", ru: "ПРОСТОЙ", correct: ["SIMPLE", "PLAIN", "BASIC", "ORDINARY"] },
+        { uz: "AJOYIB", ru: "ЗАМЕЧАТЕЛЬНЫЙ", correct: ["WONDERFUL", "EXCELLENT", "GREAT", "AMAZING", "FANTASTIC"] },
+        { uz: "YOMON", ru: "ПЛОХОЙ", correct: ["BAD", "AWFUL", "TERRIBLE", "POOR"] },
+        { uz: "YAXSHI", ru: "ХОРОШИЙ", correct: ["GOOD", "FINE", "NICE"] }
+    ];
+
+    let currentIndex = 0;
+    let typedAnswer = "";
+    let isChecking = false;
+    let currentUser = null;
+    let hearts = null;
+    let lastHeartReset = null;
+    let isHeartbarActive = false;
+
+    const fullHeart = '/assets/images/menu-icons/game-heart.webp';
+    const emptyHeart = '/assets/images/menu-icons/game-heart-empty.webp';
+
+    const promptEl = document.getElementById('prompt-text');
+    const displayEl = document.getElementById('answer-display');
+    const checkBtn = document.getElementById('check-btn');
+
+    function playClick() {
+        const sound = new Audio('/assets/audio/click.mp3'); sound.volume = 0.1; sound.play().catch(()=>{});
+    }
+    function correctSound() {
+        const sound = new Audio('/assets/audio/correct.mp3'); sound.volume = 0.1; sound.play().catch(()=>{});
+    }
+    function incorrectSound() {
+        const sound = new Audio('/assets/audio/error.mp3'); sound.volume = 0.1; sound.play().catch(()=>{});
+    }
+
+    // ====================== KEYBOARD IMPLEMENTATION ======================
+    const keyboardRows = [
+        ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+        ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+        ['Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫']
+    ];
+
+    function buildKeyboard() {
+        const container = document.getElementById('keyboard-container');
+        container.innerHTML = '';
+        
+        keyboardRows.forEach(row => {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'kb-row';
+            row.forEach(key => {
+                const btn = document.createElement('button');
+                btn.className = `kb-key ${key === '⌫' ? 'special' : ''}`;
+                btn.textContent = key;
+                btn.onclick = () => handleKeyPress(key);
+                rowDiv.appendChild(btn);
+            });
+            container.appendChild(rowDiv);
+        });
+    }
+
+    function goBack() {
+        const before = window.location.href;
+        
+        history.back();
+        
+        setTimeout(() => {
+            if (window.location.href === before) {
+                window.location.assign('/learn/');
+            }
+        }, 50);
+    }
+
+    function handleKeyPress(key) {
+        if (isChecking) return;
+        playClick();
+
+        if (key === '⌫') {
+            typedAnswer = typedAnswer.slice(0, -1);
+        } else {
+            if (typedAnswer.length < 15) {
+                typedAnswer += key;
+            }
+        }
+        renderAnswer();
+    }
+
+    function renderAnswer() {
+        const t = translations[currentLang] || translations.en;
+        if (typedAnswer.length === 0) {
+            displayEl.textContent = t.empty;
+            displayEl.style.opacity = "0.4";
+        } else {
+            displayEl.textContent = typedAnswer;
+            displayEl.style.opacity = "1";
+        }
+    }
+
+    // Prevent default desktop keys so everything operates entirely through the virtual custom layer
+    window.addEventListener('keydown', (e) => {
+        if (e.key === "Backspace") { 
+            handleKeyPress('⌫'); 
+            e.preventDefault(); 
+        }
+        if (e.key === "Enter") { 
+            checkAnswer(); 
+            e.preventDefault(); 
+        }
+        const keyUpper = e.key.toUpperCase();
+        if (keyUpper.length === 1 && keyUpper >= 'A' && keyUpper <= 'Z') {
+            handleKeyPress(keyUpper);
+            e.preventDefault();
+        }
+    });
+
+    // ====================== GAME RUNTIME ======================
+    function loadNewTask() {
+        isChecking = false;
+        typedAnswer = "";
+        checkBtn.disabled = false;
+        displayEl.className = "answer-box flex items-center justify-center";
+        
+        const t = translations[currentLang] || translations.en;
+        checkBtn.textContent = t.check;
+
+        let newIndex = currentIndex;
+        while (newIndex === currentIndex) newIndex = Math.floor(Math.random() * tasks.length);
+        currentIndex = newIndex;
+        
+        const task = tasks[currentIndex];
+        promptEl.classList.remove('visible');
+        
+        setTimeout(() => {
+            promptEl.innerHTML = `Translate: <strong>${task[currentLang] || task['uz']}</strong>`;
+            promptEl.classList.add('visible');
+            renderAnswer();
+        }, 300);
+    }
+
+    function checkAnswer() {
+        if (isChecking || typedAnswer.length === 0) return;
+        if (hearts <= 0 && !isHeartbarActive) {
+            document.getElementById('game-over-modal').style.display = 'flex';
+            return;
+        }
+
+        isChecking = true;
+        checkBtn.disabled = true;
+        const t = translations[currentLang] || translations.en;
+        checkBtn.textContent = t.loading;
+
+        const task = tasks[currentIndex];
+        const isCorrect = task.correct.includes(typedAnswer.trim().toUpperCase());
+
+        if (isCorrect) {
+            correctSound();
+            displayEl.classList.add('correct');
+            setTimeout(loadNewTask, 1600);
+        } else {
+            incorrectSound();
+            displayEl.classList.add('wrong');
+            displayEl.textContent = task.correct[0]; // show only the primary correct answer // reveal correct answer brief flash
+            
+            if (!isHeartbarActive) {
+                hearts = Math.max(0, hearts - 1);
+                renderHearts();
+                saveUserHearts();
+            }
+
+            if (hearts <= 0 && !isHeartbarActive) {
+                setTimeout(() => {
+                    document.getElementById('game-over-modal').style.display = 'flex';
+                }, 1400);
+                return;
+            }
+            setTimeout(loadNewTask, 2000);
+        }
+    }
+
+    // ====================== HEARTS LOGIC ======================
+    function renderHearts() {
+        if (hearts === null) return;
+        const isBoosted = isHeartbarActive;
+
+        const desktopContainer = document.getElementById('hearts-container');
+        desktopContainer.innerHTML = '';
+        for (let i = 1; i <= 5; i++) {
+            const img = document.createElement('img');
+            img.className = `heart ${isBoosted ? 'boosted' : ''}`;
+            img.src = (i <= hearts) ? fullHeart : emptyHeart;
+            desktopContainer.appendChild(img);
+        }
+
+        const countEl = document.getElementById('hearts-count');
+        if (countEl) {
+            countEl.textContent = isBoosted ? '∞' : hearts;
+            countEl.style.color = isBoosted ? '#fbbf24' : '#f24b0b';
+        }
+        document.getElementById('hearts-mobile').classList.toggle('boosted', isBoosted);
+    }
+
+    async function loadUserHearts() {
+        if (!currentUser || !db) return;
+        try {
+            const userRef = db.collection("users").doc(currentUser.uid);
+            const docSnap = await userRef.get();
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                hearts = data.hearts !== undefined ? data.hearts : 5;
+                lastHeartReset = data.lastHeartReset || null;
+                checkAndResetHearts();
+            } else {
+                await userRef.set({ hearts: 5, lastHeartReset: getTodayDateString() });
+                hearts = 5;
+            }
+            await loadActiveBoosts();
+            renderHearts();
+        } catch (e) {
+            hearts = 5; renderHearts();
+        }
+    }
+
+    async function loadActiveBoosts() {
+        if (!currentUser || !db) return;
+        try {
+            const snapshot = await db.collection('purchases').where('userId', '==', currentUser.uid).get();
+            isHeartbarActive = false;
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (data.itemId === "full_heartbar" && data.expiresAt > Date.now()) { isHeartbarActive = true; }
+            });
+            renderHearts();
+        } catch (e) {}
+    }
+
+    function getTodayDateString() { return new Date().toISOString().split('T')[0]; }
+    function checkAndResetHearts() {
+        const today = getTodayDateString();
+        if (lastHeartReset !== today) { hearts = 5; lastHeartReset = today; saveUserHearts(); }
+    }
+    async function saveUserHearts() {
+        if (!currentUser || !db) return;
+        try {
+            await db.collection("users").doc(currentUser.uid).set({ hearts: hearts, lastHeartReset: getTodayDateString() }, { merge: true });
+        } catch (e) {}
+    }
+
+    function initAuthListener() {
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            if (user) { loadUserHearts(); } else { hearts = 5; renderHearts(); }
+        });
+    }
+
+    // ====================== AD HANDLERS ======================
+    let countdownInterval = null;
+    function watchAdForHearts() {
+        document.getElementById('game-over-modal').style.display = 'none';
+        document.getElementById('ad-modal').style.display = 'flex';
+        startAdCountdown();
+    }
+    function finishAdAndContinue() {
+        if (countdownInterval) clearInterval(countdownInterval);
+        document.getElementById('ad-modal').style.display = 'none';
+        hearts = Math.min(5, (hearts || 0) + 3);
+        renderHearts();
+        saveUserHearts();
+        loadNewTask();
+    }
+    function startAdCountdown() {
+        const continueBtn = document.getElementById('continue-btn');
+        let timeLeft = 5;
+        
+        continueBtn.disabled = true;
+        continueBtn.style.background = '#9ca3af';
+        continueBtn.style.boxShadow = '0 4px 0 #6b7280'; // gray shadow
+        continueBtn.textContent = "5";
+        
+        if (countdownInterval) clearInterval(countdownInterval);
+        
+        countdownInterval = setInterval(() => {
+            timeLeft--;
+            continueBtn.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+                continueBtn.textContent = "CONTINUE PLAYING";
+                continueBtn.disabled = false;
+                continueBtn.style.background = '#10b981';
+                continueBtn.style.boxShadow = '0 4px 0 #0b9265'; // green shadow restored
+            }
+        }, 1000);
+    }
+
+    // ====================== INITIALIZE ======================
+    checkBtn.addEventListener('click', checkAnswer);
+    buildKeyboard();
+    loadFirebase();
+    loadNewTask();
+
+    // Hide loader
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const loader = document.getElementById('pageLoader');
+            if (loader) { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 1000); }
+        }, 1200);
+    });
+</script>
+</body>
+</html>

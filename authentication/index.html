@@ -561,6 +561,33 @@ html, body {
   font-size: 1rem;
   margin-top: 25px;
 }
+
+/* Language Modal Styles */
+  #languageModal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000; /* Above page-loader (9999) */
+    padding: 20px;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+  }
+
+  #languageModal .modal-content {
+    text-align: center;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  #languageModal h2 {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+    color: #f24b0b;
+  }
 </style>
 </head>
 <body>
@@ -761,6 +788,19 @@ html, body {
 
   </div>
 
+  <!-- Language Selection Modal -->
+  <div id="languageModal" class="hidden">
+    <div class="modal-content">
+      <img class="mobile-illust" src="/assets/images/lang/globe.webp" alt="Choose Language" style="max-width: 140px; margin: 0 auto 20px;">
+      <h2>Choose your language</h2>
+      <div class="buttons-group" style="margin: 0 auto;">
+        <button class="btn btn-primary" onclick="selectLanguage('en')">English</button>
+        <button class="btn btn-primary" onclick="selectLanguage('ru')">Русский</button>
+        <button class="btn btn-primary" onclick="selectLanguage('uz')">O'zbekcha</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Error Modal -->
   <div id="errorModal" class="hidden">
     <img src="/assets/images/illustrations/issue-login.webp" alt="Sad owl">
@@ -940,6 +980,30 @@ html, body {
   const LANG_KEY = 'summage_preferred_lang';
   let currentLang = localStorage.getItem(LANG_KEY) || 'en';
 
+  // Check if a language has been selected previously
+  window.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem(LANG_KEY)) {
+      document.getElementById('languageModal').classList.remove('hidden');
+    }
+  });
+
+  // Function to handle the user's language selection
+  function selectLanguage(lang) {
+    if (typeof playClick === 'function') playClick(); // Use existing click sound
+    
+    currentLang = lang;
+    localStorage.setItem(LANG_KEY, lang);
+    applyTranslations();
+    
+    const langModal = document.getElementById('languageModal');
+    langModal.style.opacity = '0';
+    
+    // Wait for the fade out transition before hiding
+    setTimeout(() => {
+      langModal.classList.add('hidden');
+    }, 400);
+  }
+
   function applyTranslations() {
     document.querySelectorAll('[data-lang-key]').forEach(el => {
       const key = el.getAttribute('data-lang-key');
@@ -1103,14 +1167,14 @@ let currentQuestion = 0;
 let score = 0;
 
 const questions = [
-  { q: "Choose the correct sentence:", options: ["She go to school every day.", "She goes to school every day.", "She going to school every day."], correct: 1 },
-  { q: "What does 'ubiquitous' mean?", options: ["Very rare", "Present everywhere", "Extremely expensive"], correct: 1 },
+  { q: "I __ a new student.", options: ["is", "am", "are"], correct: 1 },
+  { q: "Yesterday, we ___ to cinema.", options: ["go", "gone", "went"], correct: 2},
   { q: "If I ___ more time, I would travel the world.", options: ["have", "had", "would have"], correct: 1 },
   { q: "The meeting has been ___ until next week.", options: ["postponed", "preponed", "cancelled"], correct: 0 },
-  { q: "Which word is different?", options: ["Eloquent", "Fluent", "Silent", "Articulate"], correct: 2 },
+  { q: "The new bridge ___ next month.", options: ["will complete", "completes", "will be completed"], correct: 2 },
   { q: "I wish I ___ speak Spanish fluently.", options: ["can", "could", "would"], correct: 1 },
   { q: "What is the synonym of 'resilient'?", options: ["Fragile", "Adaptable", "Lazy"], correct: 1 },
-  { q: "Complete: 'By the time we arrive, the movie ___ .'", options: ["will start", "will have started", "starts"], correct: 1 }
+  { q: "By the time we arrive, the movie ___ .", options: ["will started", "will have started", "starts"], correct: 1 }
 ];
 
 function startEnglishTest() {
